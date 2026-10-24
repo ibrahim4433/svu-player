@@ -1237,8 +1237,8 @@
   /* ---------- Welcome Tour (Remade Studio Layout) ---------- */
   dialog.wide { width: min(1120px, 96vw); }
   .w-head { padding: 16px 24px 4px; text-align: center; }
-  .w-head h2 { margin: 0 0 4px; font-size: 21px; font-weight: 700; color: var(--text); }
-  .w-head p { margin: 0; color: var(--dim); font-size: 13px; }
+  .w-head h2 { margin: 0 0 6px; font-size: 24px; font-weight: 700; color: var(--text); }
+  .w-head p { margin: 0; color: var(--dim); font-size: 14.5px; }
   .w-body { padding: 6px 12px 6px; overflow: hidden; }
   .w-fit { margin: 0 auto; position: relative; overflow: hidden; }
   .wstage { position: absolute; left: 0; top: 0; width: 1040px; height: 690px; transform-origin: 0 0; direction: ltr; }
@@ -1246,20 +1246,20 @@
   .w-arrows path { fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; }
   .w-arrows circle { fill: var(--blue); }
   .wlabel {
-    position: absolute; z-index: 4; width: 205px; padding: 7px 10px;
+    position: absolute; z-index: 4; width: 216px; padding: 8px 12px;
     background: var(--panel2); border: 1px solid var(--line); border-inline-start: 3px solid var(--blue);
     border-radius: var(--r); direction: ltr; text-align: start;
     box-shadow: 0 8px 20px rgba(0,0,0,0.35);
   }
   html[dir=rtl] .wlabel { direction: rtl; border-inline-start: 3px solid var(--blue); }
-  .wlabel b { display: block; color: var(--blue); font-size: 12.5px; font-weight: 700; margin-bottom: 2px; }
-  .wlabel span { display: block; color: var(--text); font-size: 11.5px; line-height: 1.35; opacity: .92; }
+  .wlabel b { display: block; color: var(--blue); font-size: 13.5px; font-weight: 700; margin-bottom: 3px; }
+  .wlabel span { display: block; color: var(--text); font-size: 12.5px; line-height: 1.45; opacity: .95; }
   .w-foot { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 20px 16px; flex-wrap: nowrap; border-top: 1px solid var(--line); }
   .w-foot .tip { color: var(--dim); font-size: 11px; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .wlist { display: none; list-style: none; margin: 0; padding: 4px 18px 8px; }
   .wlist li { padding: 8px 0; border-bottom: 1px solid var(--line); }
-  .wlist b { display: block; color: var(--blue); font-size: 13px; }
-  .wlist span { color: var(--text); font-size: 13px; opacity: .9; }
+  .wlist b { display: block; color: var(--blue); font-size: 14.5px; margin-bottom: 2px; }
+  .wlist span { color: var(--text); font-size: 13.5px; opacity: .95; line-height: 1.4; }
   @media (max-width: 760px) { .w-fit { display: none; } .wlist { display: block; max-height: 56dvh; overflow: auto; } }
 
   /* Miniature Studio Player in Welcome Tour */
@@ -1390,6 +1390,11 @@
   <button id="libHeaderBtn" data-i18n-title="libTitle" title="Student Lecture Library"><svg class="i"><use href="#i-save"/></svg><span data-i18n="studentLibBtn">Student library</span><span id="libHeaderCount" style="font-size:11px;opacity:.85"></span></button>
   <button id="installPwaBtn" class="pwa-btn" data-i18n-title="installPwaTitle" title="Install SVU Player for full offline playback (PWA)"><svg class="i"><use href="#i-download"/></svg><span data-i18n="installPwaShort">Install</span></button>
   <button id="aboutBtn" data-i18n-title="aboutTitle" data-i18n-aria="aboutTitle" title="About" aria-label="About"><svg class="i" style="width:18px;height:18px"><use href="#i-info"/></svg></button>
+  <a href="https://github.com/ibrahim4433/svu-player" target="_blank" rel="noopener noreferrer" class="iconbtn github-btn" id="githubBtn" data-i18n-title="githubBtnTitle" data-i18n-aria="githubBtnTitle" title="GitHub Repository" aria-label="GitHub Repository">
+    <svg class="i" style="width:17px;height:17px" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+    </svg>
+  </a>
 
   <!-- Theme Selector Menu Button (9 Themes) -->
   <div class="theme-menu-wrap">
@@ -1728,6 +1733,10 @@
         <div class="about-badges">
           <span class="abadge" data-i18n="aboutBadgeOffline">100% Local &amp; Offline Ready</span>
           <span class="abadge gold" data-i18n="aboutBadgePrivacy">Zero External Tracking</span>
+          <a href="https://github.com/ibrahim4433/svu-player" target="_blank" rel="noopener noreferrer" class="abadge" style="text-decoration:none;display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:var(--text)">
+            <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span>ibrahim4433/svu-player</span>
+          </a>
         </div>
       </div>
     </div>
@@ -1764,9 +1773,39 @@
         <b><svg class="i"><use href="#i-globe"/></svg><span data-i18n="aboutServerTitle">Local Server Deployment (Online SVU Catalog &amp; Downloads)</span></b>
       </div>
       <p class="deploy-sub" data-i18n="aboutServerSub">To browse the live SVU session catalog and download .lrec files directly from sessions.svuonline.org, run the local server in your project directory:</p>
-      <div class="cmd-box">
-        <code>python3 serve.py &nbsp;&nbsp;# &rarr; http://127.0.0.1:8080/</code>
-        <button id="copyServerCmdBtn" data-i18n="copyCmd">Copy</button>
+      
+      <div class="server-steps" style="display:flex;flex-direction:column;gap:10px;margin:12px 0 6px">
+        <!-- Step 1: Python Check -->
+        <div class="sstep" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px">
+          <b style="color:var(--blue);display:block;margin-bottom:3px;font-size:13px" data-i18n="serverStep1Title">1. Install Python (if needed)</b>
+          <span style="font-size:12px;color:var(--dim);line-height:1.4" data-i18n="serverStep1Text">Download Python 3 from python.org. On Windows, make sure to check 'Add python.exe to PATH' during installation.</span>
+        </div>
+
+        <!-- Step 2: Clone -->
+        <div class="sstep" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px">
+          <b style="color:var(--blue);display:block;margin-bottom:3px;font-size:13px" data-i18n="serverStep2Title">2. Clone or Download Repository</b>
+          <span style="font-size:12px;color:var(--dim);line-height:1.4" data-i18n="serverStep2Text">Clone via Git or download &amp; extract the ZIP file from GitHub:</span>
+          <div class="cmd-box" style="margin-top:6px">
+            <code>git clone https://github.com/ibrahim4433/svu-player.git</code>
+            <button onclick="navigator.clipboard.writeText('git clone https://github.com/ibrahim4433/svu-player.git');this.textContent='✓'" data-i18n="copyCmd">Copy</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Run -->
+        <div class="sstep" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px">
+          <b style="color:var(--blue);display:block;margin-bottom:3px;font-size:13px" data-i18n="serverStep3Title">3. Open Folder &amp; Run Server</b>
+          <span style="font-size:12px;color:var(--dim);line-height:1.4" data-i18n="serverStep3Text">Open your terminal in the svu-player folder and start the local server:</span>
+          <div class="cmd-box" style="margin-top:6px">
+            <code>python serve.py &nbsp;&nbsp;# Windows &nbsp;|&nbsp; python3 serve.py &nbsp;(Mac/Linux)</code>
+            <button id="copyServerCmdBtn" data-i18n="copyCmd">Copy</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Open Browser -->
+        <div class="sstep" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px">
+          <b style="color:var(--blue);display:block;margin-bottom:3px;font-size:13px" data-i18n="serverStep4Title">4. Open Browser</b>
+          <span style="font-size:12px;color:var(--dim);line-height:1.4" data-i18n="serverStep4Text">Visit http://localhost:8080/ to explore and download university sessions without limits.</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1906,6 +1945,10 @@
   <div class="dlg-head">
     <span class="dlg-title"><svg class="i"><use href="#i-info"/></svg><span data-i18n="tour">Feature tour</span></span>
     <span style="flex:1"></span>
+    <button class="lang is-ar" id="welcomeLangBtn" title="Language / تغيير اللغة" aria-label="Language / تغيير اللغة" style="margin-inline-end:8px">
+      <span class="flag ar">AR</span>
+      <span class="flag en">EN</span>
+    </button>
     <button class="iconbtn" id="welcomeClose" data-i18n-aria="close" aria-label="Close"><svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg></button>
   </div>
   <div class="w-head">

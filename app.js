@@ -533,6 +533,15 @@ window.SVU_PREFS = {
       profileSaveAndLoadBtn: "Save & Open in Batch Download",
       profileCancelBtn: "Cancel",
       profileDefaultName: "Profile",
+      githubBtnTitle: "GitHub Repository (Source Code)",
+      serverStep1Title: "1. Install Python (if needed)",
+      serverStep1Text: "Download Python 3 from python.org. On Windows, make sure to check 'Add python.exe to PATH' during installation.",
+      serverStep2Title: "2. Clone or Download Repository",
+      serverStep2Text: "Clone via Git or download & extract the ZIP file from GitHub:",
+      serverStep3Title: "3. Open Folder & Run Server",
+      serverStep3Text: "Open your terminal in the svu-player folder and start the local server:",
+      serverStep4Title: "4. Open Browser",
+      serverStep4Text: "Visit http://localhost:8080/ to explore and download university sessions without limits.",
       scPlay: "Play / Pause",
       scSeek: "Seek",
       scMute: "Mute",
@@ -813,6 +822,15 @@ window.SVU_PREFS = {
       profileSaveAndLoadBtn: "حفظ وفتح في التنزيل الذكي",
       profileCancelBtn: "إلغاء",
       profileDefaultName: "البروفايل",
+      githubBtnTitle: "مستودع المشروع على GitHub (الكود المصدري)",
+      serverStep1Title: "1. تثبيت بايثون (إن لم يكن مثبتًا لديك)",
+      serverStep1Text: "نزّل بايثون من python.org. في نظام ويندوز، احرص على تفعيل خيار 'Add python.exe to PATH' أثناء التثبيت.",
+      serverStep2Title: "2. تنزيل أو استنساخ المشروع",
+      serverStep2Text: "استنسخ المشروع عبر Git أو نزّل ملف ZIP من GitHub وفك ضغطه:",
+      serverStep3Title: "3. فتح المجلد وتشغيل الخادم",
+      serverStep3Text: "افتح موجه الأوامر (PowerShell أو Terminal) داخل مجلد المشروع وشغّل الخادم:",
+      serverStep4Title: "4. فتح المتصفح",
+      serverStep4Text: "افتح الرابط http://localhost:8080/ لتصفّح وتحميل جميع جلسات ومواد الجامعة بحرية تامة.",
       scPlay: "تشغيل / إيقاف",
       scSeek: "تخطّي",
       scMute: "كتم",
@@ -830,10 +848,30 @@ window.SVU_PREFS = {
       try { localStorage.setItem(k, val); } catch (e) {}
     }
   };
-  let lang = getPref(LANG_KEY, "ar");
-  if (!STRINGS[lang]) {
-    lang = "ar";
+  function detectSystemLang() {
+    try {
+      const navLangs = (typeof navigator !== "undefined" && navigator.languages) || [
+        (typeof navigator !== "undefined" && (navigator.language || navigator.userLanguage)) || ""
+      ];
+      for (let i = 0; i < navLangs.length; i++) {
+        const l = navLangs[i] || "";
+        if (/^ar\b/i.test(l)) return "ar";
+        if (/^en\b/i.test(l)) return "en";
+      }
+      const primary = navLangs[0] || "";
+      return /^ar\b/i.test(primary) ? "ar" : "en";
+    } catch (e) {
+      return "en";
+    }
   }
+
+  let savedLang = null;
+  if (window.SVU_PREFS) {
+    savedLang = window.SVU_PREFS.get(LANG_KEY, null);
+  } else {
+    try { savedLang = localStorage.getItem(LANG_KEY); } catch (e) {}
+  }
+  let lang = savedLang && STRINGS[savedLang] ? savedLang : detectSystemLang();
   setPref(LANG_KEY, lang);
 
   function translate(key, params) {
@@ -5444,7 +5482,7 @@ window.SVU_PREFS = {
   const warrows = byId("warrows");
   const W_WIDTH = 1040;
   const W_HEIGHT = 690;
-  const TOUR_KEY = "svu.welcome.v2";
+  const TOUR_KEY = "svu.welcome.v4";
   const MARKS = [
     ["wm-meta", "wMeta", "top", 252, 10],
     ["wm-open", "wOpen", "top", 472, 10],
@@ -5583,6 +5621,19 @@ window.SVU_PREFS = {
   }
   byId("welcomeStart").addEventListener("click", closeTour);
   byId("welcomeClose").addEventListener("click", closeTour);
+  const welcomeLangBtn = byId("welcomeLangBtn");
+  if (welcomeLangBtn) {
+    const syncWLang = () => {
+      const isAr = I18N.lang === "ar";
+      welcomeLangBtn.classList.toggle("is-ar", isAr);
+      welcomeLangBtn.setAttribute("aria-checked", String(isAr));
+    };
+    syncWLang();
+    document.addEventListener("langchange", syncWLang);
+    welcomeLangBtn.addEventListener("click", () => {
+      I18N.toggle();
+    });
+  }
   welcome.addEventListener("close", () => {
     if (window.SVU_PREFS) {
       window.SVU_PREFS.set(TOUR_KEY, "1");
@@ -5596,7 +5647,7 @@ window.SVU_PREFS = {
     }
   });
   window.addEventListener("resize", () => requestAnimationFrame(layout));
-  document.addEventListener("langchange", () => requestAnimationFrame(layout));
+  document.addEventListener("langchange", () => { I18N.apply(welcome); requestAnimationFrame(layout); });
   byId("tourBtn").addEventListener("click", () => {
     const about = byId("about");
     if (about.open) {

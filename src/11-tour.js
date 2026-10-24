@@ -8,7 +8,7 @@
   const warrows = byId("warrows");
   const W_WIDTH = 1040;
   const W_HEIGHT = 690;
-  const TOUR_KEY = "svu.welcome.v2";
+  const TOUR_KEY = "svu.welcome.v4";
   const MARKS = [
     ["wm-meta", "wMeta", "top", 252, 10],
     ["wm-open", "wOpen", "top", 472, 10],
@@ -147,6 +147,19 @@
   }
   byId("welcomeStart").addEventListener("click", closeTour);
   byId("welcomeClose").addEventListener("click", closeTour);
+  const welcomeLangBtn = byId("welcomeLangBtn");
+  if (welcomeLangBtn) {
+    const syncWLang = () => {
+      const isAr = I18N.lang === "ar";
+      welcomeLangBtn.classList.toggle("is-ar", isAr);
+      welcomeLangBtn.setAttribute("aria-checked", String(isAr));
+    };
+    syncWLang();
+    document.addEventListener("langchange", syncWLang);
+    welcomeLangBtn.addEventListener("click", () => {
+      I18N.toggle();
+    });
+  }
   welcome.addEventListener("close", () => {
     if (window.SVU_PREFS) {
       window.SVU_PREFS.set(TOUR_KEY, "1");
@@ -160,7 +173,7 @@
     }
   });
   window.addEventListener("resize", () => requestAnimationFrame(layout));
-  document.addEventListener("langchange", () => requestAnimationFrame(layout));
+  document.addEventListener("langchange", () => { I18N.apply(welcome); requestAnimationFrame(layout); });
   byId("tourBtn").addEventListener("click", () => {
     const about = byId("about");
     if (about.open) {

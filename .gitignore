@@ -1,1 +1,6 @@
 /__pycache__
+*.pyc
+.firebase/
+firebase-debug.log*
+.DS_Store
+Thumbs.db
