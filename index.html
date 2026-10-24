@@ -389,12 +389,12 @@
     border-radius: 10px 0 10px 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
   }
-  html[data-theme="whatsapp"][data-mode="light"] header button:not(.primary) {
+  html[data-theme="whatsapp"][data-mode="light"] header button:not(.primary), header a.iconbtn {
     background: rgba(255, 255, 255, 0.16);
     color: #FFFFFF;
     border-color: rgba(255, 255, 255, 0.30);
   }
-  html[data-theme="whatsapp"][data-mode="light"] header button:not(.primary):hover {
+  html[data-theme="whatsapp"][data-mode="light"] header button:not(.primary):hover, header a.iconbtn:hover {
     background: rgba(255, 255, 255, 0.26);
   }
   html[data-theme="whatsapp"][data-mode="light"] header button.primary {
@@ -433,12 +433,12 @@
     border-radius: 12px 12px 4px 12px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
   }
-  html[data-theme="telegram"][data-mode="light"] header button:not(.primary) {
+  html[data-theme="telegram"][data-mode="light"] header button:not(.primary), header a.iconbtn {
     background: rgba(255, 255, 255, 0.16);
     color: #FFFFFF;
     border-color: rgba(255, 255, 255, 0.30);
   }
-  html[data-theme="telegram"][data-mode="light"] header button:not(.primary):hover {
+  html[data-theme="telegram"][data-mode="light"] header button:not(.primary):hover, header a.iconbtn:hover {
     background: rgba(255, 255, 255, 0.26);
   }
   html[data-theme="telegram"][data-mode="light"] header button.primary {
@@ -499,13 +499,13 @@
   html[data-mode="light"] .mtag-date { color: #0F766E; background: rgba(13, 148, 136, 0.12); }
   body.fs header { display: none; }
 
-  button, select {
+  button, select, a.iconbtn {
     font: inherit; color: var(--text); background: var(--panel2); border: 1px solid var(--line);
     border-radius: var(--r); padding: 7px 13px; cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.15s ease; box-sizing: border-box; text-decoration: none;
   }
-  button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-weight: 500; }
-  button:hover, select:hover { border-color: var(--line-strong); background: var(--hover); }
+  button, a.iconbtn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-weight: 500; }
+  button:hover, select:hover, a.iconbtn:hover { border-color: var(--line-strong); background: var(--hover); }
   button:focus-visible, select:focus-visible, .seek:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
   button.primary {
     background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
@@ -526,7 +526,7 @@
   button.busy { opacity: .6; animation: pulse 1s ease-in-out infinite; }
   @keyframes pulse { 50% { opacity: .25; } }
 
-  header button { height: 36px; }
+  header button, header a.iconbtn { height: 36px; }
   .lang { padding: 0 12px; font-weight: 700; font-size: 12.5px; letter-spacing: 0.04em; min-width: 44px; }
   .lang .flag { display: none; }
   .lang:not(.is-ar) .flag.ar, .lang.is-ar .flag.en { display: inline-block; }
@@ -671,7 +671,7 @@
   .seek:hover .tip, .seek.drag .tip { display: block; }
   .row { display: flex; align-items: center; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
   .row .grow { flex: 1; }
-  .iconbtn { width: 36px; height: 34px; padding: 0; }
+  .iconbtn { width: 36px; height: 36px; padding: 0; flex: none; display: inline-flex; align-items: center; justify-content: center; }
   #play.iconbtn {
     background: var(--blue); color: var(--ink); border-color: transparent;
     width: 38px; height: 36px; box-shadow: 0 4px 12px var(--accent-glow);
@@ -1334,7 +1334,7 @@
     header { gap: 6px; padding: 6px 10px; padding-top: calc(6px + env(safe-area-inset-top)); }
     header .meta, #curThemeLbl, #installPwaBtn span { display: none; }
     header #openBtn { margin-inline-start: auto; padding: 0 10px; font-size: 13px; white-space: nowrap; }
-    header button { padding: 0 9px; min-width: 36px; flex: none; }
+    header button, header a.iconbtn { padding: 0 9px; min-width: 36px; flex: none; }
     .lang { padding: 0 7px; }
     .stage { max-height: 50dvh; }
     .drop { padding: 20px 16px 24px; }
