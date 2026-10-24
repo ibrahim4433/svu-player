@@ -1,0 +1,23 @@
+{
+  "name": "SVU Player — Offline Session Studio",
+  "short_name": "SVU Player",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#090D16",
+  "background_color": "#090D16",
+  "display": "standalone",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "description": "Offline session player for Syrian Virtual University: replay recorded sessions with screen, audio, 4-stage DSP enhancement, and synchronized chat.",
+  "categories": [
+    "education"
+  ],
+  "orientation": "any"
+}

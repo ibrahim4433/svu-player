@@ -1,0 +1,834 @@
+(function () {
+  'use strict';
+
+  document.addEventListener("contextmenu", event => event.preventDefault());
+  document.addEventListener("dragstart", event => event.preventDefault());
+  document.addEventListener("selectstart", event => event.preventDefault());
+  const byId = id => document.getElementById(id);
+  const getPref = (k, def) => (window.SVU_PREFS ? window.SVU_PREFS.get(k, def) : def);
+  const setPref = (k, val) => {
+    if (window.SVU_PREFS) {
+      window.SVU_PREFS.set(k, val);
+    } else {
+      try { localStorage.setItem(k, val); } catch (e) {}
+    }
+  };
+  const stage = byId("stage");
+  const screen = byId("screen");
+  const ctx = screen.getContext("2d");
+  const audio = byId("audio");
+  const controls = byId("controls");
+  const SILENT_WAV = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
+  let unlocked = false;
+  const unlockAudio = () => {
+    if (unlocked) {
+      return;
+    }
+    unlocked = true;
+    if (audio.src) {
+      return;
+    }
+    audio.src = SILENT_WAV;
+    const reset = () => {
+      if (audio.src === SILENT_WAV) {
+        audio.pause();
+        audio.removeAttribute("src");
+        audio.load();
+      }
+    };
+    const playResult = audio.play();
+    if (playResult && playResult.then) {
+      playResult.then(reset, reset);
+    } else {
+      reset();
+    }
+  };
+  const CAPTURE_ONCE = {
+    capture: true,
+    once: true
+  };
+  ["pointerdown", "touchend", "keydown", "click"].forEach(type => document.addEventListener(type, unlockAudio, CAPTURE_ONCE));
+  const seek = byId("seek");
+  const fill = byId("fill");
+  const knob = byId("knob");
+  const tip = byId("tip");
+  const ticks = byId("ticks");
+  const msgs = byId("msgs");
+  let session = null;
+  let lastSize = [0, 0];
+  let rafId = 0;
+  let cursor = -1;
+  let userScrolled = false;
+  let wasPlaying = false;
+  const formatTime = ms => {
+    const sec = Math.max(0, Math.floor(ms / 1000));
+    const h = sec / 3600 | 0;
+    const m = sec % 3600 / 60 | 0;
+    const s = sec % 60;
+    return (h ? h + ":" + String(m).padStart(2, "0") : m) + ":" + String(s).padStart(2, "0");
+  };
+  function setStage(cls) {
+    stage.classList.remove("loading", "ready", "dragover");
+    if (cls) {
+      stage.classList.add(cls);
+    }
+  }
+  async function openFile(file, opts = {}) {
+    if (!file) {
+      return;
+    }
+    if (byId("dlg").open) {
+      byId("dlg").close();
+    }
+    closeSession();
+    setStage("loading");
+    byId("err").textContent = "";
+    byId("stagename").textContent = t("readingFile");
+    byId("barfill").style.width = "0%";
+    try {
+      const buffer = await file.arrayBuffer();
+      const STAGES = {
+        "Scanning file": [0, 0.02],
+        "Decoding screen": [0.02, 0.6],
+        "Decoding audio": [0.6, 1]
+      };
+      const parsed = await LREC.parseLrec(buffer, (label, frac) => {
+        const [lo, hi] = STAGES[label] || [0, 1];
+        byId("stagename").textContent = t({
+          "Scanning file": "scanningFile",
+          "Decoding screen": "decodingScreen",
+          "Decoding audio": "loadingSession"
+        }[label] || "loading");
+        byId("barfill").style.width = ((lo + (hi - lo) * Math.min(1, frac)) * 100).toFixed(1) + "%";
+      });
+      loadSession(file, parsed);
+      if (opts.autoplay) {
+        audio.play().catch(() => {});
+      }
+    } catch (err) {
+      console.error(err);
+      byId("stagename").textContent = t("openFail");
+      byId("err").textContent = /^Not an \.lrec/.test(err.message || "") ? t("notLrec") : String(err.message || err);
+      byId("barfill").style.width = "0%";
+      stage.classList.add("loading");
+    }
+  }
+  const ESC_MAP = { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" };
+  const escHtml = str => String(str || "").replace(/[&<>"]/g, ch => ESC_MAP[ch]);
+
+  function parseLrecFilename(rawName) {
+    const base = String(rawName || "").replace(/\.[li]rec$/i, "");
+    const parts = base.split("_").filter(Boolean);
+    if (parts.length >= 6) {
+      const dm = parts[5].match(/^(\d{4})(\d{2})(\d{2})/);
+      return {
+        college: parts[0],
+        material: parts[1],
+        cls: parts[2].replace(/^C/i, ""),
+        term: parts[3],
+        lesson: parts[4].replace(/^S/i, ""),
+        date: dm ? (dm[1] + "-" + dm[2] + "-" + dm[3]) : parts[5]
+      };
+    }
+    const info = {};
+    const rest = [];
+    for (const p of parts) {
+      const dm = p.match(/^(20\d{2})(\d{2})(\d{2})\d*$/);
+      if (dm && !info.date) {
+        info.date = dm[1] + "-" + dm[2] + "-" + dm[3];
+      } else if (/^C\d+$/i.test(p) && !info.cls) {
+        info.cls = p.replace(/^C/i, "");
+      } else if (/^[FSU]\d{2,4}$/i.test(p) && !info.term) {
+        info.term = p;
+      } else if (/^S\d+$/i.test(p) && !info.lesson) {
+        info.lesson = p.replace(/^S/i, "");
+      } else {
+        rest.push(p);
+      }
+    }
+    if (rest.length >= 2) {
+      info.college = rest[0];
+      info.material = rest[1];
+    } else if (rest.length === 1) {
+      info.material = rest[0];
+    }
+    return Object.keys(info).length >= 2 ? info : null;
+  }
+
+  function renderSessionMeta(name) {
+    const metaEl = byId("meta");
+    if (!metaEl) return;
+    if (!name) {
+      metaEl.innerHTML = "";
+      return;
+    }
+    const info = parseLrecFilename(name);
+    if (!info) {
+      metaEl.innerHTML = "<span class=\"mtag mtag-file\" dir=\"ltr\">" + escHtml(name) + "</span>";
+      return;
+    }
+    const tags = [];
+    if (info.college) tags.push("<span class=\"mtag mtag-college\" title=\"" + escHtml(t("metaCollege")) + "\"><b>" + escHtml(info.college) + "</b></span>");
+    if (info.material) tags.push("<span class=\"mtag mtag-material\" title=\"" + escHtml(t("metaMaterial")) + "\"><b>" + escHtml(info.material) + "</b></span>");
+    if (info.cls) tags.push("<span class=\"mtag mtag-class\">" + escHtml(t("metaClass")) + " " + escHtml(info.cls) + "</span>");
+    if (info.term) tags.push("<span class=\"mtag mtag-term\">" + escHtml(info.term) + "</span>");
+    if (info.lesson) tags.push("<span class=\"mtag mtag-lesson\">" + escHtml(t("metaLesson")) + " " + escHtml(info.lesson) + "</span>");
+    if (info.date) tags.push("<span class=\"mtag mtag-date\">" + escHtml(info.date) + "</span>");
+    tags.push("<span class=\"mtag mtag-file\" dir=\"ltr\" title=\"" + escHtml(name) + "\">" + escHtml(name) + "</span>");
+    metaEl.innerHTML = tags.join("");
+  }
+
+  function loadSession(file, parsed) {
+    const wav = LREC.pcmToWav(parsed.audio.pcm, parsed.audio.rate);
+    const wavUrl = URL.createObjectURL(new Blob([wav], {
+      type: "audio/wav"
+    }));
+    audio.src = wavUrl;
+    audio.playbackRate = +byId("speed").value;
+    audio.volume = +byId("vol").value;
+    audio.muted = false;
+    session = {
+      durationMs: parsed.durationMs,
+      vs: new LREC.VideoState(parsed.video),
+      chat: parsed.chat,
+      nodes: [],
+      wavUrl: wavUrl,
+      audio: parsed.audio,
+      key: file.name
+    };
+    renderSessionMeta(file.name);
+    document.title = file.name + " | SVU Player";
+    byId("vnotice").hidden = parsed.videoOk !== false;
+    renderChat();
+    renderTicks();
+    seek.setAttribute("aria-valuemax", Math.floor(parsed.durationMs / 1000));
+    controls.classList.remove("disabled");
+    setStage("ready");
+    stage.classList.add("paused");
+    seekTo(0);
+    cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(frame);
+    if (window.__lrec.onSession) {
+      window.__lrec.onSession(session);
+    }
+  }
+  function closeSession() {
+    audio.pause();
+    cancelAnimationFrame(rafId);
+    if (session) {
+      URL.revokeObjectURL(session.wavUrl);
+      session = null;
+      if (window.__lrec && window.__lrec.onClose) {
+        window.__lrec.onClose();
+      }
+    }
+    audio.removeAttribute("src");
+    audio.load();
+    controls.classList.add("disabled");
+    renderSessionMeta("");
+    ticks.innerHTML = "";
+    msgs.innerHTML = "<div class=\"empty\" data-i18n=\"chatEmpty\"></div>";
+    I18N.apply(msgs);
+    byId("chatCount").textContent = "";
+    cursor = -1;
+    syncPlayIcon();
+  }
+  const AVATAR_COLORS = ["#6cb6ff", "#f2994a", "#6fcf97", "#bb86fc", "#f2c94c", "#56ccf2", "#eb5757", "#9bd1a8", "#ff9ec4", "#a5b4fc"];
+  function colorFor(str) {
+    let hash = 0;
+    for (const ch of str) {
+      hash = hash * 31 + ch.codePointAt(0) >>> 0;
+    }
+    return AVATAR_COLORS[hash % AVATAR_COLORS.length];
+  }
+  function renderChat() {
+    msgs.innerHTML = "";
+    const chat = session.chat;
+    byId("chatCount").textContent = "(" + chat.length + ")";
+    if (!chat.length) {
+      msgs.innerHTML = "<div class=\"empty\" data-i18n=\"chatNone\"></div>";
+      I18N.apply(msgs);
+      return;
+    }
+    for (const msg of chat) {
+      const row = document.createElement("div");
+      row.className = "msg";
+      row.title = msg.date + "\n" + msg.user + "\n" + msg.conn;
+      const avatar = document.createElement("div");
+      avatar.className = "av";
+      avatar.style.background = colorFor(msg.user);
+      avatar.textContent = msg.name[0] || "?";
+      const body = document.createElement("div");
+      body.className = "bd";
+      const who = document.createElement("div");
+      who.className = "who";
+      const nameEl = document.createElement("b");
+      nameEl.textContent = msg.user;
+      nameEl.style.color = colorFor(msg.user);
+      const timeEl = document.createElement("span");
+      timeEl.className = "time-link";
+      timeEl.textContent = "▶ " + formatTime(msg.t);
+      who.append(nameEl, timeEl);
+      const text = document.createElement("div");
+      text.className = "tx";
+      text.dir = "auto";
+      text.textContent = msg.text || "…";
+      body.append(who, text);
+      row.append(avatar, body);
+      row.addEventListener("click", () => seekTo(msg.t / 1000));
+      msgs.appendChild(row);
+      session.nodes.push(row);
+    }
+    cursor = -1;
+    updateChat(0, true);
+  }
+  function updateChat(now, force) {
+    if (!session || !session.nodes.length) {
+      return;
+    }
+    const chat = session.chat;
+    const showAll = byId("showAll").checked;
+    let count = 0;
+    while (count < chat.length && chat[count].t <= now) {
+      count++;
+    }
+    if (count === cursor && !force) {
+      return;
+    }
+    const forward = count > cursor;
+    cursor = count;
+    session.nodes.forEach((node, i) => {
+      node.hidden = !showAll && i >= count;
+      node.classList.toggle("future", showAll && i >= count);
+      node.classList.toggle("latest", i === count - 1);
+    });
+    const latest = count > 0 ? session.nodes[count - 1] : null;
+    if (latest && (forward || force) && !userScrolled) {
+      latest.scrollIntoView({
+        block: "nearest"
+      });
+    }
+  }
+  const PASSIVE = {
+    passive: true
+  };
+  ["wheel", "touchmove"].forEach(type => msgs.addEventListener(type, () => {
+    userScrolled = true;
+    clearTimeout(msgs._t);
+    msgs._t = setTimeout(() => userScrolled = false, 4000);
+  }, PASSIVE));
+  byId("showAll").addEventListener("change", () => {
+    const lbl = byId("showAll").closest("label");
+    if (lbl) {
+      lbl.classList.toggle("on", byId("showAll").checked);
+    }
+    if (session) {
+      updateChat(audio.currentTime * 1000, true);
+    }
+  });
+  function renderTicks() {
+    ticks.innerHTML = "";
+    const duration = session.durationMs;
+    for (const msg of session.chat) {
+      const tick = document.createElement("i");
+      tick.className = "tick";
+      tick.style.left = (msg.t * 100 / duration).toFixed(3) + "%";
+      ticks.appendChild(tick);
+    }
+  }
+  function currentMs() {
+    return Math.min(session.durationMs, audio.currentTime * 1000);
+  }
+  function seekTo(sec) {
+    if (!session) {
+      return;
+    }
+    const time = Math.max(0, Math.min(session.durationMs / 1000, sec));
+    audio.currentTime = time;
+    session.vs.seek(time * 1000, true);
+    session.vs.draw(ctx, screen);
+    renderTime(time * 1000);
+    updateChat(time * 1000, true);
+  }
+  function syncPlayIcon() {
+    const playing = !audio.paused && !audio.ended;
+    byId("icoPlay").style.display = playing ? "none" : "";
+    byId("icoPause").style.display = playing ? "" : "none";
+    stage.classList.toggle("paused", !playing);
+  }
+  function togglePlay() {
+    if (!session) {
+      return;
+    }
+    if (audio.paused || audio.ended) {
+      if (audio.ended || currentMs() >= session.durationMs - 50) {
+        seekTo(0);
+      }
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+    }
+  }
+  function renderTime(ms) {
+    const duration = session.durationMs;
+    const frac = Math.min(1, ms / duration);
+    fill.style.width = (frac * 100).toFixed(3) + "%";
+    knob.style.left = (frac * 100).toFixed(3) + "%";
+    byId("time").textContent = formatTime(ms) + " / " + formatTime(duration);
+    byId("tCur").textContent = formatTime(ms);
+    byId("tTot").textContent = formatTime(duration);
+    seek.setAttribute("aria-valuenow", Math.floor(ms / 1000));
+    seek.setAttribute("aria-valuetext", formatTime(ms) + " of " + formatTime(duration));
+  }
+  function frame() {
+    rafId = requestAnimationFrame(frame);
+    if (!session) {
+      return;
+    }
+    const now = currentMs();
+    if (session.vs.seek(now)) {
+      session.vs.draw(ctx, screen);
+    }
+    if (screen.width !== lastSize[0] || screen.height !== lastSize[1]) {
+      lastSize = [screen.width, screen.height];
+      stage.style.setProperty("--ar", screen.width + " / " + screen.height);
+    }
+    renderTime(now);
+    updateChat(now, false);
+    if (window.__lrec.onTick) {
+      window.__lrec.onTick(now);
+    }
+  }
+  audio.addEventListener("play", syncPlayIcon);
+  audio.addEventListener("pause", syncPlayIcon);
+  audio.addEventListener("ended", syncPlayIcon);
+  function seekFromPointer(event) {
+    const rect = seek.getBoundingClientRect();
+    return Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)) * session.durationMs / 1000;
+  }
+  seek.addEventListener("pointerdown", event => {
+    if (!session) {
+      return;
+    }
+    seek.setPointerCapture(event.pointerId);
+    seek.classList.add("drag");
+    wasPlaying = !audio.paused;
+    audio.pause();
+    seekTo(seekFromPointer(event));
+  });
+  seek.addEventListener("pointermove", event => {
+    if (!session) {
+      return;
+    }
+    const sec = seekFromPointer(event);
+    const rect = seek.getBoundingClientRect();
+    tip.textContent = formatTime(sec * 1000);
+    tip.style.left = Math.max(24, Math.min(rect.width - 24, event.clientX - rect.left)) + "px";
+    if (seek.classList.contains("drag")) {
+      seekTo(sec);
+    }
+  });
+  const endDrag = event => {
+    if (!seek.classList.contains("drag")) {
+      return;
+    }
+    seek.classList.remove("drag");
+    if (wasPlaying) {
+      audio.play().catch(() => {});
+    }
+  };
+  seek.addEventListener("pointerup", endDrag);
+  seek.addEventListener("pointercancel", endDrag);
+  byId("play").addEventListener("click", togglePlay);
+  byId("bigplay").addEventListener("click", togglePlay);
+  screen.addEventListener("click", togglePlay);
+  byId("back").addEventListener("click", () => session && seekTo(audio.currentTime - 10));
+  byId("fwd").addEventListener("click", () => session && seekTo(audio.currentTime + 10));
+  byId("speed").addEventListener("change", event => {
+    audio.playbackRate = +event.target.value;
+  });
+  byId("vol").addEventListener("input", event => {
+    audio.volume = +event.target.value;
+    audio.muted = false;
+    syncVolumeIcon();
+  });
+  byId("mute").addEventListener("click", () => {
+    audio.muted = !audio.muted;
+    syncVolumeIcon();
+  });
+  function syncVolumeIcon() {
+    const muted = audio.muted || audio.volume === 0;
+    byId("icoVol").style.display = muted ? "none" : "";
+    byId("icoMute").style.display = muted ? "" : "none";
+  }
+  const toggleChat = () => {
+    const hidden = document.body.classList.toggle("nochat");
+    byId("chatToggle").classList.toggle("on", !hidden);
+    byId("chatToggle").setAttribute("aria-pressed", String(!hidden));
+  };
+  byId("chatToggle").addEventListener("click", toggleChat);
+  if (byId("chatClose")) {
+    byId("chatClose").addEventListener("click", toggleChat);
+  }
+
+  // Pin / Auto-hide bottom controls + 3-second mouse movement visibility inside player window
+  let mouseIdleTimer = null;
+  let isHoveringControls = false;
+  const stageWrap = stage.closest(".stage-wrap") || stage;
+
+  function showControlsOnMouseActivity() {
+    controls.classList.add("mouse-active");
+    if (mouseIdleTimer) {
+      clearTimeout(mouseIdleTimer);
+    }
+    mouseIdleTimer = setTimeout(() => {
+      if (!isHoveringControls && !controls.classList.contains("pinned")) {
+        controls.classList.remove("mouse-active");
+      }
+    }, 3000);
+  }
+
+  stageWrap.addEventListener("mousemove", showControlsOnMouseActivity, { passive: true });
+  stageWrap.addEventListener("pointermove", showControlsOnMouseActivity, { passive: true });
+  stageWrap.addEventListener("mouseleave", () => {
+    if (mouseIdleTimer) {
+      clearTimeout(mouseIdleTimer);
+      mouseIdleTimer = null;
+    }
+    if (!controls.classList.contains("pinned")) {
+      controls.classList.remove("mouse-active");
+    }
+  });
+  controls.addEventListener("mouseenter", () => {
+    isHoveringControls = true;
+    controls.classList.add("mouse-active");
+    if (mouseIdleTimer) {
+      clearTimeout(mouseIdleTimer);
+    }
+  });
+  controls.addEventListener("mouseleave", () => {
+    isHoveringControls = false;
+    showControlsOnMouseActivity();
+  });
+
+  const setPinned = on => {
+    controls.classList.toggle("pinned", !!on);
+    if (byId("pinBtn")) {
+      byId("pinBtn").classList.toggle("on", !!on);
+      byId("pinBtn").setAttribute("aria-pressed", String(!!on));
+    }
+    setPref("svu.pinControls", on ? "1" : "0");
+  };
+  if (byId("pinBtn")) {
+    const pinnedStored = getPref("svu.pinControls", "0");
+    setPinned(pinnedStored === "1");
+    byId("pinBtn").addEventListener("click", () => {
+      setPinned(!controls.classList.contains("pinned"));
+    });
+  }
+  const setStretch = on => {
+    stage.classList.toggle("stretch", on);
+    byId("stretchBtn").classList.toggle("on", on);
+    byId("stretchBtn").setAttribute("aria-pressed", String(on));
+    setPref("lrec.stretch", on ? "1" : "0");
+  };
+  const toggleStretch = () => setStretch(!stage.classList.contains("stretch"));
+  byId("stretchBtn").addEventListener("click", toggleStretch);
+  {
+    const stored = getPref("lrec.stretch", "1");
+    setStretch(stored === "1");
+  }
+  if (!document.documentElement.requestFullscreen && !document.documentElement.webkitRequestFullscreen) {
+    byId("fsBtn").hidden = true;
+  }
+  byId("fsBtn").addEventListener("click", toggleFullscreen);
+  function toggleFullscreen() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    }
+  }
+  document.addEventListener("fullscreenchange", () => document.body.classList.toggle("fs", !!document.fullscreenElement));
+  document.addEventListener("keydown", event => {
+    if (event.target.matches("input[type=range], select, input[type=checkbox]") && event.key !== " ") {
+      return;
+    }
+    if (event.metaKey || event.ctrlKey || event.altKey || !session) {
+      return;
+    }
+    switch (event.key) {
+      case " ":
+      case "k":
+        event.preventDefault();
+        togglePlay();
+        break;
+      case "ArrowLeft":
+        event.preventDefault();
+        seekTo(audio.currentTime - (event.shiftKey ? 30 : 5));
+        break;
+      case "ArrowRight":
+        event.preventDefault();
+        seekTo(audio.currentTime + (event.shiftKey ? 30 : 5));
+        break;
+      case "j":
+        seekTo(audio.currentTime - 10);
+        break;
+      case "l":
+        seekTo(audio.currentTime + 10);
+        break;
+      case "ArrowUp":
+        event.preventDefault();
+        audio.volume = Math.min(1, audio.volume + 0.05);
+        byId("vol").value = audio.volume;
+        syncVolumeIcon();
+        break;
+      case "ArrowDown":
+        event.preventDefault();
+        audio.volume = Math.max(0, audio.volume - 0.05);
+        byId("vol").value = audio.volume;
+        syncVolumeIcon();
+        break;
+      case "m":
+        audio.muted = !audio.muted;
+        syncVolumeIcon();
+        break;
+      case "f":
+        toggleFullscreen();
+        break;
+      case "c":
+        toggleChat();
+        break;
+      case "s":
+        toggleStretch();
+        break;
+      case "Home":
+        seekTo(0);
+        break;
+      case "End":
+        seekTo(session.durationMs / 1000);
+        break;
+    }
+  });
+  const fileInput = byId("file");
+  fileInput.addEventListener("change", () => {
+    const f = fileInput.files[0];
+    fileInput.value = "";
+    if (!f) return;
+    if (byId("dlg") && byId("dlg").open) {
+      byId("dlg").close();
+    }
+    if (typeof window.__svuHandleLocalFileOpen === "function") {
+      window.__svuHandleLocalFileOpen(f);
+    } else {
+      openFile(f, { autoplay: true });
+    }
+  });
+  ["dragenter", "dragover"].forEach(type => window.addEventListener(type, event => {
+    event.preventDefault();
+    document.body.classList.add("dragging");
+    if (!stage.classList.contains("loading")) {
+      stage.classList.add("dragover");
+    }
+  }));
+  ["dragleave", "drop"].forEach(type => window.addEventListener(type, event => {
+    event.preventDefault();
+    document.body.classList.remove("dragging");
+    stage.classList.remove("dragover");
+  }));
+  window.addEventListener("drop", event => {
+    const file = event.dataTransfer.files[0];
+    if (file) {
+      if (byId("dlg") && byId("dlg").open) {
+        byId("dlg").close();
+      }
+      if (typeof window.__svuHandleLocalFileOpen === "function") {
+        window.__svuHandleLocalFileOpen(file);
+      } else {
+        openFile(file, { autoplay: true });
+      }
+    }
+  });
+  I18N.setLang(I18N.lang, true);
+  byId("langBtn").addEventListener("click", () => I18N.toggle());
+
+  // Theme & Dark/Light Mode Manager (9 Themes + Dark/Light Mode) — Persistent across refresh & restart
+  const THEME_KEYS = {
+    default: "themeDefault",
+    whatsapp: "themeWhatsapp",
+    telegram: "themeTelegram",
+    win98: "themeWin98",
+    winxp: "themeWinxp",
+    win7: "themeWin7",
+    hacker: "themeHacker",
+    vscode: "themeVscode",
+    terminal: "themeTerminal"
+  };
+  let curTheme = getPref("svu.theme", "default");
+  let curMode = getPref("svu.mode", "dark");
+  if (!THEME_KEYS[curTheme]) {
+    curTheme = "default";
+  }
+  function applyTheme(theme, mode) {
+    curTheme = THEME_KEYS[theme] ? theme : "default";
+    curMode = mode === "light" ? "light" : "dark";
+    document.documentElement.dataset.theme = curTheme;
+    document.documentElement.dataset.mode = curMode;
+    setPref("svu.theme", curTheme);
+    setPref("svu.mode", curMode);
+    const lbl = byId("curThemeLbl");
+    if (lbl) {
+      lbl.dataset.i18n = "themesBtn";
+      lbl.textContent = t("themesBtn");
+    }
+    document.querySelectorAll(".theme-opt[data-theme-opt]").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.themeOpt === curTheme);
+    });
+  }
+  applyTheme(curTheme, curMode);
+  window.__svuApplyTheme = applyTheme;
+  window.__svuGetTheme = () => ({ theme: curTheme, mode: curMode });
+  if (byId("themeBtn")) {
+    byId("themeBtn").addEventListener("click", () => {
+      applyTheme(curTheme, curMode === "light" ? "dark" : "light");
+    });
+  }
+  if (byId("themeMenuBtn") && byId("themeDropdown")) {
+    byId("themeMenuBtn").addEventListener("click", event => {
+      event.stopPropagation();
+      byId("themeDropdown").classList.toggle("open");
+    });
+    document.querySelectorAll(".theme-opt[data-theme-opt]").forEach(btn => {
+      btn.addEventListener("click", event => {
+        event.stopPropagation();
+        applyTheme(btn.dataset.themeOpt, curMode);
+        byId("themeDropdown").classList.remove("open");
+      });
+    });
+    document.addEventListener("click", () => {
+      byId("themeDropdown").classList.remove("open");
+    });
+  }
+  document.addEventListener("langchange", () => {
+    applyTheme(curTheme, curMode);
+  window.__svuApplyTheme = applyTheme;
+  window.__svuGetTheme = () => ({ theme: curTheme, mode: curMode });
+    if (session && session.key) {
+      renderSessionMeta(session.key);
+    }
+  });
+
+  // PWA Offline Install & Local Server Deployment Manager
+  let deferredPwaPrompt = null;
+  const isStandalone = () =>
+    (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+    window.navigator.standalone === true;
+
+  function syncPwaButtons() {
+    const installed = isStandalone();
+    const hdrBtn = byId("installPwaBtn");
+    const abtBtn = byId("aboutInstallBtn");
+    if (hdrBtn) {
+      hdrBtn.hidden = installed;
+    }
+    if (abtBtn) {
+      const span = abtBtn.querySelector("span");
+      if (installed) {
+        abtBtn.disabled = true;
+        if (span) {
+          span.dataset.i18n = "pwaInstalled";
+          span.textContent = t("pwaInstalled");
+        }
+      } else {
+        abtBtn.disabled = false;
+        if (span) {
+          span.dataset.i18n = "installPwa";
+          span.textContent = t("installPwa");
+        }
+      }
+    }
+  }
+
+  window.addEventListener("beforeinstallprompt", event => {
+    event.preventDefault();
+    deferredPwaPrompt = event;
+    syncPwaButtons();
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredPwaPrompt = null;
+    syncPwaButtons();
+    const hint = byId("pwaHint");
+    if (hint) {
+      hint.textContent = t("pwaInstalled");
+      hint.classList.add("ok");
+    }
+  });
+
+  async function triggerPwaInstall(fromAbout) {
+    if (deferredPwaPrompt) {
+      try {
+        deferredPwaPrompt.prompt();
+        const choice = await deferredPwaPrompt.userChoice;
+        if (choice && choice.outcome === "accepted") {
+          deferredPwaPrompt = null;
+        }
+      } catch (err) {}
+      syncPwaButtons();
+      return;
+    }
+    if (!fromAbout && byId("about") && !byId("about").open) {
+      byId("about").showModal();
+    }
+    const pwaBox = byId("aboutPwaCard");
+    if (pwaBox) {
+      pwaBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      pwaBox.classList.add("pulse-card");
+      setTimeout(() => pwaBox.classList.remove("pulse-card"), 1400);
+    }
+  }
+
+  if (byId("installPwaBtn")) {
+    byId("installPwaBtn").addEventListener("click", () => triggerPwaInstall(false));
+  }
+  if (byId("aboutInstallBtn")) {
+    byId("aboutInstallBtn").addEventListener("click", () => triggerPwaInstall(true));
+  }
+  if (byId("copyServerCmdBtn")) {
+    byId("copyServerCmdBtn").addEventListener("click", () => {
+      const cmdText = "python3 serve.py";
+      const btn = byId("copyServerCmdBtn");
+      const done = () => {
+        btn.textContent = t("copiedCmd");
+        setTimeout(() => {
+          btn.textContent = t("copyCmd");
+        }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(cmdText).then(done, done);
+      } else {
+        done();
+      }
+    });
+  }
+  syncPwaButtons();
+
+  byId("aboutBtn").addEventListener("click", () => byId("about").showModal());
+  byId("aboutClose").addEventListener("click", () => byId("about").close());
+  byId("about").addEventListener("click", event => {
+    if (event.target === byId("about")) {
+      byId("about").close();
+    }
+  });
+  window.__lrec = {
+    get session() {
+      return session;
+    },
+    audio: audio,
+    seekTo: seekTo,
+    openFile: openFile
+  };
+})();
+;
+
+;

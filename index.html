@@ -1,0 +1,1990 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="default" data-mode="dark">
+<head>
+  <script src="src/config.js"></script>
+<meta charset="utf-8">
+<meta name="build" content="v2.7.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SVU Player | Offline Session Player for Syrian Virtual University</title>
+<meta name="description" content="Watch recorded Syrian Virtual University sessions with screen, audio and chat in sync. Play online or save sessions to watch offline, with captions and audio enhancement.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#090D16">
+<meta name="application-name" content="SVU Player">
+<meta name="apple-mobile-web-app-title" content="SVU Player">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/favicon.svg" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SVU Player">
+<meta property="og:title" content="SVU Player | Offline Session Player for Syrian Virtual University">
+<meta property="og:description" content="Replay recorded sessions with screen, audio and chat in sync. Save them to watch offline, turn on captions and enhance the audio.">
+<meta property="og:image" content="/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SVU Player logo">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ar_AR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SVU Player | Offline Session Player for Syrian Virtual University">
+<meta name="twitter:description" content="Replay recorded sessions with screen, audio and chat in sync. Save them to watch offline, turn on captions and enhance the audio.">
+<meta name="twitter:image" content="/og-image.png">
+<style>
+  @font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/IBMPlexSansArabic-400-arabic.woff2') format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1; }
+  @font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/IBMPlexSansArabic-400-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/IBMPlexSansArabic-600-arabic.woff2') format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1; }
+  @font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/IBMPlexSansArabic-600-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+  /* ==================== 1. DEFAULT THEME (Obsidian & Sky-Gold) ==================== */
+  :root {
+    --bg: #090D16;
+    --panel: #111827;
+    --panel2: #1E293B;
+    --hover: #263449;
+    --glass: rgba(15, 23, 42, 0.80);
+    --stage-bg: #050811;
+    --line: rgba(255, 255, 255, 0.09);
+    --line-strong: rgba(56, 189, 248, 0.35);
+    --text: #F8FAFC;
+    --dim: #94A3B8;
+    --blue: #38BDF8;
+    --blue-dark: #0284C7;
+    --gold: #F59E0B;
+    --gold-hi: #FBBF24;
+    --ink: #06101E;
+    --accent: var(--blue);
+    --accent-glow: rgba(56, 189, 248, 0.22);
+    --header-bg: #111827;
+    --font-ui: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "Noto Naskh Arabic", sans-serif;
+    --r: 10px;
+    --r-lg: 16px;
+  }
+  html[data-theme="default"][data-mode="light"] {
+    --bg: #F1F5F9;
+    --panel: #FFFFFF;
+    --panel2: #F8FAFC;
+    --hover: #E2E8F0;
+    --glass: rgba(255, 255, 255, 0.88);
+    --stage-bg: #0F172A;
+    --line: rgba(15, 23, 42, 0.10);
+    --line-strong: rgba(2, 132, 199, 0.38);
+    --text: #0F172A;
+    --dim: #64748B;
+    --blue: #0284C7;
+    --blue-dark: #0369A1;
+    --gold: #D97706;
+    --gold-hi: #F59E0B;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(2, 132, 199, 0.18);
+    --header-bg: #FFFFFF;
+  }
+
+  /* ==================== 2. WHATSAPP THEME (AUTHENTIC CLASSIC DOODLE WALLPAPER & BUBBLES) ==================== */
+  html[data-theme="whatsapp"] {
+    --bg: #0B141A;
+    --panel: #111B21;
+    --panel2: #202C33;
+    --hover: #2A3942;
+    --glass: rgba(17, 27, 33, 0.90);
+    --stage-bg: #080F14;
+    --line: rgba(134, 150, 160, 0.16);
+    --line-strong: rgba(0, 168, 132, 0.55);
+    --text: #E9EDEF;
+    --dim: #8696A0;
+    --blue: #00A884;
+    --blue-dark: #008069;
+    --gold: #25D366;
+    --gold-hi: #25D366;
+    --ink: #041E17;
+    --accent-glow: rgba(0, 168, 132, 0.25);
+    --header-bg: #202C33;
+    --wa-bubble-in: #202C33;
+    --wa-bubble-out: #005C4B;
+    --wa-wallpaper: #0B141A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%238696a0' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round' opacity='0.08'%3E%3Cpath d='M18 24h22a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H26l-8 6V28a4 4 0 0 1 4-4z'/%3E%3Ccircle cx='78' cy='28' r='10'/%3E%3Cpath d='M74 26h.01M82 26h.01M74 32c2 2.5 6 2.5 8 0'/%3E%3Cpath d='M122 18l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z'/%3E%3Cpath d='M28 84c4-6 12-6 16 0 4-6 12-6 16 0 0 10-16 18-16 18S28 94 28 84z'/%3E%3Cpath d='M86 78l28-10-10 28-6-10-12-8z'/%3E%3Crect x='122' y='74' width='22' height='16' rx='3'/%3E%3Cpath d='M122 77l11 7 11-7'/%3E%3Cpath d='M24 132h18v12a6 6 0 0 1-6 6h-6a6 6 0 0 1-6-6v-12zm18 3h4a3 3 0 0 1 0 6h-4'/%3E%3Ccircle cx='84' cy='134' r='11'/%3E%3Cpath d='M84 128v6l4 3'/%3E%3Cpath d='M126 138v-14l16-4v14'/%3E%3Ccircle cx='123' cy='138' r='3'/%3E%3Ccircle cx='139' cy='134' r='3'/%3E%3C/g%3E%3C/svg%3E") repeat;
+  }
+  html[data-theme="whatsapp"][data-mode="light"] {
+    --bg: #EFEAE2;
+    --panel: #F0F2F5;
+    --panel2: #FFFFFF;
+    --hover: #E9EDEF;
+    --glass: rgba(240, 242, 245, 0.92);
+    --stage-bg: #111B21;
+    --line: rgba(17, 27, 33, 0.12);
+    --line-strong: rgba(0, 128, 105, 0.48);
+    --text: #111B21;
+    --dim: #54656F;
+    --blue: #008069;
+    --blue-dark: #005C4B;
+    --gold: #008069;
+    --gold-hi: #005C4B;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(0, 128, 105, 0.18);
+    --header-bg: #008069;
+    --wa-bubble-in: #FFFFFF;
+    --wa-bubble-out: #D9FDD3;
+    --wa-wallpaper: #EFEAE2 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%2354656f' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round' opacity='0.11'%3E%3Cpath d='M18 24h22a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H26l-8 6V28a4 4 0 0 1 4-4z'/%3E%3Ccircle cx='78' cy='28' r='10'/%3E%3Cpath d='M74 26h.01M82 26h.01M74 32c2 2.5 6 2.5 8 0'/%3E%3Cpath d='M122 18l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z'/%3E%3Cpath d='M28 84c4-6 12-6 16 0 4-6 12-6 16 0 0 10-16 18-16 18S28 94 28 84z'/%3E%3Cpath d='M86 78l28-10-10 28-6-10-12-8z'/%3E%3Crect x='122' y='74' width='22' height='16' rx='3'/%3E%3Cpath d='M122 77l11 7 11-7'/%3E%3Cpath d='M24 132h18v12a6 6 0 0 1-6 6h-6a6 6 0 0 1-6-6v-12zm18 3h4a3 3 0 0 1 0 6h-4'/%3E%3Ccircle cx='84' cy='134' r='11'/%3E%3Cpath d='M84 128v6l4 3'/%3E%3Cpath d='M126 138v-14l16-4v14'/%3E%3Ccircle cx='123' cy='138' r='3'/%3E%3Ccircle cx='139' cy='134' r='3'/%3E%3C/g%3E%3C/svg%3E") repeat;
+  }
+
+  /* ==================== 3. TELEGRAM THEME (CLASSIC PATTERN WALLPAPER & BUBBLES) ==================== */
+  html[data-theme="telegram"] {
+    --bg: #0E1621;
+    --panel: #17212B;
+    --panel2: #242F3D;
+    --hover: #2B5278;
+    --glass: rgba(23, 33, 43, 0.90);
+    --stage-bg: #090F17;
+    --line: rgba(255, 255, 255, 0.09);
+    --line-strong: rgba(64, 167, 227, 0.52);
+    --text: #F5F5F5;
+    --dim: #7F91A4;
+    --blue: #2AABEE;
+    --blue-dark: #229ED9;
+    --gold: #64B5EF;
+    --gold-hi: #64B5EF;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(42, 171, 238, 0.26);
+    --header-bg: #17212B;
+    --tg-bubble-in: #182533;
+    --tg-bubble-out: #2B5278;
+    --tg-wallpaper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%2364b5ef' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round' opacity='0.08'%3E%3Cpath d='M16 32l26-10-9 26-5-9-12-7z'/%3E%3Crect x='74' y='16' width='22' height='16' rx='4'/%3E%3Cpath d='M81 24h8'/%3E%3Ccircle cx='120' cy='34' r='9'/%3E%3Cpath d='M117 31l7 3-7 3v-6z'/%3E%3Cpath d='M28 88a10 10 0 1 1 14-14 8 8 0 1 0-14 14z'/%3E%3Cpath d='M76 78l4-8 4 8 8 1-6 6 2 8-8-4-8 4 2-8-6-6 8-1z'/%3E%3Cpath d='M114 82h16a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-10l-6 5v-19a4 4 0 0 1 4-4z'/%3E%3Ccircle cx='34' cy='124' r='8'/%3E%3Cpath d='M80 120c4-5 10-5 14 0 4-5 10-5 14 0 0 8-14 15-14 15s-14-7-14-15z'/%3E%3C/g%3E%3C/svg%3E") repeat, linear-gradient(135deg, #0E1621 0%, #162536 52%, #0F1D2C 100%);
+  }
+  html[data-theme="telegram"][data-mode="light"] {
+    --bg: #C8D9EA;
+    --panel: #FFFFFF;
+    --panel2: #F1F5F8;
+    --hover: #E3EDF6;
+    --glass: rgba(255, 255, 255, 0.92);
+    --stage-bg: #17212B;
+    --line: rgba(0, 0, 0, 0.10);
+    --line-strong: rgba(42, 171, 238, 0.50);
+    --text: #1C2733;
+    --dim: #60758A;
+    --blue: #2AABEE;
+    --blue-dark: #1E96C8;
+    --gold: #1E88E5;
+    --gold-hi: #1565C0;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(42, 171, 238, 0.20);
+    --header-bg: #517DA2;
+    --tg-bubble-in: #FFFFFF;
+    --tg-bubble-out: #EEFFDE;
+    --tg-wallpaper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%233b5a42' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round' opacity='0.11'%3E%3Cpath d='M16 32l26-10-9 26-5-9-12-7z'/%3E%3Crect x='74' y='16' width='22' height='16' rx='4'/%3E%3Cpath d='M81 24h8'/%3E%3Ccircle cx='120' cy='34' r='9'/%3E%3Cpath d='M117 31l7 3-7 3v-6z'/%3E%3Cpath d='M28 88a10 10 0 1 1 14-14 8 8 0 1 0-14 14z'/%3E%3Cpath d='M76 78l4-8 4 8 8 1-6 6 2 8-8-4-8 4 2-8-6-6 8-1z'/%3E%3Cpath d='M114 82h16a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-10l-6 5v-19a4 4 0 0 1 4-4z'/%3E%3Ccircle cx='34' cy='124' r='8'/%3E%3Cpath d='M80 120c4-5 10-5 14 0 4-5 10-5 14 0 0 8-14 15-14 15s-14-7-14-15z'/%3E%3C/g%3E%3C/svg%3E") repeat, linear-gradient(135deg, #B9D3E9 0%, #D5E8C6 52%, #B6D8BE 100%);
+  }
+
+  /* ==================== 4. WINDOWS 98 THEME ==================== */
+  html[data-theme="win98"] {
+    --bg: #008080;
+    --panel: #C0C0C0;
+    --panel2: #DFDFDF;
+    --hover: #D4D0C8;
+    --glass: #C0C0C0;
+    --stage-bg: #000000;
+    --line: #808080;
+    --line-strong: #000080;
+    --text: #000000;
+    --dim: #333333;
+    --blue: #000080;
+    --blue-dark: #1084D0;
+    --gold: #000080;
+    --gold-hi: #1084D0;
+    --ink: #FFFFFF;
+    --accent-glow: transparent;
+    --header-bg: linear-gradient(90deg, #000080 0%, #1084D0 100%);
+    --font-ui: "Tahoma", "MS Sans Serif", sans-serif;
+    --r: 0px;
+    --r-lg: 0px;
+  }
+
+  /* ==================== 5. WINDOWS XP (LUNA) THEME ==================== */
+  html[data-theme="winxp"] {
+    --bg: #3A6EA5;
+    --panel: #ECE9D8;
+    --panel2: #FFFFFF;
+    --hover: #D6DFF7;
+    --glass: rgba(236, 233, 216, 0.94);
+    --stage-bg: #000E29;
+    --line: #ACA899;
+    --line-strong: #0054E3;
+    --text: #000000;
+    --dim: #4A5568;
+    --blue: #3C9A2E;
+    --blue-dark: #2B7A1E;
+    --gold: #0054E3;
+    --gold-hi: #2786FF;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(60, 154, 46, 0.25);
+    --header-bg: linear-gradient(180deg, #0997FF 0%, #0053EE 14%, #0050EE 88%, #0640B6 100%);
+    --font-ui: "Tahoma", "Trebuchet MS", sans-serif;
+    --r: 4px;
+    --r-lg: 8px;
+  }
+
+  /* ==================== 6. WINDOWS 7 (AERO GLASS) THEME ==================== */
+  html[data-theme="win7"] {
+    --bg: #0E2338;
+    --panel: rgba(24, 52, 82, 0.76);
+    --panel2: rgba(40, 80, 120, 0.68);
+    --hover: rgba(62, 118, 172, 0.78);
+    --glass: rgba(20, 45, 72, 0.74);
+    --stage-bg: #06101B;
+    --line: rgba(168, 216, 255, 0.28);
+    --line-strong: rgba(112, 200, 255, 0.65);
+    --text: #F0F8FF;
+    --dim: #A7CBE8;
+    --blue: #36A9E1;
+    --blue-dark: #1B75BC;
+    --gold: #7CE0FF;
+    --gold-hi: #A8ECFF;
+    --ink: #041527;
+    --accent-glow: rgba(112, 200, 255, 0.35);
+    --header-bg: linear-gradient(180deg, rgba(65,115,165,0.84) 0%, rgba(22,50,80,0.88) 50%, rgba(12,32,54,0.92) 100%);
+    --r: 6px;
+    --r-lg: 10px;
+  }
+
+  /* ==================== 7. HACKER THEME ==================== */
+  html[data-theme="hacker"] {
+    --bg: #020502;
+    --panel: #050D06;
+    --panel2: #0A190C;
+    --hover: #112A15;
+    --glass: rgba(5, 13, 6, 0.88);
+    --stage-bg: #010401;
+    --line: rgba(0, 255, 65, 0.24);
+    --line-strong: rgba(0, 255, 65, 0.70);
+    --text: #00FF41;
+    --dim: #00A82B;
+    --blue: #00FF41;
+    --blue-dark: #00C832;
+    --gold: #39FF14;
+    --gold-hi: #76FF5B;
+    --ink: #020802;
+    --accent-glow: rgba(0, 255, 65, 0.30);
+    --header-bg: #050D06;
+    --font-ui: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+    --r: 4px;
+    --r-lg: 8px;
+  }
+
+  /* ==================== 8. VS CODE THEME ==================== */
+  html[data-theme="vscode"] {
+    --bg: #181818;
+    --panel: #252526;
+    --panel2: #333337;
+    --hover: #3E3E42;
+    --glass: rgba(37, 37, 38, 0.88);
+    --stage-bg: #1E1E1E;
+    --line: #3C3C3C;
+    --line-strong: #007ACC;
+    --text: #CCCCCC;
+    --dim: #858585;
+    --blue: #007ACC;
+    --blue-dark: #0062A3;
+    --gold: #CCA700;
+    --gold-hi: #E5BD00;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(0, 122, 204, 0.28);
+    --header-bg: #323233;
+    --font-ui: "Segoe WPC", "Segoe UI", "Consolas", sans-serif;
+    --r: 4px;
+    --r-lg: 6px;
+  }
+
+  /* ==================== 9. TERMINAL THEME ==================== */
+  html[data-theme="terminal"] {
+    --bg: #0A0804;
+    --panel: #120E07;
+    --panel2: #1F180B;
+    --hover: #2E2310;
+    --glass: rgba(18, 14, 7, 0.90);
+    --stage-bg: #060402;
+    --line: rgba(255, 176, 0, 0.24);
+    --line-strong: rgba(255, 176, 0, 0.70);
+    --text: #FFB000;
+    --dim: #B87D00;
+    --blue: #FFB000;
+    --blue-dark: #E09600;
+    --gold: #FFD066;
+    --gold-hi: #FFE099;
+    --ink: #0A0804;
+    --accent-glow: rgba(255, 176, 0, 0.28);
+    --header-bg: #120E07;
+    --font-ui: "Courier New", "Consolas", monospace;
+    --r: 2px;
+    --r-lg: 4px;
+  }
+
+  html { color-scheme: dark; }
+  html[data-mode="light"] { color-scheme: light; }
+
+  /* Global Scrollbars */
+  * { scrollbar-width: thin; scrollbar-color: var(--blue) rgba(148, 163, 184, 0.08); box-sizing: border-box; }
+  *::-webkit-scrollbar { width: 8px; height: 8px; }
+  *::-webkit-scrollbar-track { background: rgba(148, 163, 184, 0.08); border-radius: 4px; }
+  *::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; min-height: 36px; }
+  *::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+  *::-webkit-scrollbar-corner { background: transparent; }
+
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 14px/1.5 var(--font-ui);
+    display: flex; flex-direction: column; overflow: hidden;
+    -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+    transition: background 0.18s ease, color 0.18s ease;
+  }
+  html[lang=ar] body { font-family: 'IBM Plex Sans Arabic', var(--font-ui); }
+  img, canvas { -webkit-user-drag: none; user-drag: none; }
+  [hidden] { display: none !important; }
+
+  /* Win98 3D Bevel Styling */
+  html[data-theme="win98"] header,
+  html[data-theme="win98"] aside.chat,
+  html[data-theme="win98"] .controls,
+  html[data-theme="win98"] dialog,
+  html[data-theme="win98"] button,
+  html[data-theme="win98"] select,
+  html[data-theme="win98"] .vol-group {
+    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf !important;
+    border: none !important;
+  }
+  html[data-theme="win98"] header .brand-title,
+  html[data-theme="winxp"] header .brand-title,
+  html[data-theme="whatsapp"][data-mode="light"] header .brand-title,
+  html[data-theme="telegram"][data-mode="light"] header .brand-title {
+    color: #FFFFFF;
+  }
+
+  /* Authentic WhatsApp Classic Wallpaper, Chat Bubbles & Header Styling */
+  html[data-theme="whatsapp"] aside.chat .msgs,
+  html[data-theme="whatsapp"] .dlg-body {
+    background: var(--wa-wallpaper);
+  }
+  html[data-theme="whatsapp"] aside.chat .chat-head {
+    background: var(--header-bg);
+    color: #E9EDEF;
+  }
+  html[data-theme="whatsapp"][data-mode="light"] aside.chat .chat-head {
+    background: #008069;
+    color: #FFFFFF;
+  }
+  html[data-theme="whatsapp"][data-mode="light"] aside.chat .chat-head #chatCount,
+  html[data-theme="whatsapp"][data-mode="light"] aside.chat .chat-head .showall-pill,
+  html[data-theme="whatsapp"][data-mode="light"] aside.chat .chat-head .iconbtn {
+    background: rgba(255, 255, 255, 0.16);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+  html[data-theme="whatsapp"] .msg {
+    background: var(--wa-bubble-in);
+    border-radius: 0 10px 10px 10px;
+    border: none;
+    box-shadow: 0 1px 1.5px rgba(11, 20, 26, 0.22);
+    position: relative;
+  }
+  html[data-theme="whatsapp"] .msg.latest {
+    background: var(--wa-bubble-out);
+    border-radius: 10px 0 10px 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  }
+  html[data-theme="whatsapp"][data-mode="light"] header button:not(.primary) {
+    background: rgba(255, 255, 255, 0.16);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.30);
+  }
+  html[data-theme="whatsapp"][data-mode="light"] header button:not(.primary):hover {
+    background: rgba(255, 255, 255, 0.26);
+  }
+  html[data-theme="whatsapp"][data-mode="light"] header button.primary {
+    background: #25D366;
+    color: #073B22;
+    font-weight: 700;
+  }
+
+  /* Authentic Telegram Classic Wallpaper, Chat Bubbles & Header Styling */
+  html[data-theme="telegram"] aside.chat .msgs,
+  html[data-theme="telegram"] .dlg-body {
+    background: var(--tg-wallpaper);
+  }
+  html[data-theme="telegram"] aside.chat .chat-head {
+    background: var(--header-bg);
+  }
+  html[data-theme="telegram"][data-mode="light"] aside.chat .chat-head {
+    background: #517DA2;
+    color: #FFFFFF;
+  }
+  html[data-theme="telegram"][data-mode="light"] aside.chat .chat-head #chatCount,
+  html[data-theme="telegram"][data-mode="light"] aside.chat .chat-head .showall-pill,
+  html[data-theme="telegram"][data-mode="light"] aside.chat .chat-head .iconbtn {
+    background: rgba(255, 255, 255, 0.16);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+  html[data-theme="telegram"] .msg {
+    background: var(--tg-bubble-in);
+    border-radius: 12px 12px 12px 4px;
+    border: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+  }
+  html[data-theme="telegram"] .msg.latest {
+    background: var(--tg-bubble-out);
+    border-radius: 12px 12px 4px 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+  }
+  html[data-theme="telegram"][data-mode="light"] header button:not(.primary) {
+    background: rgba(255, 255, 255, 0.16);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.30);
+  }
+  html[data-theme="telegram"][data-mode="light"] header button:not(.primary):hover {
+    background: rgba(255, 255, 255, 0.26);
+  }
+  html[data-theme="telegram"][data-mode="light"] header button.primary {
+    background: #2AABEE;
+    color: #FFFFFF;
+    font-weight: 700;
+  }
+  html[data-theme="winxp"] header button:not(.primary) {
+    background: rgba(255, 255, 255, 0.18);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  /* Icons */
+  .i { width: 16px; height: 16px; fill: currentColor; flex: none; }
+
+  /* Top Header Bar */
+  header {
+    direction: ltr; display: flex; align-items: center; gap: 10px; padding: 10px 18px;
+    background: var(--header-bg); border-bottom: 1px solid var(--line); flex: none; z-index: 25;
+  }
+  header h1 { margin: 0; display: flex; align-items: center; gap: 11px; font-size: 16px; font-weight: 700; letter-spacing: -0.02em; }
+  .brand-emblem {
+    width: 36px; height: 36px; border-radius: var(--r);
+    background: linear-gradient(135deg, rgba(56,189,248,0.18), rgba(245,158,11,0.15));
+    border: 1px solid var(--line-strong);
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+    box-shadow: 0 4px 14px var(--accent-glow);
+  }
+  .brand-title { color: var(--text); white-space: nowrap; }
+  header .meta {
+    display: flex; align-items: center; justify-content: center; flex-wrap: nowrap; gap: 6px;
+    color: var(--dim); font-size: 11px; min-width: 0; flex: 1; padding: 0 8px; overflow-x: auto; scrollbar-width: none;
+  }
+  header .meta::-webkit-scrollbar { display: none; }
+  .mtag {
+    display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 99px;
+    font-size: 11px; font-weight: 500; white-space: nowrap; border: 1px solid transparent; flex: none;
+  }
+  .mtag b { font-weight: 700; opacity: 0.95; }
+  .mtag-college { background: rgba(56, 189, 248, 0.15); color: #38BDF8; border-color: rgba(56, 189, 248, 0.35); font-weight: 700; }
+  .mtag-material { background: rgba(168, 85, 247, 0.15); color: #C084FC; border-color: rgba(168, 85, 247, 0.35); font-weight: 700; }
+  .mtag-class { background: rgba(34, 197, 94, 0.15); color: #4ADE80; border-color: rgba(34, 197, 94, 0.35); }
+  .mtag-term { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border-color: rgba(245, 158, 11, 0.35); }
+  .mtag-lesson { background: rgba(244, 63, 94, 0.15); color: #FB7185; border-color: rgba(244, 63, 94, 0.35); }
+  .mtag-date { background: rgba(20, 184, 166, 0.15); color: #2DD4BF; border-color: rgba(20, 184, 166, 0.35); }
+  .mtag-file {
+    background: var(--panel2); color: var(--dim); border-color: var(--line);
+    font-family: "Consolas", "Courier New", monospace; font-size: 10.5px; padding: 3px 14px;
+    border-radius: 99px; max-width: min(540px, 45vw); overflow: hidden; text-overflow: ellipsis;
+    letter-spacing: 0.2px; flex: none;
+  }
+  html[data-mode="light"] .mtag-college { color: #0369A1; background: rgba(2, 132, 199, 0.12); }
+  html[data-mode="light"] .mtag-material { color: #7E22CE; background: rgba(147, 51, 234, 0.12); }
+  html[data-mode="light"] .mtag-class { color: #15803D; background: rgba(22, 163, 74, 0.12); }
+  html[data-mode="light"] .mtag-term { color: #B45309; background: rgba(217, 119, 6, 0.12); }
+  html[data-mode="light"] .mtag-lesson { color: #BE123C; background: rgba(225, 29, 72, 0.12); }
+  html[data-mode="light"] .mtag-date { color: #0F766E; background: rgba(13, 148, 136, 0.12); }
+  body.fs header { display: none; }
+
+  button, select {
+    font: inherit; color: var(--text); background: var(--panel2); border: 1px solid var(--line);
+    border-radius: var(--r); padding: 7px 13px; cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-weight: 500; }
+  button:hover, select:hover { border-color: var(--line-strong); background: var(--hover); }
+  button:focus-visible, select:focus-visible, .seek:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  button.primary {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+    border-color: transparent; color: var(--ink); font-weight: 600;
+    box-shadow: 0 4px 14px var(--accent-glow);
+  }
+  button.primary:hover { filter: brightness(1.08); }
+  button.on {
+    background: rgba(245, 158, 11, 0.16);
+    border-color: var(--gold);
+    color: var(--gold-hi);
+  }
+  #chatToggle.on, #stretchBtn.on {
+    background: var(--accent-glow);
+    border-color: var(--line-strong);
+    color: var(--blue);
+  }
+  button.busy { opacity: .6; animation: pulse 1s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .25; } }
+
+  header button { height: 36px; }
+  .lang { padding: 0 12px; font-weight: 700; font-size: 12.5px; letter-spacing: 0.04em; min-width: 44px; }
+  .lang .flag { display: none; }
+  .lang:not(.is-ar) .flag.ar, .lang.is-ar .flag.en { display: inline-block; }
+
+  /* Theme Selector Dropdown & Dark/Light Mode Button */
+  .theme-menu-wrap { position: relative; }
+  .theme-dropdown {
+    position: absolute; top: calc(100% + 8px); right: 0; width: 215px;
+    background: var(--panel); border: 1px solid var(--line-strong); border-radius: var(--r-lg);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.65); padding: 6px;
+    display: none; flex-direction: column; gap: 2px; z-index: 80;
+    backdrop-filter: blur(16px);
+  }
+  .theme-dropdown.open { display: flex; }
+  .theme-opt {
+    width: 100%; justify-content: space-between; padding: 8px 11px;
+    border-radius: var(--r); background: transparent; border: none;
+    color: var(--text); font-size: 12.5px; text-align: left;
+  }
+  .theme-opt:hover { background: var(--hover); }
+  .theme-opt.active { background: var(--panel2); color: var(--blue); font-weight: 600; }
+  .theme-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.25); flex: none; }
+
+  .theme-btn { width: 36px; padding: 0; }
+  .theme-btn .ico-sun { display: block; color: #F59E0B; width: 17px; height: 17px; }
+  .theme-btn .ico-moon { display: none; color: #0284C7; width: 17px; height: 17px; }
+  html[data-mode="light"] .theme-btn .ico-sun { display: none; }
+  html[data-mode="light"] .theme-btn .ico-moon { display: block; }
+
+  /* Bento Workspace Layout */
+  main { flex: 1; display: flex; min-height: 0; padding: 12px; gap: 12px; }
+  body.fs main { padding: 0; gap: 0; }
+  .stage-wrap {
+    flex: 1; display: flex; flex-direction: column; min-width: 0;
+    position: relative; border-radius: var(--r-lg); border: 1px solid var(--line);
+    overflow: hidden; background: var(--stage-bg);
+  }
+  body.fs .stage-wrap { border-radius: 0; border: none; }
+  .stage {
+    flex: 1; min-height: 0; background: var(--stage-bg); display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  canvas#screen { max-width: 100%; max-height: 100%; background: #000; image-rendering: auto; display: none; }
+  .stage.ready canvas#screen { display: block; }
+  .stage.stretch canvas#screen { width: 100%; height: 100%; max-width: none; max-height: none; object-fit: contain; }
+
+  /* Clean Empty Stage Drop-Zone (#drop) */
+  .drop {
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 28px 24px 104px; color: var(--dim);
+    background: radial-gradient(circle at 50% 42%, var(--accent-glow) 0%, transparent 68%);
+  }
+  .stage.ready .drop, .stage.loading .drop { display: none; }
+  .hero-emblem {
+    width: 84px; height: 84px; border-radius: 22px;
+    background: rgba(15, 23, 42, 0.85); border: 1px solid var(--line-strong);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 28px var(--accent-glow);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+    transition: transform 0.18s ease;
+  }
+  .stage.dragover .hero-emblem { transform: scale(1.08); }
+  .drop-title { font-size: 20px; font-weight: 700; color: #F8FAFC; margin: 0 0 6px; letter-spacing: -0.02em; }
+  .drop-sub { font-size: 13.5px; color: #94A3B8; max-width: 400px; margin: 0 0 20px; }
+  .shortcut-strip { margin-top: 14px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; font-size: 10px; color: #94A3B8; opacity: 0.85; }
+  .shortcut-strip span { display: inline-flex; align-items: center; gap: 4px; }
+  .shortcut-strip kbd {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px; padding: 1px 5px; font-family: inherit; font-size: 9.5px; color: #E2E8F0; margin-inline-end: 2px; line-height: 1.2;
+  }
+
+  .loading-box { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding-bottom: 70px; }
+  .stage.loading .loading-box { display: flex; }
+  .bar { width: 320px; max-width: 80%; height: 6px; background: var(--panel2); border-radius: 99px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--blue), var(--gold)); transition: width .1s; }
+  .loading-box .stagename { color: var(--dim); font-weight: 500; }
+  .err { color: #ff9d9d; max-width: 480px; text-align: center; }
+
+  .bigplay {
+    position: absolute; width: 72px; height: 56px; border-radius: 14px; border: 1px solid var(--line-strong); padding: 0;
+    background: var(--glass); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+  }
+  .bigplay:hover { background: var(--blue); color: var(--ink); }
+  .stage.ready.paused .bigplay { display: flex; }
+  .bigplay svg { width: 34px; height: 34px; fill: currentColor; }
+
+  .wm { position: absolute; right: 14px; bottom: 86px; width: clamp(70px, 9%, 150px); opacity: .6; pointer-events: none; user-select: none; -webkit-user-select: none; z-index: 5; display: none; }
+  .stage.ready .wm { display: block; }
+  .caption {
+    position: absolute; left: 50%; bottom: 92px; transform: translateX(-50%); max-width: 86%; text-align: center;
+    background: rgba(0,0,0,.78); color: #fff; padding: 6px 14px; border-radius: var(--r); font-size: clamp(14px, 2.1vw, 24px);
+    line-height: 1.4; pointer-events: none; unicode-bidi: plaintext; white-space: pre-wrap; z-index: 6;
+  }
+
+  /* Floating Glass Player Control Bar (#controls) — Auto-Hide with Hover & Pin Toggle */
+  .controls-zone {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 92px; z-index: 10;
+    display: flex; align-items: flex-end; padding: 0 14px 12px;
+    pointer-events: auto;
+  }
+  .controls {
+    direction: ltr; width: 100%;
+    background: var(--glass); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    border: 1px solid var(--line); border-radius: 14px; padding: 8px 16px 10px;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+  .controls-zone:hover .controls,
+  .controls:hover,
+  .controls:focus-within,
+  .controls.pinned,
+  .controls.mouse-active,
+  .seek.drag {
+    opacity: 1; transform: translateY(0);
+  }
+  .controls.disabled { pointer-events: none; }
+  .controls-zone:hover .controls.disabled,
+  .controls.mouse-active.disabled,
+  .controls.pinned.disabled { opacity: .55; }
+  #pinBtn.on {
+    background: var(--accent-glow);
+    border-color: var(--line-strong);
+    color: var(--blue);
+  }
+  .seek { position: relative; height: 20px; cursor: pointer; touch-action: none; display: flex; align-items: center; }
+  .seek .track { position: relative; width: 100%; height: 6px; background: rgba(148, 163, 184, 0.25); border-radius: 99px; transition: height 0.14s; }
+  .seek:hover .track { height: 8px; }
+  .seek .fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--blue), var(--gold)); border-radius: 99px; width: 0; }
+  .seek .knob {
+    position: absolute; top: 50%; width: 14px; height: 14px; border-radius: 50%; background: #fff;
+    border: 3px solid var(--blue); transform: translate(-50%, -50%);
+    left: 0; box-shadow: 0 2px 6px rgba(0,0,0,.45); opacity: 0; transition: opacity .12s;
+  }
+  .seek:hover .knob, .seek.drag .knob, .seek:focus-visible .knob { opacity: 1; }
+  .seek .tick { position: absolute; top: -2px; width: 2px; height: 10px; background: rgba(255,255,255,.65); border-radius: 1px; transform: translateX(-1px); pointer-events: none; }
+  .seek .tip {
+    position: absolute; bottom: 22px; transform: translateX(-50%); background: var(--panel); color: var(--text);
+    border: 1px solid var(--line-strong); font-size: 11.5px; font-weight: 600;
+    padding: 2px 8px; border-radius: 6px; pointer-events: none; display: none; white-space: nowrap; font-variant-numeric: tabular-nums;
+  }
+  .seek:hover .tip, .seek.drag .tip { display: block; }
+  .row { display: flex; align-items: center; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+  .row .grow { flex: 1; }
+  .iconbtn { width: 36px; height: 34px; padding: 0; }
+  #play.iconbtn {
+    background: var(--blue); color: var(--ink); border-color: transparent;
+    width: 38px; height: 36px; box-shadow: 0 4px 12px var(--accent-glow);
+  }
+  .iconbtn svg { width: 18px; height: 18px; fill: currentColor; }
+  .tbtn { height: 34px; padding: 0 11px; font-size: 12.5px; }
+  .time { color: var(--dim); font-variant-numeric: tabular-nums; font-size: 12px; font-weight: 600; margin-inline: 4px; }
+  .vol-group {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--panel2); border: 1px solid var(--line); border-radius: var(--r);
+    padding: 0 9px 0 3px; height: 34px;
+  }
+  .vol-group .iconbtn { width: 28px; height: 28px; border: none; background: transparent; }
+  input[type=range] { accent-color: var(--blue); width: 72px; cursor: pointer; }
+  .ccstatus { color: var(--dim); font-size: 12px; }
+  .ccstatus.bad, .status.bad { color: #ff9d9d; }
+
+  /* Synchronized Chat Bento Sidebar (aside#chat) */
+  aside.chat {
+    width: 340px; flex: none; background: var(--panel);
+    border: 1px solid var(--line); border-radius: var(--r-lg);
+    display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+  }
+  body.fs aside.chat { border-radius: 0; border-top: none; border-bottom: none; border-inline-end: none; }
+  body.nochat aside.chat { display: none; }
+  .chat-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 11px 14px; background: var(--panel); border-bottom: 1px solid var(--line);
+  }
+  .chat-head h2 { margin: 0; font-size: 13.5px; font-weight: 600; flex: 1; display: flex; gap: 7px; align-items: center; }
+  #chatCount {
+    font-size: 11px; padding: 1px 7px; border-radius: 99px;
+    background: var(--panel2); color: var(--blue); border: 1px solid var(--line); font-weight: 600;
+  }
+  .showall-pill {
+    color: var(--text); background: var(--panel2); border: 1px solid var(--line);
+    border-radius: 8px; padding: 4px 10px; font-size: 11.5px; font-weight: 600;
+    display: inline-flex; gap: 6px; align-items: center; cursor: pointer; transition: all 0.14s;
+  }
+  .showall-pill:hover { border-color: var(--line-strong); }
+  .showall-pill.on { background: var(--blue); color: var(--ink); border-color: transparent; }
+  .showall-pill input { accent-color: var(--gold); margin: 0; width: 13px; height: 13px; cursor: pointer; }
+
+  /* Chat Messages List with Explicit Vertical Scrollbar on Right */
+  .msgs {
+    flex: 1; overflow-y: scroll; padding: 10px 10px 14px 12px; scroll-behavior: smooth;
+    scrollbar-width: thin; scrollbar-color: var(--blue) rgba(148, 163, 184, 0.08);
+  }
+  .msgs::-webkit-scrollbar { width: 8px; }
+  .msgs::-webkit-scrollbar-track { background: rgba(148, 163, 184, 0.08); border-radius: 4px; }
+  .msgs::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
+  .empty { color: var(--dim); text-align: center; padding: 32px 12px; font-size: 13px; }
+  .msg {
+    display: flex; gap: 9px; padding: 9px 11px; border-radius: var(--r);
+    background: var(--panel2); border: 1px solid var(--line);
+    cursor: pointer; margin-bottom: 7px; transition: all 0.14s;
+  }
+  .msg:hover { border-color: var(--line-strong); background: var(--hover); }
+  .msg.future { opacity: .45; }
+  .msg.latest { border-color: var(--blue); box-shadow: inset 3px 0 0 var(--blue); }
+  .msg[hidden] { display: none; }
+  .av {
+    flex: none; width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 12px; color: #0b1620; text-transform: uppercase;
+  }
+  .bd { min-width: 0; flex: 1; }
+  .who { display: flex; justify-content: space-between; gap: 8px; align-items: center; margin-bottom: 2px; }
+  .who b { font-weight: 600; font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; direction: ltr; unicode-bidi: isolate; }
+  .who span, .who .time-link {
+    color: var(--blue); background: var(--accent-glow); padding: 1px 6px; border-radius: 5px;
+    font-size: 10.5px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums;
+  }
+  .msg:hover .who .time-link { background: var(--blue); color: var(--ink); }
+  .tx { margin-top: 2px; font-size: 12.5px; overflow-wrap: anywhere; white-space: pre-wrap; unicode-bidi: plaintext; }
+
+  /* Dialogs & 5-Tab Session / Batch / Student Library Modal */
+  dialog {
+    background: var(--panel); color: var(--text); border: 1px solid var(--line-strong);
+    border-radius: var(--r-lg); padding: 0; width: min(920px, 95vw); max-height: 90vh;
+    box-shadow: 0 24px 54px rgba(0,0,0,0.75);
+  }
+  dialog::backdrop { background: rgba(5, 8, 17, 0.74); backdrop-filter: blur(8px); }
+  dialog[open] { display: flex; flex-direction: column; }
+  .dlg-head {
+    display: flex; align-items: center; gap: 6px; padding: 12px 16px;
+    background: var(--panel); border-bottom: 1px solid var(--line); flex-wrap: wrap;
+  }
+  .tab {
+    background: var(--bg); border: 1px solid var(--line); border-radius: var(--r);
+    padding: 7px 12px; color: var(--dim); font-size: 12.5px; font-weight: 600;
+  }
+  .tab.on { background: var(--panel2); color: var(--blue); border-color: var(--line-strong); }
+  .tab:hover { color: var(--text); background: var(--hover); }
+  .dlg-head .iconbtn { background: var(--panel2); border-color: var(--line); color: var(--text); }
+  .dlg-body { padding: 18px 20px; overflow: auto; }
+
+  /* 2-Column Bento Cascade Grid — High-Contrast Enabled vs Dimmed Disabled */
+  .cascade { display: grid; grid-template-columns: 80px 1fr 80px 1fr; gap: 10px 12px; align-items: center; }
+  .cascade label { font-size: 11.5px; font-weight: 700; color: var(--dim); text-transform: uppercase; letter-spacing: 0.03em; transition: all 0.16s ease; }
+  .cascade label.lbl-disabled { opacity: 0.24; color: var(--dim); font-weight: 500; }
+  .cascade label.lbl-open { opacity: 1; color: var(--blue); }
+  .cascade label.lbl-chosen { opacity: 1; color: var(--gold); }
+  .cascade select { width: 100%; transition: all 0.18s ease; }
+  .cascade select:disabled {
+    opacity: 0.22; filter: grayscale(1); cursor: not-allowed;
+    background: rgba(128, 128, 128, 0.04); border: 1px dashed var(--line);
+    color: var(--dim); box-shadow: none; pointer-events: none;
+  }
+  .cascade select:not(:disabled),
+  .cascade select.is-open:not(:disabled) {
+    opacity: 1;
+    background: linear-gradient(135deg, var(--accent-glow), var(--panel2));
+    border: 1.5px solid var(--blue);
+    color: var(--text);
+    font-weight: 600;
+    box-shadow: 0 3px 12px var(--accent-glow);
+  }
+  .cascade select.has-val:not(:disabled) {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), var(--panel2));
+    border-color: var(--gold);
+    color: var(--gold-hi);
+    box-shadow: 0 3px 14px rgba(245, 158, 11, 0.20);
+  }
+  html[data-mode="light"] .cascade select.has-val:not(:disabled) {
+    color: #92400E;
+    border-color: #D97706;
+  }
+  .cascade select:not(:disabled) option {
+    background: var(--panel);
+    color: var(--text);
+    font-weight: 500;
+  }
+  h3 { font-size: 13px; margin: 16px 0 8px; color: var(--blue); font-weight: 600; }
+  .list { display: flex; flex-direction: column; gap: 6px; }
+  .row-item {
+    display: flex; gap: 12px; align-items: center; text-align: start; width: 100%;
+    padding: 10px 14px; background: var(--panel2); border: 1px solid var(--line); border-radius: var(--r);
+  }
+  button.row-item.on, .row-item.on { border-color: var(--blue); background: var(--accent-glow); color: var(--text); }
+  .row-item.static { cursor: default; flex-wrap: wrap; }
+  .row-item .grow { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .muted { color: var(--dim); font-size: 12px; }
+  .status { min-height: 20px; margin-top: 10px; color: var(--dim); }
+  .rowprog { flex: 1 1 100%; order: 99; }
+  .rowprog .bar { width: 100%; max-width: none; }
+  .rowprog .muted { margin-top: 5px; font-variant-numeric: tabular-nums; }
+  .dropzone {
+    width: 100%; flex-direction: column; gap: 8px; padding: 44px 20px;
+    border: 2px dashed var(--line-strong); border-radius: var(--r-lg); background: var(--panel2); color: var(--text); font-size: 15px;
+  }
+  .dropzone .i { width: 34px; height: 34px; color: var(--blue); }
+  .dropzone:hover, body.dragging .dropzone { border-color: var(--gold); background: var(--hover); }
+  .keep { display: inline-flex; gap: 7px; align-items: center; color: var(--dim); margin-top: 12px; font-size: 12.5px; cursor: pointer; }
+  .keep input { accent-color: var(--blue); }
+  .spin { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.3); border-top-color: var(--blue); border-radius: 50%; animation: sp .8s linear infinite; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+
+  /* ---------- Smart Batch Course Downloader (#paneBatch) ---------- */
+  .batch-step-box {
+    background: var(--panel2); border: 1px solid var(--line); border-radius: var(--r-lg);
+    padding: 13px 16px; margin-bottom: 12px;
+  }
+  .batch-step-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    flex-wrap: wrap; margin-bottom: 10px;
+  }
+  .batch-step-head b { font-size: 13px; color: var(--blue); font-weight: 700; }
+  .batch-top-grid {
+    display: grid; grid-template-columns: 75px 1fr 75px 1fr auto; gap: 10px 12px; align-items: center;
+  }
+  @media (max-width: 720px) {
+    .batch-top-grid { grid-template-columns: 75px 1fr; }
+    .batch-top-grid button { grid-column: 1 / -1; }
+  }
+  .batch-toolbar {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;
+  }
+  .batch-search {
+    flex: 1; min-width: 180px; padding: 7px 12px; background: var(--bg); color: var(--text);
+    border: 1px solid var(--line); border-radius: var(--r); font: inherit; font-size: 12.5px;
+  }
+  .batch-search:focus { outline: 2px solid var(--blue); border-color: transparent; }
+  .batch-courses-list {
+    display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; padding-inline-end: 4px;
+  }
+  .b-course-card {
+    background: var(--bg); border: 1px solid var(--line); border-radius: var(--r);
+    padding: 10px 13px; transition: all 0.16s ease;
+  }
+  .b-course-card.checked {
+    border-color: var(--blue); background: linear-gradient(135deg, var(--accent-glow), var(--bg));
+    box-shadow: 0 3px 14px rgba(0,0,0,0.22);
+  }
+  .b-course-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer;
+  }
+  .b-course-head label {
+    display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 13.5px;
+    color: var(--text); cursor: pointer; flex: 1;
+  }
+  .b-course-head input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--blue); cursor: pointer; }
+  .b-course-body {
+    margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .b-course-selects {
+    display: grid; grid-template-columns: 65px 1fr 65px 1fr; gap: 8px 10px; align-items: center;
+  }
+  @media (max-width: 640px) { .b-course-selects { grid-template-columns: 65px 1fr; } }
+  .b-lessons-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+  }
+  .b-lessons-head span { font-size: 12px; font-weight: 600; color: var(--dim); }
+  .b-mini-btns { display: inline-flex; gap: 5px; flex-wrap: wrap; }
+  .b-mini-btns button { padding: 3px 9px; font-size: 11.5px; height: 26px; border-radius: 6px; }
+  .b-filter-toggle {
+    display: inline-flex; align-items: center; gap: 6px; padding: 3px 11px !important;
+    font-weight: 700; border-color: var(--blue); color: var(--blue);
+    background: rgba(56, 189, 248, 0.08);
+  }
+  .b-filter-toggle.on {
+    background: linear-gradient(135deg, var(--blue), #0284C7);
+    color: #fff; border-color: transparent;
+    box-shadow: 0 3px 12px var(--accent-glow);
+  }
+  .b-lessons-grid {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .l-pill {
+    display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px;
+    border-radius: 8px; background: var(--panel2); border: 1px solid var(--line);
+    font-size: 11.5px; font-weight: 600; color: var(--dim); cursor: pointer; transition: all 0.14s ease;
+  }
+  .l-pill:hover { border-color: var(--line-strong); color: var(--text); }
+  .l-pill.on {
+    background: var(--accent-glow); border-color: var(--blue); color: var(--text);
+    box-shadow: 0 2px 8px var(--accent-glow);
+  }
+  .l-pill.is-saved {
+    border-color: rgba(34, 197, 94, 0.45); background: rgba(34, 197, 94, 0.10); color: #4ADE80;
+  }
+  html[data-mode="light"] .l-pill.is-saved { color: #15803D; }
+  .l-pill input { width: 13px; height: 13px; accent-color: var(--blue); margin: 0; cursor: pointer; }
+  .l-pill .saved-tag {
+    font-size: 10px; padding: 1px 5px; border-radius: 99px;
+    background: rgba(34, 197, 94, 0.20); color: #4ADE80; font-weight: 700;
+  }
+  html[data-mode="light"] .l-pill .saved-tag { color: #15803D; }
+
+  .batch-footer {
+    background: var(--panel2); border: 1px solid var(--line-strong); border-radius: var(--r-lg);
+    padding: 12px 16px; display: flex; flex-direction: column; gap: 9px;
+  }
+  .batch-foot-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  }
+  .batch-summary-txt { font-size: 12.5px; font-weight: 600; color: var(--text); }
+  .batch-safe-note { font-size: 11.5px; color: var(--gold-hi); }
+  html[data-mode="light"] .batch-safe-note { color: #B45309; }
+  .batch-queue-box {
+    padding-top: 8px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px;
+  }
+  .batch-queue-box .bar { width: 100%; max-width: none; height: 7px; }
+
+  /* ---------- Organized Student Lecture Library (#paneSaved) ---------- */
+  .lib-top-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+    padding: 11px 14px; background: var(--panel2); border: 1px solid var(--line);
+    border-radius: var(--r-lg); margin-bottom: 10px;
+  }
+  .lib-stats { font-size: 12.5px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .lib-sync-banner {
+    padding: 11px 14px; border-radius: var(--r); background: rgba(56, 189, 248, 0.12);
+    border: 1px solid var(--blue); margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+    font-size: 12.5px; font-weight: 600; color: var(--text);
+  }
+  .lib-controls-bar {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;
+  }
+  .lib-search {
+    flex: 1; min-width: 200px; padding: 7px 12px; background: var(--bg); color: var(--text);
+    border: 1px solid var(--line); border-radius: var(--r); font: inherit; font-size: 12.5px;
+  }
+  .lib-search:focus { outline: 2px solid var(--blue); border-color: transparent; }
+  .lib-filter-pills {
+    display: inline-flex; background: var(--bg); border: 1px solid var(--line); border-radius: var(--r); padding: 2px; gap: 2px;
+  }
+  .lib-fpill {
+    border: none; background: transparent; color: var(--dim); padding: 4px 10px;
+    font-size: 11.5px; font-weight: 600; border-radius: 7px; height: 28px;
+  }
+  .lib-fpill.on { background: var(--blue); color: var(--ink); }
+
+  .lib-group-card {
+    background: var(--bg); border: 1.5px solid var(--line-strong); border-radius: var(--r-lg);
+    margin-bottom: 14px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.22);
+  }
+  .lib-group-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+    padding: 11px 16px; background: var(--panel2); border-bottom: 1px solid var(--line); cursor: pointer;
+  }
+  .lib-group-title { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-weight: 700; font-size: 13.5px; }
+  .lib-group-prog { display: inline-flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--text); font-weight: 600; }
+  .lib-mini-bar { width: 68px; height: 7px; background: rgba(0,0,0,0.25); border-radius: 99px; overflow: hidden; border: 1px solid var(--line); }
+  .lib-mini-bar > i { display: block; height: 100%; background: #4ADE80; transition: width 0.2s; }
+  .lib-group-list { padding: 10px 12px; display: flex; flex-direction: column; gap: 7px; }
+  .lib-group-card.collapsed .lib-group-list { display: none; }
+
+  /* Distinct Colored Material Windows for Student Library */
+  .lib-group-card.mat-theme-0 {
+    border-color: rgba(56, 189, 248, 0.55);
+    background: linear-gradient(180deg, rgba(14, 116, 144, 0.16) 0%, rgba(15, 23, 42, 0.35) 100%);
+  }
+  .lib-group-card.mat-theme-0 > .lib-group-head {
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.24), rgba(14, 116, 144, 0.12));
+    border-bottom-color: rgba(56, 189, 248, 0.35);
+  }
+  .lib-group-card.mat-theme-1 {
+    border-color: rgba(168, 85, 247, 0.55);
+    background: linear-gradient(180deg, rgba(126, 34, 206, 0.16) 0%, rgba(15, 23, 42, 0.35) 100%);
+  }
+  .lib-group-card.mat-theme-1 > .lib-group-head {
+    background: linear-gradient(90deg, rgba(168, 85, 247, 0.24), rgba(126, 34, 206, 0.12));
+    border-bottom-color: rgba(168, 85, 247, 0.35);
+  }
+  .lib-group-card.mat-theme-2 {
+    border-color: rgba(16, 185, 129, 0.55);
+    background: linear-gradient(180deg, rgba(4, 120, 87, 0.16) 0%, rgba(15, 23, 42, 0.35) 100%);
+  }
+  .lib-group-card.mat-theme-2 > .lib-group-head {
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.24), rgba(4, 120, 87, 0.12));
+    border-bottom-color: rgba(16, 185, 129, 0.35);
+  }
+  .lib-group-card.mat-theme-3 {
+    border-color: rgba(245, 158, 11, 0.55);
+    background: linear-gradient(180deg, rgba(180, 83, 9, 0.16) 0%, rgba(15, 23, 42, 0.35) 100%);
+  }
+  .lib-group-card.mat-theme-3 > .lib-group-head {
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.24), rgba(180, 83, 9, 0.12));
+    border-bottom-color: rgba(245, 158, 11, 0.35);
+  }
+  .lib-group-card.mat-theme-4 {
+    border-color: rgba(244, 63, 94, 0.55);
+    background: linear-gradient(180deg, rgba(190, 18, 60, 0.16) 0%, rgba(15, 23, 42, 0.35) 100%);
+  }
+  .lib-group-card.mat-theme-4 > .lib-group-head {
+    background: linear-gradient(90deg, rgba(244, 63, 94, 0.24), rgba(190, 18, 60, 0.12));
+    border-bottom-color: rgba(244, 63, 94, 0.35);
+  }
+  .lib-group-card.mat-theme-5 {
+    border-color: rgba(20, 184, 166, 0.55);
+    background: linear-gradient(180deg, rgba(15, 118, 110, 0.16) 0%, rgba(15, 23, 42, 0.35) 100%);
+  }
+  .lib-group-card.mat-theme-5 > .lib-group-head {
+    background: linear-gradient(90deg, rgba(20, 184, 166, 0.24), rgba(15, 118, 110, 0.12));
+    border-bottom-color: rgba(20, 184, 166, 0.35);
+  }
+  .lib-group-card.mat-theme-local {
+    border-color: rgba(99, 102, 241, 0.65);
+    background: linear-gradient(180deg, rgba(67, 56, 202, 0.18) 0%, rgba(15, 23, 42, 0.35) 100%);
+  }
+  .lib-group-card.mat-theme-local > .lib-group-head {
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.28), rgba(67, 56, 202, 0.14));
+    border-bottom-color: rgba(99, 102, 241, 0.40);
+  }
+  html[data-mode="light"] .lib-group-card.mat-theme-0 { background: rgba(224, 242, 254, 0.65); }
+  html[data-mode="light"] .lib-group-card.mat-theme-1 { background: rgba(243, 232, 255, 0.65); }
+  html[data-mode="light"] .lib-group-card.mat-theme-2 { background: rgba(209, 250, 229, 0.65); }
+  html[data-mode="light"] .lib-group-card.mat-theme-3 { background: rgba(254, 243, 199, 0.65); }
+  html[data-mode="light"] .lib-group-card.mat-theme-4 { background: rgba(255, 228, 230, 0.65); }
+  html[data-mode="light"] .lib-group-card.mat-theme-5 { background: rgba(204, 251, 241, 0.65); }
+  html[data-mode="light"] .lib-group-card.mat-theme-local { background: rgba(224, 231, 255, 0.70); }
+
+  .lec-row {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 9px 13px; background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--r); transition: all 0.14s ease;
+  }
+  .lec-row:hover { border-color: var(--line-strong); transform: translateY(-1px); }
+  .lec-row.is-watched { border-inline-start: 4px solid #4ADE80; background: rgba(34, 197, 94, 0.06); }
+  .watch-btn {
+    padding: 4px 10px; height: 28px; border-radius: 99px; font-size: 11px; font-weight: 700;
+    background: var(--panel2); border: 1px solid var(--line); color: var(--dim); flex: none;
+  }
+  .watch-btn.on {
+    background: rgba(34, 197, 94, 0.18); border-color: rgba(34, 197, 94, 0.55); color: #4ADE80;
+  }
+  html[data-mode="light"] .watch-btn.on { color: #15803D; }
+  .lec-info { flex: 1; min-width: 180px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .lec-tags { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+  .lec-sub { font-size: 11px; color: var(--dim); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .lec-sub code { font-family: "Consolas", monospace; font-size: 10.5px; opacity: 0.75; }
+
+  /* Header Install Button & Profile Button — High Contrast Across All Themes */
+  .pwa-btn {
+    background: var(--panel2);
+    border: 1.5px solid var(--blue);
+    color: var(--text);
+    font-weight: 700;
+  }
+  .pwa-btn svg { color: var(--blue); }
+  .pwa-btn:hover { background: var(--blue); color: var(--ink); border-color: transparent; }
+  .pwa-btn:hover svg { color: var(--ink); }
+
+  .profile-btn {
+    background: var(--panel2);
+    border: 1.5px solid var(--line-strong);
+    color: var(--text);
+    font-weight: 700;
+    padding: 0 11px;
+    max-width: 170px;
+  }
+  .profile-btn span {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px;
+  }
+  .profile-btn svg { color: var(--gold-hi); }
+
+  /* ---------- Local File Save Prompt Modal (#localSaveDlg) ---------- */
+  dialog.local-save-dlg { width: min(560px, 95vw); }
+  .lsave-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 12px; }
+  .lsave-file-box {
+    padding: 10px 13px; border-radius: var(--r); background: var(--panel2);
+    border: 1px solid var(--line-strong); display: flex; flex-direction: column; gap: 6px;
+  }
+  .lsave-choice {
+    display: flex; flex-direction: column; align-items: flex-start; text-align: start;
+    gap: 4px; width: 100%; padding: 12px 15px; border-radius: var(--r-lg);
+    background: var(--panel2); border: 1.5px solid var(--line); cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .lsave-choice:hover { border-color: var(--blue); background: var(--hover); transform: translateY(-1px); }
+  .lsave-choice.recommended {
+    border-color: var(--blue);
+    background: linear-gradient(135deg, var(--accent-glow), var(--panel2));
+  }
+  .lsave-choice b { font-size: 13.5px; color: var(--text); display: flex; align-items: center; gap: 8px; }
+  .lsave-choice span { font-size: 12px; color: var(--dim); font-weight: 400; line-height: 1.4; }
+
+  /* ---------- Multi-Profile & Storage Manager Modal (#profileDlg) ---------- */
+  dialog.profile-dlg { width: min(820px, 96vw); }
+  .prof-body { padding: 16px 20px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+  .prof-list { display: flex; flex-direction: column; gap: 10px; }
+  .prof-card {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    padding: 12px 15px; border-radius: var(--r-lg); background: var(--panel2);
+    border: 1.5px solid var(--line); transition: all 0.15s ease;
+  }
+  .prof-card.active {
+    border-color: var(--blue);
+    background: linear-gradient(135deg, var(--accent-glow), var(--panel2));
+    box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+  }
+  .prof-info { flex: 1; min-width: 210px; display: flex; flex-direction: column; gap: 5px; }
+  .prof-name-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-weight: 700; font-size: 14px; color: var(--text); }
+  .prof-active-pill {
+    font-size: 10.5px; padding: 2px 8px; border-radius: 99px;
+    background: rgba(34, 197, 94, 0.18); color: #4ADE80; border: 1px solid rgba(34, 197, 94, 0.45); font-weight: 700;
+  }
+  html[data-mode="light"] .prof-active-pill { color: #15803D; }
+  .prof-meta-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 11.5px; color: var(--dim); }
+  .prof-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .prof-actions button { height: 32px; padding: 0 11px; font-size: 12px; }
+
+  .prof-editor {
+    padding: 15px 16px; border-radius: var(--r-lg); background: var(--bg);
+    border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; gap: 12px;
+  }
+  .prof-form-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px 12px;
+  }
+  .prof-field { display: flex; flex-direction: column; gap: 4px; }
+  .prof-field label { font-size: 11.5px; font-weight: 700; color: var(--dim); }
+  .prof-field input, .prof-field select {
+    width: 100%; padding: 7px 10px; background: var(--panel2); color: var(--text);
+    border: 1px solid var(--line); border-radius: var(--r); font: inherit; font-size: 12.5px;
+  }
+  .prof-mat-rows { display: flex; flex-direction: column; gap: 7px; max-height: 210px; overflow-y: auto; padding-inline-end: 4px; }
+  .prof-mat-row {
+    display: grid; grid-template-columns: 1.2fr 0.9fr 1.1fr 1fr auto; gap: 6px; align-items: center;
+  }
+  @media (max-width: 680px) {
+    .prof-mat-row { grid-template-columns: 1fr 1fr; }
+  }
+  .prof-mat-row input {
+    padding: 6px 9px; background: var(--panel2); color: var(--text);
+    border: 1px solid var(--line); border-radius: var(--r); font: inherit; font-size: 12px; width: 100%;
+  }
+  .prof-textarea {
+    width: 100%; min-height: 78px; padding: 8px 11px; background: var(--panel2); color: var(--text);
+    border: 1px solid var(--line); border-radius: var(--r); font-family: "Consolas", monospace; font-size: 12px; resize: vertical;
+  }
+
+  /* ---------- Pro Studio About & Deployment Modal ---------- */
+  dialog.about-pro { width: min(680px, 95vw); }
+  .dlg-title { display: inline-flex; align-items: center; gap: 8px; color: var(--text); font-weight: 600; padding: 4px; }
+  .about-body { padding: 20px 22px 22px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+  .about-hero {
+    display: flex; align-items: center; gap: 16px; padding: 16px 18px;
+    background: linear-gradient(135deg, var(--accent-glow), rgba(245, 158, 11, 0.08));
+    border: 1px solid var(--line-strong); border-radius: var(--r-lg);
+  }
+  .about-logo-wrap {
+    width: 64px; height: 64px; border-radius: 16px; flex: none;
+    background: var(--bg); border: 1px solid var(--line-strong);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  }
+  .about-logo { width: 42px; height: 42px; display: block; }
+  .about-hero-txt { flex: 1; min-width: 0; text-align: start; }
+  .about-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .about-dev { font-size: 17px; font-weight: 700; color: var(--text); margin: 0; }
+  .ver-pill {
+    display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px; border-radius: 99px;
+    background: var(--blue); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
+  }
+  .about-sub { margin: 0 0 8px; font-size: 12.5px; color: var(--dim); line-height: 1.45; }
+  .about-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+  .abadge {
+    display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 99px;
+    font-size: 11px; font-weight: 600; background: var(--panel2); border: 1px solid var(--line); color: var(--blue);
+  }
+  .abadge.gold { color: var(--gold-hi); border-color: rgba(245, 158, 11, 0.35); background: rgba(245, 158, 11, 0.12); }
+  html[data-mode="light"] .abadge.gold { color: #B45309; }
+
+  .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 10px; }
+  .acard {
+    padding: 12px 14px; border-radius: var(--r); background: var(--panel2);
+    border: 1px solid var(--line); text-align: start; display: flex; flex-direction: column; gap: 4px;
+  }
+  .acard b { font-size: 12.5px; color: var(--blue); display: flex; align-items: center; gap: 6px; }
+  .acard p { margin: 0; font-size: 11.5px; color: var(--dim); line-height: 1.45; }
+
+  .deploy-card {
+    padding: 14px 16px; border-radius: var(--r-lg); background: var(--panel2);
+    border: 1px solid var(--line-strong); text-align: start; display: flex; flex-direction: column; gap: 8px;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .deploy-card.pulse-card { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.28); }
+  .deploy-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .deploy-head b { font-size: 13.5px; color: var(--text); display: inline-flex; align-items: center; gap: 7px; }
+  .deploy-sub { margin: 0; font-size: 12px; color: var(--dim); line-height: 1.45; }
+  .deploy-hint { font-size: 11.5px; color: var(--gold-hi); margin: 0; }
+  html[data-mode="light"] .deploy-hint { color: #B45309; }
+  .deploy-hint.ok { color: #4ADE80; font-weight: 600; }
+
+  .cmd-box {
+    direction: ltr; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    background: var(--bg); border: 1px solid var(--line); border-radius: var(--r);
+    padding: 8px 12px; font-family: "JetBrains Mono", "Consolas", monospace; font-size: 12px; color: var(--blue);
+  }
+  .cmd-box code { user-select: all; -webkit-user-select: all; overflow-x: auto; white-space: nowrap; }
+  .cmd-box button { padding: 4px 10px; font-size: 11.5px; height: 28px; flex: none; }
+
+  .about-foot {
+    padding-top: 12px; border-top: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  }
+  .about-foot .btns { display: flex; gap: 8px; flex-wrap: wrap; width: 100%; }
+  .about-foot .btns button { flex: 1; min-width: 150px; padding: 8px 12px; font-size: 12.5px; }
+  .updatebar { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 50; display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--panel); border: 1px solid var(--line-strong); border-radius: var(--r-lg); box-shadow: 0 6px 24px rgba(0,0,0,.45); max-width: 92vw; }
+
+  /* ---------- Welcome Tour (Remade Studio Layout) ---------- */
+  dialog.wide { width: min(1120px, 96vw); }
+  .w-head { padding: 16px 24px 4px; text-align: center; }
+  .w-head h2 { margin: 0 0 4px; font-size: 21px; font-weight: 700; color: var(--text); }
+  .w-head p { margin: 0; color: var(--dim); font-size: 13px; }
+  .w-body { padding: 6px 12px 6px; overflow: hidden; }
+  .w-fit { margin: 0 auto; position: relative; overflow: hidden; }
+  .wstage { position: absolute; left: 0; top: 0; width: 1040px; height: 690px; transform-origin: 0 0; direction: ltr; }
+  .w-arrows { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 3; }
+  .w-arrows path { fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; }
+  .w-arrows circle { fill: var(--blue); }
+  .wlabel {
+    position: absolute; z-index: 4; width: 205px; padding: 7px 10px;
+    background: var(--panel2); border: 1px solid var(--line); border-inline-start: 3px solid var(--blue);
+    border-radius: var(--r); direction: ltr; text-align: start;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  }
+  html[dir=rtl] .wlabel { direction: rtl; border-inline-start: 3px solid var(--blue); }
+  .wlabel b { display: block; color: var(--blue); font-size: 12.5px; font-weight: 700; margin-bottom: 2px; }
+  .wlabel span { display: block; color: var(--text); font-size: 11.5px; line-height: 1.35; opacity: .92; }
+  .w-foot { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 20px 16px; flex-wrap: nowrap; border-top: 1px solid var(--line); }
+  .w-foot .tip { color: var(--dim); font-size: 11px; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .wlist { display: none; list-style: none; margin: 0; padding: 4px 18px 8px; }
+  .wlist li { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .wlist b { display: block; color: var(--blue); font-size: 13px; }
+  .wlist span { color: var(--text); font-size: 13px; opacity: .9; }
+  @media (max-width: 760px) { .w-fit { display: none; } .wlist { display: block; max-height: 56dvh; overflow: auto; } }
+
+  /* Miniature Studio Player in Welcome Tour */
+  .mock { position: absolute; left: 242px; top: 142px; width: 556px; height: 416px; background: var(--bg); border: 1px solid var(--line-strong); border-radius: var(--r-lg); overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 14px 44px rgba(0,0,0,.55); }
+  .m-head { height: 36px; background: var(--panel); border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 5px; padding: 0 9px; flex: none; }
+  .m-head img { height: 18px; width: auto; }
+  .m-tags { display: inline-flex; align-items: center; gap: 3px; padding: 2px 4px; border-radius: 6px; }
+  .m-tag { font-size: 8.5px; font-weight: 700; padding: 1px 5px; border-radius: 99px; white-space: nowrap; }
+  .m-head .sp { flex: 1; }
+  .m-btn { height: 20px; padding: 0 6px; display: inline-flex; align-items: center; gap: 3px; background: var(--panel2); border: 1px solid var(--line); border-radius: 5px; font-size: 9.5px; color: var(--text); white-space: nowrap; }
+  .m-btn.gold { background: var(--blue); border-color: var(--blue); color: var(--ink); font-weight: 600; }
+  .m-btn.pwa { background: rgba(245,158,11,0.18); border-color: var(--gold); color: var(--gold-hi); font-weight: 600; }
+  .m-btn.on { background: var(--accent-glow); border-color: var(--blue); color: var(--blue); font-weight: 600; }
+  .m-btn.enh-on { background: rgba(245,158,11,0.2); border-color: var(--gold); color: var(--gold-hi); font-weight: 700; }
+  .m-btn svg { width: 10px; height: 10px; fill: currentColor; flex: none; }
+  .m-mid { flex: 1; display: flex; min-height: 0; padding: 6px; gap: 6px; }
+  .m-screen { flex: 1; background: #050811; border: 1px solid var(--line); border-radius: 8px; position: relative; display: flex; align-items: center; justify-content: center; padding: 12px; }
+  .m-slide { width: 100%; height: 100%; background: #f4f6f8; border-radius: 5px; padding: 12px 14px; display: flex; flex-direction: column; gap: 7px; }
+  .m-slide i { display: block; height: 6px; background: #c9d2db; border-radius: 2px; }
+  .m-slide i.t { height: 9px; width: 55%; background: #0284C7; margin-bottom: 4px; }
+  .m-chat { width: 148px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; flex: none; display: flex; flex-direction: column; overflow: hidden; }
+  .m-chat .ch { height: 24px; background: var(--panel2); border-bottom: 1px solid var(--line); display: flex; align-items: center; padding: 0 6px; font-size: 9px; font-weight: 600; gap: 4px; }
+  .m-chat .ch svg { width: 10px; height: 10px; fill: currentColor; }
+  .m-chat .ch .m-pill { margin-left: auto; background: var(--bg); border: 1px solid var(--line); padding: 1px 4px; border-radius: 4px; font-size: 8px; color: var(--dim); }
+  .m-chat .ch .m-x { width: 14px; height: 14px; display: inline-flex; align-items: center; justify-content: center; background: var(--bg); border-radius: 3px; font-size: 8px; }
+  .m-msgs-wrap { flex: 1; display: flex; min-height: 0; }
+  .m-msgs-list { flex: 1; display: flex; flex-direction: column; }
+  .m-sbar { width: 4px; background: rgba(148,163,184,0.12); margin: 3px 2px 3px 0; border-radius: 2px; position: relative; }
+  .m-sbar i { display: block; width: 100%; height: 42%; background: var(--blue); border-radius: 2px; margin-top: 14px; }
+  .m-msg { display: flex; gap: 5px; padding: 5px 6px; border-bottom: 1px solid var(--line); }
+  .m-msg .a { width: 15px; height: 15px; border-radius: 4px; flex: none; }
+  .m-msg .l { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+  .m-msg .l .w { display: flex; justify-content: space-between; align-items: center; }
+  .m-msg .l .w b { width: 32px; height: 4px; background: var(--blue); border-radius: 1px; display: inline-block; }
+  .m-msg .l .w em { font-style: normal; font-size: 7.5px; color: var(--blue); background: var(--accent-glow); padding: 0 3px; border-radius: 3px; }
+  .m-msg .l i { display: block; height: 4px; background: #5d7f99; border-radius: 1px; }
+  .m-msg.cur { background: var(--accent-glow); }
+  .m-ctl { flex: none; background: var(--glass); border-top: 1px solid var(--line); padding: 6px 10px 8px; }
+  .m-seek { position: relative; height: 5px; background: var(--panel2); border-radius: 99px; margin: 3px 0 8px; }
+  .m-seek .f { position: absolute; left: 0; top: 0; bottom: 0; width: 38%; background: linear-gradient(90deg, var(--blue), var(--gold)); border-radius: 99px; }
+  .m-seek .k { position: absolute; left: 38%; top: -4px; width: 8px; height: 13px; background: #fff; border: 2px solid var(--blue); border-radius: 99px; transform: translateX(-50%); }
+  .m-seek .t { position: absolute; top: -2px; width: 2px; height: 9px; background: rgba(226,234,240,.85); }
+  .m-row { display: flex; align-items: center; gap: 4px; }
+  .m-ic { width: 19px; height: 19px; display: inline-flex; align-items: center; justify-content: center; background: var(--panel2); border: 1px solid var(--line); border-radius: 4px; flex: none; }
+  .m-ic.play { background: var(--blue); color: var(--ink); border-color: transparent; }
+  .m-ic svg { width: 11px; height: 11px; fill: currentColor; }
+  .m-vol { width: 26px; height: 4px; background: var(--blue); border-radius: 2px; flex: none; }
+  .m-sel { height: 19px; padding: 0 4px; display: inline-flex; align-items: center; font-size: 8.5px; background: var(--panel2); border: 1px solid var(--line); border-radius: 4px; }
+
+  .vnotice { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; color: #ffd2d2; background: rgba(0,0,0,.6); z-index: 4; }
+  .ccstatus:empty { display: none; }
+  .seekrow { display: flex; align-items: center; gap: 10px; }
+  .seekrow .seek { flex: 1; min-width: 0; }
+  .tcur, .ttot { display: block; color: var(--dim); font-size: 11.5px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; min-width: 36px; }
+  .tcur { text-align: start; } .ttot { text-align: end; }
+  @media (hover: none) { .seek .knob { opacity: 1; } }
+
+  /* Responsive: Tablets and Phones */
+  @media (max-width: 820px) {
+    main { flex-direction: column; padding: 8px; gap: 8px; }
+    .stage-wrap { flex: none; }
+    .stage { flex: none; width: 100%; aspect-ratio: var(--ar, 16 / 9); max-height: 54dvh; min-height: 180px; }
+    .controls-zone { position: relative; left: auto; right: auto; bottom: auto; height: auto; padding: 0; }
+    .controls { opacity: 1; transform: none; border-radius: 0; border-left: none; border-right: none; border-bottom: none; }
+    aside.chat { flex: 1; width: auto; height: auto; min-height: 140px; }
+    .cascade { grid-template-columns: 80px 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    html, body { height: 100dvh; }
+    select, input[type=text] { font-size: 16px; }
+    header { gap: 6px; padding: 6px 10px; padding-top: calc(6px + env(safe-area-inset-top)); }
+    header .meta, #curThemeLbl, #installPwaBtn span { display: none; }
+    header #openBtn { margin-inline-start: auto; padding: 0 10px; font-size: 13px; white-space: nowrap; }
+    header button { padding: 0 9px; min-width: 36px; flex: none; }
+    .lang { padding: 0 7px; }
+    .stage { max-height: 50dvh; }
+    .drop { padding: 20px 16px 24px; }
+    .shortcut-strip { display: none; }
+    .time, #vol, .row .grow { display: none; }
+    .vol-group { padding: 0 4px; }
+    .row { flex-wrap: nowrap; justify-content: space-between; gap: 3px; margin-top: 2px; }
+    .row .iconbtn, .row .tbtn { flex: 1 1 0; min-width: 0; max-width: 46px; width: auto; height: 36px; padding: 0; }
+    .tbtn span { display: none; }
+    #speed { flex: 1.5 1 0; min-width: 0; max-width: 66px; height: 36px; padding: 0 2px; text-align: center; text-align-last: center; }
+    dialog { width: 96vw; max-height: 92dvh; }
+    .tab:not(.on) > span { display: none; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zm0 12H4V8h16v10z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-2.95a15.7 15.7 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.9 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14a8.2 8.2 0 0 1 0-4h3.38a16.5 16.5 0 0 0 0 4H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.99 7.99 0 0 1 5.08 16zm2.95-8H5.08a7.99 7.99 0 0 1 4.33-3.56A15.7 15.7 0 0 0 8.03 8zM12 19.96A14.2 14.2 0 0 1 10.09 16h3.82A14.2 14.2 0 0 1 12 19.96zM14.34 14H9.66a14.7 14.7 0 0 1 0-4h4.68a14.7 14.7 0 0 1 0 4zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14a16.5 16.5 0 0 0 0-4h3.38a8.2 8.2 0 0 1 0 4h-3.38z"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7l-4-4zm-5 16a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm3-10H5V5h10v4z"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></symbol>
+    <symbol id="i-wand" viewBox="0 0 24 24"><path d="M7.5 5.6 10 7 8.6 4.5 10 2 7.5 3.4 5 2l1.4 2.5L5 7zm12 9.8L17 14l1.4 2.5L17 19l2.5-1.4L22 19l-1.4-2.5L22 14zM22 2l-2.5 1.4L17 2l1.4 2.5L17 7l2.5-1.4L22 7l-1.4-2.5zm-7.63 5.29a.996.996 0 0 0-1.41 0L1.29 18.96a.996.996 0 0 0 0 1.41l2.34 2.34c.39.39 1.02.39 1.41 0L16.7 11.05a.996.996 0 0 0 0-1.41l-2.33-2.35zm-1.03 5.49-2.12-2.12 2.44-2.44 2.12 2.12-2.44 2.44z"/></symbol>
+    <symbol id="i-cc" viewBox="0 0 24 24"><path d="M19 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm-8 7H9.5v-.5h-2v3h2V13H11v1c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1h3c.55 0 1 .45 1 1v1zm7 0h-1.5v-.5h-2v3h2V13H18v1c0 .55-.45 1-1 1h-3c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1h3c.55 0 1 .45 1 1v1z"/></symbol>
+    <symbol id="i-stretch" viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 16.01H3V4.99h18v14.02z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0 0 12 4a8 8 0 1 0 7.73 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></symbol>
+  </defs>
+</svg>
+
+<noscript><p style="margin:0;padding:12px 16px;background:#111827;color:#f8fafc;text-align:center">SVU Player replays recorded Syrian Virtual University sessions (screen, audio and chat) in your browser. Please turn on JavaScript to use it.</p></noscript>
+<header>
+  <h1>
+    <span class="brand-emblem" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M2 6.5C2 5.4 2.9 4.5 4 4.5H8.5C10.4 4.5 12 5.8 12 7.5V19.5C12 18.4 10.6 17.5 8.5 17.5H4C2.9 17.5 2 16.6 2 15.5V6.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="rgba(56,189,248,0.12)"/>
+        <path d="M22 6.5C22 5.4 21.1 4.5 20 4.5H15.5C13.6 4.5 12 5.8 12 7.5V19.5C12 18.4 13.4 17.5 15.5 17.5H20C21.1 17.5 22 16.6 22 15.5V6.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="rgba(56,189,248,0.12)"/>
+        <circle cx="12" cy="11.5" r="4.6" fill="#090D16" stroke="#F59E0B" stroke-width="1.6"/>
+        <polygon points="10.8 9.4 14.5 11.5 10.8 13.6" fill="#F59E0B"/>
+      </svg>
+    </span>
+    <span class="brand-title">SVU Player</span>
+  </h1>
+  <div class="meta" id="meta" dir="auto"></div>
+  <button id="openBtn" class="primary"><svg class="i"><use href="#i-folder"/></svg><span data-i18n="tabFile">Open file</span></button>
+  <button id="libHeaderBtn" data-i18n-title="libTitle" title="Student Lecture Library"><svg class="i"><use href="#i-save"/></svg><span data-i18n="studentLibBtn">Student library</span><span id="libHeaderCount" style="font-size:11px;opacity:.85"></span></button>
+  <button id="installPwaBtn" class="pwa-btn" data-i18n-title="installPwaTitle" title="Install SVU Player for full offline playback (PWA)"><svg class="i"><use href="#i-download"/></svg><span data-i18n="installPwaShort">Install</span></button>
+  <button id="aboutBtn" data-i18n-title="aboutTitle" data-i18n-aria="aboutTitle" title="About" aria-label="About"><svg class="i" style="width:18px;height:18px"><use href="#i-info"/></svg></button>
+
+  <!-- Theme Selector Menu Button (9 Themes) -->
+  <div class="theme-menu-wrap">
+    <button id="themeMenuBtn" data-i18n-title="themeMenuTitle" title="Choose theme" aria-label="Choose theme">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+      </svg>
+      <span id="curThemeLbl" data-i18n="themesBtn">Themes</span>
+      <span style="font-size:10px;opacity:.7">▾</span>
+    </button>
+    <div class="theme-dropdown" id="themeDropdown" role="menu">
+      <button class="theme-opt active" data-theme-opt="default" role="menuitem"><span data-i18n="themeDefault">Default</span><span class="theme-dot" style="background:linear-gradient(135deg,#38BDF8,#F59E0B)"></span></button>
+      <button class="theme-opt" data-theme-opt="whatsapp" role="menuitem"><span data-i18n="themeWhatsapp">WhatsApp</span><span class="theme-dot" style="background:#00A884"></span></button>
+      <button class="theme-opt" data-theme-opt="telegram" role="menuitem"><span data-i18n="themeTelegram">Telegram</span><span class="theme-dot" style="background:#2AABEE"></span></button>
+      <button class="theme-opt" data-theme-opt="win98" role="menuitem"><span data-i18n="themeWin98">Windows 98</span><span class="theme-dot" style="background:#008080"></span></button>
+      <button class="theme-opt" data-theme-opt="winxp" role="menuitem"><span data-i18n="themeWinxp">Windows XP</span><span class="theme-dot" style="background:linear-gradient(135deg,#0054E3,#3C9A2E)"></span></button>
+      <button class="theme-opt" data-theme-opt="win7" role="menuitem"><span data-i18n="themeWin7">Windows 7</span><span class="theme-dot" style="background:#36A9E1"></span></button>
+      <button class="theme-opt" data-theme-opt="hacker" role="menuitem"><span data-i18n="themeHacker">Hacker</span><span class="theme-dot" style="background:#00FF41"></span></button>
+      <button class="theme-opt" data-theme-opt="vscode" role="menuitem"><span data-i18n="themeVscode">VS Code</span><span class="theme-dot" style="background:#007ACC"></span></button>
+      <button class="theme-opt" data-theme-opt="terminal" role="menuitem"><span data-i18n="themeTerminal">Terminal</span><span class="theme-dot" style="background:#FFB000"></span></button>
+    </div>
+  </div>
+
+  <!-- Dark / Light Mode Toggle Button -->
+  <button id="themeBtn" class="theme-btn" data-i18n-title="modeToggleTitle" title="Toggle Dark / Light Mode" aria-label="Toggle Dark / Light Mode">
+    <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+    </svg>
+    <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+    </svg>
+  </button>
+
+  <!-- Profile & Storage Manager Button (Beside Language Toggle) -->
+  <button id="profileBtn" class="profile-btn" data-i18n-title="profileBtnTitle" title="Profiles &amp; Course Presets Manager">
+    <svg class="i"><use href="#i-user"/></svg>
+    <span id="activeProfileLbl" data-i18n="profileDefaultName">البروفايل</span>
+  </button>
+
+  <!-- Language Toggle Button (AR / EN Text) -->
+  <button id="langBtn" class="lang is-ar" role="switch" aria-checked="true" title="التبديل إلى الإنجليزية" aria-label="التبديل إلى الإنجليزية">
+    <span class="flag ar">AR</span>
+    <span class="flag en">EN</span>
+  </button>
+  <input type="file" id="file" accept=".lrec,.LREC" hidden>
+</header>
+
+<main>
+  <div class="stage-wrap">
+    <div class="stage" id="stage">
+      <canvas id="screen" width="640" height="360"></canvas>
+      <div class="caption" id="caption" dir="auto" hidden></div>
+      <div class="vnotice" id="vnotice" data-i18n="videoFail" hidden></div>
+      <button class="bigplay" id="bigplay" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+
+      <div class="drop" id="drop">
+        <div class="hero-emblem" aria-hidden="true">
+          <svg width="46" height="46" viewBox="0 0 24 24" fill="none">
+            <path d="M2 6.5C2 5.4 2.9 4.5 4 4.5H8.5C10.4 4.5 12 5.8 12 7.5V19.5C12 18.4 10.6 17.5 8.5 17.5H4C2.9 17.5 2 16.6 2 15.5V6.5Z" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="rgba(56,189,248,0.12)"/>
+            <path d="M22 6.5C22 5.4 21.1 4.5 20 4.5H15.5C13.6 4.5 12 5.8 12 7.5V19.5C12 18.4 13.4 17.5 15.5 17.5H20C21.1 17.5 22 16.6 22 15.5V6.5Z" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="rgba(56,189,248,0.12)"/>
+            <circle cx="12" cy="11.5" r="4.8" fill="#090D16" stroke="#F59E0B" stroke-width="1.6"/>
+            <polygon points="10.7 9.3 14.6 11.5 10.7 13.7" fill="#F59E0B"/>
+          </svg>
+        </div>
+        <h2 class="drop-title" data-i18n="dropHeroTitle">Ready to Watch a Session</h2>
+        <p class="drop-sub" data-i18n="dropHeroSub">Browse the university session catalog, paste a direct link, or drop any .lrec file right here.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+          <button class="primary" id="dropBrowseBtn"><svg class="i"><use href="#i-globe"/></svg><span data-i18n="browseSessions">Browse Sessions</span></button>
+          <button id="dropBatchBtn"><svg class="i"><use href="#i-download"/></svg><span data-i18n="tabBatch">Batch download</span></button>
+          <button id="dropLibBtn"><svg class="i"><use href="#i-save"/></svg><span data-i18n="studentLibBtn">Student library</span></button>
+        </div>
+        <div class="shortcut-strip">
+          <span><kbd>Space</kbd> <span data-i18n="scPlay">Play / Pause</span></span>
+          <span><kbd>←</kbd> <kbd>→</kbd> <span data-i18n="scSeek">Seek</span></span>
+          <span><kbd>M</kbd> <span data-i18n="scMute">Mute</span></span>
+          <span><kbd>F</kbd> <span data-i18n="scFs">Fullscreen</span></span>
+          <span><kbd>C</kbd> <span data-i18n="scChat">Chat</span></span>
+        </div>
+      </div>
+
+      <div class="loading-box" id="loading">
+        <div class="stagename" id="stagename" data-i18n="loading">Loading…</div>
+        <div class="bar"><i id="barfill"></i></div>
+        <div class="err" id="err"></div>
+      </div>
+    </div>
+
+    <div class="controls-zone" id="controlsZone">
+      <div class="controls disabled" id="controls">
+        <div class="seekrow">
+          <span class="tcur" id="tCur">0:00</span>
+          <div class="seek" id="seek" role="slider" tabindex="0" data-i18n-aria="seek" aria-label="Seek" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
+            <div class="track"><div class="fill" id="fill"></div><div id="ticks"></div></div>
+            <div class="knob" id="knob"></div>
+            <div class="tip" id="tip">0:00</div>
+          </div>
+          <span class="ttot" id="tTot">0:00</span>
+        </div>
+        <div class="row">
+          <!-- Left Group: Play/Pause + Seek Back + Seek Next + Time + Enhance -->
+          <button class="iconbtn" id="play" data-i18n-aria="playPause" data-i18n-title="playPause" aria-label="Play/Pause" title="Play/Pause (Space)">
+            <svg id="icoPlay" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="icoPause" viewBox="0 0 24 24" style="display:none"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+          </button>
+          <button class="iconbtn" id="back" data-i18n-title="back10" data-i18n-aria="back10" title="Back 10 s (←)"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6.5 12 11V8a5 5 0 1 1-5 5H5a7 7 0 1 0 7-8z"/></svg></button>
+          <button class="iconbtn" id="fwd" data-i18n-title="fwd10" data-i18n-aria="fwd10" title="Forward 10 s (→)"><svg viewBox="0 0 24 24"><path d="M12 5V2l5 4.5L12 11V8a5 5 0 1 0 5 5h2a7 7 0 1 1-7-8z"/></svg></button>
+          <span class="time" id="time">0:00 / 0:00</span>
+          <button class="tbtn" id="enhBtn" data-i18n-title="enhanceTitle" title="Enhance audio (noise reduction)" aria-pressed="false"><svg class="i"><use href="#i-wand"/></svg><span data-i18n="enhance">Enhance</span></button>
+          <button class="tbtn" id="ccBtn" data-i18n-title="ccTitle" title="Captions (auto-generated)" aria-pressed="false" hidden><svg class="i"><use href="#i-cc"/></svg><span data-i18n="cc">CC</span></button>
+          <span class="ccstatus" id="ccStatus"></span>
+          <span class="grow"></span>
+          <!-- Right Group: Volume (Mute/Unmute + Slider) + Speed + Stretch + Chat + Fullscreen + Pin Toggle -->
+          <div class="vol-group">
+            <button class="iconbtn" id="mute" data-i18n-title="mute" data-i18n-aria="mute" title="Mute (M)">
+              <svg id="icoVol" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+              <svg id="icoMute" viewBox="0 0 24 24" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13 .6L14.6 11l1.4 1.4-1.4 1.4L16 15.2l1.4-1.4 1.4 1.4 1.4-1.4-1.4-1.4 1.4-1.4-1.4-1.4-1.4 1.4z"/></svg>
+            </button>
+            <input type="range" id="vol" min="0" max="1" step="0.01" value="1" data-i18n-aria="volume" aria-label="Volume">
+          </div>
+          <select id="speed" data-i18n-aria="speed" data-i18n-title="speed" aria-label="Playback speed" title="Playback speed">
+            <option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option>
+            <option value="1.5">1.5×</option><option value="2">2×</option>
+          </select>
+          <button class="tbtn on" id="stretchBtn" aria-pressed="true" data-i18n-title="stretchTitle" title="Enlarge the view to fill the available space (S)"><svg class="i"><use href="#i-stretch"/></svg><span data-i18n="stretch">Stretch</span></button>
+          <button class="tbtn on" id="chatToggle" aria-pressed="true" data-i18n-title="chatTitle" title="Show/hide chat (C)"><svg class="i"><use href="#i-chat"/></svg><span data-i18n="chat">Chat</span></button>
+          <button class="iconbtn" id="fsBtn" data-i18n-title="fullscreen" data-i18n-aria="fullscreen" title="Fullscreen (F)"><svg viewBox="0 0 24 24"><path d="M5 5h5v2H7v3H5zm9 0h5v5h-2V7h-3zM5 14h2v3h3v2H5zm12 0h2v5h-5v-2h3z"/></svg></button>
+          <button class="iconbtn" id="pinBtn" aria-pressed="false" data-i18n-title="pinControls" data-i18n-aria="pinControls" title="Pin / auto-hide controls">
+            <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="chat" id="chat">
+    <div class="chat-head">
+      <h2><svg class="i"><use href="#i-chat"/></svg><span data-i18n="chat">Chat</span> <span id="chatCount"></span></h2>
+      <label class="showall-pill"><input type="checkbox" id="showAll"> <span data-i18n="showAll">Show all</span></label>
+      <button class="iconbtn" id="chatClose" style="width:28px;height:28px" data-i18n-title="hideChat" data-i18n-aria="hideChat" title="Hide chat" aria-label="Hide chat">
+        <svg class="i" style="width:15px;height:15px"><use href="#i-close"/></svg>
+      </button>
+    </div>
+    <div class="msgs" id="msgs"><div class="empty" data-i18n="chatEmpty">Open a recording to see its chat.</div></div>
+  </aside>
+</main>
+
+<dialog id="dlg">
+  <div class="dlg-head">
+    <button class="tab on" id="tabRemote"><svg class="i"><use href="#i-globe"/></svg><span data-i18n="tabRemote">SVU sessions</span></button>
+    <button class="tab" id="tabBatch"><svg class="i"><use href="#i-download"/></svg><span data-i18n="tabBatch">Batch download</span></button>
+    <button class="tab" id="tabSaved"><svg class="i"><use href="#i-save"/></svg><span data-i18n="tabSaved">Student library</span><span id="tabSavedCount"></span></button>
+    <button class="tab" id="tabLink"><svg class="i"><use href="#i-link"/></svg><span data-i18n="tabLink">Direct link</span></button>
+    <button class="tab" id="tabFile"><svg class="i"><use href="#i-folder"/></svg><span data-i18n="tabFile">Open file</span></button>
+    <span style="flex:1"></span>
+    <span class="spin" id="dlspin" hidden></span>
+    <button class="iconbtn" id="dlgClose" data-i18n-aria="close" aria-label="Close"><svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="dlg-body">
+    <!-- Tab 1: SVU Session Catalog -->
+    <div id="paneRemote">
+      <div id="noserver" class="muted" data-i18n="noServer" hidden style="margin-bottom:10px;"></div>
+      <div class="cascade" id="cascade">
+        <label for="selTerm" data-i18n="lblTerm">Term</label><select id="selTerm" disabled><option value="" data-i18n="selTerm">Select Term</option></select>
+        <label for="selProgram" data-i18n="lblProgram">Program</label><select id="selProgram" disabled><option value="" data-i18n="selProgram">Select Program</option></select>
+        <label for="selCourse" data-i18n="lblCourse">Course</label><select id="selCourse" disabled><option value="" data-i18n="selCourse">Select Course</option></select>
+        <label for="selTutor" data-i18n="lblTutor">Tutor</label><select id="selTutor" disabled><option value="" data-i18n="selTutor">Select Tutor</option></select>
+        <label for="selClass" data-i18n="lblClass">Class</label><select id="selClass" disabled><option value="" data-i18n="selClass">Select Class</option></select>
+        <label for="selSession" data-i18n="lblSession">Session</label><select id="selSession" disabled><option value="" data-i18n="selSession">Select Session</option></select>
+      </div>
+      <div id="filesBox" hidden>
+        <h3 data-i18n="recordings">Recordings</h3>
+        <div class="list" id="files"></div>
+      </div>
+    </div>
+
+    <!-- Tab 2: Smart Batch Course Downloader -->
+    <div id="paneBatch" hidden>
+      <div style="margin-bottom:6px;font-weight:700;font-size:15px;color:var(--text)" data-i18n="batchTitle">Smart Batch Course Downloader</div>
+      <div class="muted" data-i18n="batchSub" style="margin-bottom:12px;">Select your Term &amp; College, check the materials you study, pick Tutor, Class &amp; Lessons (or ALL), and download everything safely with one click. Already downloaded lectures are skipped automatically.</div>
+
+      <!-- Step 1: Term & College -->
+      <div class="batch-step-box">
+        <div class="batch-step-head">
+          <b data-i18n="batchStep1">1. Select Term &amp; College (Program)</b>
+          <button id="batchRefreshBtn" style="height:30px;padding:0 10px;font-size:12px;"><svg class="i"><use href="#i-refresh"/></svg><span data-i18n="batchRefreshBtn">Refresh / Check New</span></button>
+        </div>
+        <div class="batch-top-grid cascade">
+          <label for="batchTerm" data-i18n="lblTerm">Term</label>
+          <select id="batchTerm" disabled><option value="" data-i18n="selTerm">Select Term</option></select>
+          <label for="batchProgram" data-i18n="lblProgram">Program</label>
+          <select id="batchProgram" disabled><option value="" data-i18n="selProgram">Select Program</option></select>
+        </div>
+      </div>
+
+      <!-- Step 2: Multi-Course Selection & Per-Course Lesson Picker -->
+      <div class="batch-step-box">
+        <div class="batch-step-head">
+          <b data-i18n="batchStep2">2. Select Materials &amp; Configure Classes / Lessons</b>
+          <div class="b-mini-btns">
+            <button id="batchShowSelectedBtn" class="b-filter-toggle" data-i18n-title="batchShowSelectedTitle">Selected only (0)</button>
+            <button id="batchSelectAllBtn" data-i18n="batchSelectAllCourses">Select visible</button>
+            <button id="batchClearBtn" data-i18n="batchClearCourses">Clear selection</button>
+          </div>
+        </div>
+        <div class="batch-toolbar">
+          <input type="text" class="batch-search" id="batchCourseFilter" data-i18n-ph="batchFilterPh" placeholder="Search materials (e.g. BPG401)…">
+        </div>
+        <div class="batch-courses-list" id="batchCoursesList">
+          <div class="muted" data-i18n="batchNoCollege" style="padding:18px;text-align:center;">Select a Term and College above to load all available materials.</div>
+        </div>
+      </div>
+
+      <!-- Step 3: Safe Sequential Queue & Action Bar -->
+      <div class="batch-footer">
+        <div class="batch-foot-row">
+          <div>
+            <div class="batch-summary-txt" id="batchSummaryTxt">0 materials · 0 lessons selected</div>
+            <div class="batch-safe-note" data-i18n="batchSafeNote">🛡 Safe Anti-Ban Mode: Downloads sequentially with polite delays to protect your connection.</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <button class="primary" id="batchStartBtn" disabled><svg class="i"><use href="#i-download"/></svg><span data-i18n="batchStartBtn">Download Selected Lectures Safely</span></button>
+            <button id="batchStopBtn" hidden><svg class="i"><use href="#i-close"/></svg><span data-i18n="batchStopBtn">Stop Queue</span></button>
+            <button id="batchOpenLibBtn" hidden><svg class="i"><use href="#i-save"/></svg><span data-i18n="batchOpenLib">Open Student Library</span></button>
+          </div>
+        </div>
+        <div class="batch-queue-box" id="batchQueueBox" hidden>
+          <div style="display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:600">
+            <span id="batchQueueStatus"></span>
+            <span id="batchQueueCount" dir="ltr"></span>
+          </div>
+          <div class="bar"><i id="batchQueueBar"></i></div>
+          <div class="bar" style="height:4px;opacity:.85"><i id="batchFileBar"></i></div>
+          <div class="muted" id="batchFileTxt" style="font-variant-numeric:tabular-nums"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 3: Direct .lrec Link (Separate Tab) -->
+    <div id="paneLink" hidden>
+      <div style="margin-bottom:8px;font-weight:600;font-size:14px;" data-i18n="linkTitle">Download from Direct SVU Recording Link</div>
+      <div class="muted" data-i18n="linkSub" style="margin-bottom:12px;">Paste a direct .lrec URL from sessions.svuonline.org to download and play it immediately.</div>
+      <div class="row-item static" id="urlPaste">
+        <input type="text" id="pasteUrl" placeholder="http://sessions.svuonline.org/files/.../session.lrec" dir="ltr" style="flex:1;min-width:200px;padding:9px 12px;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:var(--r);font:inherit;">
+        <button class="primary" id="pasteGo"><svg class="i"><use href="#i-download"/></svg><span data-i18n="downloadPlay">Download &amp; play</span></button>
+        <button id="pasteCancel" hidden><svg class="i"><use href="#i-close"/></svg><span data-i18n="cancel">Cancel</span></button>
+        <div class="rowprog" id="pasteProg" hidden>
+          <div class="bar"><i id="pasteFill"></i></div>
+          <div class="muted" id="pasteTxt"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shared Status & Offline Save Option for Remote & Link Tabs -->
+    <div id="keepWrap">
+      <div class="status" id="rstatus"></div>
+      <label class="keep"><input type="checkbox" id="keepOffline" checked> <span data-i18n="keep">Keep a copy on this device for offline playback</span></label>
+    </div>
+
+    <!-- Tab 4: Open Local File -->
+    <div id="paneFile" hidden>
+      <button class="dropzone" id="dropzone">
+        <svg class="i"><use href="#i-upload"/></svg>
+        <b data-i18n="dropTitle">Drop a .lrec file here</b>
+        <span class="muted" data-i18n="dropSub">or click to choose one from your computer</span>
+      </button>
+    </div>
+
+    <!-- Tab 5: Organized Student Lecture Library -->
+    <div id="paneSaved" hidden>
+      <div class="lib-top-bar">
+        <div class="lib-stats">
+          <span id="libStatsSummary"></span>
+          <span class="muted" id="usage"></span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button id="libCheckNewBtn" style="height:32px;padding:0 11px;font-size:12px;"><svg class="i"><use href="#i-refresh"/></svg><span data-i18n="libCheckNewBtn">Check for new lectures</span></button>
+          <button class="primary" id="libGoBatchBtn" style="height:32px;padding:0 11px;font-size:12px;"><svg class="i"><use href="#i-download"/></svg><span data-i18n="tabBatch">Batch download</span></button>
+        </div>
+      </div>
+
+      <!-- Sync / New Lectures Banner -->
+      <div class="lib-sync-banner" id="libSyncBanner" hidden>
+        <span id="libSyncTxt"></span>
+        <button class="primary" id="libSyncDlBtn" hidden style="height:30px;padding:0 12px;font-size:12px;"></button>
+      </div>
+
+      <!-- Search, Group, Sort & Watched Filter Controls -->
+      <div class="lib-controls-bar">
+        <input type="text" class="lib-search" id="libSearch" data-i18n-ph="libSearchPh" placeholder="Search by material, college, lesson, tutor, class, or date…">
+        <select id="libGroup" style="height:34px;padding:0 10px;font-size:12px;">
+          <option value="course" data-i18n="libGroupCourse">By Material</option>
+          <option value="college" data-i18n="libGroupCollege">By College</option>
+          <option value="term" data-i18n="libGroupTerm">By Term</option>
+          <option value="none" data-i18n="libGroupNone">Flat List</option>
+        </select>
+        <select id="libSort" style="height:34px;padding:0 10px;font-size:12px;">
+          <option value="lesson_asc" data-i18n="libSortLessonAsc">Lesson (1 → 12)</option>
+          <option value="lesson_desc" data-i18n="libSortLessonDesc">Lesson (12 → 1)</option>
+          <option value="date_desc" data-i18n="libSortDateDesc">Date (Newest)</option>
+          <option value="date_asc" data-i18n="libSortDateAsc">Date (Oldest)</option>
+          <option value="saved_desc" data-i18n="libSortSaved">Recently Added</option>
+        </select>
+        <div class="lib-filter-pills">
+          <button class="lib-fpill on" data-wfilter="all" data-i18n="libFilterAll">All</button>
+          <button class="lib-fpill" data-wfilter="unwatched" data-i18n="libFilterUnwatched">Unwatched</button>
+          <button class="lib-fpill" data-wfilter="watched" data-i18n="libFilterWatched">Watched ✓</button>
+        </div>
+      </div>
+
+      <div class="list" id="saved"></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="about" class="about-pro">
+  <div class="dlg-head">
+    <span class="dlg-title"><svg class="i"><use href="#i-info"/></svg><span data-i18n="aboutTitle">About SVU Player</span></span>
+    <span style="flex:1"></span>
+    <button id="tourBtn" style="height:32px;padding:0 11px;font-size:12px;"><svg class="i"><use href="#i-info"/></svg><span data-i18n="tour">Help Guide</span></button>
+    <button id="reloadLatestBtn" style="height:32px;padding:0 11px;font-size:12px;" data-i18n-title="reloadLatestTitle" title="Reload the latest version"><svg class="i"><use href="#i-refresh"/></svg><span data-i18n="reloadLatest">Update</span></button>
+    <button class="iconbtn" id="aboutClose" data-i18n-aria="close" aria-label="Close"><svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="about-body">
+    <!-- Hero Banner -->
+    <div class="about-hero">
+      <div class="about-logo-wrap">
+        <img class="about-logo" id="aboutLogo" src="/favicon.svg" alt="SVU Player" onerror="this.onerror=null;this.src='favicon.svg'">
+      </div>
+      <div class="about-hero-txt">
+        <div class="about-title-row">
+          <h3 class="about-dev" data-i18n="aboutDev">SVU Player — Studio Edition</h3>
+          <span class="ver-pill"><span data-i18n="version">Version</span> <b id="buildId" dir="ltr">v2.7.0</b></span>
+        </div>
+        <p class="about-sub" data-i18n="aboutSub">High-performance local &amp; offline session player engineered for Syrian Virtual University (.lrec) recordings.</p>
+        <div class="about-badges">
+          <span class="abadge" data-i18n="aboutBadgeOffline">100% Local &amp; Offline Ready</span>
+          <span class="abadge gold" data-i18n="aboutBadgePrivacy">Zero External Tracking</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 Feature Cards -->
+    <div class="about-grid">
+      <div class="acard">
+        <b><svg class="i"><use href="#i-wand"/></svg><span data-i18n="aboutFeat1T">WASM Decoder &amp; 4-Stage Vocal DSP</span></b>
+        <p data-i18n="aboutFeat1D">Hardware-accelerated screen replay paired with a 4-stage speech processor (high-pass filter, +5.5 dB vocal presence EQ, smooth noise gate, and soft-knee compressor).</p>
+      </div>
+      <div class="acard">
+        <b><svg class="i"><use href="#i-stretch"/></svg><span data-i18n="aboutFeat2T">9 Studio Themes &amp; Smart Metadata</span></b>
+        <p data-i18n="aboutFeat2D">9 built-in themes (Default, WhatsApp, Telegram, Win98, WinXP, Win7, Hacker, VS Code, Terminal) + Dark/Light mode &amp; automatic .lrec filename tag parsing.</p>
+      </div>
+      <div class="acard">
+        <b><svg class="i"><use href="#i-save"/></svg><span data-i18n="aboutFeat3T">IndexedDB Offline Library &amp; PWA</span></b>
+        <p data-i18n="aboutFeat3D">Save downloaded recordings directly inside your browser and install SVU Player as a standalone offline app.</p>
+      </div>
+    </div>
+
+    <!-- Full Offline Deployment via PWA Card -->
+    <div class="deploy-card" id="aboutPwaCard">
+      <div class="deploy-head">
+        <b><svg class="i"><use href="#i-download"/></svg><span data-i18n="aboutPwaTitle">Full Offline Deployment (PWA App)</span></b>
+        <button class="primary" id="aboutInstallBtn"><svg class="i"><use href="#i-download"/></svg><span data-i18n="installPwa">Install</span></button>
+      </div>
+      <p class="deploy-sub" data-i18n="aboutPwaSub">Install SVU Player on your desktop or phone so it launches instantly without a browser bar and works 100% offline with local .lrec files and saved sessions.</p>
+      <p class="deploy-hint" id="pwaHint" data-i18n="aboutPwaHint">If the browser prompt does not appear automatically, click the Install App icon (⊕) in your browser's address bar.</p>
+    </div>
+
+    <!-- Local Server Deployment Instructions Card -->
+    <div class="deploy-card">
+      <div class="deploy-head">
+        <b><svg class="i"><use href="#i-globe"/></svg><span data-i18n="aboutServerTitle">Local Server Deployment (Online SVU Catalog &amp; Downloads)</span></b>
+      </div>
+      <p class="deploy-sub" data-i18n="aboutServerSub">To browse the live SVU session catalog and download .lrec files directly from sessions.svuonline.org, run the local server in your project directory:</p>
+      <div class="cmd-box">
+        <code>python3 serve.py &nbsp;&nbsp;# &rarr; http://127.0.0.1:8080/</code>
+        <button id="copyServerCmdBtn" data-i18n="copyCmd">Copy</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- Local File Open & Save Choice Modal (#localSaveDlg) -->
+<dialog id="localSaveDlg" class="local-save-dlg">
+  <div class="dlg-head">
+    <span class="dlg-title"><svg class="i"><use href="#i-save"/></svg><span data-i18n="localSaveTitle">Save Local Recording to App Storage?</span></span>
+    <span style="flex:1"></span>
+    <button class="iconbtn" id="localSaveClose" data-i18n-aria="close" aria-label="Close"><svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="lsave-body">
+    <div class="muted" data-i18n="localSaveSub">Choose how you want to store this local .lrec file inside your active profile's Student Library:</div>
+    <div class="lsave-file-box">
+      <div id="localSaveTags" class="lec-tags"></div>
+      <code id="localSaveFileName" dir="ltr" style="font-size:11.5px;color:var(--blue);word-break:break-all"></code>
+    </div>
+    <button class="lsave-choice recommended" id="localSaveMergeBtn">
+      <b><svg class="i" style="color:var(--blue)"><use href="#i-save"/></svg><span data-i18n="localSaveMergeT">Auto-Merge into Material Group (Recommended)</span></b>
+      <span data-i18n="localSaveMergeD">Uses filename tags (College, Material, Class, Term, Lesson, Date) to sort this lecture into its Material window automatically, just like a downloaded lecture.</span>
+    </button>
+    <button class="lsave-choice" id="localSaveSeparateBtn">
+      <b><svg class="i" style="color:var(--gold-hi)"><use href="#i-folder"/></svg><span data-i18n="localSaveSeparateT">Save in Separate “Local Files” Group</span></b>
+      <span data-i18n="localSaveSeparateD">Saves a copy in internal storage inside a dedicated “Local Files” window, separate from university course folders.</span>
+    </button>
+    <button class="lsave-choice" id="localSavePlayOnlyBtn">
+      <b><svg class="i"><use href="#i-play"/></svg><span data-i18n="localSavePlayOnlyT">Play Only (Do Not Save)</span></b>
+      <span data-i18n="localSavePlayOnlyD">Plays the recording right now without storing a copy in internal storage.</span>
+    </button>
+  </div>
+</dialog>
+
+<!-- Multi-Profile & Storage Manager Modal (#profileDlg) -->
+<dialog id="profileDlg" class="profile-dlg">
+  <div class="dlg-head">
+    <span class="dlg-title"><svg class="i"><use href="#i-user"/></svg><span data-i18n="profileModalTitle">Student Profiles &amp; Isolated Storage</span></span>
+    <span style="flex:1"></span>
+    <button class="primary" id="profNewBtn" style="height:32px;padding:0 12px;font-size:12px;" data-i18n="profileNewBtn">+ New Profile</button>
+    <button class="iconbtn" id="profileClose" data-i18n-aria="close" aria-label="Close"><svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="prof-body">
+    <div class="muted" data-i18n="profileModalSub">Create independent profiles — each with its own isolated library storage, theme, language, mode, and pre-configured materials ready to load into Batch Download.</div>
+
+    <!-- Profiles List -->
+    <div class="prof-list" id="profList"></div>
+
+    <!-- Profile Create / Edit Form -->
+    <div class="prof-editor" id="profEditor" hidden>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+        <b id="profEditorTitle" style="font-size:14px;color:var(--blue);" data-i18n="profileFormNewTitle">Create New Profile</b>
+      </div>
+      <div class="prof-form-grid">
+        <div class="prof-field" style="grid-column: span 2;">
+          <label for="profNameInput" data-i18n="profileNameLbl">Profile Name</label>
+          <input type="text" id="profNameInput" data-i18n-ph="profileNamePh" placeholder="e.g. ITE — F25 (My Courses)">
+        </div>
+        <div class="prof-field">
+          <label for="profThemeInput" data-i18n="profileThemeLbl">Theme</label>
+          <select id="profThemeInput">
+            <option value="default" data-i18n="themeDefault">Default</option>
+            <option value="whatsapp" data-i18n="themeWhatsapp">WhatsApp</option>
+            <option value="telegram" data-i18n="themeTelegram">Telegram</option>
+            <option value="win98" data-i18n="themeWin98">Windows 98</option>
+            <option value="winxp" data-i18n="themeWinxp">Windows XP</option>
+            <option value="win7" data-i18n="themeWin7">Windows 7</option>
+            <option value="hacker" data-i18n="themeHacker">Hacker</option>
+            <option value="vscode" data-i18n="themeVscode">VS Code</option>
+            <option value="terminal" data-i18n="themeTerminal">Terminal</option>
+          </select>
+        </div>
+        <div class="prof-field">
+          <label for="profModeInput" data-i18n="profileModeLbl">Appearance</label>
+          <select id="profModeInput">
+            <option value="dark" data-i18n="profileModeDark">Dark Mode</option>
+            <option value="light" data-i18n="profileModeLight">Light Mode</option>
+          </select>
+        </div>
+        <div class="prof-field">
+          <label for="profLangInput" data-i18n="profileLangLbl">Language</label>
+          <select id="profLangInput">
+            <option value="ar">العربية (AR)</option>
+            <option value="en">English (EN)</option>
+          </select>
+        </div>
+        <div class="prof-field">
+          <label for="profTermInput" data-i18n="profileTermLbl">Term (select or type)</label>
+          <input type="text" id="profTermInput" list="profTermDatalist" placeholder="e.g. F25">
+          <datalist id="profTermDatalist"></datalist>
+        </div>
+        <div class="prof-field">
+          <label for="profProgInput" data-i18n="profileProgramLbl">College / Program (select or type)</label>
+          <input type="text" id="profProgInput" list="profProgDatalist" placeholder="e.g. ITE">
+          <datalist id="profProgDatalist"></datalist>
+        </div>
+      </div>
+
+      <!-- Visual Material Rows Builder -->
+      <div style="border-top:1px solid var(--line);padding-top:10px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+          <b style="font-size:12.5px;color:var(--text);" data-i18n="profileMatSectionTitle">Profile Materials &amp; Class Details</b>
+          <button id="profAddMatRowBtn" style="height:28px;padding:0 10px;font-size:11.5px;" data-i18n="profileMatAddRow">+ Add Material Row</button>
+        </div>
+        <datalist id="profCourseDatalist"></datalist>
+        <div class="prof-mat-rows" id="profMatRows"></div>
+      </div>
+
+      <!-- Quick Text Box for Typing / Pasting Materials -->
+      <div style="border-top:1px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+          <label for="profMatText" style="font-size:12px;font-weight:700;color:var(--blue);" data-i18n="profileMatTextLbl">Or Type / Paste Materials Directly (Quick Text Box):</label>
+          <div class="b-mini-btns">
+            <button id="profParseTextBtn" data-i18n="profileMatSyncFromText">Parse Text into Rows ↑</button>
+            <button id="profSyncToTextBtn" data-i18n="profileMatSyncToText">Sync Rows to Text ↓</button>
+          </div>
+        </div>
+        <div class="muted" style="font-size:11px;" data-i18n="profileMatTextHint">Format per line: MATERIAL | CLASS | TUTOR | LESSONS  (e.g. BMA401 | C23 | t_laldroubi | ALL  or simply  BPG401 C15)</div>
+        <textarea id="profMatText" class="prof-textarea" dir="ltr" placeholder="BMA401 | C23 | t_laldroubi | ALL&#10;BMA402 | C5 | t_imashriki | ALL&#10;BPG401 | C15"></textarea>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--line);">
+        <button id="profCancelBtn" data-i18n="profileCancelBtn">Cancel</button>
+        <button id="profSaveBtn" data-i18n="profileSaveBtn">Save Profile</button>
+        <button class="primary" id="profSaveAndLoadBtn" data-i18n="profileSaveAndLoadBtn">Save &amp; Open in Batch Download</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<div class="updatebar" id="updateBar" hidden role="status">
+  <span data-i18n="updateAvail">A new version is available.</span>
+  <button class="primary" id="updateNow"><svg class="i"><use href="#i-refresh"/></svg><span data-i18n="updateNow">Update now</span></button>
+  <button id="updateLater" data-i18n="later">Later</button>
+</div>
+
+<dialog id="welcome" class="wide">
+  <div class="dlg-head">
+    <span class="dlg-title"><svg class="i"><use href="#i-info"/></svg><span data-i18n="tour">Feature tour</span></span>
+    <span style="flex:1"></span>
+    <button class="iconbtn" id="welcomeClose" data-i18n-aria="close" aria-label="Close"><svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="w-head">
+    <h2 data-i18n="welcomeTitle">Welcome to SVU Player Studio</h2>
+    <p data-i18n="welcomeSub">Replay recorded university sessions with synchronized screen, enhanced vocal audio, and interactive chat — 100% locally and offline:</p>
+  </div>
+  <div class="w-body">
+    <div class="w-fit" id="wfit">
+      <div class="wstage" id="wstage">
+        <div class="mock">
+          <!-- Miniature Top Bar -->
+          <div class="m-head">
+            <img src="/favicon.svg" alt="">
+            <span class="m-tags" id="wm-meta">
+              <span class="m-tag" style="background:rgba(56,189,248,0.18);color:#38BDF8">ITE</span>
+              <span class="m-tag" style="background:rgba(168,85,247,0.18);color:#C084FC">BPG401</span>
+              <span class="m-tag" style="background:rgba(34,197,94,0.18);color:#4ADE80">C15</span>
+              <span class="m-tag" style="background:rgba(245,158,11,0.18);color:#FBBF24">F25</span>
+            </span>
+            <span class="sp"></span>
+            <span id="wm-open" style="display:inline-flex;gap:4px">
+              <span class="m-btn gold"><svg><use href="#i-folder"/></svg><span data-i18n="tabFile">Open file</span></span>
+              <span class="m-btn pwa"><svg><use href="#i-download"/></svg><span data-i18n="installPwaShort">Install</span></span>
+            </span>
+            <span id="wm-themes" style="display:inline-flex;gap:4px">
+              <span class="m-btn"><span data-i18n="themesBtn">Themes</span> ▾</span>
+              <span class="m-btn" style="color:#F59E0B">☀</span>
+              <span class="m-btn" style="font-weight:700">AR/EN</span>
+            </span>
+          </div>
+
+          <!-- Miniature Bento Stage + Chat -->
+          <div class="m-mid">
+            <div class="m-screen" id="wm-screen">
+              <div class="m-slide"><i class="t"></i><i></i><i style="width:92%"></i><i style="width:86%"></i><i style="width:94%"></i><i style="width:60%"></i><i style="margin-top:8px;width:88%"></i><i style="width:80%"></i></div>
+            </div>
+            <div class="m-chat">
+              <div class="ch" id="wm-chathead">
+                <svg><use href="#i-chat"/></svg><span data-i18n="chat">Chat</span>
+                <span class="m-pill" data-i18n="showAll">Show all</span>
+                <span class="m-x">✕</span>
+              </div>
+              <div class="m-msgs-wrap" id="wm-chat">
+                <div class="m-msgs-list">
+                  <div class="m-msg"><span class="a" style="background:#6cb6ff"></span><span class="l"><span class="w"><b></b><em>▶ 04:12</em></span><i style="width:90%"></i></span></div>
+                  <div class="m-msg"><span class="a" style="background:#f2994a"></span><span class="l"><span class="w"><b></b><em>▶ 11:05</em></span><i style="width:72%"></i></span></div>
+                  <div class="m-msg cur"><span class="a" style="background:#6fcf97"></span><span class="l"><span class="w"><b></b><em>▶ 21:43</em></span><i style="width:84%"></i><i style="width:45%"></i></span></div>
+                </div>
+                <div class="m-sbar"><i></i></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Miniature Auto-Hide Glass Control Bar -->
+          <div class="m-ctl">
+            <div class="m-seek" id="wm-seek"><span class="f"></span><span class="t" style="left:12%"></span><span class="t" style="left:27%"></span><span class="t" style="left:46%"></span><span class="t" style="left:55%"></span><span class="t" style="left:74%"></span><span class="k"></span></div>
+            <div class="m-row">
+              <span id="wm-play" style="display:inline-flex;gap:4px"><span class="m-ic play" data-clone="#icoPlay"></span><span class="m-ic" data-clone="#back svg"></span><span class="m-ic" data-clone="#fwd svg"></span></span>
+              <span class="m-btn enh-on" id="wm-enh"><svg><use href="#i-wand"/></svg><span data-i18n="enhanceOn">Enhance ON</span></span>
+              <span style="flex:1"></span>
+              <span id="wm-vol" style="display:inline-flex;align-items:center;gap:4px"><span class="m-ic" data-clone="#icoVol"></span><span class="m-vol"></span><span class="m-sel">1×</span></span>
+              <span id="wm-stretch" style="display:inline-flex;gap:4px"><span class="m-btn on"><svg><use href="#i-stretch"/></svg><span data-i18n="stretch">Stretch</span></span><span class="m-btn on"><svg><use href="#i-chat"/></svg><span data-i18n="chat">Chat</span></span></span>
+              <span id="wm-pin" style="display:inline-flex;gap:4px"><span class="m-ic" data-clone="#fsBtn svg"></span><span class="m-ic" data-clone="#pinBtn svg"></span></span>
+            </div>
+          </div>
+        </div>
+        <svg class="w-arrows" id="warrows"><defs><marker id="wtip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" style="fill:var(--blue);stroke:none"/></marker></defs></svg>
+      </div>
+    </div>
+    <ul class="wlist" id="wlist"></ul>
+  </div>
+  <div class="w-foot">
+    <div class="tip" data-i18n="shortcuts">Shortcuts: Space play/pause · ← → skip 5 s · M mute · F fullscreen · C chat · S stretch</div>
+    <button class="primary" id="welcomeStart"><svg class="i"><use href="#i-play"/></svg><span data-i18n="welcomeStart">Get started</span></button>
+  </div>
+</dialog>
+
+<audio id="audio" preload="auto"></audio>
+
+<script src="app.js"></script>
+</body>
+</html>

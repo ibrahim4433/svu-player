@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#090D16"/>
+    </linearGradient>
+    <linearGradient id="bookGrad" x1="8" y1="14" x2="56" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bgGrad)" stroke="#38BDF8" stroke-opacity="0.35" stroke-width="2"/>
+  <!-- Open Book Pages -->
+  <path d="M10 19C10 16.5 12 14.5 14.5 14.5H24C28.4 14.5 32 17.5 32 21.5V49.5C32 46.8 28.8 44.8 24 44.8H14.5C12 44.8 10 42.8 10 40.3V19Z" fill="#38BDF8" fill-opacity="0.16" stroke="url(#bookGrad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M54 19C54 16.5 52 14.5 49.5 14.5H40C35.6 14.5 32 17.5 32 21.5V49.5C32 46.8 35.2 44.8 40 44.8H49.5C52 44.8 54 42.8 54 40.3V19Z" fill="#38BDF8" fill-opacity="0.16" stroke="url(#bookGrad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Play Button Emblem on Center of Open Book -->
+  <circle cx="32" cy="31" r="11" fill="#090D16" stroke="#F59E0B" stroke-width="3.2"/>
+  <polygon points="29.2 25.8 38.2 31 29.2 36.2" fill="#F59E0B"/>
+</svg>
