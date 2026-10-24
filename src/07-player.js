@@ -169,7 +169,13 @@
     }
     const tags = [];
     if (info.college) tags.push("<span class=\"mtag mtag-college\" title=\"" + escHtml(t("metaCollege")) + "\"><b>" + escHtml(info.college) + "</b></span>");
-    if (info.material) tags.push("<span class=\"mtag mtag-material\" title=\"" + escHtml(t("metaMaterial")) + "\"><b>" + escHtml(info.material) + "</b></span>");
+    if (info.material) {
+      if (window.MaterialsDB) {
+        tags.push(window.MaterialsDB.getBadgeHtml(info.material));
+      } else {
+        tags.push("<span class=\"mtag mtag-material\" title=\"" + escHtml(t("metaMaterial")) + "\"><b>" + escHtml(info.material) + "</b></span>");
+      }
+    }
     if (info.cls) tags.push("<span class=\"mtag mtag-class\">" + escHtml(t("metaClass")) + " " + escHtml(info.cls) + "</span>");
     if (info.term) tags.push("<span class=\"mtag mtag-term\">" + escHtml(info.term) + "</span>");
     if (info.lesson) tags.push("<span class=\"mtag mtag-lesson\">" + escHtml(t("metaLesson")) + " " + escHtml(info.lesson) + "</span>");
@@ -197,7 +203,9 @@
       key: file.name
     };
     renderSessionMeta(file.name);
-    document.title = file.name + " | SVU Player";
+    const parsedMeta = parseLrecFilename(file.name);
+    const matName = (window.MaterialsDB && parsedMeta && parsedMeta.material) ? window.MaterialsDB.getName(parsedMeta.material) : "";
+    document.title = (matName ? (parsedMeta.material + " (" + matName + ") · " + (parsedMeta.lesson ? "S" + parsedMeta.lesson : file.name)) : file.name) + " | SVU Player";
     byId("vnotice").hidden = parsed.videoOk !== false;
     renderChat();
     renderTicks();
@@ -314,9 +322,24 @@
   };
   ["wheel", "touchmove"].forEach(type => msgs.addEventListener(type, () => {
     userScrolled = true;
+    if (byId("chatJumpBtn")) byId("chatJumpBtn").hidden = false;
     clearTimeout(msgs._t);
-    msgs._t = setTimeout(() => userScrolled = false, 4000);
+    msgs._t = setTimeout(() => {
+      userScrolled = false;
+      if (byId("chatJumpBtn")) byId("chatJumpBtn").hidden = true;
+    }, 4500);
   }, PASSIVE));
+  if (byId("chatJumpBtn")) {
+    byId("chatJumpBtn").addEventListener("click", () => {
+      userScrolled = false;
+      byId("chatJumpBtn").hidden = true;
+      if (cursor >= 0 && session && session.nodes && session.nodes[cursor]) {
+        session.nodes[cursor].scrollIntoView({ block: "center", behavior: "smooth" });
+      } else {
+        msgs.scrollTop = msgs.scrollHeight;
+      }
+    });
+  }
   byId("showAll").addEventListener("change", () => {
     const lbl = byId("showAll").closest("label");
     if (lbl) {
@@ -461,14 +484,30 @@
     byId("icoVol").style.display = muted ? "none" : "";
     byId("icoMute").style.display = muted ? "" : "none";
   }
+  const isLandscapeMobile = () => (window.innerHeight <= 560 && window.innerWidth > window.innerHeight);
+
   const toggleChat = () => {
-    const hidden = document.body.classList.toggle("nochat");
-    byId("chatToggle").classList.toggle("on", !hidden);
-    byId("chatToggle").setAttribute("aria-pressed", String(!hidden));
+    if (isLandscapeMobile()) {
+      const open = document.body.classList.toggle("chat-drawer-open");
+      byId("chatToggle").classList.toggle("on", open);
+      byId("chatToggle").setAttribute("aria-pressed", String(open));
+    } else {
+      const hidden = document.body.classList.toggle("nochat");
+      byId("chatToggle").classList.toggle("on", !hidden);
+      byId("chatToggle").setAttribute("aria-pressed", String(!hidden));
+    }
   };
   byId("chatToggle").addEventListener("click", toggleChat);
   if (byId("chatClose")) {
-    byId("chatClose").addEventListener("click", toggleChat);
+    byId("chatClose").addEventListener("click", () => {
+      if (document.body.classList.contains("chat-drawer-open")) {
+        document.body.classList.remove("chat-drawer-open");
+        byId("chatToggle").classList.remove("on");
+        byId("chatToggle").setAttribute("aria-pressed", "false");
+      } else {
+        toggleChat();
+      }
+    });
   }
 
   // Pin / Auto-hide bottom controls + 3-second mouse movement visibility inside player window
@@ -544,12 +583,96 @@
   byId("fsBtn").addEventListener("click", toggleFullscreen);
   function toggleFullscreen() {
     if (document.fullscreenElement) {
-      document.exitFullscreen();
+      document.exitFullscreen().catch(() => {});
+      try { screen.orientation?.unlock?.(); } catch (e) {}
     } else if (document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen();
+      document.documentElement.requestFullscreen().then(() => {
+        if (window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+          try { screen.orientation?.lock?.("landscape").catch(() => {}); } catch (e) {}
+        }
+      }).catch(() => {});
     }
   }
   document.addEventListener("fullscreenchange", () => document.body.classList.toggle("fs", !!document.fullscreenElement));
+
+  // Touch Gestures, Double-Tap Seeking & Cinema Controls Overlay
+  let lastTapTime = 0;
+  let lastTapPos = { x: 0, y: 0 };
+  let cinemaTimer = null;
+
+  function showCinemaControls() {
+    controls.classList.add("active", "mouse-active");
+    if (cinemaTimer) clearTimeout(cinemaTimer);
+    if (!audio.paused) {
+      cinemaTimer = setTimeout(() => {
+        if (!controls.matches(":hover") && !controls.classList.contains("pinned")) {
+          controls.classList.remove("active", "mouse-active");
+        }
+      }, 3200);
+    }
+  }
+
+  function triggerRipple(elemId) {
+    const el = byId(elemId);
+    if (!el) return;
+    el.classList.add("active");
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove("active"), 650);
+  }
+
+  stage.addEventListener("pointerup", event => {
+    if (event.target.closest("button, a, input, select, .controls, .controls-zone, .loading-box, .mobile-touch-strip, .shortcut-strip")) {
+      return;
+    }
+    const now = Date.now();
+    const rect = stage.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const relX = x / rect.width;
+    const dt = now - lastTapTime;
+    const dist = Math.hypot(event.clientX - lastTapPos.x, event.clientY - lastTapPos.y);
+
+    if (dt < 320 && dist < 45) {
+      lastTapTime = 0;
+      if (relX < 0.35) {
+        seekBy(-10);
+        triggerRipple("doubleTapBack");
+        try { navigator.vibrate?.(25); } catch (e) {}
+      } else if (relX > 0.65) {
+        seekBy(10);
+        triggerRipple("doubleTapFwd");
+        try { navigator.vibrate?.(25); } catch (e) {}
+      } else {
+        togglePlay();
+        try { navigator.vibrate?.(25); } catch (e) {}
+      }
+    } else {
+      lastTapTime = now;
+      lastTapPos = { x: event.clientX, y: event.clientY };
+      if (isLandscapeMobile() || window.innerWidth <= 768) {
+        if (controls.classList.contains("active") || controls.classList.contains("mouse-active")) {
+          controls.classList.remove("active", "mouse-active");
+        } else {
+          showCinemaControls();
+        }
+      }
+    }
+  });
+
+  audio.addEventListener("play", () => {
+    document.body.classList.add("is-playing");
+    if (isLandscapeMobile()) {
+      if (cinemaTimer) clearTimeout(cinemaTimer);
+      cinemaTimer = setTimeout(() => {
+        if (!controls.matches(":hover") && !controls.classList.contains("pinned")) {
+          controls.classList.remove("active", "mouse-active");
+        }
+      }, 3200);
+    }
+  });
+  audio.addEventListener("pause", () => {
+    document.body.classList.remove("is-playing");
+    controls.classList.add("active", "mouse-active");
+  });
   document.addEventListener("keydown", event => {
     if (event.target.matches("input[type=range], select, input[type=checkbox]") && event.key !== " ") {
       return;
@@ -684,6 +807,18 @@
     document.querySelectorAll(".theme-opt[data-theme-opt]").forEach(btn => {
       btn.classList.toggle("active", btn.dataset.themeOpt === curTheme);
     });
+    document.querySelectorAll(".m-theme-opt[data-theme-opt]").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.themeOpt === curTheme);
+    });
+    const modeBtn = byId("mobileModeToggle");
+    if (modeBtn) {
+      const darkTag = modeBtn.querySelector(".mode-tag.dark");
+      const lightTag = modeBtn.querySelector(".mode-tag.light");
+      if (darkTag && lightTag) {
+        darkTag.style.display = curMode === "dark" ? "" : "none";
+        lightTag.style.display = curMode === "light" ? "" : "none";
+      }
+    }
   }
   applyTheme(curTheme, curMode);
   window.__svuApplyTheme = applyTheme;
@@ -820,6 +955,110 @@
       byId("about").close();
     }
   });
+  // Mobile Quick Menu Action Sheet Controller
+  const sheet = byId("mobileMenuSheet");
+  const sheetBackdrop = byId("mobileSheetBackdrop");
+  const moreBtn = byId("mobileMoreBtn");
+  const sheetClose = byId("mobileSheetClose");
+
+  function syncMobileBadges() {
+    const count = byId("libHeaderCount")?.textContent || "";
+    if (byId("mobileLibBadge")) byId("mobileLibBadge").textContent = count;
+    const prof = byId("activeProfileLbl")?.textContent || "البروفايل";
+    if (byId("mobileProfileName")) byId("mobileProfileName").textContent = prof;
+  }
+
+  function openMobileSheet() {
+    if (!sheet) return;
+    syncMobileBadges();
+    sheet.classList.add("open");
+    sheet.setAttribute("aria-hidden", "false");
+    if (sheetBackdrop) {
+      sheetBackdrop.classList.add("open");
+      sheetBackdrop.setAttribute("aria-hidden", "false");
+    }
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMobileSheet() {
+    if (!sheet) return;
+    sheet.classList.remove("open");
+    sheet.setAttribute("aria-hidden", "true");
+    if (sheetBackdrop) {
+      sheetBackdrop.classList.remove("open");
+      sheetBackdrop.setAttribute("aria-hidden", "true");
+    }
+    document.body.style.overflow = "";
+  }
+
+  if (moreBtn) moreBtn.addEventListener("click", openMobileSheet);
+  if (sheetClose) sheetClose.addEventListener("click", closeMobileSheet);
+  if (sheetBackdrop) sheetBackdrop.addEventListener("click", closeMobileSheet);
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && sheet && sheet.classList.contains("open")) {
+      closeMobileSheet();
+    }
+  });
+
+  if (byId("mobileLibBtn")) {
+    byId("mobileLibBtn").addEventListener("click", () => {
+      closeMobileSheet();
+      if (byId("libHeaderBtn")) byId("libHeaderBtn").click();
+    });
+  }
+  if (byId("mobileBatchBtn")) {
+    byId("mobileBatchBtn").addEventListener("click", () => {
+      closeMobileSheet();
+      if (byId("tabBatch")) {
+        byId("tabBatch").click();
+        if (byId("dlg")) byId("dlg").showModal();
+      }
+    });
+  }
+  if (byId("mobilePwaBtn")) {
+    byId("mobilePwaBtn").addEventListener("click", () => {
+      closeMobileSheet();
+      if (byId("installPwaBtn")) byId("installPwaBtn").click();
+    });
+  }
+  if (byId("mobileAboutBtn")) {
+    byId("mobileAboutBtn").addEventListener("click", () => {
+      closeMobileSheet();
+      if (byId("aboutBtn")) byId("aboutBtn").click();
+    });
+  }
+  if (byId("mobileProfileManageBtn")) {
+    byId("mobileProfileManageBtn").addEventListener("click", () => {
+      closeMobileSheet();
+      if (byId("profileBtn")) byId("profileBtn").click();
+    });
+  }
+  if (byId("mobileModeToggle")) {
+    byId("mobileModeToggle").addEventListener("click", () => {
+      applyTheme(curTheme, curMode === "light" ? "dark" : "light");
+    });
+  }
+  document.querySelectorAll(".m-theme-opt[data-theme-opt]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      applyTheme(btn.dataset.themeOpt, curMode);
+    });
+  });
+
+  // Responsive Orientation & Viewport Handler
+  function handleScreenResize() {
+    const isPortrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
+    const isLandscape = isLandscapeMobile();
+    document.body.classList.toggle("is-mobile-portrait", isPortrait);
+    document.body.classList.toggle("is-mobile-landscape", isLandscape);
+    if (!isLandscape && document.body.classList.contains("chat-drawer-open")) {
+      document.body.classList.remove("chat-drawer-open");
+    }
+    drawFrame();
+  }
+  window.addEventListener("resize", handleScreenResize, PASSIVE);
+  window.addEventListener("orientationchange", () => setTimeout(handleScreenResize, 150), PASSIVE);
+  handleScreenResize();
+
   window.__lrec = {
     get session() {
       return session;

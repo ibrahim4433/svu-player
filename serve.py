@@ -37,6 +37,7 @@ EXTRA_TYPES = {
     ".json": "application/json",
     ".svg": "image/svg+xml",
     ".css": "text/css",
+    ".csv": "text/csv; charset=utf-8",
     ".lrec": "application/octet-stream",
 }
 

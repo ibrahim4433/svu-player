@@ -547,7 +547,28 @@ window.SVU_PREFS = {
       scMute: "Mute",
       scFs: "Fullscreen",
       scChat: "Chat",
-      langSwitch: "Switch to Arabic"
+      langSwitch: "Switch to Arabic",
+      mobileMenuTitle: "Quick Menu",
+      appearance: "Appearance & Themes",
+      moreOptions: "More options",
+      touchHintTap: "Tap for controls",
+      touchHintDouble: "Double-tap ±10s",
+      touchHintRotate: "Rotate for Cinema",
+      cinemaExit: "Exit Cinema",
+      activeProfileHeader: "Active Student Profile",
+      jumpLatest: "Jump to latest ↓",
+      courseDirBtn: "Course Directory",
+      courseDirBtnTitle: "Browse all 1,163 SVU course codes & titles",
+      courseDirTitle: "SVU Course Directory",
+      courseDirSub: "Instant search across all 1,163 Syrian Virtual University course codes, official Arabic titles, and English names.",
+      courseDirSearchPh: "Search by course code, Arabic name, or English name (e.g. BPG401, برمجة, Math)…",
+      courseDirAllFaculties: "All Faculties",
+      courseDirCopyCode: "Copy Code",
+      courseDirCopied: "Copied!",
+      courseDirFindInLib: "Find in Library",
+      courseDirBatchSelect: "Batch Downloader",
+      courseDirCountSummary: "Showing {n} of {total} courses",
+      courseDirNoMatch: "No courses found matching your search."
     },
     ar: {
       openSession: "فتح جلسة",
@@ -836,7 +857,28 @@ window.SVU_PREFS = {
       scMute: "كتم",
       scFs: "ملء الشاشة",
       scChat: "الدردشة",
-      langSwitch: "التبديل إلى الإنجليزية"
+      langSwitch: "التبديل إلى الإنجليزية",
+      mobileMenuTitle: "القائمة السريعة",
+      appearance: "المظهر والسمات",
+      moreOptions: "خيارات إضافية",
+      touchHintTap: "نقرة واحدة للتحكم",
+      touchHintDouble: "نقرتان لتقديم/ترجيع 10ث",
+      touchHintRotate: "تدوير الشاشة للعرض الكامل",
+      cinemaExit: "خروج من العرض الكامل",
+      activeProfileHeader: "الملف الدراسي النشط",
+      jumpLatest: "الانتقال للأحدث ↓",
+      courseDirBtn: "دليل المواد",
+      courseDirBtnTitle: "تصفح والبحث في جميع مواد الجامعة الـ ١١٦٣ برمزها واسمها",
+      courseDirTitle: "دليل مواد الجامعة الافتراضية السورية",
+      courseDirSub: "بحث فوري في جميع مقررات ومواد الجامعة الافتراضية (١١٦٣ مادة) برموزها الدقيقة ومسمياتها الرسمية بالعربية والإنجليزية.",
+      courseDirSearchPh: "ابحث برمز المادة، اسمها بالعربية، أو بالإنجليزية (مثال: BPG401 أو البرمجة أو Programming)…",
+      courseDirAllFaculties: "جميع الكليات والاختصاصات",
+      courseDirCopyCode: "نسخ الرمز",
+      courseDirCopied: "تم النسخ!",
+      courseDirFindInLib: "البحث في المكتبة",
+      courseDirBatchSelect: "التحميل المتعدد",
+      courseDirCountSummary: "عرض {n} من أصل {total} مادة",
+      courseDirNoMatch: "لم يتم العثور على أية مواد تطابق بحثك."
     }
   };
   const LANG_KEY = "svu.lang.v2";
@@ -937,6 +979,128 @@ window.SVU_PREFS = {
 ;
 
 ;
+;
+(function (ns) {
+  'use strict';
+
+  // SVU Materials Database (Auto-generated from assets/svu-material-codes.csv)
+  // 1163 total course records
+  const RAW = [["GCS301","Computer Skills-ICDL","مهارات الحاسوب"],["GOE301","Introduction to On-Line Education","مدخل إلى التعلم الإلكتروني"],["GTW301","Communications Skills and Technical Writing","مهارات التواصل والكتابة العلمية"],["GEN301","English Language I","اللغة الإنكليزية ( 1 )"],["GEN401","English Language II","اللغة الإنكليزية ( 2 )"],["GMN401","Fundamentals of Management","أساسيات الإدارة"],["GEN501","English Language III","اللغة الإنكليزية ( 3 )"],["GEN502","English language IV","اللغة الإنكليزية ( 4 )"],["GAC501","Accounting","المحاسبة"],["GPM601","IT Project Management","إدارة المشاريع المعلوماتية"],["GEN601","English Language V","اللغة الإنكليزية ( 5 )"],["GET601","Ethics of Profession & Society","أخلاقيات المهنة والمجتمع"],["GEP601","Epistemology & Computer Science","نظرية المعرفة وعلوم الحاسب"],["BPH401","Physics","الفيزياء"],["BMA401","Mathematical Analysis I","تحليل رياضي ( 1 )"],["BAS401","Algebraic Structures","بنى جبرية"],["BMA402","Mathematical Analysis II","تحليل رياضي ( 2 )"],["BLA401","Linear Algebra","الجبر الخطي"],["BNA401","Numerical Analysis","تحليل عددي"],["BEC401","Electronic Circuits","الدارات الإلكترونية"],["BLC401","Logical Circuits","دارات منطقية"],["BPG401","Programming 1","البرمجة 1"],["BPG402","Programming II","برمجة (2)"],["BWP401","Web Programming I","برمجة الويب (1)"],["BSP501","Signal Processing","معالجة إشارة"],["BDM501","Discrete Mathematics","الرياضيات المتقطعة"],["BDA501","Data Structures & Algorithms","بنى المعطيات والخوارزميات"],["BDB501","Database Systems I","نظم قواعد البيانات (1)"],["BDBL501","Database Systems I Lab","مخبر نظم قواعد بيانات (1)"],["BCA501","Computer Architecture I","بنيان الحاسوب (1)"],["BOS501","Operating Systems I","نظم التشغيل ( 1 )"],["BOSL501","Operating System Lab I","مخبر نظم تشغيل ( 1 )"],["BTS501","Telecommunication Systems","نظم الاتصالات"],["BWP501","Web Programming II","برمجة الويب (2)"],["BAU501","Automata & Formal Languages","اوتومات ولغات صورية"],["BNT501","Computer Networks I","الشبكات الحاسوبية (1)"],["BAI501","Artificial Intelligence","الذكاء الصنعي"],["BPG601","Programming III","برمجة (3)"],["BCM601","Compilers","المترجمات"],["BPS601","Probability & Statistics","الاحتمالات والإحصاء"],["BPR601","Project I","مشروع (1)"],["BSE601","Software Engineering I","هندسة البرمجيات (1)"],["BID601","Information Systems Analysis and Design","تحليل وتصميم نظم المعلومات"],["BIS601","Information System Security","أمن تظم المعلومات"],["BCG601","Computer Graphics","البيانيات"],["BMM601","Multimedia Systems","نظم الوسائط المتعددة"],["BMP601","Mobile Applications Programming","برمجة تطبيقات النقال"],["BIA601","Intelligent Algorithms","الخوارزميات الذكية"],["BPR602","Project II","مشروع ( 2 )"],["BSM601","Simulation and Modelling and Verification","النمذجة والمحاكاة والتحقق"],["SSE602","Software Engineering II","هندسة البرمجيات (2) (باللغة الانكليزية)"],["SDA601","Data Structures & Algorithms II","بنى المعطيات والخوارزميات (2)"],["SAD601","Algorithm Analysis & Design","تحليل وتصميم الخوارزميات"],["SDB601","Database Systems II","نظم قواعد البيانات (2)"],["SDBL601","Database Systems II Lab","مخبر نظم قواعد البيانات (2)"],["SDE601","Data Mining","تنقيب البيانات"],["SCP601","Compiler Project","مشروع مترجمات"],["SIR601","Information Retrieval","استرجاع المعلومات"],["SSW601","Semantic Web","الويب الدلالي"],["SSQ601","Software Quality (In English)","جودة البرمجيات (باللغة الانكليزية)"],["ANN601","Neural Networks & Fuzzy Logic","الشبكات العصبونية والمنطق العائم"],["AVR601","Virtual Reality","الواقع الافتراضي"],["AML601","Machine Learning","تعلم الآلة"],["ANL601","Natural Language Processing","معالجة اللغات الطبيعية"],["AES601","Expert Systems","النظم الخبيرة"],["AIP601","Digital Image Processing","معالجة الصورة الرقمية (باللغة الانكليزية)"],["ACV601","Computer Vision (In English)","الرؤية الحاسوبية (باللغة الانكليزية)"],["NCA601","Computer Architecture II","بنيان الحاسوب (2)"],["NNP601","Network Application Programming","برمجة التطبيقات الشبكية"],["NNS601","Network Services","خدمات شبكية"],["NNT601","Networking II","شبكات (2)"],["NOS601","Operating Systems II (In English)","نظم التشغيل ( 2 ) (باللغة الانكليزية)"],["NOSL601","Operating Systems II Lab","مخبر نظم التشغيل ( 2 )"],["NNM601","Network Management","إدارة الشبكات"],["NSS601","Computer Networks Security","أمن الشبكات الحاسوبية"],["NDS601","Distributed & Cloud Systems (In English)","النظم الموزعة والسحابية (باللغة الانكليزية)"],["NRT601","Real Time Systems","نظم الزمن الحقيقي"],["GBS101","Computer Skills","مهارات الحاسوب"],["GBS103","Introduction to On-Line Education","مقدمة في التعلم الإلكتروني"],["GHS101","Introduction to Philosophy","مقدمة في الفلسفة"],["GBS102","Career Preparation","تحضير السيرة المهنية"],["GHS102","Introduction to Sociology","مقدمة في علم الاجتماع"],["Eng1","English Level 1","لغة إنكليزية – مستوى أول"],["Eng2","English Level 2","لغة إنكليزية – مستوى ثاني"],["Eng3","English Level 3","لغة إنكليزية – مستوى ثالث"],["Eng4","English Level 4","لغة إنكليزية – مستوى رابع"],["Eng5","English Level 5","لغة إنكليزية – مستوى خامس"],["GMA101","Mathematical Algebra","الجبر الرياضي"],["GMA102","Mathematical Analysis","التحليل الرياضي"],["GMA204","Discrete Mathematics","الرياضيات المتقطعة"],["GMA205","Probability & Statistics","الاحتمالات والإحصاء"],["GDE101","Digital Electronics","الإلكترونيات الرقمية"],["IPG101","Introduction to Programming","مقدمة في البرمجة"],["IWB101","E-Commerce Technologies","تقانات التجارة الإلكترونية"],["IIS101","Introduction to Data Modeling","مقدمة في نمذجة المعطيات"],["INT101","Introduction to Networks","مقدمة في الشبكات"],["IOS101","Introduction to Operating Systems","مقدمة في نظم التشغيل"],["IPG202","Procedural Programming","البرمجة الإجرائية"],["IPG203","Event Driven Programming","البرمجة المقادة بالأحداث"],["IPG204","Object Oriented Programming","التصميم والبرمجة غرضية التوجه"],["IOS202","Windows Platform 1","منصة ويندوز 1"],["IOS203","Linux Platform 1","منصة لينوكس 1"],["IOS204","Network Operating System","نظم التشغيل الشبكية"],["IWB202","Web Application Development and Design","تصميم وتطوير تطبيقات الوِب"],["INT305","Network & IT Infrastructure Security","أمن الشبكات والبنية التحتية المعلوماتية"],["IOS304","Windows Platform 2","منصة ويندوز 2"],["IOS305","Linux Platform 2","منصة لينوكس 2"],["IIS202","Database Architecture and Design","تصميم وبنيان قواعد المعطيات"],["INT202","Network Services","خدمات الشبكات"],["INT203","Wireless Networks","الشبكات اللاسلكية"],["INT204","Routing Principles","مبادئ التوجيه"],["IWB303","Mobile Programming","برمجة التطبيقات النقّالة"],["ISE301","Software Engineering","هندسة البرمجيات"],["ISE302","IT Project Management","إدارة مشاريع تقانة المعلومات"],["IIS303","Advanced SQL Programming","البرمجة المتقدمة بلغة SQL"],["IIS404","MS-SQL Server Administration","إدارة قواعد بيانات MS-SQL Server"],["IIS405","Oracle Database Administration I","إدارة قواعد بيانات Oracle 1"],["IIS406","Oracle Database Administration II","إدارة قواعد بيانات Oracle 2"],["IWB404","Data & Applications Security","أمن التطبيقات والمعطيات"],["IPI405","IT Final Project (ISDN)","مشروع"],["IPM405","IT Final Project (MIS)","مشروع"],["BMN101","Fundamentals of Management","أساسيّات الإدارة"],["BAC101","Principles of Accounting","أسس المحاسبة"],["BEC101","Introduction to Economics","مدخل إلى علم الاقتصاد"],["BMN202","Introduction to Marketing","مدخل إلى التسويق"],["BMN203","Human Resources Management","إدارة الموارد البشريّة"],["BFB201","Fundamentals of Financial Management","أسس الإدارة الماليّة"],["BEC202","Microeconomics","اقتصاد جزئي"],["BFB305","Banking","الخدمات المصرفيّة"],["BAC202","Cost Analysis","المحاسبة التحليليّة (محاسبة التكاليف)"],["BQM301","Operations Management","إدارة العمليّات"],["BMN305","Supply Chain Management","إدارة الإمداد (إدارة سلاسل التوريد)"],["BAC303","Feasibility Studies","تقييم المشاريع ودراسات الجدوى"],["BQM202","Operational Researches","بحوث العمليّات"],["BQM303","Decision Theory","نظريّة القرارات"],["BMN306","Strategic Management","الإدارة الاستراتيجيّة"],["BQM304","Project Management","إدارة المشاريع"],["BMN308","Entrepreneurship and SMEs Management","ريادة الأعمال وإدارة الشركات المتوسطة والصغيرة"],["BQM305","Data Analysis","تحليل البيانات"],["BMN309","Corporate Social Responsibility and Business Ethics","المسؤولية الاجتماعية للشركات وأخلاقيّات العمل"],["GPH101","Physics","الفيزياء"],["BQM406","Research in Marketing","بحوث التسويق"],["CEE101","Electrical Circuits","دارات كهربائية"],["CEE102","Data Communications","تراسل البيانات"],["CML201","MATLAB for Numerical Computing","ماتلاب للحوسبة العددية"],["CEE202","Electronics","إلكترونيات"],["CEE203","Signals and Systems","إشارات ونظم"],["CEE204","Digital Electronics","إلكترونيات رقمية"],["CEE205","Digital Signal Processing","معالجة الإشارة الرقمية"],["CEE306","Analog Communications","اتصالات تمثيلية"],["CEE307","Microprocessors and Microcontrollers","المعالجات والمتحكمات الصغرية"],["CEE308","Digital Communications","اتصالات رقمية"],["CRF301","Electromagnetic Waves and Transmission Lines","الأمواج الكهرطيسية وخطوط النقل"],["CCS401","Introduction to Wireless Systems","مدخل إلى النظم اللاسلكية"],["CRF402","Antennas and Wave Propagation","الهوائيات وانتشار الأمواج"],["CRF403","Microwave Engineering","هندسة الأمواج المكروية"],["CRF404","RF & Microwave telecommunications systems","نظم الاتصالات الراديوية والمكروية"],["CRF406","Optical Communications","اتصالات بصرية"],["CCN401","Wireless networks","شبكات الاتصالات اللاسلكية"],["CPR401","BACT Final Project - RF & Microwave Communications (RMC)","مشروع تخرج في تقانة الاتصالات– اختصاص الاتصالات الراديوية والمكروية"],["CCN403","Mobile Applications","التطبيقات النقالة"],["CCN404","Multimedia Networking","تشبيك الوسائط المتعددة"],["CCN402","Digital Transport and Broadband Access Technologies","تقانات النقل الرقمي والنفاذ العريض الحزمة"],["CPS401","BACT Final Project - Communications Services & Business (CSB)","مشروع تخرج في تقانة الاتصالات– اختصاص خدمات الاتصالات والأعمال"],["CCS402","Mobile and Wireless communications","اتصالات لاسلكية ونقالة"],["CCS404","Embedded System Fundamentals","أساسيات النظم المضمّنة"],["CCS403","Mobile communications Systems","نظم الاتصالات النقالة"],["CPM401","BACT Final Project - Mobile Communications Systems (MCS)","مشروع تخرج في تقانة الاتصالات– اختصاص نظم الاتصالات النقالة"],["AWP","Web Programming","برمجيات الوب"],["ADE","Advanced Concepts in Data Repository and Data Exchange","مفاهيم متقدمة في تخزين وتبادل البيانات"],["ADM","Data Mining","التنقيب عن المعطيات"],["ADP","Distributed Applications Programming","برمجة التطبيقات الشبكية والموزعة"],["AWE","Web Engineering","هندسة الوب"],["AHM","Hyper and Multimedia","الوسائط المتعددة والفائقة"],["AMW","Mobile Web","الوب النقال"],["AIR","Information Retrieval","استرجاع المعلومات"],["AWM","Web Mining","التنقيب في الوب"],["AWS","Web Security","أمن المعلومات"],["ATH","Thesis","الرسالة"],["WWD","Web Design","تصميم تطبيقات الوب"],["WXL","XML Techniques","تقانات XML"],["WNT","Networks","شبكات حاسوبية"],["WJD","Java Application Development","تطوير التطبيقات بلغة جافا"],["WDB","DataBase","قواعد البيانات"],["WEB","Electronic Business","الأعمال الالكترونية"],["WIM","Internet & Multimedia","تعدد الوسائط والانترنت"],["WMS","Mobile Services","الخدمات النقالة"],["WEG","Web Engineering","هندسة الوب"],["WIS","Internet Security","أمن الانترنت"],["WDA","Distributed Applications","التطبيقات الموزعة"],["WDE","Data Exploring","استكشاف البيانات"],["WPR","Project","مشروع التخرج"],["MCBG","Molecular Cell Biology and Genetics","البيولوجيا الجزيئية للخلية وعلم الوراثة"],["FBDA","Fundamentals of Bioinformatics and Data Analysis","أساسيات المعلوماتية الحيوية وتحليل البيانات"],["MBA","Methods in Bioinformatics and Algorithms","طرائق المعلوماتية الحيوية والخوارزميات"],["BSS","Biostatistics","الإحصاء الحيوي"],["IRDM","Information Resources and Data Mining Techniques","مصادر المعلومات وتقنيات التنقيب عن البيانات"],["AIML","Artificial Intelligence and Machine Learning in biological applications","الذكاء الصنعي وتعلم الآلة في التطبيقات البيولوجية"],["BITM","BioMolecular Interactions: Theories and Methods","تآثرات الجزيئات الحيوية: النظريات والطرائق"],["ABI","Advanced BioInformatics","المعلوماتية الحيوية المتقدمة"],["PSBI","Protein and Structural BioInformatics","المعلوماتية الحيوية للبروتينات والبنى"],["SRM","Scientific Research Methodologies","أساليب البحث العلمي"],["BIP","Master Project","مشروع الماجستير"],["BID","Master Project (Study Plan Code)","مشروع الماجستير"],["RDSC","Rational Design and Structural Characterization of Bioactive Molecules","التصميم الرشيد والتحديد البنيوي للجزيئات الفعالة حيوياً"],["AMCB","Advanced Molecular and Cellular Biotechnology","التقانة الحيوية الخلوية والجزيئية المتقدمة"],["APCB","Advanced Plant Cell Biotechnology","التقانة الحيوية المتقدمة للخلية النباتية"],["PEME","Protein Engineering and Molecular Enzymology","هندسة البروتين وعلم الإنزيمات الجزيئي"],["BIMP","Bioimaging and Image Processing","التصوير الحيوي وتحليل الصور"],["MSPD","Molecular Strategies in Control of Parasites and Vector-Borne Diseases","الاستراتيجيات الجزيئية في ضبط الأمراض المسببة بالطفيليات والنواقل"],["NNDL","Neural Network and Deep learning","الشبكات العصبونية والتعلم العميق"],["SE","Software Engineering","هندسة البرمجيات"],["SB","Systems biology","بيولوجيا المنظومات"],["MBPG","Molecular breeding and plant genetics","التهجين الجزيئي ووراثيات النبات"],["PHG","Pharmacogenomics","علم تأثير الأدوية المجيني"],["WP1","Web programming 1","برمجة الويب 1"],["PRB","Programming Basics","أساسيات البرمجة"],["DBS","Database Systems","نظم قواعد البيانات"],["STP","Principles of Statistics","مبادئ الاحصاء"],["NTP","Networks and Protocols","الشبكات الحاسوبية والبروتوكولات"],["WP2","Web programming 2","برمجة الويب 2"],["IAI","Introduction to Artificial Intelligence","مقدمة في الذكاء الصنعي"],["CYS","Cyber Security","الأمن السيبراني"],["CIT","Cloud Computing and the Internet of Things","الحوسبة السحابية وانترنت الأشياء"],["SWP","Software Principles","مبادئ هندسة البرمجيات"],["SWE","Software Principles (Study Plan Code)","مبادئ هندسة البرمجيات"],["AWD","Advanced Web Development","تطوير الويب المتقدم"],["IDM","Introduction to Data Mining","مقدمة في تنقيب البيانات"],["MAD","Mobile Application Development","تطوير تطبيقات المحمول"],["DSA","Distributed Systems and Applications","النظم والتطبيقات الموزعة"],["MLT","Machine Learning Technologies","تقانات تعلم الآلة"],["MPR","Master's Project","مشروع الماجستير"],["RSW","Switch and Routing","التبديل والتوجيه"],["WNT","Wireless Networks","الشبكات اللاسلكية"],["DCD","Data Center Design","تصميم مراكز المعطيات"],["ISP","Internet Service Providers","مزودي خدمة الانترنت"],["MMS","Multimedia Systems","أنظمة الوسائط المتعددة"],["NSS","Network Security","أمن الشبكات"],["WNS","Wireless Network Security","أمن الشبكات اللاسلكية"],["ANA","Advanced Network Administration","إدارة شبكات متقدمة"],["IPR","Internet Protocols","بروتوكولات الأنترنت"],["SSD","Server Design","تصميم الخوادم"],["CYS","Cyber Security","أمن الأنترنت"],["AHN","Ad-hoc Networks","الشبكات Ad-hoc"],["SDN","Software Defined Networks","الشبكات المعرفة برمجياً"],["IOT","The Internet of things","أنترنت الأشياء"],["CID","Cloud Computing Infrastructure","بنية الحوسبة السحابية التحتية"],["NPR","Master's Project","مشروع الماجستير"],["GMA401","Mathematics","رياضيات"],["GMA402","Probability & Statistics","الإحصاء و الاحتمالات"],["GBS301","Introduction to On-Line Education","التعليم الإلكتروني"],["GBS302","Computer Skills","مهارات الحاسوب"],["GBL401","Business Law","قانون الأعمال"],["GMA403","Economic and Administrative Mathematics","الرياضيات الاقتصادية والإدارية"],["GBS303","Career Preparation","تحضير السيرة المهنية"],["GBS504","Computer Applications in Management","تطبيقات حاسوبية في الإدارة"],["GRM501","Research Methodology","مناهج البحث العلمي"],["BAC401","Accounting Principles (1)","مبادئ محاسبة(1)"],["BMN401","Fundamentals of Management","أساسيات الإدارة"],["BEC401","The History of Economic Thought","تاريخ الفكر الاقتصادي"],["BMK401","Introduction to Marketing","مدخل إلى التسويق"],["BEC402","Microeconomics","الاقتصاد الجزئي"],["BHR401","Human Resources Management","إدارة الموارد البشرية"],["BAC402","Accounting Principles (2)","مبادئ محاسبة (2)"],["BEC403","Macroeconomics","الاقتصاد الكلي"],["BMK502","Consumer Behavior","سلوك المستهلك"],["BQM501","Operations Management","إدارة العمليات"],["BHR502","Organizational Behavior","السلوك تنظيمي"],["BFB401","Principles of Financial Management","مبادئ الإدارة المالية"],["BMN502","Negotiation Management","إدارة التفاوض"],["BMN503","Organization Theory","نظرية المنظمة"],["BFB502","Public Finance","المالية العامة"],["BQM502","Operations Research","بحوث العمليات"],["BQM603","Decision Theory","نظرية القرارات"],["BMN504","Management Information Systems","نظم المعلومات الإدارية"],["BMN505","Quality Management","إدارة الجودة"],["BMN606","Strategic Management","الإدارة الاستراتيجية"],["BMN507","E-Business Management","إدارة الأعمال الإلكترونية"],["BMN508","Corporate Social Responsibility and Business Ethics","المسؤولية الاجتماعية للشركات وأخلاقيات العمل"],["BAC506","Administrative Accounting","المحاسبة الإدارية"],["BMN609","Crisis Management","إدارة الأزمات"],["BAC607","Feasibility Studies","دراسات الجدوى الاقتصادية"],["BQM604","Data Analysis","تحليل البيانات"],["BMN610","Entrepreneurship","ريادة الأعمال"],["BQM607","Project Management","إدارة المشاريع"],["BAC504","Financial Accounting for Companies","محاسبة مالية للشركات"],["BMK603","Services Marketing","تسويق الخدمات"],["BMK604","Product and Brand Management","إدارة المنتج والعلامة التجارية"],["BMK605","Sales Management","إدارة المبيعات"],["BMK606","Pricing and Distribution","التسعير والتوزيع"],["BMK607","Integrated Marketing Communications","الاتصالات التسويقية المتكاملة"],["BMK608","E-Marketing","التسويق الإلكتروني"],["BMK609","Public Relations Management","إدارة العلاقات العامة"],["BMK610","Strategic Marketing","التسويق الاستراتيجي"],["BMK612","International Marketing","التسويق الدولي"],["BMK611","Business to Business Marketing","التسويق نحو منظمات الأعمال"],["PMK601","Graduation Project (Marketing)","مشروع"],["BHR603","Industrial & Managerial Psychology","علم النفس الإداري والصناعي"],["BHR604","Human Resource Training","التدريب والتطوير"],["BHR605","Employment Management","إدارة التوظيف"],["BHR606","Managerial Leadership","القيادة الإدارية"],["BHR607","Career Path Management","إدارة المسار المهني"],["BHR608","Strategic Human Resource Management","الإدارة الاستراتيجية للموارد البشرية"],["BHR609","Knowledge Management & Intellectual Capital","إدارة المعرفة ورأس المال الفكري"],["BHR610","Teamwork Management","إدارة فرق العمل"],["BHR6011","Diversity Management","إدارة التنوع"],["BHR6012","Modern Trends in Human Resource Management","اتجاهات حديثة في إدارة الموارد البشرية"],["PHR601","Graduation Project (HRM)","مشروع"],["BAC603","Accounting for Partnership Companies","محاسبة شركات الأشخاص"],["BFB503","Financial Management of Enterprises","الإدارة المالية للشركات"],["BAC605","Accounting for Corporations","محاسبة شركات الأموال"],["BFB604","Management of Financial Institutions","إدارة مؤسسات مالية"],["BFB605","Financial Analysis","تحليل مالي"],["BFB606","International Finance","مالية دولية"],["BFB607","Banking","خدمات مصرفية"],["BFB608","Islamic Finance","مالية إسلامية"],["BFB609","Management of Financial Markets","إدارة أسواق مالية"],["BAC608","Intermediate Accounting (1)","محاسبة متوسطة1"],["BAC609","Intermediate Accounting (2)","محاسبة متوسطة2"],["BFB610","Management of Credit Risk","إدارة المخاطر الإئتمانية"],["PFB601","Graduation Project (Finance & Banking)","مشروع"],["QMH51","Management Fundamentals and Human Resource Management","أساسيات الإدارة وإدارة الموارد البشرية"],["QAS51","Applied Statistics","الإحصاء التطبيقي"],["QDM61","Problem Solving and Decision Making","حل المشكلات وصناعة القرار"],["QMS61","Quality Management Systems","أنظمة إدارة الجودة"],["QIT62","Techniques and Tools for Quality Improvements","تقنيات وأدوات تحسين الجودة"],["QFM62","Financial Management and Quality Costs","الإدارة المالية وتكاليف الجودة"],["QTM62","Total Quality Management","إدارة الجودة الشاملة"],["QPM72","Project Quality Management","إدارة الجودة في المشاريع"],["QSC72","Statistical Quality Control","الضبط الإحصائي للجودة"],["QIA72","Internal Quality Audit","التدقيق الداخلي للجودة"],["QMM72","Measurement Systems","أنظمة القياس"],["QDE72","Design and Analysis of Experiments","تصميم وتحليل التجارب"],["QPD72","Product and Process Design","تصميم المنتجات والإجرائيات"],["QSM72","Service Quality Management","إدارة جودة الخدمات"],["QSP72","Planning and Strategic Analysis","التخطيط والتحليل الاستراتيجي"],["QCM72","Supply Chain Management","إدارة سلاسل الإمداد"],["QMC72","Marketing and Customer Relationship Management","التسويق وإدارة العلاقة مع الزبون"],["QPR73","Master Project","مشروع الماجستير"],["MET","Management and Economics of Technology","إدارة واقتصاد التقانة"],["SCM","Supply Chain Management","إدارة سلاسل التزويد"],["ICT","Information and Communication Technology","تقانة المعلومات والاتصالات"],["TCI","Technology Change and Innovation","التغيير التقاني والإبداع"],["SMM","Scientific Methods in Management","طرق علمية في الإدارة"],["AFM","Accounting and Financial Management","محاسبة وإدارة مالية"],["QRM","Quality, Reliability and Maintainability","جودة ووثوقية وصيانة"],["TDT","Technology Development and Transfer","نقل وتطوير التقانة"],["MIS","Management Information Systems","نظم معلومات إدارية"],["SE","System Engineering","هندسة النظم"],["ITM","Industrial and Technological Marketing","تسويق صناعي وتكنلوجي"],["TPM","Technology Project Management","إدارة مشاريع التقانة"],["BTL","Business and Technology Law","قانون الأعمال والتقانة"],["NPD","New Product Development","تطوير منتج جديد"],["CTM","Cases in Technology Management","تجارب في إدارة التقانة"],["FIP","Final Project","مشروع نهائي"],["BRM.12","Business Research Methods","طرائق البحث في إدارة الأعمال"],["PCM.11","Principle of Management","أساسيات الإدارة"],["MEC.13","Managerial Economics","اقتصاديات الأعمال"],["HRM.14","Human Resources Management","إدارة الموارد البشرية"],["MKG.15","Marketing","التسويق"],["OPM.22","Operation Management","إدارة العمليات"],["DAC.23","Data analysis by computer","تحليل البيانات باستخدام الحاسوب"],["ACM.21","Accounting for Managers","المحاسبة للمديرين"],["ORB.24","Organizational Behavior","السلوك التنظيمي"],["BUL.25","Business Law","قانون الأعمال"],["MIS.32","Management Information Systems","نظم المعلومات الإدارية"],["IMT.33","International Marketing and Trading","التسويق والتجارة الدولية"],["PRM.34","Project Management","إدارة المشروعات"],["STM.35","Strategy (in English)","الإدارة الإستراتيجية (بالإنكليزية)"],["FIN.31","Financial Management","الإدارة المالية"],["PRJ.40","The Project","مشروع التخرج"],["CRI101","Public Criminal Law 1","قانون العقوبات العام 1"],["INL102","Public International Law","القانون الدولي العام"],["ECO103","Principles of Economics","مبادئ علم الاقتصاد"],["CON104","Constitutional Law and Political Systems","القانون الدستوري والنظم السياسية"],["MET105","Legal Methodology","المنهجية القانونية"],["IL106","Introduction to Law","مدخل إلى علم القانون"],["CDL107","ICDL","الرخصة الدولية لقيادة الحاسوب"],["GBS108","E-learning","التعليم الالكتروني"],["HUM201","Human Rights","حقوق الإنسان"],["CRI202","Public Criminal Law 2","قانون العقوبات العام 2"],["IS203","Principles of Islamic Sharia","مبادئ الشريعة الإسلامية"],["POL 204","Introduction to Political Science","المدخل الى علم السياسة"],["INT205","Introduction to Law and Legal Systems (E1)","مقدمة إلى علم القانون والأنظمة القانونية (باللغة الإنجليزية)"],["CIV206","Civil Law 1","القانون المدني 1 مصادر الالتزام"],["CRI301","Private Criminal Law 3","قانون العقوبات الخاص 1"],["COM302","Commercial Law 1","القانون التجاري 1 (الأعمال التجارية والتاجر والمتجر)"],["ADM303","Administrative Law 1","القانون الإداري 1"],["FAM304","Personal Status Law 1","قانون الأحوال الشخصية 1 زواج وطلاق"],["EIL305","International Economic Law","القانون الدولي الاقتصادي"],["CIV306","Civil Law 2","القانون المدني 2 مصادر الالتزام"],["CRI401","Private Criminal Law 4","قانون العقوبات الخاص 2"],["COM402","Commercial Law 2 (Company Law)","القانون التجاري 2 (الشركات التجارية)"],["COL403","Cooperative Law","التشريع التعاوني"],["CL404","Criminal Law (E2)","القانون الجنائي (باللغة الإنجليزية)"],["CIV405","Civil Law 3","القانون المدني 3 أحكام الالتزام"],["ADM406","Administrative Law 2","القانون الإداري 2"],["CIP501","Civil Procedures 1","أصول المحاكمات المدنية 1"],["FL502","Public Finance Law 1","المالية العامة 1 الإيرادات والنفقات"],["CL503","Commercial Law 3 (Commercial Papers)","القانون التجاري 3 (الأسناد التجارية)"],["Cive504","Civil Law 4","القانون المدني 4 العقود المسماة"],["CIV504","Civil Law 4","القانون المدني 4 العقود المسماة"],["FAM505","Personal Status Law 2","قانون الأحوال الشخصية 2 المواريث"],["ADM506","Administrative Law 3","القانون الإداري 3"],["CIP601","Civil Procedures 2","أصول المحاكمات المدنية 2"],["PIL602","Private International Law 1","القانون الدولي الخاص 1"],["INT 603","Public International Law (E3)","القانون الدولي العام (باللغة الإنجليزية)"],["CIV604","Civil Law 5","القانون المدني 5 (الحقوق العينية الأصلية)"],["CRP605","Criminal Procedures 1","أصول المحاكمات الجزائية 1"],["ML606","Commercial Law 4 (Maritime and Air Law)","القانون التجاري 4 القانون البحري والجوي"],["PIL701","Private International Law 2","القانون الدولي الخاص 2"],["CIV702","Execution Procedures","أصول التنفيذ"],["ICL703","International Trade Law (E4)","قانون التجارة الدولية (باللغة الإنجليزية)"],["CIV704","Civil Law 6","القانون المدني 6 (الحقوق العينية التبعية)"],["CRP705","Criminal Procedures 2","أصول المحاكمات الجزائية 2"],["B706","Commercial Arbitration","التحكيم التجاري"],["TAX801","Tax Law","التشريع الضريبي"],["LL802","Labor Law","قانون العمل"],["ID803","Islamic Doctrine","أصول الفقه"],["A-INL-811","Insurance Law","التأمين"],["A - BL - 812","Banking Legislation","المصارف والتشريعات المصرفية"],["A -Bany- 813","Bankruptcy","الإفلاس والصلح الواقي"],["A- EC -814","E-commerce","التجارة الإلكترونية"],["B-ARL- 821","Agricultural Relations Law","قانون العلاقات الزراعية"],["B - IP- 822","Intellectual Property Rights","حقوق الملكية الفكرية"],["B - CPL -823","Consumer Protection Law","قانون حماية المستهلك"],["B-LSL- 824","Legal Sociology","علم الاجتماع القانوني"],["C-EL -831","Environmental Law","التشريع البيئي"],["AC- 832-C","Administrative Contracts","العقود الإدارية"],["FC- 833-C","Financial Control","الرقابة المالية"],["LAL834 -C","Local Administrative Law","قانون الإدارة المحلية"],["841 - DL -D","Diplomatic Law","العلاقات الدبلوماسية والقنصلية"],["842 – IHL-D","International Humanitarian Law","القانون الدولي الإنساني"],["IEO-843-D","International Economic Organizations","المنظمات الدولية الاقتصادية"],["ILS- 844-D","International Law of the Sea","القانون الدولي للبحار"],["851 – DL-E","Drugs Law","قانون المخدرات"],["852 – JL-E","Juvenile Law","قانون الأحداث الجانحين"],["853 – ML-E","Money Laundering Law","قانون غسل الأموال"],["854 – Cybc-E","Cyber Crime","جرائم المعلوماتية"],["MME13","Introduction to Mass Media Organization Management","مدخل إلى وسائل الإعلام- إدارة المؤسسات الإعلامية"],["IIC13","Introduction to Image and Cinema","مدخل إلى الصورة والسينما"],["MML13","Media English Language I","مادة إعلامية بلغة انكليزية 1"],["IJ13","Introduction to Journalism","مدخل إلى الصحافة"],["APM13","Advertising- Principles and Management","الإعلان - مبادئ وإدارة"],["PR13","Public Relations- Principles and Management","العلاقات العامة- مبادئ وإدارة"],["CDL11","Computer Skills","مهارات الحاسوب"],["GBS103","Introduction to Online Education","التعليم الإلكتروني"],["IME121","Introduction to Media Editing","مدخل إلى التحرير الإعلامي"],["MMRM121","Mass Media Research Methods","مناهج البحث الإعلامي"],["MMLII121","Media English Language II","مادة إعلامية بلغة انكليزية 2"],["CS122","Communication and Society","الاتصال والمجتمع"],["LCLM122","Literature, Criticism and Media Language","الأدب والنقد واللغة الإعلامية"],["IRT122","Introduction to Radio and TV","مدخل إلى الإذاعة والتلفزيون"],["MCT131","Media and Communication Theory","نظريات الإعلام والاتصال"],["LEMC131","Legislations and Ethics of Media and Communication","التشريعات الإعلامية وأخلاقيات المهنة"],["MMLIII231","Media English Language III","مادة إعلامية بلغة انكليزية 3"],["OPA131","Public Opinion and it's Assessment","الرأي العام وطرق قياسه"],["IMS132","Introduction to Media Sociology","مدخل إلى علم الاجتماع الإعلامي"],["OC132","Organizational Communication","الاتصال التنظيمي"],["CA132","Current Affairs","قضايا راهنة"],["TPSM241","Techniques of Persuasion and Social Marketing","أساليب الإقناع والتسويق الاجتماعي"],["MPA241","Media Planning","التخطيط الإعلامي"],["MKE241","Media and the Knowledge Economy","اقتصاد الإعلام والمعرفة"],["SIDM241","Sources of Information and Media Documentation","مصادر المعلومات والتوثيق الإعلامي"],["OMC242","Online Media and Communication","الإعلام والاتصال الإلكتروني"],["AL242","Administrative Leadership","القيادة الإدارية"],["MCI242","International Media and Communication","الإعلام والاتصال الدولي"],["RTPD533","Radio and Television Presentation and Delivery","التقديم والإلقاء الإذاعي والتلفزيوني"],["NPRT534","News Programs in Radio and TV","البرامج الإخبارية في الإذاعة والتلفزيون"],["RP535","Preparation of Radio Programs","إعداد البرامج الإذاعية"],["SMRT536","Specialized Media in Radio and Television","الإعلام الإذاعي والتلفزيوني المتخصص"],["MCI537","Management of Creativity and Innovation","إدارة الإبداع والابتكار"],["IPR532","Intellectual Property Rights","حقوق الملكية الفكرية"],["MIM645","Media Institutions Management","إدارة المؤسسات الإعلامية"],["TRTP646","Talk Programs In Radio and Television","البرامج الحوارية الإذاعية والتلفزيونية"],["ML648","Media Legislations","تشريعات إعلامية"],["MM647","Multimedia","الوسائط المتعددة"],["LS649","Investigative Articles' Editing","التحرير الاستقصائي"],["IAT650","Photos' Analysis Techniques","أساليب تحليل الصورة"],["IS872","Information Society","مجتمع المعلومات"],["WBN752","Writing and Preparation of News Reports","كتابة وإعداد التقارير الإخبارية"],["RTP758","Radio and TV Production","الإنتاج الإذاعي والتلفزيوني"],["MTE759","Technology of Media and Education","تكنولوجيا الإعلام والتعليم"],["RTA760","Radio and Television Advertising","الإعلان الإذاعي والتلفزيوني"],["SD756","Scenario and Drama","السيناريو والدراما"],["RTVD785","Radio and TV Direction","الإخراج الإذاعي والتلفزيوني"],["EOM874","Editing of Opinion Articles","تحرير مواد الرأي"],["DO757","Documentary Films","الأفلام الوثائقية"],["GD762","Graphic Design","التصميم الجرافيكي"],["ATVW787","Advanced TV Writing","كتابة تلفزيونية مستوى متقدم"],["G796","Graduation Project_RTV","مشروع تخرج"],["BP540","Principles of Business Management","أسس إدارة الأعمال"],["OGP528","Online Journalism and Publishing","الصحافة الالكترونية والنشر الالكتروني"],["CB539","Consumer Behavior","سلوك المستهلك"],["PSEM538","Persuasion Skills by Electronic Media","مهارات الإقناع بالوسائل الإلكترونية"],["EMC687","Electronic Means of Communication","وسائل الاتصال الالكترونية"],["CJ686","Citizen Journalism","صحافة المواطن"],["MI530","Media Interview","المقابلة الإعلامية"],["IWD753","Web Page Creation","تكوين صفحة الويب"],["NPD755","Newspaper Production and Layout","إنتاج وإخراج الصحف"],["EM790","Electronic Marketing","التسويق الإلكتروني"],["PMPT870","Methods, Principles and Techniques of Publication","أساليب وأصول وتقنيات النشر"],["TVIC 786","TV Interview and Reportage","الحديث والتحقيق التلفزيوني"],["G797","Graduation Project_EM","مشروع تخرج"],["PMAC542","Planning of Advertisement Content","تخطيط المحتوى الإعلاني"],["PM541","Principles of Marketing","مبادئ التسويق"],["MSP533","Marketing Strategies and Policies","استراتيجيات وسياسات التسويق"],["PA534","Advertising Psychology","سيكولوجيا الإعلان"],["E649","Economics","علم الاقتصاد"],["PRS650","Public Relations Skills","مهارات العلاقات العامة"],["SM791","Service Marketing","تسويق الخدمات"],["AD792","Advertisement Designing","تصميم الإعلان"],["MC764","Marketing Communication","الاتصال التسويقي"],["EA763","Economic Analysis","التحليل الاقتصادي"],["BM764","Trade Mark Management","إدارة العلامة التجارية"],["A794","Aesthetics","علم الجمال"],["G795","Graduation Project_AD","مشروع تخرج"],["NWE527","News Writing and Editing I","كتابة وتحرير الأخبار1"],["JOA529","Reportage, Interviews and Opinion Articles","التحقيق والحديث الصحفي ومواد الرأي"],["APP531","Art of Press Photography","فن التصوير الصحفي"],["NWE527-2","News Writing and Editing II","كتابة وتحرير الأخبار II"],["ETP 757","Online Press Editing","تحرير الصحافة الإلكترونية"],["TAT754","Text Analysis Techniques","أساليب تحليل النصوص"],["SP871","Specialized Press","الصحافة المتخصصة"],["PT751","Printing Technologies","تقنيات الطباعة"],["MPW873","Media and Psychological Warfare","الإعلام والحرب النفسية"],["G799","Graduation Project_JO","مشروع تخرج"],["PRC543","Public Relations and Crises","العلاقات العامة والأزمات"],["MP544","Publicity and Media Relations","العلاقات الإعلامية والإعلانية"],["IPR649","International Public Relations","العلاقات العامة الدولية"],["CB535","Organizational Behavior","السلوك التنظيمي"],["PRN766","Public Relations and Negotiation","العلاقات العامة والتفاوض"],["IS769","Internet and Society","الانترنت والمجتمع"],["PRC768","Public Relations Campaigns","حملات العلاقات العامة"],["EPRM767","Writing for Public Relations","الكتابة للعلاقات العامة"],["G798","Graduation Project_PR","مشروع تخرج"],["CET","Education Technology","تكنولوجيا التعليم"],["CCE","Comparative Education","التربية المقارنة"],["CEC","Educational Curricula","المناهج التربوية"],["CEP","Educational Psychology","علم النفس التربوي"],["CME","Measurement and Evaluation in Modern Education","القياس والتقويم في التربية الحديثة"],["CDP","Developmental Psychology","علم نفس النمو"],["CMT","General Methods of Teaching","طرائق التدريس العامة"],["CGE","General Education and Philosophy of Education","التربية العامة وفلسفة التربية"],["CMH","Mental Health","الصحة النفسية"],["ICDL","Computer Skills","مهارات قيادة الحاسوب"],["CTP","Practical Education","التربية العملية"],["GBS103","Introduction to E-learning","مقدمة في التعلم الالكتروني"],["PRO","Project","المشروع"],["ESC","School Counseling","الإرشاد المدرسي"],["ESE","Special Needs Education","تربية ذوي الاحتياجات الخاصة"],["ETT","Thinking Skills Teaching","تعليم مهارات التفكير"],["EME","Modern Educational Trends","الاتجاهات التربوية المعاصرة"],["EEL","E-learning","التعليم الالكتروني"],["ECS","Scientific Education","التربية العلمية"],["CCL","Computer and Internet Learning","التعلم بالحاسوب والانترنت"],["CSM","School and Classroom Management","الإدارة الصفية والمدرسية"],["IET","Introduction to education Technology","مدخل إلى تكنولوجيا التعليم"],["TCM","Contemporary trends in curriculum and teaching methods","اتجاهات حديثة في المناهج وطرائق التدريس"],["EDC","Educational Communication","الاتصال التربوي"],["ISL","Uniqueness of teaching and self-learning","تفريد التعليم والتعلم الذاتي"],["LRC","Learning Resources centres and their management","مراكز مصادر التعلم وإدارتها"],["SET","Effective teaching strategies and active learning","استراتيجيات التدريس الفعال والتعلم النشط"],["BLL","Blending Learning","التعليم المتمازج"],["ITA","Applications of integrating technology into learning","تطبيقات دمج التكنولوجيا في التعليم"],["CPD","Designing, production and evaluation of computer educational Programmes","تصميم البرمجيات التعليمية الحاسوبية وإنتاجها وتقويمها"],["IAE","Internet applications in education","تطبيقات الانترنت في التعليم"],["EDL","e-learning and distant learning","التعلم الالكتروني والتعليم من بعد"],["ERM","Research methods in education","مناهج البحث في التربية"],["IND","Education Design","التصميم التعليمي"],["CIE","Contemporary issues in educational technology","موضوعات معاصرة في تكنولوجيا التعليم"],["ETS","Learning technology for people with special needs","تكنولوجيا التعليم لذوي الحاجات الخاصة"],["GRD","Master's Project","مشروع الماجستير"],["PIL","Public international law","القانون الدولي العام"],["IHRL","International human rights law","القانون الدولي لحقوق الإنسان"],["GTIHL","General Theory of International Humanitarian Law","النظرية العامة للقانون الدولي الإنساني"],["ISIHL","In-depth studies in international humanitarian law","دراسات معمقة في القانون الدولي الإنساني"],["LAC","Law of Armed Conflict","قانون النزاعات المسلحة"],["JAB","JUS AD BELLUM","القانون الدولي للجوء إلى القوة"],["ICL","International criminal law","القانون الدولي الجزائي"],["IHO","International and humanitarian organizations","المنظمات الدولية والإنسانية"],["CII","Contemporary international issues","قضايا دولية معاصرة"],["IRL","International refugee law","القانون الدولي للاجئين"],["RLM","Research and Legal Methodology","البحث والمنهجية القانونية"],["TSFL","Terms and studies in foreign language","مصطلحات ودراسات باللغة الأجنبية"],["MGP","Graduation Project","مشروع التخرج"],["RES","Basics of scholarly research","منهجية البحث العلمي"],["METHODS","Theories and methods of language teaching","نظريات تعليم اللغات وطرائق تدريسها"],["CURR","Curriculum design and computerizing content","تصميم مناهج اللغات وحوسبتها"],["SOCLIN","Sociolinguistics and diglossia","اللسانيات الاجتماعية والازدواجية"],["PSYCLIN","Language acquisition and psycholinguistics","اكتساب اللغة واللسانيات النفسية"],["GENLIN","General linguistics and phonology","اللسانيات العامة"],["APPLIN","Applied linguistics","اللسانيات التطبيقية"],["LANCULT","Arabic language and culture","اللغة العربية وثقافتها"],["SMPR","Semantics and pragmatics","علم الدلالة والتداولية"],["SYN","Syntax and morphology","النحو والصرف"],["STATS","Measurement, evaluation, educational statistics","القياس و التقييم والإحصاء التربوي"],["THES","Thesis writing","مشروع التخرج (كتابة الرسالة)"],["GBS301","Virtual Learning Systems","أنظمة التعلم الافتراضي"],["GSC301","The Syrian Culture1","الحضارة السورية (1)"],["GSC302","The Syrian Culture2","الحضارة السورية (2)"],["TGT401","Introduction to Tourism","مدخل إلى السياحة"],["GIS402","Introduction to Statistics Science","مدخل إلى الإحصاء"],["GEL403","E- Learning","تعليم إلكتروني"],["BMN401","Introduction to Management","مدخل إلى الإدارة"],["GIA405","Introduction to Accounting","مدخل إلى المحاسبة"],["GIM406","Introduction to Marketing","مدخل إلى التسويق"],["GIT407","Introduction to Tourism Economics","مدخل إلى الاقتصاد السياحي"],["Gcp303","Career Preparation","بناء السيرة المهنية"],["BTP601","Tourism Planning","التخطيط السياحي"],["BHS404","The History Of Syrian Arts","تاريخ الفن السوري"],["BTAS605","Tourism establishments in Accounting","محاسبة منشآت سياحية"],["BHR604","Human Resources Management (HR)","إدارة موارد بشرية"],["BTD407","Tourism Destinations Marketing","تسويق المواقع السياحية"],["BTS502","Tourism services Quality","جودة الخدمات السياحية"],["BFM504","Financial Management","إدارة مالية"],["BLT506","Legislations in Tourism & Hotels","تشريعات سياحية وفندقية"],["BSR59","Social responsibility and work ethics","المسؤولية الاجتماعية وأخلاقيات العمل"],["BTS401","Tourism Marketing Department","إدارة التسويق السياحية"],["BSR603","Scientific Research Methodologies","منهجية البحث العلمي"],["BSP402","Sustainable Development of Tourism","التنمية السياحية المستدامة"],["BSM602","Services Marketing","التسويق الخدمي"],["GBS401","Communication Skills","مهارات التواصل"],["BMS403","Managing Safe & Healthy Work Environment","إدارة الصحة والسلامة المهنية"],["BMR508","Management of resorts and tourist villages","إدارة المنتجعات والقرى السياحية"],["BTE501","Tourism Events Management","إدارة الفعاليات السياحية"],["BTP505","Tourism Projects Management","إدارة مشاريع سياحية"],["TTM501","Cultural tourism","السياحة الثقافية"],["TTM606","Syrian Intangible Heritage","التراث اللامادي السوري"],["TTM608","Management of tourist camps","إدارة المخيمات السياحية"],["TTM610","The Art of Etiquette (Ceremonies & Professional Attitude)","فن الاتيكيت (المراسم وآداب اللياقة)"],["TTM 615","Feasibility study for tourism establishments","دراسة الجدوى الاقتصادية بالمنشآت السياحية"],["TTM614","Syrian Tourism Map","الخارطة السياحية السورية"],["TTM601","Tourism Companies & Travel Agencies Management","إدارة شركات السياحة والسفر"],["TTM603","Airline Service Management","إدارة خدمات شركات الطيران"],["TTM607","Creating & Operating Tours & Traveling Products","تنظيم البرامج السياحية والجولات"],["TTM502","Specialized English (1)","لغة إنكليزية تخصصية (1)"],["TTM605","Tourism Destination Management","إدارة المواقع السياحية"],["TTM503","Specialized English (2)","لغة إنكليزية تخصصية (2)"],["TTM611","Tourism Product Development Strategy","إستراتيجية تطوير المنتج السياحي"],["TTM612","Tourism auditing","المراجعة والتدقيق السياحي"],["TTM613","Tourism Information Systems","تطبيقات حاسوبية في السياحة"],["PTM616","Graduation Project (Tourism Management)","مشروع تخرج"],["THM601","Hotel Operations Management","إدارة العمليات الفندقية"],["THM602","Introduction To Hospitality Industry","مدخل إلى الضيافة"],["THM501","Food & Beverage Service (F&B Service)","خدمة الأغذية والمشروبات"],["THM604","Customer behavior","سلوك العملاء"],["THM502","Rooms Division Management","إدارة الإيواء"],["THM607","Purchase & Store Management","إدارة المشتريات والمخازن"],["THM503","Specialized English 1","لغة إنكليزية تخصصية (1)"],["THM609","Bar Management","إدارة البارات"],["THM603","Feasibility study In hotel establishments","دراسة الجدوى الاقتصادية في المنشآت فندقية"],["THM605","Hotel Security","الأمن الفندقي"],["THM610","Event Management","إدارة المناسبات"],["THM606","Restaurant Management","إدارة المطاعم"],["THM505","Computer applications in hotel establishments","تطبيقات حاسوبية في المنشآت الفندقية"],["PHM611","Graduation Project (Hotel Management)","مشروع تخرج"],["TMK601","E-Marketing In Tourism","التسويق الالكتروني السياحي"],["TMK603","Marketing research in Tourism","بحوث التسويق السياحي"],["TMK605","Tourism Marketing Communications","الاتصالات التسويقية السياحية"],["TMK608","Tourist markets","الأسواق السياحية"],["TMK502","Tourist behavior","سلوك السائح"],["TMK602","Tourism Marketing Information Systems","نظم المعلومات التسويقية السياحية"],["TMK501","International Tourism Marketing","التسويق السياحي الدولي"],["TMK607","Pricing Strategy for Tourism Products","التسعير السياحي"],["TMK503","Tourism Marketing Information Systems (Computer Applications)","تطبيقات حاسوبية في التسويق السياحي"],["TMK604","Tourism product development strategies","استراتيجيات تطوير المنتج السياحي"],["TMK606","Innovation Marketing in Tourism Industry","التسويق الابتكاري السياحي"],["TMK609","Digital Tourism","السياحة الرقمية"],["TMK611","Social Marketing","التسويق الاجتماعي"],["THM504","Specialized English 2","لغة إنكليزية تخصصية (2)"],["MGMT101","Principles of Management and Business","مبادئ الإدارة والأعمال"],["ECON101","Principles of Economics","مبادئ الاقتصاد"],["STAT101","Principles of Statistics","مبادئ الإحصاء"],["MKTG101","Principles of Marketing","مبادئ التسويق"],["ACCT101","Principles of Financial Accounting","مبادئ المحاسبة المالية"],["IT101","Computer Skills and Information Technology","مهارات الحاسوب وتكنولوجيا المعلومات"],["BLAW101","Business Law","قانون الأعمال"],["MGMT301","Strategic Management","الإدارة الإستراتيجية"],["HRM101","Introduction to Human Resource Management","المدخل إلى إدارة الموارد البشرية"],["MIS201","Management Information Systems","نظم المعلومات الإدارية"],["ACCT201","Principles of Managerial Accounting","مبادئ المحاسبة الإدارية"],["COMM301","Communication and Negotiation Skills in the Workplace","مهارات التواصل والتفاوض في بيئة العمل"],["OB201","Organizational Behavior","السلوك التنظيمي"],["EBUS301","E-Business Management","إدارة الأعمال الإلكترونية"],["CSR301","Corporate Social Responsibility and Business Ethics","المسؤولية الاجتماعية للشركة وأخلاقيات العمل"],["ADML401","Administrative Leadership","القيادة الإدارية"],["KM401","Knowledge Management and Intellectual Capital","إدارة المعرفة ورأس المال الفكري"],["HRM301","Human Resource Development and Training","تنمية وتدريب الموارد البشرية"],["SHRM401","Strategic Human Resource Management","الإدارة الاستراتيجية للموارد البشرية"],["DATA301","Data Analysis","تحليل البيانات"],["WP301","Workforce Planning","تخطيط القوى العاملة"],["PM301","Project Management","إدارة المشاريع"],["CS101","Programming for Non-Specialists","البرمجة لغير المختصين"],["CPM401","Career Path Management","إدارة المسار الوظيفي"],["EM301","Employment Management","إدارة التوظيف"],["MC301","Management by Creativity","الإدارة بالإبداع"],["QM401","Quality Management and Institutional Excellence","إدارة الجودة والتمييز المؤسسي"],["OHSM301","Occupational Health and Safety Management","إدارة الصحة والسلامة المهنية"],["RM301","Scientific Research Methodology","منهجية البحث العلمي"],["MTHRM401","Modern Trends in Human Resource Management","اتجاهات حديثة في إدارة الموارد البشرية"],["PM401","Performance Management","إدارة الاداء"],["CM401","Compensation Management","إدارة التعويضات"],["IHRM401","International Human Resource Management","إدارة الموارد البشرية الدولية"],["OG401","Organizational Governance","حوكمة المنظمات"],["HRMIS401","Human Resource Management Information Systems","نظم معلومات إدارة الموارد البشرية"],["AIHRM401","AI Applications in Human Resource Management","تطبيقات الذكاء الصنعي في إدارة الموارد البشرية"],["GP499","Graduation Project","مشروع التخرج"],["BMN401","Basics of Project Management","أساسيات إدارة المشاريع"],["BSC","Basics of Smart Cities","مبادئ المدن الذكية"],["Gph101","Physics","الفيزياء"],["Gma101","Mathematical Algebra","الجبر الرياضي"],["CAD","Computer Aided Design (AutoCAD)","التصميم بمعونة الحاسوب (AutoCAD)"],["ENM","Engineering Mechanics","الميكانيك الهندسي"],["PRG","Programming","البرمجة وبنى المعطيات بلغة بايثون"],["BBM","Basics of Building Information Modelling + Revit","أساسيات نمذجة معلومات البناء (مع أساسيات ريفيت)"],["GBS304","Entering Labour Market Skills","مهارات الدخول إلى سوق العمل"],["SCP 1","Smart Cities Policies 1","سياسات المدن الذكية 1"],["CAL","Calculus","التكامل والتفاضل"],["LADL","Linear Algebra and Data Learning","الجبر الخطي والتعلم من لبيانات"],["SSC","Sustainability in Smart Cities","الاستدامة في المدن الذكية"],["SUD","Smart Urban Design","التصميم الحضري الذكي (تطبيقية)"],["PCEI","Principles of Civil Engineering and Infrastructure","مبادئ الهندسة المدنية والبنية التحتية"],["MSC 1","Materials Science I","علم المواد 1 ( تطبيقية)"],["ENG 3","English 3","إنكليزي 3"],["PROB","Probability","الاحتمالات"],["OBJP","Object-oriented Programming","برمجة غرضية التوجه"],["MSC2","Materials Science 2","علم مواد 2 ( تطبيقية)"],["BCR","Building Construction (Revit)","انشاء مباني (Revit)"],["GIS 1","Geographic Information Systems (GIS)1","نظم المعلومات الجغرافية GIS (1)"],["SCP 2","Smart Cities Policies 2","سياسات المدن الذكية 2"],["ENG 4","English 4","انكليزي 4"],["OEHS","Occupational, Environmental, and Health Safety","السلامة و الصحة المهنية و البيئية"],["SDP","Statistics and Data Processing","الإحصاء ومعالجة المعطيات"],["SCP 1 (Planning)","Smart Cities Planning I","تخطيط المدن الذكية 1 ( تطبيقية)"],["SSM 1","Smart Systems I","النظم الذكية 1"],["DSM","Database Systems","نظم قواعد البيانات"],["SUS","Smart urban sociology","السيسولوجيا الحضرية الذكية"],["ENG 5","English 5","انكليزي 5"],["ORSC","Operations Research in Smart Cities","بحوث العمليات في المدن الذكية"],["SCP 2 (Planning)","Smart Cities Planning 2","تخطيط المدن الذكية 2 ( تطبيقية)"],["BCT","Basics of Construction Technology","تكنولوجيا التشييد"],["MLDM","Machine Learning and Data Mining","تعلم الالة و التنقيب في البيانات"],["UGC","Urban Governance","الحوكمة الحضرية"],["ATSC","Architectural Theories in Smart Cities","نظريات العمارة في المدن الذكية"],["RMAN","Risk Management","إدارة المخاطر"],["SBIM","Sustainability in BIM","الاستدامة في BIM"],["UAI","Urban Artificial Intelligence","الذكاء الاصطناعي الحضري"],["BDSC","Big Data in Smart Cities","البيانات الضخمة في المدن الذكية"],["QSC","Quality Systems and Quality Control","نظم و مراقبة الجودة"],["SSM 2","Smart Systems 2","النظم الذكية 2"],["CNS","Communication Networks","شبكات الاتصالات"],["IMBIM","INTEGRATED Management in BIM","الإدارة المتكاملة في الـ BIM _ ISO19650"],["QTM","Quality Testing and Total Quality Management","اختبارات الجودة و إدارة الجودة الشاملة (تطييقية)"],["IoT","Internet of Things (IoT)","إنترنت الأشياء IoT"],["EDSC","Executive Designs for Smart Cities","التصميمات التنفيذية للمدن الذكية"],["SCMDS","Smart City Management & Decision Support","ادارة المدن الذكية ودعم القرار (CIM) GIS ADV+"],["SAPH","Smart Architecture Philosophy","فلسفة العمارة الذكية"],["SPAD","Smart Parametric in Architectural Design","البارامترية الذكية في التصميم المعماري"],["TENT","Technology Entrepreneurship","ريادة الأعمال التقنية"],["PRP","Project Research Plan","خطة بحث المشروع"],["DTC","Digital Twin for Cities","التوأم الرقمي للمدن"],["UCS","Urban Cybersecurity","الأمن السيبراني الحضري"],["PR","Project (Smart City Design)","مشروع التخرج (تصميم مدينة ذكية)"],["CPME","Curriculum design in medical education and modern tendencies","تصميم المناهج في التعليم الطبي والتوجهات الحديثة"],["TLME","Teaching and learning strategies in medical education","استراتيجيات التدريس والتعلم في التعليم الطبي"],["QAMS","Quality Assurance and Reliability of medical professions institutions","ضمان جودة واعتمادية مؤسسات المهن الطبية"],["MCMT","Measuring Competencies of medical team","قياس كفاءات الفريق الطبي"],["EMP","Evaluation of Medical Programs","تقويم البرامج الطبية"],["LME","Management and administrative leadership in medical education","الإدارة والقيادة الإدارية في التعليم الطبي"],["TME","Applying technology in medical education","تطبيق التكنولوجيا في التعليم الطبي"],["CPD","Continuous professional development","التطوير المهني المستمر"],["SRME","Scientific Research in Medical Education","البحوث العلمية في مجال التعليم الطبي"],["MEP","Master's Project","مشروع الماجستير"],["MES","Medical education for surgeons","التعليم الطبي للجراحين"],["MEA","Medical education for anesthetists","التعليم الطبي للأطباء المخدرين"],["MEO","Medical Education for Oncologists","التعليم الطبي لأطباء الأورام"],["SRMS","Social responsibility of medical professions colleges","المسؤولية الاجتماعية لكليات المهن الطبية"],["QAME","Quality Assurance of medical education (English language)","ضمان جودة التعليم الطبي (اللغة الإنكليزية)"],["MEE","Medical education environment","بيئة التعلم الطبي"],["PDMT","Developing Medical training package","تطوير حقيبة تدريبية طبية"],["PBL","Problem solving-based learning (English language)","التعلم المرتكز على حل المشكلات (اللغة الإنكليزية)"],["EBP","Developing evidence-based practice (English language)","تطوير الممارسة المسندة بالدليل (اللغة الإنكليزية)"],["MM","Medical Management (English language)","التوجيه الطبي (اللغة الإنكليزية)"],["MCC","Measuring clinical competency","قياس الكفاءة السريرية"],["EMEP","Medical e-training program (English language)","برنامج تدريبي طبي الكتروني (اللغة الإنكليزية)"],["BIM-F","Fundamentals of Building Information Modeling","أساسيات نمذجة معلومات البناء"],["BIM-MA","Enterprise Maturity Analysis for BIM","تحليل نضج المؤسسات للـ BIM"],["OTB","Organizational and Behavioral Theory","النظرية التنظيمية والسلوكية"],["SM","Strategic Management","الإدارة الاستراتيجية"],["PM","Project Management","إدارة المشاريع"],["IM-BIM","Integrated Management in BIM","الإدارة المتكاملة في الـ BIM"],["CM","Construction Contract Management","إدارة عقود البناء"],["EE","Engineering Economics","الاقتصاد الهندسي"],["QM","Quality Management","إدارة الجودة"],["BIM-C","BIM-based Contracts","العقود القائمة على الـ BIM"],["PMP","Professional Project Management","الإدارة الاحترافية للمشاريع"],["BIM-A","Advanced Cases in BIM","حالات متقدمة في الـ BIM"],["BIM-SI","The Successful Application of BIM","التطبيق الناجح للـ BIM"],["RM-BIM","Managing Risks using BIM","إدارة المخاطر باستخدام الـ BIM"],["PR","Master project","مشروع الماجستير"],["NR","Natural Resources","الموارد الطبيعية"],["ES","Ecosystem Services","خدمات النظم الإيكولوجية"],["ASNE","Assessment of the State of Natural Ecosystems","تقييم حالة النظم الإيكولوجية الطبيعية"],["RNE","Resilience of Natural Ecosystems","مرونة النظم الإيكولوجية الطبيعية"],["EAM","Environmental Adaptive Management","الإدارة البيئية التكيفية"],["EPPC","Environment Protection and Pollution Control","حماية البيئة والتحكم بالتلوث"],["CCFS","Climate Change and Food Security","التغيرات المناخية والأمن الغذائي"],["SDNC","Sustainable Development & Natural Capital","التنمية المستدامة والرأسمال الطبيعي"],["EASPC","Environmental Adaptive Strategic Planning Cycle","دورة التخطيط الاستراتيجي التكيفي البيئي"],["PA","Participatory Approach in Environmental Adaptive Management","التشاركية في الإدارة البيئية التكيفية"],["MVNE","Monetary Valuation of Natural Ecosystem","التقييم النقدي للنظم الإيكولوجية الطبيعية"],["SSPC","Support the Strategic Planning Cycle","مساندة دورة التخطيط الاستراتيجي"],["NRLL","Application of Integrated Management of Natural Resources at Local Level","تطبيق الإدارة المتكاملة للموارد الطبيعية على المستوى المحلي"],["IMNR1","Integrated Management of Natural Resources (1)","الإدارة المتكاملة للموارد الطبيعية (القسم 1)"],["IMNR2","Integrated Management of Natural Resources (2)","الإدارة المتكاملة للموارد الطبيعية (القسم 2)"],["Ma","Master Project","مشروع الماجستير"],["ITNGO","Introduction to NGOs","مدخل إلى المنظمات غير الحكومية"],["ANGO","Accounting for NGOs","المحاسبة في المنظمات غير الحكومية"],["HRVM","Human Resources and Volunteering Management in NGOs","إدارة الموارد البشرية والتطوع في المنظَّمات غير الحكوميَّة"],["SRM","Research Methods in Management","منهجية البحث العلمي في الإدارة"],["RNGO","Regulations of NGOs","تشريعات المنظمات غير الحكومية"],["FMNGO","Financial Management for NGOs","الإدارة المالية في المنظَّمات غير الحكوميَّة"],["BES","Business Ethics and Sustainability in NGOs","أخلاقيات العمل والاستدامة في المنظَّمات غير الحكوميَّة"],["PRC","Public Relations and Communication in NGOs","العلاقات العامة والتواصل في المنظمات غير الحكومية"],["LMWT","Leadership and Teams' Management in NGOs","القيادة وإدارة الفرق في المنظمات غير الحكومية"],["GNGO","Governance in NGOs","الحوكمة في المنظمات غير الحكومية"],["INGO","International NGOs and Cooperation","المنظمات غير الحكومية الدولية والتعاون الدولي"],["QMNGO","Quality Management in NGOs","إدارة الجودة في المنظمات غير الحكوميَّة"],["ITI","Information Technology and Innovations in NGOs","تكنولوجيا المعلومات والابتكار في المنظمات غير الحكومية"],["MHDP","Humanitarian and Developmental Project Management (In English)","إدارة المشروعات الإنسانية والتنموية (In English)"],["CMER","Crisis Management and Emergency Response","إدارة الأزمات والاستجابة الطارئة"],["SMNGO","Strategic Management in NGOs","الإدارة الإستراتيجية في المنظّمات غير الحكوميَّة"],["PCNGO","Practical Class in NGOs","مقرر تطبيقي"],["MPG","Project","مشروع التخرج"],["HSM 1","Health Systems Management (1)","إدارة النظم الصحية1 (التنظيم وتوفير الخدمات)"],["HSM 2","Health Systems Management (2)","إدارة النظم الصحية2 (التخطيط الاستراتيجي والإدارة)"],["GHS","Global Health Systems","النظم الصحية العالمية"],["HCF","Health Finance","التمويل الصحي (التحليل وصنع القرار)"],["HE.HCM","Health Economics","اقتصاديات الصحة (تسويق الرعاية الصحية)"],["HQ.EBP","Health Quality 1","جودة الصحة1 (اتخاذ القرارات المبنية على الأدلة للمديرين)"],["HSM 3","Health Systems Management (3)","إدارة النظم الصحية3 (مبادئ القيادة-صنع التغيير وحل المشكلات)"],["HP1.R","Health Policies1","السياسات الصحية1 (السياسة والتنظيم الصحي)"],["HP2.GE","Health Policies2","السياسات الصحية2 (الحوكمة والاعتبارات القانونية والأخلاقية في أنظمة الرعاية الصحية)"],["HQ.PS","Health Quality 2","جودة الصحة2 (إدارة الجودة وسلامة المرضى وتحسين الأداء)"],["HR.HCM","Human Resources in Healthcare","إدارة الموارد البشرية في الرعاية الصحية"],["FPH.E","Fundamentals of Public Health & Epidemiology","أساسيات الصحة العامة والوبائيات"],["BS.HSM","Statistics in Healthcare Systems","الإحصاء في أنظمة الرعاية الصحية"],["R.HOM","Research in Healthcare Operations","بحوث إدارة عمليات الرعاية الصحية"],["HIM.T","Health Information Administration & Technology","إدارة وتقانات المعلومات الصحية"],["EI.HSM","Emerging Issues in Health Systems Management","القضايا الطارئة في إدارة النظم الصحية (إدارة الكوارث- الأوبئة- المتغيرات)"],["MEP","Master Thesis","مشروع الماجستير"],["HOA","History of Architecture","تاريخ العمارة"],["ICL","International Charters and Laws","المواثيق والقوانين الدولية والعربية والمحلية (قانون الاثار السوري)"],["CSHC","Conservation Strategies for Historic Cities","استراتيجيات الحفاظ على المدن التاريخية"],["ADMS","Archaeological Documentation and Manual Surveying","الرفع اليدوي والتوثيق الأثري (المسح التصويري والفوتوغرامتري)"],["BIMB","BIM Basics","أساسيات الـ BIM"],["ITR","Introduction to Restoration and Structural Strengthening","مدخل إلى الترميم والتدعيم الإنشائي للأبنية التاريخية"],["TBM","Traditional Building Materials in the Arab Region","مواد البناء التقليدية في المنطقة العربية"],["RVA","Revit Advanced","ريفيت متقدم"],["SBIM","Scan to BIM","Scan to BIM"],["HAC","Heritage Adaptive Reuse & Conservation","حفظ وتوظيف الأبنية التراثية"],["RMH","Risk Management in Heritage Projects","إدارة المخاطر في المشاريع التراثية"],["HPV","Heritage Projects Visualization with AI","إظهار المشاريع التراثية باستخدام AI"],["SAH","Structural Analysis of Historic Buildings","التحليل الإنشائي للمباني التاريخية"],["HPM","Heritage Project Management","الإدارة المستدامة للمشاريع التراثية"],["PR","PROJECT","مشروع الماجستير (HBIM)"],["GMA101","Mathematical Analysis","التحليل الرياضي"],["IPG201","Event Driven Programming","البرمجة المقادة بالأحداث"],["IIS201","Database Architecture and Design","تصميم وبنيان قواعد المعطيات"],["IWB201","Web Application Development and Design","تصميم وتطوير تطبيقات الوِب"],["IOS201","Network Operating System","نظم التشغيل الشبكية"],["IPG203","Object Oriented Programming","التصميم والبرمجة غرضية التوجه"],["IOS202","Windows Platform","منصة ويندوز"],["IOS203","Linux Platform","منصة لينوكس"],["IIS202","Advanced SQL Programming","البرمجة المتقدمة بلغة SQL"],["IIS303","MS-SQL Server Administration","إدارة قواعد بيانات MS-SQL Server"],["IIS203","Oracle Database Administration","إدارة قواعد بيانات Oracle"],["IPG204","Mobile Programming","برمجة التطبيقات النقّالة"],["IPI201","TIC Final Project","مشروع"],["GBS303","Entering Labor Market Skills","مهارات الدخول إلى سوق العمل"],["GMA401","Introduction to Statistics","مدخل إلى الإحصاء"],["BAC401","Introduction to Accounting","مدخل إلى المحاسبة"],["BMK502","Customer Behavior","سلوك العملاء"],["TGT402","The Syrian Culture1","الحضارة السورية (1)"],["TGT403","The Syrian Culture2","الحضارة السورية (2)"],["TGT406","Introduction to Hotel Management","مدخل إلى الإدارة الفندقية"],["TGT404","Syrian Intangible Heritage","التراث اللامادي السوري"],["BMN601","Tourism Services Quality","جودة الخدمات السياحية"],["GLL401","Legislations in Tourism & Hotels","تشريعات سياحية وفندقية"],["BMK503","Sales Management in Tourism Establishments","إدارة المبيعات في المنشآت السياحية"],["BMN502","Health and Safety in Work Environment","الصحة والسلامة المهنية"],["TTM502","Syrian Tourism Geography","جغرافية سورية السياحية"],["TTM602","Airlines Services Management","إدارة خدمات شركات الطيران"],["TTM604","Tours in Tourism Companies & Travel Agencies (practical course)","جولات في شركات السياحة ومكاتب السفر (عملي)"],["TTM603","Tour Guide Techniques","تقنيات الدليل السياحي"],["TGT405","Tourism Archeological Sites","المواقع السياحية الأثرية"],["TTM606","Computer Applications for Tourism Companies & Travel Agencies (practical course)","تطبيقات حاسوبية في شركات السياحة ومكاتب السفر(عملي)"],["THM501","Operational Processes in Food Production","العمليات التشغيلية في إنتاج الطعام"],["THM504","Operational Processes in Food Production (practical course1)","العمليات التشغيلية في إنتاج الطعام(عملي1)"],["THM503","Operational Processes in Food Service","العمليات التشغيلية في خدمة الطعام"],["THM506","Operational Processes in Food Service (practical course1)","العمليات التشغيلية في خدمة الطعام (عملي1)"],["THM502","Housekeeping Supervision","إدارة الإشراف الداخلي"],["THM505","Front Office Operations","عمليات مكاتب أمامية"],["THM603","Front Office Operations and Housekeeping Supervision (practical course)","عمليات مكاتب أمامية وإدارة الاشراف الداخلي (عملي)"],["THM507","Purchasing & Store Management","إدارة المشتريات والمخازن"],["THM604","Computer Applications in Hotel Establishments (practical course)","تطبيقات حاسوبية في المنشآت الفندقية (عملي)"],["TMK501","Tourism Companies & Travel Agencies","شركات السياحة ومكاتب السفر"],["TMK504","Tourism Marketing Communications","الاتصالات التسويقية السياحية"],["TMK502","Pricing in Tourism","التسعير السياحي"],["TMK505","Development Strategies for Tourism Product","استراتيجيات تطوير المنتج السياحي"],["TMK503","Distribution in Tourism","التوزيع السياحي"],["TMK604","Tours in Tourism Companies & Travel Agencies (practical course)","جولات في شركات السياحة ومكاتب السفر (عملي)"],["TMK602","Tours in Hotels (practical course)","جولات في الفنادق(عملي)"],["TMK606","Tourism Tours (practical course)","الجولات السياحية (عملي)"],["BED","Basics of Engineering Design","مبادئ التصميم الهندسي"],["BRV","Revit Basic","أساسيات Revit"],["BPS","Basics of Project Planning – Scheduling","مبادئ تخطيط المشاريع (الجدولة)"],["BPE","Basics of Project Planning – Quantity and Cost Estimations","مبادئ تخطيط المشاريع (حساب الكميات والأسعار)"],["BDC","Building Documents","مستندات البناء"],["PMR","Project Management using Revit","الإدارة باستخدام Revit"],["ETW","Engineering Technical Writing","الكتابة التقنية الهندسية"],["BCQ","Basics of Construction Quality","مبادئ الجودة"],["PRT","PROJECT","مشروع"],["BSB","Basics of Sustainable Building","مبادئ البناء المستدام"],["BMS","Building Materials","مواد بناء"],["BEI","Building Elements Implementation","عناصر تنفيذية"],["ARV","Revit Advanced (2)","برنامج Revit متقدم (2)"],["HBM","Heritage BIM","البيم للتراث العمراني"],["BSA","Basics of Structural Analysis","مبادئ التحليل الإنشائي"],["SHD","Shop Drawings","المخططات التنفيذية"],["IND","Infrastructure Design","تصميم البنى التحتية"],["BSM(1)","Basics of Mechanical Modelling 1","مبادئ النمذجة الميكانيكية1"],["BEM(1)","Basics of Electrical Modelling 1","مبادئ النمذجة الكهربائية 1"],["BPM(1)","Basics of Plumbing Modelling 1","مبادئ النمذجة الصحية 1"],["BFR","Basics of Fire Systems Design","مبادئ ونمذجة أنظمة الحرائق"],["BSM(2)","Basics of Mechanical Modelling 2","مبادئ النمذجة الميكانيكية 2"],["BEM(2)","Basics of Electrical Modelling 2","مبادئ برنامج نمذجة كهرباء 2"],["BPM(2)","Basics of Plumbing Modelling 2","مبادئ ونمذجة الأعمال الصحية 2"],["BDM","Basics of Disaster Management","أسس إدارة الكوارث"],["AED","Assessment and Evaluation of Damages in Buildings","كشف وتقييم الأضرار (تطبيقي)"],["RMN","Risk Management","إدارة المخاطر"],["MCN","Methodologies of Collaboration","النظم التعاونية"],["OSN","Occupational Safety using Navisworks","السلامة المهنية باستخدام Navisworks"],["DSM","Disaster Strategic Management","الإدارة الاستراتيجية للكوارث"],["L1","Level One (Elementary)","المستوى الأول (مبتدئ)"],["L2","Level Two (Lower Intermediate)","المستوى الثاني (دون المتوسط)"],["L3","Level Three (Mid Intermediate)","المستوى الثالث (متوسط)"],["L4","Level Four (Upper Intermediate)","المستوى الرابع (فوق المتوسط)"],["L5","Level Five (Advanced)","المستوى الخامس (متقدم)"],["CS","Computer Skills","مهارات الحاسوب"],["CSTW","Communications Skills and Technical Writing","مهارات التواصل والكتابة العلمية"],["EN1","English Language I","اللغة الإنكليزية (1)"],["EN2","English Language II","اللغة الإنكليزية (2)"],["EN3","English Language III","اللغة الإنكليزية (3)"],["EN4","English Language IV","اللغة الإنكليزية (4)"],["EN5","English Language V","اللغة الإنكليزية (5)"],["MA1","Mathematical Analysis I","تحليل رياضي (1)"],["AS","Algebraic Structures","بنى جبرية (2)"],["MA2","Mathematical Analysis II","تحليل رياضي (2)"],["LA","Linear Algebra","الجبر الخطي"],["NA","Numerical Analysis","تحليل عددي"],["CP1","Computer Programming I","البرمجة (1)"],["CP2","Computer Programming II","البرمجة (2)"],["DSA","Data Structures and Algorithms","الخوارزميات وبنى المعطيات"],["OO","Object Oriented Programming","البرمجة غرضية التوجه"],["DB","Database Systems","قواعد البيانات"],["DG","Digital Systems","النظم الرقمية"],["DSR","Discrete Structures","البنى المتقطعة"],["EC","Electronic Circuits","الدارات الإلكترونية"],["ICA","Introduction to Computer Architecture","مدخل إلى بنيان الحاسوب"],["OS1","Operating Systems I","نظم التشغيل (1)"],["TS","Data Communication","الاتصالات الرقمية"],["CN","Computer Networks","الشبكات الحاسوبية"],["CMP","Compilers","مترجمات"],["VP","Visual Programming","البرمجة المرئية"],["PR1","Project1","مشروع 1"],["EA","Basics of Economics & Accounting","أساسيات الاقتصاد والمحاسبة"],["PRB","Probability","الاحتمالات"],["IS","Systems Analysis and Design","تحليل وتصميم النظم"],["ST","Statistics","الإحصاء"],["WB","Web applications","تطبيقات الويب"],["MG","Management","الإدارة"],["OR","Operational Research","بحوث العمليات"],["CM","e-commerce technology","تقانة التجارة الإلكترونية"],["PM","Software Project Management","إدارة مشاريع البرمجيات"],["SS","Decision Support Systems","نظم دعم القرار"],["RQE","Requirements Engineering","هندسة المتطلبات"],["CMPP","Compiler project","مشروع مترجمات"],["IR","Information Retrieval","استرجاع المعلومات"],["PR2","Project2","مشروع 2"],["NAP","Network Application Programming","برمجة التطبيقات الشبكية"],["CSR","Computer Security","أمن الحواسيب"],["CR","Cryptography","التعمية"],["CG","Computer Graphics","البيانيات"],["MP","Microprocessor","المعالجات الصغرية"],["NS","Network Services","خدمات شبكية"],["AN","Advanced Networking","شبكات متقدمة"],["LP","Logic Programming","البرمجة المنطقية"],["OS2","Operating Systems II","نظم التشغيل (2)"],["MI","Man-Machine Interface","التخاطب بين الإنسان والآلة"],["NM","Network Management","إدارة شبكات"],["AE","Artificial Intelligence","الذكاء الصنعي"],["PPR","Parallel Processing","المعالجة التفرعية"],["VR","Virtual Reality","الواقع الافتراضي"],["DST","Distributed Systems","النظم الموزعة"],["NLP","Natural Language Processing","معالجة اللغات الطبيعية"],["ES","Expert Systems","النظم الخبيرة"],["SM","Simulation and modeling","النمذجة والمحاكاة"],["RT","Real Time Systems","نظم الزمن الحقيقي"],["MM","Multimedia Systems","نظم الوسائط المتعددة"],["SIP","Signal Processing","معالجة إشارة"],["IMP","Image Processing","معالجة صورة"],["EM610","Essential Mathematics (1)","أساسيات الرياضيات (1)"],["BMP612","Basic Management Principles","أساسيات الادارة"],["AE614","Accounting Essentials 1","أساسيات المحاسبة 1"],["MA624","Microeconomic Analysis","أساسيات التحليل الجزئي"],["ICDL","International Computer driving Licence","رخصة قيادة الحاسب الدولية"],["AIC613","Arabic Islamic Civilization","الحضارة العربية والإسلامية"],["EM621","Essential Mathematics 2","أساسيات الرياضيات 2"],["AE622","Accounting Essentials 2","أساسيات المحاسبة 2"],["PS623","Principles of Statistics","أساسيات الإحصاء"],["PM625","Principals of Marketing","أساسيات التسويق"],["ENG1","English I","اللغة الانكليزية [1]"],["ENG2","English II","اللغة الانكليزية [2]"],["ENG3","English III","اللغة الانكليزية [3]"],["ENG4","English IV","اللغة الانكليزية [4]"],["ENG5","English V","اللغة الانكليزية [5]"],["MA","Macroeconomics Analysis","التحليل الكلي"],["BE","Business Environment","بيئة الأعمال القانونية"],["AO","Administrative Organization","التنظيم الإداري"],["EAM","Economics & Administrative Mathematics","الرياضيات الإقتصادية والإدارية"],["CAM","Computer Applications Of Management","تطبيقات الحاسوب في الادارة"],["MM","The Management of Marketing","إدارة التسويق"],["FA","Financial Accounting of Companies","المحاسبة المالية في الشركات"],["CA","Cost Accounting","محاسبة التكاليف"],["DBM","Database management","نظم إدارة قواعد البيانات"],["FM","Financial Management","الإدارة المالية"],["OM","Operations Management","إدارة الإنتاج"],["SBM823","Small and medium Business Management","إدارة المشاريع الصغيرة والمتوسطة"],["GRM","General relation Management","إدارة العلاقات العامة"],["GA834","General Administration","الإدارة العامة"],["MFM","Management of Financial Markets","إدارة الأسواق المالية"],["AE","Administrative Economy","الإقتصاد الإداري"],["SAA","Statistical applications for administration","تطبيقات الإحصاء في الإدارة"],["GF","General Finance","المالية العامة"],["PA842","Projects Administration","إدارة المشاريع"],["LSA843","Logistic and supplying administration","إدارة التخزين والإمداد"],["HRM","Human resources Management","إدارة الموارد البشرية"],["ADT","Administrative Decisions Theory","نظرية القرارات الإدارية"],["SM","Services Marketing","التسويق الخدمي"],["SA","Strategic Management","الإدارة الإستراتيجية"],["TQM855","Quality Management","ادارة الجودة"],["IBA853","International Businesses Management","إدارة الأعمال الدولية"],["CM864","Crisis Management","إدارة الأزمات"],["IM","International Marketing","التسويق الدولي"],["CIM862","Contemporary Issues In Management","قضايا إدارية معاصرة"],["OT865","Organization Theory","نظرية المنظمة"],["MC864","Management Of Change","إدارة التغيير"],["MSE","Managerial Studies (in English)","دراسات إدارية باللغة الإنكليزية"],["OB923","Organization Behaviour","السلوك التنظيمي"],["SM924","Sales management","ادارة المبيعات"],["AA","Administrative accounting","المحاسبة الإدارية"],["MP934","Management Of Promotion","إدارة الترويج"],["COB942","Consumer Behaviour","سلوك المستهلك"],["ISP943","Individual-Selling Policies","سياسات البيع الشخصي"],["SM952","Strategic Marketing","التسويق الإستراتيجي"],["MR953","Marketing Research","بحوث التسويق"],["PDP954","Pricing and Distribution Policies","سياسات التسعير والتوزيع"],["MEC962","Marketing and Electronic Commerce","التسويق والتجارة الإلكترونية"],["CIM961","Contemporary Issues In Marketing","قضايا معاصرة في التسويق"],["INNO964","Innovative Marketing","التسويق الإبتكاري"],["IRM753","Insurance & Risk Management","إدارة التأمين والمخاطر"],["FA731","Financial Accounting1","المحاسبة المالية 1"],["FM740","Financial Management 1","الادارة المالية 1"],["BA742","Banking Administration","إدارة المصارف"],["BM743","Banks and Money","النقود والمصارف"],["FA745","Financial Accounting 2","المحاسبة المالية 2"],["IA750","Intermediate Accounting1","المحاسبة المتوسطة 1"],["FM751","Financial Management 2","الإدارة المالية 2"],["IA760","Intermediate accounting 2","المحاسبة المتوسطة 2"],["CB762","Commercial Banks","المصارف التجارية"],["IBF763","International banks and finance","المصارف الدولية والتمويل"],["IFO770","Islamic financial organizations","المؤسسات المالية الإسلامية"],["FB774","Financial Budgeting","الموازنة المالية"],["EB775","E-Banks","المصارف الإلكترونية"],["FAN780","Financial Analysis","مقرر التحليل المالي"],["CFBI781","Contemporary Financial and Banking Issues","قضايا مصرفية ومالية معاصرة"],["INVM773","Investment Management","إدارة الإستثمارات"],["BF783","Business Finance","تمويل المنظمات"],["ENG101","English Level 1","لغة إنكليزية مستوى 1"],["ENG102","English Level 2","لغة إنكليزية مستوى 2"],["PSP103","English Level 3 – Public Speaking","لغة إنكليزية مستوى 3"],["ENG104","English Level 4","لغة إنكليزية مستوى 4"],["ENG105","English Level 5","لغة إنكليزية مستوى 5"],["UNV101","Introduction to On-Line Education","مقدمة في التعلم الإلكتروني"],["CIS101","Computer Skills","مهارات الحاسوب"],["PHL201","Introduction to Philosophy","مقدمة في الفلسفة"],["SOC101","Introduction to Sociology","مقدمة في علم الإجتماع"],["UNV301","Career Preparation","تحضير السيرة المهنية"],["MTH160","Math with Business Applications","الرياضيات وتطبيقاتها في إدارة الأعمال"],["ITC100","Discrete Mathematics","الرياضيات المتقطعة"],["QMB240","Statistics","الإحصاء"],["BUS242","Introduction to Business","مقدمة في الأعمال"],["MGT250","Leadership and Management","القيادة والإدارة"],["MKT244","Introduction to Marketing","مقدمة في التسويق"],["ACG242","Introduction to Accounting","مقدمة في المحاسبة"],["MGT246","Introduction to Finance","مقدمة في المالية"],["MGT325","Banking and Finance","البنوك والمصارف"],["ITC110","Introduction to Operating Systems","مقدمة في نظم التشغيل"],["ITC200","Introduction to Networks","مقدمة في الشبكات"],["ITC220","Web Development and E-Commerce","الوب والتجارة الإلكترونية"],["ITC210","Introduction to Data Modeling","مقدمة في نمذجة المعطيات"],["ITC230","Introduction to Programming","مقدمة في البرمجة"],["MGT345","Project Management","إدارة المشاريع"],["ITD300","Data Base Architecture and Design","بنيان وتصميم قواعد المعطيات"],["ITA310","Object Oriented Programming and Design","التصميم والبرمجة غرضية التوجه"],["ITI300","Network Operating Systems","نظم التشغيل الشبكية"],["ITA320","Web Application Design and Development","تصميم وتطوير تطبيقات الوب"],["ITD310","Advanced SQL Programming","البرمجة المتقدمة بلغة SQL"],["ITADD430","Mobile Application","تطبيقات نقّالة"],["ITA330","Business Process Modeling","نمذجة إجراءات العمل"],["ITD410","MS-SQL Development and Administration","إدارة وتطوير أنظمة MS-SQL"],["ITI410","Data Security","أمن المعطيات"],["ITI310","Windows Platform 1","منصات ويندوز 1"],["ITD415","Advanced Data Base Administration I","إدارة قواعد المعطيات I"],["ITP390","Internship","مشروع تدريبي"],["ITI420","Data Networks","شبكات المعطيات"],["ITI320","Linux Platform","منصات لينوكس"],["ITD420","Advanced Database Administration II","إدارة قواعد المعطيات II"],["IND","Induction","الدراسات التمهيدية"],["EBD","eBusiness Development","تطوير الأعمال الإلكترونية"],["ECT","eCommerce Technology","تقنيات التجارة الإلكترونية"],["IS","Internet Studies","دراسات الانترنيت"],["ECP","eCommerce Project","مشروع في التجارة الإلكترونية"],["ECP1","eCommerce Project 1","مشروع في التجارة الإلكترونية 1"],["ECP2","eCommerce Project 2","مشروع في التجارة الإلكترونية 2"],["SCM","Supply Chain Management","إدارة السلسلة التموينية"],["WD","Website Design","تصميم مواقع الويب"],["MFC","Marketing for eCommerce","التسويق في التجارة الإلكترونية"],["MPP","eMarketing Processes in Practice","اجراءات التسويق الإلكتروني"],["IMC","Integrated Marketing in eCommerce","التواصل التسويقي المتكامل في التجارة الإلكترونية"],["MPI","Market Planning & Intelligence for eCommerce","مهارات التخطيط التسويقي في التجارة الإلكترونية"],["GMP","Global Marketplace","الأسواق العالمية"],["DHA","Data Handling and Analysis","دراسة وتحليل المعطيات"],["IP","Introduction to Programming","مقدمة إلى البرمجة"],["PP","Programming Principles","مبادئ البرمجة"],["DAD","Data Analysis & Database Design","تحليل المعلومات وتصميم قواعد المعطيات"],["PDS","Developing Personal Skills","تطوير المهارات الشخصية"],["TC","Technology Culture Dissemination and Strategies","نشر الثقافة التقانية واستراتيجياتها"],["HRTM","Managing Emerging High Technologies and Their Challenges","إدارة التقانات العالية البازغة وتحدياتها"],["IITDM","Managing Technological Development and Intermediate Institutions","إدارة التنمية التقانية والمؤسسات الوسيطة"],["TDT","Technology Transfer, Dissemination, Acquisition, and Development","نقل ونشر واكتساب وتحصيل وتطوير التقانة"],["ITTTC","International Experiences in Technology Transfer, Management, and Localization","التجارب الدولية في نقل وإدارة وتوطين التقانة"],["TTM","Technology Transfer Models","نماذج نقل التقانة"],["TMTH","Applied Research and Training / Graduation Project - Thesis","البحث التطبيقي والتدريب / مشروع التخرج- الأطروحة"],["QMS","Quality Management Systems","أنظمة إدارة الجودة"],["SCO","Statistical Process Control","الضبط الاحصائي للعمليات"],["STQMS","Quality Tools and Supporting Technologies for QMS Implementation","أدوات الجودة والتقانات الداعمة لتطبيق أنظمة إدارة الجودة"],["IAQCS","Internal Auditing of Quality Management Systems ISO 9001","التدقيق الداخلي لأنظمة إدارة الجودة ISO 9001"],["QMSS","Special Quality Control Systems","أنظمة ضبط الجودة الخاصة"],["RY","Reliability","الوثوقية"],["QMTH","Applied Research and Training / Graduation Project - Thesis","البحث التطبيقي والتدريب / مشروع التخرج- الأطروحة"]];
+
+  const codeMap = new Map();
+  const allList = [];
+
+  const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+  const esc = str => String(str || '').replace(/[&<>"']/g, ch => ESC_MAP[ch]);
+
+  for (let i = 0; i < RAW.length; i++) {
+    const row = RAW[i];
+    const code = row[0];
+    const en = row[1];
+    const ar = row[2];
+    const upper = code.toUpperCase();
+
+    if (!codeMap.has(upper)) {
+      const entry = { code, en, ar, alts: [] };
+      codeMap.set(upper, entry);
+      allList.push(entry);
+    } else {
+      const existing = codeMap.get(upper);
+      if (existing.en !== en || existing.ar !== ar) {
+        if (!existing.alts.some(a => a.en === en && a.ar === ar)) {
+          existing.alts.push({ en, ar });
+        }
+      }
+    }
+  }
+
+  const MaterialsDB = {
+    get(rawCode) {
+      if (!rawCode) return null;
+      const key = String(rawCode).trim().toUpperCase();
+      return codeMap.get(key) || null;
+    },
+
+    getName(rawCode, lang) {
+      const mat = this.get(rawCode);
+      if (!mat) return '';
+      const currentLang = lang || (ns.I18N && ns.I18N.lang) || 'ar';
+      return currentLang === 'en' ? (mat.en || mat.ar) : (mat.ar || mat.en);
+    },
+
+    getLabel(rawCode, lang) {
+      const mat = this.get(rawCode);
+      if (!mat) return String(rawCode || '');
+      const currentLang = lang || (ns.I18N && ns.I18N.lang) || 'ar';
+      const name = currentLang === 'en' ? (mat.en || mat.ar) : (mat.ar || mat.en);
+      return mat.code + ' — ' + name;
+    },
+
+    getBadgeHtml(rawCode, options) {
+      const opts = options || {};
+      const mat = this.get(rawCode);
+      const codeStr = mat ? mat.code : String(rawCode || '');
+      const currentLang = opts.lang || (ns.I18N && ns.I18N.lang) || 'ar';
+      if (!mat) {
+        return '<span class="mtag mtag-material"><b>' + esc(codeStr) + '</b></span>';
+      }
+      const mainName = currentLang === 'en' ? (mat.en || mat.ar) : (mat.ar || mat.en);
+      let title = mat.ar + ' / ' + mat.en;
+      if (mat.alts && mat.alts.length) {
+        title += ' (' + mat.alts.map(a => a.ar + ' / ' + a.en).join('; ') + ')';
+      }
+      return '<span class="mtag mtag-material" title="' + esc(title) + '"><b>' + esc(codeStr) + '</b> · ' + esc(mainName) + '</span>';
+    },
+
+    getTooltip(rawCode) {
+      const mat = this.get(rawCode);
+      if (!mat) return '';
+      let t = mat.ar + ' / ' + mat.en;
+      if (mat.alts && mat.alts.length) {
+        t += ' (' + mat.alts.map(a => a.ar + ' / ' + a.en).join('; ') + ')';
+      }
+      return t;
+    },
+
+    search(query, limit) {
+      const lim = typeof limit === 'number' ? limit : 50;
+      if (!query) return allList.slice(0, lim);
+      const q = String(query).trim().toLowerCase();
+      const exactCode = [];
+      const startsCode = [];
+      const matchesName = [];
+
+      for (let i = 0; i < allList.length; i++) {
+        const item = allList[i];
+        const codeLower = item.code.toLowerCase();
+        const enLower = item.en.toLowerCase();
+        const arLower = item.ar.toLowerCase();
+
+        if (codeLower === q) {
+          exactCode.push(item);
+        } else if (codeLower.startsWith(q)) {
+          startsCode.push(item);
+        } else if (codeLower.includes(q) || enLower.includes(q) || arLower.includes(q)) {
+          matchesName.push(item);
+        } else if (item.alts && item.alts.some(a => a.en.toLowerCase().includes(q) || a.ar.toLowerCase().includes(q))) {
+          matchesName.push(item);
+        }
+        if (exactCode.length + startsCode.length + matchesName.length >= lim * 2) break;
+      }
+      return exactCode.concat(startsCode, matchesName).slice(0, lim);
+    },
+
+    all() {
+      return allList;
+    },
+
+    count() {
+      return allList.length;
+    }
+  };
+
+  ns.MaterialsDB = MaterialsDB;
+})(globalThis);
 ;
 (function (ns) {
   "use strict";
@@ -1531,7 +1695,13 @@ window.SVU_PREFS = {
     }
     const tags = [];
     if (info.college) tags.push("<span class=\"mtag mtag-college\" title=\"" + escHtml(t("metaCollege")) + "\"><b>" + escHtml(info.college) + "</b></span>");
-    if (info.material) tags.push("<span class=\"mtag mtag-material\" title=\"" + escHtml(t("metaMaterial")) + "\"><b>" + escHtml(info.material) + "</b></span>");
+    if (info.material) {
+      if (window.MaterialsDB) {
+        tags.push(window.MaterialsDB.getBadgeHtml(info.material));
+      } else {
+        tags.push("<span class=\"mtag mtag-material\" title=\"" + escHtml(t("metaMaterial")) + "\"><b>" + escHtml(info.material) + "</b></span>");
+      }
+    }
     if (info.cls) tags.push("<span class=\"mtag mtag-class\">" + escHtml(t("metaClass")) + " " + escHtml(info.cls) + "</span>");
     if (info.term) tags.push("<span class=\"mtag mtag-term\">" + escHtml(info.term) + "</span>");
     if (info.lesson) tags.push("<span class=\"mtag mtag-lesson\">" + escHtml(t("metaLesson")) + " " + escHtml(info.lesson) + "</span>");
@@ -1559,7 +1729,9 @@ window.SVU_PREFS = {
       key: file.name
     };
     renderSessionMeta(file.name);
-    document.title = file.name + " | SVU Player";
+    const parsedMeta = parseLrecFilename(file.name);
+    const matName = (window.MaterialsDB && parsedMeta && parsedMeta.material) ? window.MaterialsDB.getName(parsedMeta.material) : "";
+    document.title = (matName ? (parsedMeta.material + " (" + matName + ") · " + (parsedMeta.lesson ? "S" + parsedMeta.lesson : file.name)) : file.name) + " | SVU Player";
     byId("vnotice").hidden = parsed.videoOk !== false;
     renderChat();
     renderTicks();
@@ -1676,9 +1848,24 @@ window.SVU_PREFS = {
   };
   ["wheel", "touchmove"].forEach(type => msgs.addEventListener(type, () => {
     userScrolled = true;
+    if (byId("chatJumpBtn")) byId("chatJumpBtn").hidden = false;
     clearTimeout(msgs._t);
-    msgs._t = setTimeout(() => userScrolled = false, 4000);
+    msgs._t = setTimeout(() => {
+      userScrolled = false;
+      if (byId("chatJumpBtn")) byId("chatJumpBtn").hidden = true;
+    }, 4500);
   }, PASSIVE));
+  if (byId("chatJumpBtn")) {
+    byId("chatJumpBtn").addEventListener("click", () => {
+      userScrolled = false;
+      byId("chatJumpBtn").hidden = true;
+      if (cursor >= 0 && session && session.nodes && session.nodes[cursor]) {
+        session.nodes[cursor].scrollIntoView({ block: "center", behavior: "smooth" });
+      } else {
+        msgs.scrollTop = msgs.scrollHeight;
+      }
+    });
+  }
   byId("showAll").addEventListener("change", () => {
     const lbl = byId("showAll").closest("label");
     if (lbl) {
@@ -1823,14 +2010,30 @@ window.SVU_PREFS = {
     byId("icoVol").style.display = muted ? "none" : "";
     byId("icoMute").style.display = muted ? "" : "none";
   }
+  const isLandscapeMobile = () => (window.innerHeight <= 560 && window.innerWidth > window.innerHeight);
+
   const toggleChat = () => {
-    const hidden = document.body.classList.toggle("nochat");
-    byId("chatToggle").classList.toggle("on", !hidden);
-    byId("chatToggle").setAttribute("aria-pressed", String(!hidden));
+    if (isLandscapeMobile()) {
+      const open = document.body.classList.toggle("chat-drawer-open");
+      byId("chatToggle").classList.toggle("on", open);
+      byId("chatToggle").setAttribute("aria-pressed", String(open));
+    } else {
+      const hidden = document.body.classList.toggle("nochat");
+      byId("chatToggle").classList.toggle("on", !hidden);
+      byId("chatToggle").setAttribute("aria-pressed", String(!hidden));
+    }
   };
   byId("chatToggle").addEventListener("click", toggleChat);
   if (byId("chatClose")) {
-    byId("chatClose").addEventListener("click", toggleChat);
+    byId("chatClose").addEventListener("click", () => {
+      if (document.body.classList.contains("chat-drawer-open")) {
+        document.body.classList.remove("chat-drawer-open");
+        byId("chatToggle").classList.remove("on");
+        byId("chatToggle").setAttribute("aria-pressed", "false");
+      } else {
+        toggleChat();
+      }
+    });
   }
 
   // Pin / Auto-hide bottom controls + 3-second mouse movement visibility inside player window
@@ -1906,12 +2109,96 @@ window.SVU_PREFS = {
   byId("fsBtn").addEventListener("click", toggleFullscreen);
   function toggleFullscreen() {
     if (document.fullscreenElement) {
-      document.exitFullscreen();
+      document.exitFullscreen().catch(() => {});
+      try { screen.orientation?.unlock?.(); } catch (e) {}
     } else if (document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen();
+      document.documentElement.requestFullscreen().then(() => {
+        if (window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+          try { screen.orientation?.lock?.("landscape").catch(() => {}); } catch (e) {}
+        }
+      }).catch(() => {});
     }
   }
   document.addEventListener("fullscreenchange", () => document.body.classList.toggle("fs", !!document.fullscreenElement));
+
+  // Touch Gestures, Double-Tap Seeking & Cinema Controls Overlay
+  let lastTapTime = 0;
+  let lastTapPos = { x: 0, y: 0 };
+  let cinemaTimer = null;
+
+  function showCinemaControls() {
+    controls.classList.add("active", "mouse-active");
+    if (cinemaTimer) clearTimeout(cinemaTimer);
+    if (!audio.paused) {
+      cinemaTimer = setTimeout(() => {
+        if (!controls.matches(":hover") && !controls.classList.contains("pinned")) {
+          controls.classList.remove("active", "mouse-active");
+        }
+      }, 3200);
+    }
+  }
+
+  function triggerRipple(elemId) {
+    const el = byId(elemId);
+    if (!el) return;
+    el.classList.add("active");
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove("active"), 650);
+  }
+
+  stage.addEventListener("pointerup", event => {
+    if (event.target.closest("button, a, input, select, .controls, .controls-zone, .loading-box, .mobile-touch-strip, .shortcut-strip")) {
+      return;
+    }
+    const now = Date.now();
+    const rect = stage.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const relX = x / rect.width;
+    const dt = now - lastTapTime;
+    const dist = Math.hypot(event.clientX - lastTapPos.x, event.clientY - lastTapPos.y);
+
+    if (dt < 320 && dist < 45) {
+      lastTapTime = 0;
+      if (relX < 0.35) {
+        seekBy(-10);
+        triggerRipple("doubleTapBack");
+        try { navigator.vibrate?.(25); } catch (e) {}
+      } else if (relX > 0.65) {
+        seekBy(10);
+        triggerRipple("doubleTapFwd");
+        try { navigator.vibrate?.(25); } catch (e) {}
+      } else {
+        togglePlay();
+        try { navigator.vibrate?.(25); } catch (e) {}
+      }
+    } else {
+      lastTapTime = now;
+      lastTapPos = { x: event.clientX, y: event.clientY };
+      if (isLandscapeMobile() || window.innerWidth <= 768) {
+        if (controls.classList.contains("active") || controls.classList.contains("mouse-active")) {
+          controls.classList.remove("active", "mouse-active");
+        } else {
+          showCinemaControls();
+        }
+      }
+    }
+  });
+
+  audio.addEventListener("play", () => {
+    document.body.classList.add("is-playing");
+    if (isLandscapeMobile()) {
+      if (cinemaTimer) clearTimeout(cinemaTimer);
+      cinemaTimer = setTimeout(() => {
+        if (!controls.matches(":hover") && !controls.classList.contains("pinned")) {
+          controls.classList.remove("active", "mouse-active");
+        }
+      }, 3200);
+    }
+  });
+  audio.addEventListener("pause", () => {
+    document.body.classList.remove("is-playing");
+    controls.classList.add("active", "mouse-active");
+  });
   document.addEventListener("keydown", event => {
     if (event.target.matches("input[type=range], select, input[type=checkbox]") && event.key !== " ") {
       return;
@@ -2046,6 +2333,18 @@ window.SVU_PREFS = {
     document.querySelectorAll(".theme-opt[data-theme-opt]").forEach(btn => {
       btn.classList.toggle("active", btn.dataset.themeOpt === curTheme);
     });
+    document.querySelectorAll(".m-theme-opt[data-theme-opt]").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.themeOpt === curTheme);
+    });
+    const modeBtn = byId("mobileModeToggle");
+    if (modeBtn) {
+      const darkTag = modeBtn.querySelector(".mode-tag.dark");
+      const lightTag = modeBtn.querySelector(".mode-tag.light");
+      if (darkTag && lightTag) {
+        darkTag.style.display = curMode === "dark" ? "" : "none";
+        lightTag.style.display = curMode === "light" ? "" : "none";
+      }
+    }
   }
   applyTheme(curTheme, curMode);
   window.__svuApplyTheme = applyTheme;
@@ -2182,6 +2481,110 @@ window.SVU_PREFS = {
       byId("about").close();
     }
   });
+  // Mobile Quick Menu Action Sheet Controller
+  const sheet = byId("mobileMenuSheet");
+  const sheetBackdrop = byId("mobileSheetBackdrop");
+  const moreBtn = byId("mobileMoreBtn");
+  const sheetClose = byId("mobileSheetClose");
+
+  function syncMobileBadges() {
+    const count = byId("libHeaderCount")?.textContent || "";
+    if (byId("mobileLibBadge")) byId("mobileLibBadge").textContent = count;
+    const prof = byId("activeProfileLbl")?.textContent || "البروفايل";
+    if (byId("mobileProfileName")) byId("mobileProfileName").textContent = prof;
+  }
+
+  function openMobileSheet() {
+    if (!sheet) return;
+    syncMobileBadges();
+    sheet.classList.add("open");
+    sheet.setAttribute("aria-hidden", "false");
+    if (sheetBackdrop) {
+      sheetBackdrop.classList.add("open");
+      sheetBackdrop.setAttribute("aria-hidden", "false");
+    }
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMobileSheet() {
+    if (!sheet) return;
+    sheet.classList.remove("open");
+    sheet.setAttribute("aria-hidden", "true");
+    if (sheetBackdrop) {
+      sheetBackdrop.classList.remove("open");
+      sheetBackdrop.setAttribute("aria-hidden", "true");
+    }
+    document.body.style.overflow = "";
+  }
+
+  if (moreBtn) moreBtn.addEventListener("click", openMobileSheet);
+  if (sheetClose) sheetClose.addEventListener("click", closeMobileSheet);
+  if (sheetBackdrop) sheetBackdrop.addEventListener("click", closeMobileSheet);
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && sheet && sheet.classList.contains("open")) {
+      closeMobileSheet();
+    }
+  });
+
+  if (byId("mobileLibBtn")) {
+    byId("mobileLibBtn").addEventListener("click", () => {
+      closeMobileSheet();
+      if (byId("libHeaderBtn")) byId("libHeaderBtn").click();
+    });
+  }
+  if (byId("mobileBatchBtn")) {
+    byId("mobileBatchBtn").addEventListener("click", () => {
+      closeMobileSheet();
+      if (byId("tabBatch")) {
+        byId("tabBatch").click();
+        if (byId("dlg")) byId("dlg").showModal();
+      }
+    });
+  }
+  if (byId("mobilePwaBtn")) {
+    byId("mobilePwaBtn").addEventListener("click", () => {
+      closeMobileSheet();
+      if (byId("installPwaBtn")) byId("installPwaBtn").click();
+    });
+  }
+  if (byId("mobileAboutBtn")) {
+    byId("mobileAboutBtn").addEventListener("click", () => {
+      closeMobileSheet();
+      if (byId("aboutBtn")) byId("aboutBtn").click();
+    });
+  }
+  if (byId("mobileProfileManageBtn")) {
+    byId("mobileProfileManageBtn").addEventListener("click", () => {
+      closeMobileSheet();
+      if (byId("profileBtn")) byId("profileBtn").click();
+    });
+  }
+  if (byId("mobileModeToggle")) {
+    byId("mobileModeToggle").addEventListener("click", () => {
+      applyTheme(curTheme, curMode === "light" ? "dark" : "light");
+    });
+  }
+  document.querySelectorAll(".m-theme-opt[data-theme-opt]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      applyTheme(btn.dataset.themeOpt, curMode);
+    });
+  });
+
+  // Responsive Orientation & Viewport Handler
+  function handleScreenResize() {
+    const isPortrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
+    const isLandscape = isLandscapeMobile();
+    document.body.classList.toggle("is-mobile-portrait", isPortrait);
+    document.body.classList.toggle("is-mobile-landscape", isLandscape);
+    if (!isLandscape && document.body.classList.contains("chat-drawer-open")) {
+      document.body.classList.remove("chat-drawer-open");
+    }
+    drawFrame();
+  }
+  window.addEventListener("resize", handleScreenResize, PASSIVE);
+  window.addEventListener("orientationchange", () => setTimeout(handleScreenResize, 150), PASSIVE);
+  handleScreenResize();
+
   window.__lrec = {
     get session() {
       return session;
@@ -2449,6 +2852,22 @@ window.SVU_PREFS = {
   const icon = name => "<svg class=\"i\"><use href=\"#i-" + name + "\"/></svg>";
   const iconLabel = (svg, key) => icon(svg) + "<span data-i18n=\"" + key + "\">" + t(key) + "</span>";
 
+  function formatCourseDisplay(courseObj) {
+    if (!courseObj) return "";
+    const val = String(courseObj.value || "").trim();
+    const rawLabel = String(courseObj.label || val).trim();
+    if (!window.MaterialsDB || !val) return rawLabel;
+    const mat = window.MaterialsDB.get(val);
+    if (!mat) return rawLabel;
+    const isEn = window.I18N && window.I18N.lang === "en";
+    const primary = isEn ? (mat.en || mat.ar) : (mat.ar || mat.en);
+    const secondary = isEn ? mat.ar : mat.en;
+    if (secondary && secondary !== primary) {
+      return mat.code + " — " + primary + " (" + secondary + ")";
+    }
+    return mat.code + " — " + primary;
+  }
+
   function fillSelect(sel, items, placeholder, current) {
     if (!sel) return;
     sel.innerHTML = "";
@@ -2458,7 +2877,10 @@ window.SVU_PREFS = {
     const curTrim = current != null ? String(current).trim() : "";
     let matchedVal = "";
     for (const item of items) {
-      sel.add(new Option(item.label, item.value));
+      const displayLabel = (sel.id === "selCourse" && window.MaterialsDB)
+        ? formatCourseDisplay(item)
+        : item.label;
+      sel.add(new Option(displayLabel, item.value));
       if (curTrim && (item.value === current || String(item.value).trim() === curTrim)) {
         matchedVal = item.value;
       }
@@ -3169,8 +3591,16 @@ window.SVU_PREFS = {
       if (onlySelected && !isChecked) {
         continue;
       }
-      if (filterQ && !c.label.toLowerCase().includes(filterQ) && !c.value.toLowerCase().includes(filterQ)) {
-        continue;
+      if (filterQ) {
+        const mat = (window.MaterialsDB && c.value) ? window.MaterialsDB.get(c.value) : null;
+        const matchesVal = c.value.toLowerCase().includes(filterQ);
+        const matchesLabel = c.label.toLowerCase().includes(filterQ);
+        const matchesAr = !!(mat && mat.ar && mat.ar.toLowerCase().includes(filterQ));
+        const matchesEn = !!(mat && mat.en && mat.en.toLowerCase().includes(filterQ));
+        const matchesAlts = !!(mat && mat.alts && mat.alts.some(a => a.ar.toLowerCase().includes(filterQ) || a.en.toLowerCase().includes(filterQ)));
+        if (!matchesVal && !matchesLabel && !matchesAr && !matchesEn && !matchesAlts) {
+          continue;
+        }
       }
 
       renderedCount++;
@@ -3185,7 +3615,7 @@ window.SVU_PREFS = {
       chk.type = "checkbox";
       chk.checked = isChecked;
       const titleSpan = document.createElement("span");
-      titleSpan.textContent = c.label;
+      titleSpan.textContent = formatCourseDisplay(c);
       lbl.append(chk, titleSpan);
 
       const metaBadge = document.createElement("span");
@@ -4045,11 +4475,15 @@ window.SVU_PREFS = {
       if (libFilterWatched === "unwatched" && rec.watched) return false;
       if (searchQ) {
         const m = rec.parsedMeta;
+        const mat = (window.MaterialsDB && m.material) ? window.MaterialsDB.get(m.material) : null;
         const hay = [
           rec.name,
           rec.label,
           m.college,
           m.material,
+          mat ? mat.ar : "",
+          mat ? mat.en : "",
+          (mat && mat.alts) ? mat.alts.map(a => a.ar + " " + a.en).join(" ") : "",
           "c" + m.className,
           m.className,
           m.term,
@@ -4140,8 +4574,12 @@ window.SVU_PREFS = {
         gTitle.innerHTML =
           "<span class=\"mtag mtag-college\"><b>" + escapeHtml(t("localFilesGroup")) + "</b> (" + items.length + ")</span>";
       } else if (groupMode === "course") {
+        const mat = (window.MaterialsDB && gKey !== "OTHER") ? window.MaterialsDB.get(gKey) : null;
+        const isEn = window.I18N && window.I18N.lang === "en";
+        const primary = mat ? (isEn ? (mat.en || mat.ar) : (mat.ar || mat.en)) : "";
+        const tooltip = mat ? window.MaterialsDB.getTooltip(gKey) : "";
         gTitle.innerHTML =
-          "<span class=\"mtag mtag-material\"><b>" + escapeHtml(t("metaMaterial")) + " :</b> " + escapeHtml(gKey) + "</span>" +
+          "<span class=\"mtag mtag-material\" title=\"" + escapeHtml(tooltip) + "\"><b>" + escapeHtml(t("metaMaterial")) + " :</b> " + escapeHtml(gKey) + (primary ? (" — " + escapeHtml(primary)) : "") + "</span>" +
           (sample.college ? "<span class=\"mtag mtag-college\"><b>" + escapeHtml(t("metaCollege")) + " :</b> " + escapeHtml(sample.college) + "</span>" : "") +
           (sample.className ? "<span class=\"mtag mtag-class\"><b>" + escapeHtml(t("metaClass")) + " :</b> " + escapeHtml(sample.className) + "</span>" : "") +
           (sample.term ? "<span class=\"mtag mtag-term\"><b>" + escapeHtml(t("metaTerm")) + " :</b> " + escapeHtml(sample.term) + "</span>" : "") +
@@ -4206,7 +4644,11 @@ window.SVU_PREFS = {
     }
     if (!insideMaterialWindow) {
       if (m.material && m.material !== "__LOCAL_FILES__") {
-        tags.innerHTML += "<span class=\"mtag mtag-material\">" + escapeHtml(m.material) + "</span>";
+        if (window.MaterialsDB) {
+          tags.innerHTML += window.MaterialsDB.getBadgeHtml(m.material);
+        } else {
+          tags.innerHTML += "<span class=\"mtag mtag-material\">" + escapeHtml(m.material) + "</span>";
+        }
       }
       if (m.college) {
         tags.innerHTML += "<span class=\"mtag mtag-college\">" + escapeHtml(m.college) + "</span>";
@@ -4510,7 +4952,13 @@ window.SVU_PREFS = {
     if (tagsEl) {
       let html = "";
       if (parsed.college) html += "<span class=\"mtag mtag-college\"><b>" + escapeHtml(t("metaCollege")) + " :</b> " + escapeHtml(parsed.college) + "</span>";
-      if (parsed.material) html += "<span class=\"mtag mtag-material\"><b>" + escapeHtml(t("metaMaterial")) + " :</b> " + escapeHtml(parsed.material) + "</span>";
+      if (parsed.material) {
+        if (window.MaterialsDB) {
+          html += window.MaterialsDB.getBadgeHtml(parsed.material);
+        } else {
+          html += "<span class=\"mtag mtag-material\"><b>" + escapeHtml(t("metaMaterial")) + " :</b> " + escapeHtml(parsed.material) + "</span>";
+        }
+      }
       if (parsed.className) html += "<span class=\"mtag mtag-class\"><b>" + escapeHtml(t("metaClass")) + " :</b> " + escapeHtml(parsed.className) + "</span>";
       if (parsed.term) html += "<span class=\"mtag mtag-term\"><b>" + escapeHtml(t("metaTerm")) + " :</b> " + escapeHtml(parsed.term) + "</span>";
       if (parsed.lesson) html += "<span class=\"mtag mtag-lesson\"><b>" + escapeHtml(t("metaLesson")) + " :</b> " + escapeHtml(parsed.lesson) + "</span>";
@@ -4883,6 +5331,17 @@ window.SVU_PREFS = {
     if (courseDl) {
       courseDl.innerHTML = "";
       const seenCourses = new Set();
+      if (window.MaterialsDB) {
+        const isEn = window.I18N && window.I18N.lang === "en";
+        window.MaterialsDB.all().forEach(m => {
+          seenCourses.add(m.code);
+          const opt = document.createElement("option");
+          opt.value = m.code;
+          const name = isEn ? (m.en || m.ar) : (m.ar || m.en);
+          opt.label = m.code + " — " + name;
+          courseDl.appendChild(opt);
+        });
+      }
       Object.values(batchCache.courses || {}).forEach(list => {
         (list || []).forEach(c => {
           if (!seenCourses.has(c.value)) {
@@ -5000,7 +5459,12 @@ window.SVU_PREFS = {
         (prof.program ? "<span class=\"mtag mtag-college\">" + escapeHtml(prof.program) + "</span>" : "") +
         (prof.term ? "<span class=\"mtag mtag-term\">" + escapeHtml(prof.term) + "</span>" : "") +
         "<span class=\"mtag mtag-date\">" + escapeHtml(prof.theme || "default") + " · " + escapeHtml(prof.mode || "dark") + " · " + escapeHtml((prof.lang || "ar").toUpperCase()) + "</span>" +
-        matList.map(m => "<span class=\"mtag mtag-material\">" + escapeHtml(m.course + (m.classVal ? " (" + m.classVal + ")" : "")) + "</span>").join("");
+        matList.map(m => {
+          const name = window.MaterialsDB ? window.MaterialsDB.getName(m.course) : "";
+          const tip = window.MaterialsDB ? window.MaterialsDB.getTooltip(m.course) : "";
+          const display = escapeHtml(m.course + (name ? " · " + name : "") + (m.classVal ? " (" + m.classVal + ")" : ""));
+          return "<span class=\"mtag mtag-material\" title=\"" + escapeHtml(tip) + "\">" + display + "</span>";
+        }).join("");
 
       info.append(nameRow, metaRow);
 
@@ -5167,6 +5631,182 @@ window.SVU_PREFS = {
     setBusy(false);
   }
 
+  // SVU Course Directory Modal Manager
+  const courseDirModal = byId("courseDirModal");
+  const courseDirSearch = byId("courseDirSearch");
+  const courseDirClearSearch = byId("courseDirClearSearch");
+  const courseDirGrid = byId("courseDirGrid");
+  const courseDirStatus = byId("courseDirStatus");
+  const courseDirFaculties = byId("courseDirFaculties");
+  let activeDirPrefix = "ALL";
+  let dirSearchDebounce = null;
+
+  function renderCourseDirectory() {
+    if (!courseDirGrid || !window.MaterialsDB) return;
+    const query = (courseDirSearch ? courseDirSearch.value : "").trim();
+    if (courseDirClearSearch) {
+      courseDirClearSearch.hidden = !query;
+    }
+    const all = window.MaterialsDB.all();
+    let results = query ? window.MaterialsDB.search(query, 500) : all;
+    if (activeDirPrefix && activeDirPrefix !== "ALL") {
+      results = results.filter(item => item.code.toUpperCase().startsWith(activeDirPrefix));
+    }
+
+    if (courseDirStatus) {
+      courseDirStatus.textContent = t("courseDirCountSummary", { n: results.length, total: all.length });
+    }
+
+    courseDirGrid.innerHTML = "";
+    if (!results.length) {
+      courseDirGrid.innerHTML = "<div class=\"muted\" style=\"grid-column: 1 / -1; padding: 32px 16px; text-align: center;\">" + escapeHtml(t("courseDirNoMatch")) + "</div>";
+      return;
+    }
+
+    const isEn = window.I18N && window.I18N.lang === "en";
+    const frag = document.createDocumentFragment();
+
+    for (let i = 0; i < results.length; i++) {
+      const it = results[i];
+      const card = document.createElement("div");
+      card.className = "dir-card";
+
+      const top = document.createElement("div");
+      top.className = "dir-card-top";
+      const codeSpan = document.createElement("span");
+      codeSpan.className = "dir-code-badge";
+      codeSpan.textContent = it.code;
+      top.appendChild(codeSpan);
+
+      const copyBtn = document.createElement("button");
+      copyBtn.className = "iconbtn";
+      copyBtn.style.width = "26px";
+      copyBtn.style.height = "26px";
+      copyBtn.title = t("courseDirCopyCode");
+      copyBtn.innerHTML = "<svg class=\"i\" style=\"width:14px;height:14px;\"><use href=\"#i-copy\"/></svg>";
+      copyBtn.addEventListener("click", () => {
+        try {
+          navigator.clipboard.writeText(it.code);
+          copyBtn.title = t("courseDirCopied");
+          copyBtn.style.color = "var(--blue)";
+          setTimeout(() => {
+            copyBtn.title = t("courseDirCopyCode");
+            copyBtn.style.color = "";
+          }, 1500);
+        } catch (e) {}
+      });
+      top.appendChild(copyBtn);
+
+      const names = document.createElement("div");
+      names.className = "dir-card-names";
+      const arName = document.createElement("div");
+      arName.className = "dir-name-ar";
+      arName.textContent = it.ar || it.en;
+      const enName = document.createElement("div");
+      enName.className = "dir-name-en";
+      enName.textContent = it.en || it.ar;
+      names.append(arName, enName);
+
+      if (it.alts && it.alts.length) {
+        const altBox = document.createElement("div");
+        altBox.className = "dir-card-alts";
+        altBox.textContent = (isEn ? "Also: " : "أيضاً: ") + it.alts.map(a => (isEn ? (a.en || a.ar) : (a.ar || a.en))).join(" | ");
+        names.appendChild(altBox);
+      }
+
+      const actions = document.createElement("div");
+      actions.className = "dir-card-actions";
+
+      const libBtn = document.createElement("button");
+      libBtn.className = "dir-btn";
+      libBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-save\"/></svg><span>" + escapeHtml(t("courseDirFindInLib")) + "</span>";
+      libBtn.addEventListener("click", () => {
+        if (courseDirModal) courseDirModal.close();
+        if (byId("tabSaved")) byId("tabSaved").click();
+        if (byId("libSearch")) {
+          byId("libSearch").value = it.code;
+          renderLibraryView();
+        }
+      });
+
+      const batchBtn = document.createElement("button");
+      batchBtn.className = "dir-btn";
+      batchBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-download\"/></svg><span>" + escapeHtml(t("courseDirBatchSelect")) + "</span>";
+      batchBtn.addEventListener("click", () => {
+        if (courseDirModal) courseDirModal.close();
+        if (byId("tabBatch")) byId("tabBatch").click();
+        if (byId("batchCourseFilter")) {
+          byId("batchCourseFilter").value = it.code;
+          renderBatchCoursesList(false);
+        }
+      });
+
+      actions.append(libBtn, batchBtn);
+      card.append(top, names, actions);
+      frag.appendChild(card);
+    }
+    courseDirGrid.appendChild(frag);
+  }
+
+  function openCourseDirectory() {
+    if (!courseDirModal) return;
+    if (courseDirSearch) courseDirSearch.value = "";
+    activeDirPrefix = "ALL";
+    if (courseDirFaculties) {
+      courseDirFaculties.querySelectorAll(".dir-chip").forEach(c => {
+        c.classList.toggle("on", c.dataset.prefix === "ALL");
+      });
+    }
+    renderCourseDirectory();
+    courseDirModal.showModal();
+    if (courseDirSearch) setTimeout(() => courseDirSearch.focus(), 100);
+  }
+
+  if (byId("headerCourseDirBtn")) {
+    byId("headerCourseDirBtn").addEventListener("click", openCourseDirectory);
+  }
+  if (byId("libCourseDirBtn")) {
+    byId("libCourseDirBtn").addEventListener("click", openCourseDirectory);
+  }
+  if (byId("mobileCourseDirBtn")) {
+    byId("mobileCourseDirBtn").addEventListener("click", () => {
+      const sheet = byId("mobileMenuSheet");
+      if (sheet) {
+        sheet.classList.remove("open");
+        sheet.setAttribute("aria-hidden", "true");
+      }
+      openCourseDirectory();
+    });
+  }
+  if (byId("courseDirClose") && courseDirModal) {
+    byId("courseDirClose").addEventListener("click", () => courseDirModal.close());
+  }
+  if (courseDirSearch) {
+    courseDirSearch.addEventListener("input", () => {
+      clearTimeout(dirSearchDebounce);
+      dirSearchDebounce = setTimeout(renderCourseDirectory, 150);
+    });
+  }
+  if (courseDirClearSearch) {
+    courseDirClearSearch.addEventListener("click", () => {
+      if (courseDirSearch) {
+        courseDirSearch.value = "";
+        courseDirSearch.focus();
+      }
+      renderCourseDirectory();
+    });
+  }
+  if (courseDirFaculties) {
+    courseDirFaculties.addEventListener("click", e => {
+      const chip = e.target.closest(".dir-chip");
+      if (!chip) return;
+      courseDirFaculties.querySelectorAll(".dir-chip").forEach(c => c.classList.remove("on"));
+      chip.classList.add("on");
+      activeDirPrefix = chip.dataset.prefix || "ALL";
+      renderCourseDirectory();
+    });
+  }
+
   CASCADE.forEach((stage, index) => byId(stage.sel).addEventListener("change", () => onCascadeChange(index)));
   syncCascadeStyles();
   updateBatchShowSelectedBtn();
@@ -5180,6 +5820,9 @@ window.SVU_PREFS = {
     renderProfilesList();
     updateBatchShowSelectedBtn();
     renderLibraryView();
+    if (courseDirModal && courseDirModal.open) {
+      renderCourseDirectory();
+    }
     if (dialog.open && !byId("paneBatch").hidden) {
       renderBatchCoursesList(false);
       updateBatchSummary();

@@ -252,6 +252,22 @@
   const icon = name => "<svg class=\"i\"><use href=\"#i-" + name + "\"/></svg>";
   const iconLabel = (svg, key) => icon(svg) + "<span data-i18n=\"" + key + "\">" + t(key) + "</span>";
 
+  function formatCourseDisplay(courseObj) {
+    if (!courseObj) return "";
+    const val = String(courseObj.value || "").trim();
+    const rawLabel = String(courseObj.label || val).trim();
+    if (!window.MaterialsDB || !val) return rawLabel;
+    const mat = window.MaterialsDB.get(val);
+    if (!mat) return rawLabel;
+    const isEn = window.I18N && window.I18N.lang === "en";
+    const primary = isEn ? (mat.en || mat.ar) : (mat.ar || mat.en);
+    const secondary = isEn ? mat.ar : mat.en;
+    if (secondary && secondary !== primary) {
+      return mat.code + " — " + primary + " (" + secondary + ")";
+    }
+    return mat.code + " — " + primary;
+  }
+
   function fillSelect(sel, items, placeholder, current) {
     if (!sel) return;
     sel.innerHTML = "";
@@ -261,7 +277,10 @@
     const curTrim = current != null ? String(current).trim() : "";
     let matchedVal = "";
     for (const item of items) {
-      sel.add(new Option(item.label, item.value));
+      const displayLabel = (sel.id === "selCourse" && window.MaterialsDB)
+        ? formatCourseDisplay(item)
+        : item.label;
+      sel.add(new Option(displayLabel, item.value));
       if (curTrim && (item.value === current || String(item.value).trim() === curTrim)) {
         matchedVal = item.value;
       }
@@ -972,8 +991,16 @@
       if (onlySelected && !isChecked) {
         continue;
       }
-      if (filterQ && !c.label.toLowerCase().includes(filterQ) && !c.value.toLowerCase().includes(filterQ)) {
-        continue;
+      if (filterQ) {
+        const mat = (window.MaterialsDB && c.value) ? window.MaterialsDB.get(c.value) : null;
+        const matchesVal = c.value.toLowerCase().includes(filterQ);
+        const matchesLabel = c.label.toLowerCase().includes(filterQ);
+        const matchesAr = !!(mat && mat.ar && mat.ar.toLowerCase().includes(filterQ));
+        const matchesEn = !!(mat && mat.en && mat.en.toLowerCase().includes(filterQ));
+        const matchesAlts = !!(mat && mat.alts && mat.alts.some(a => a.ar.toLowerCase().includes(filterQ) || a.en.toLowerCase().includes(filterQ)));
+        if (!matchesVal && !matchesLabel && !matchesAr && !matchesEn && !matchesAlts) {
+          continue;
+        }
       }
 
       renderedCount++;
@@ -988,7 +1015,7 @@
       chk.type = "checkbox";
       chk.checked = isChecked;
       const titleSpan = document.createElement("span");
-      titleSpan.textContent = c.label;
+      titleSpan.textContent = formatCourseDisplay(c);
       lbl.append(chk, titleSpan);
 
       const metaBadge = document.createElement("span");
@@ -1848,11 +1875,15 @@
       if (libFilterWatched === "unwatched" && rec.watched) return false;
       if (searchQ) {
         const m = rec.parsedMeta;
+        const mat = (window.MaterialsDB && m.material) ? window.MaterialsDB.get(m.material) : null;
         const hay = [
           rec.name,
           rec.label,
           m.college,
           m.material,
+          mat ? mat.ar : "",
+          mat ? mat.en : "",
+          (mat && mat.alts) ? mat.alts.map(a => a.ar + " " + a.en).join(" ") : "",
           "c" + m.className,
           m.className,
           m.term,
@@ -1943,8 +1974,12 @@
         gTitle.innerHTML =
           "<span class=\"mtag mtag-college\"><b>" + escapeHtml(t("localFilesGroup")) + "</b> (" + items.length + ")</span>";
       } else if (groupMode === "course") {
+        const mat = (window.MaterialsDB && gKey !== "OTHER") ? window.MaterialsDB.get(gKey) : null;
+        const isEn = window.I18N && window.I18N.lang === "en";
+        const primary = mat ? (isEn ? (mat.en || mat.ar) : (mat.ar || mat.en)) : "";
+        const tooltip = mat ? window.MaterialsDB.getTooltip(gKey) : "";
         gTitle.innerHTML =
-          "<span class=\"mtag mtag-material\"><b>" + escapeHtml(t("metaMaterial")) + " :</b> " + escapeHtml(gKey) + "</span>" +
+          "<span class=\"mtag mtag-material\" title=\"" + escapeHtml(tooltip) + "\"><b>" + escapeHtml(t("metaMaterial")) + " :</b> " + escapeHtml(gKey) + (primary ? (" — " + escapeHtml(primary)) : "") + "</span>" +
           (sample.college ? "<span class=\"mtag mtag-college\"><b>" + escapeHtml(t("metaCollege")) + " :</b> " + escapeHtml(sample.college) + "</span>" : "") +
           (sample.className ? "<span class=\"mtag mtag-class\"><b>" + escapeHtml(t("metaClass")) + " :</b> " + escapeHtml(sample.className) + "</span>" : "") +
           (sample.term ? "<span class=\"mtag mtag-term\"><b>" + escapeHtml(t("metaTerm")) + " :</b> " + escapeHtml(sample.term) + "</span>" : "") +
@@ -2009,7 +2044,11 @@
     }
     if (!insideMaterialWindow) {
       if (m.material && m.material !== "__LOCAL_FILES__") {
-        tags.innerHTML += "<span class=\"mtag mtag-material\">" + escapeHtml(m.material) + "</span>";
+        if (window.MaterialsDB) {
+          tags.innerHTML += window.MaterialsDB.getBadgeHtml(m.material);
+        } else {
+          tags.innerHTML += "<span class=\"mtag mtag-material\">" + escapeHtml(m.material) + "</span>";
+        }
       }
       if (m.college) {
         tags.innerHTML += "<span class=\"mtag mtag-college\">" + escapeHtml(m.college) + "</span>";
@@ -2313,7 +2352,13 @@
     if (tagsEl) {
       let html = "";
       if (parsed.college) html += "<span class=\"mtag mtag-college\"><b>" + escapeHtml(t("metaCollege")) + " :</b> " + escapeHtml(parsed.college) + "</span>";
-      if (parsed.material) html += "<span class=\"mtag mtag-material\"><b>" + escapeHtml(t("metaMaterial")) + " :</b> " + escapeHtml(parsed.material) + "</span>";
+      if (parsed.material) {
+        if (window.MaterialsDB) {
+          html += window.MaterialsDB.getBadgeHtml(parsed.material);
+        } else {
+          html += "<span class=\"mtag mtag-material\"><b>" + escapeHtml(t("metaMaterial")) + " :</b> " + escapeHtml(parsed.material) + "</span>";
+        }
+      }
       if (parsed.className) html += "<span class=\"mtag mtag-class\"><b>" + escapeHtml(t("metaClass")) + " :</b> " + escapeHtml(parsed.className) + "</span>";
       if (parsed.term) html += "<span class=\"mtag mtag-term\"><b>" + escapeHtml(t("metaTerm")) + " :</b> " + escapeHtml(parsed.term) + "</span>";
       if (parsed.lesson) html += "<span class=\"mtag mtag-lesson\"><b>" + escapeHtml(t("metaLesson")) + " :</b> " + escapeHtml(parsed.lesson) + "</span>";
@@ -2686,6 +2731,17 @@
     if (courseDl) {
       courseDl.innerHTML = "";
       const seenCourses = new Set();
+      if (window.MaterialsDB) {
+        const isEn = window.I18N && window.I18N.lang === "en";
+        window.MaterialsDB.all().forEach(m => {
+          seenCourses.add(m.code);
+          const opt = document.createElement("option");
+          opt.value = m.code;
+          const name = isEn ? (m.en || m.ar) : (m.ar || m.en);
+          opt.label = m.code + " — " + name;
+          courseDl.appendChild(opt);
+        });
+      }
       Object.values(batchCache.courses || {}).forEach(list => {
         (list || []).forEach(c => {
           if (!seenCourses.has(c.value)) {
@@ -2803,7 +2859,12 @@
         (prof.program ? "<span class=\"mtag mtag-college\">" + escapeHtml(prof.program) + "</span>" : "") +
         (prof.term ? "<span class=\"mtag mtag-term\">" + escapeHtml(prof.term) + "</span>" : "") +
         "<span class=\"mtag mtag-date\">" + escapeHtml(prof.theme || "default") + " · " + escapeHtml(prof.mode || "dark") + " · " + escapeHtml((prof.lang || "ar").toUpperCase()) + "</span>" +
-        matList.map(m => "<span class=\"mtag mtag-material\">" + escapeHtml(m.course + (m.classVal ? " (" + m.classVal + ")" : "")) + "</span>").join("");
+        matList.map(m => {
+          const name = window.MaterialsDB ? window.MaterialsDB.getName(m.course) : "";
+          const tip = window.MaterialsDB ? window.MaterialsDB.getTooltip(m.course) : "";
+          const display = escapeHtml(m.course + (name ? " · " + name : "") + (m.classVal ? " (" + m.classVal + ")" : ""));
+          return "<span class=\"mtag mtag-material\" title=\"" + escapeHtml(tip) + "\">" + display + "</span>";
+        }).join("");
 
       info.append(nameRow, metaRow);
 
@@ -2970,6 +3031,182 @@
     setBusy(false);
   }
 
+  // SVU Course Directory Modal Manager
+  const courseDirModal = byId("courseDirModal");
+  const courseDirSearch = byId("courseDirSearch");
+  const courseDirClearSearch = byId("courseDirClearSearch");
+  const courseDirGrid = byId("courseDirGrid");
+  const courseDirStatus = byId("courseDirStatus");
+  const courseDirFaculties = byId("courseDirFaculties");
+  let activeDirPrefix = "ALL";
+  let dirSearchDebounce = null;
+
+  function renderCourseDirectory() {
+    if (!courseDirGrid || !window.MaterialsDB) return;
+    const query = (courseDirSearch ? courseDirSearch.value : "").trim();
+    if (courseDirClearSearch) {
+      courseDirClearSearch.hidden = !query;
+    }
+    const all = window.MaterialsDB.all();
+    let results = query ? window.MaterialsDB.search(query, 500) : all;
+    if (activeDirPrefix && activeDirPrefix !== "ALL") {
+      results = results.filter(item => item.code.toUpperCase().startsWith(activeDirPrefix));
+    }
+
+    if (courseDirStatus) {
+      courseDirStatus.textContent = t("courseDirCountSummary", { n: results.length, total: all.length });
+    }
+
+    courseDirGrid.innerHTML = "";
+    if (!results.length) {
+      courseDirGrid.innerHTML = "<div class=\"muted\" style=\"grid-column: 1 / -1; padding: 32px 16px; text-align: center;\">" + escapeHtml(t("courseDirNoMatch")) + "</div>";
+      return;
+    }
+
+    const isEn = window.I18N && window.I18N.lang === "en";
+    const frag = document.createDocumentFragment();
+
+    for (let i = 0; i < results.length; i++) {
+      const it = results[i];
+      const card = document.createElement("div");
+      card.className = "dir-card";
+
+      const top = document.createElement("div");
+      top.className = "dir-card-top";
+      const codeSpan = document.createElement("span");
+      codeSpan.className = "dir-code-badge";
+      codeSpan.textContent = it.code;
+      top.appendChild(codeSpan);
+
+      const copyBtn = document.createElement("button");
+      copyBtn.className = "iconbtn";
+      copyBtn.style.width = "26px";
+      copyBtn.style.height = "26px";
+      copyBtn.title = t("courseDirCopyCode");
+      copyBtn.innerHTML = "<svg class=\"i\" style=\"width:14px;height:14px;\"><use href=\"#i-copy\"/></svg>";
+      copyBtn.addEventListener("click", () => {
+        try {
+          navigator.clipboard.writeText(it.code);
+          copyBtn.title = t("courseDirCopied");
+          copyBtn.style.color = "var(--blue)";
+          setTimeout(() => {
+            copyBtn.title = t("courseDirCopyCode");
+            copyBtn.style.color = "";
+          }, 1500);
+        } catch (e) {}
+      });
+      top.appendChild(copyBtn);
+
+      const names = document.createElement("div");
+      names.className = "dir-card-names";
+      const arName = document.createElement("div");
+      arName.className = "dir-name-ar";
+      arName.textContent = it.ar || it.en;
+      const enName = document.createElement("div");
+      enName.className = "dir-name-en";
+      enName.textContent = it.en || it.ar;
+      names.append(arName, enName);
+
+      if (it.alts && it.alts.length) {
+        const altBox = document.createElement("div");
+        altBox.className = "dir-card-alts";
+        altBox.textContent = (isEn ? "Also: " : "أيضاً: ") + it.alts.map(a => (isEn ? (a.en || a.ar) : (a.ar || a.en))).join(" | ");
+        names.appendChild(altBox);
+      }
+
+      const actions = document.createElement("div");
+      actions.className = "dir-card-actions";
+
+      const libBtn = document.createElement("button");
+      libBtn.className = "dir-btn";
+      libBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-save\"/></svg><span>" + escapeHtml(t("courseDirFindInLib")) + "</span>";
+      libBtn.addEventListener("click", () => {
+        if (courseDirModal) courseDirModal.close();
+        if (byId("tabSaved")) byId("tabSaved").click();
+        if (byId("libSearch")) {
+          byId("libSearch").value = it.code;
+          renderLibraryView();
+        }
+      });
+
+      const batchBtn = document.createElement("button");
+      batchBtn.className = "dir-btn";
+      batchBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-download\"/></svg><span>" + escapeHtml(t("courseDirBatchSelect")) + "</span>";
+      batchBtn.addEventListener("click", () => {
+        if (courseDirModal) courseDirModal.close();
+        if (byId("tabBatch")) byId("tabBatch").click();
+        if (byId("batchCourseFilter")) {
+          byId("batchCourseFilter").value = it.code;
+          renderBatchCoursesList(false);
+        }
+      });
+
+      actions.append(libBtn, batchBtn);
+      card.append(top, names, actions);
+      frag.appendChild(card);
+    }
+    courseDirGrid.appendChild(frag);
+  }
+
+  function openCourseDirectory() {
+    if (!courseDirModal) return;
+    if (courseDirSearch) courseDirSearch.value = "";
+    activeDirPrefix = "ALL";
+    if (courseDirFaculties) {
+      courseDirFaculties.querySelectorAll(".dir-chip").forEach(c => {
+        c.classList.toggle("on", c.dataset.prefix === "ALL");
+      });
+    }
+    renderCourseDirectory();
+    courseDirModal.showModal();
+    if (courseDirSearch) setTimeout(() => courseDirSearch.focus(), 100);
+  }
+
+  if (byId("headerCourseDirBtn")) {
+    byId("headerCourseDirBtn").addEventListener("click", openCourseDirectory);
+  }
+  if (byId("libCourseDirBtn")) {
+    byId("libCourseDirBtn").addEventListener("click", openCourseDirectory);
+  }
+  if (byId("mobileCourseDirBtn")) {
+    byId("mobileCourseDirBtn").addEventListener("click", () => {
+      const sheet = byId("mobileMenuSheet");
+      if (sheet) {
+        sheet.classList.remove("open");
+        sheet.setAttribute("aria-hidden", "true");
+      }
+      openCourseDirectory();
+    });
+  }
+  if (byId("courseDirClose") && courseDirModal) {
+    byId("courseDirClose").addEventListener("click", () => courseDirModal.close());
+  }
+  if (courseDirSearch) {
+    courseDirSearch.addEventListener("input", () => {
+      clearTimeout(dirSearchDebounce);
+      dirSearchDebounce = setTimeout(renderCourseDirectory, 150);
+    });
+  }
+  if (courseDirClearSearch) {
+    courseDirClearSearch.addEventListener("click", () => {
+      if (courseDirSearch) {
+        courseDirSearch.value = "";
+        courseDirSearch.focus();
+      }
+      renderCourseDirectory();
+    });
+  }
+  if (courseDirFaculties) {
+    courseDirFaculties.addEventListener("click", e => {
+      const chip = e.target.closest(".dir-chip");
+      if (!chip) return;
+      courseDirFaculties.querySelectorAll(".dir-chip").forEach(c => c.classList.remove("on"));
+      chip.classList.add("on");
+      activeDirPrefix = chip.dataset.prefix || "ALL";
+      renderCourseDirectory();
+    });
+  }
+
   CASCADE.forEach((stage, index) => byId(stage.sel).addEventListener("change", () => onCascadeChange(index)));
   syncCascadeStyles();
   updateBatchShowSelectedBtn();
@@ -2983,6 +3220,9 @@
     renderProfilesList();
     updateBatchShowSelectedBtn();
     renderLibraryView();
+    if (courseDirModal && courseDirModal.open) {
+      renderCourseDirectory();
+    }
     if (dialog.open && !byId("paneBatch").hidden) {
       renderBatchCoursesList(false);
       updateBatchSummary();

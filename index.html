@@ -1165,6 +1165,49 @@
     border: 1px solid var(--line); border-radius: var(--r); font-family: "Consolas", monospace; font-size: 12px; resize: vertical;
   }
 
+  /* ---------- SVU Course Directory Modal (#courseDirModal) ---------- */
+  dialog.course-dir-dlg { width: min(920px, 96vw); max-height: 88vh; }
+  .course-dir-body { padding: 16px 20px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+  .course-dir-controls { display: flex; flex-direction: column; gap: 10px; }
+  .course-dir-search-wrap { position: relative; width: 100%; }
+  .course-dir-search-wrap input {
+    width: 100%; height: 42px; padding: 0 40px; background: var(--panel2); color: var(--text);
+    border: 1.5px solid var(--line); border-radius: var(--r-lg); font: inherit; font-size: 13.5px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.15); transition: border-color 0.15s ease;
+  }
+  .course-dir-search-wrap input:focus { border-color: var(--blue); outline: none; }
+  .course-dir-faculties { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
+  .dir-chip {
+    flex-shrink: 0; padding: 5px 12px; font-size: 11.5px; font-weight: 600; border-radius: 99px;
+    background: var(--panel2); color: var(--dim); border: 1px solid var(--line); cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .dir-chip:hover { border-color: var(--blue); color: var(--text); }
+  .dir-chip.on { background: var(--blue); color: var(--ink); border-color: var(--blue); }
+  .course-dir-status { font-size: 12px; color: var(--dim); font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+  .course-dir-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 10px;
+    max-height: 52vh; overflow-y: auto; padding-inline-end: 4px;
+  }
+  .dir-card {
+    display: flex; flex-direction: column; justify-content: space-between; gap: 8px;
+    padding: 12px 14px; border-radius: var(--r-lg); background: var(--panel2);
+    border: 1px solid var(--line); transition: all 0.15s ease;
+  }
+  .dir-card:hover { border-color: var(--blue); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
+  .dir-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .dir-code-badge {
+    font-size: 12.5px; font-weight: 800; padding: 3px 8px; border-radius: var(--r);
+    background: rgba(59, 130, 246, 0.15); color: var(--blue); border: 1px solid rgba(59, 130, 246, 0.35);
+    letter-spacing: 0.5px;
+  }
+  .dir-card-names { display: flex; flex-direction: column; gap: 3px; }
+  .dir-name-ar { font-size: 13.5px; font-weight: 700; color: var(--text); line-height: 1.35; }
+  .dir-name-en { font-size: 11.5px; color: var(--dim); line-height: 1.3; }
+  .dir-card-alts { font-size: 10.5px; color: #EAB308; background: rgba(234, 179, 8, 0.1); padding: 3px 6px; border-radius: 4px; line-height: 1.25; }
+  .dir-card-actions { display: flex; align-items: center; gap: 6px; margin-top: 4px; border-top: 1px solid var(--line); padding-top: 8px; }
+  .dir-btn { height: 26px; padding: 0 8px; font-size: 11px; border-radius: var(--r); font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+
   /* ---------- Pro Studio About & Deployment Modal ---------- */
   dialog.about-pro { width: min(680px, 95vw); }
   .dlg-title { display: inline-flex; align-items: center; gap: 8px; color: var(--text); font-weight: 600; padding: 4px; }
@@ -1317,36 +1360,773 @@
   .tcur { text-align: start; } .ttot { text-align: end; }
   @media (hover: none) { .seek .knob { opacity: 1; } }
 
-  /* Responsive: Tablets and Phones */
-  @media (max-width: 820px) {
-    main { flex-direction: column; padding: 8px; gap: 8px; }
-    .stage-wrap { flex: none; }
-    .stage { flex: none; width: 100%; aspect-ratio: var(--ar, 16 / 9); max-height: 54dvh; min-height: 180px; }
-    .controls-zone { position: relative; left: auto; right: auto; bottom: auto; height: auto; padding: 0; }
-    .controls { opacity: 1; transform: none; border-radius: 0; border-left: none; border-right: none; border-bottom: none; }
-    aside.chat { flex: 1; width: auto; height: auto; min-height: 140px; }
-    .cascade { grid-template-columns: 80px 1fr; }
+  /* ==========================================================================
+     MOBILE & RESPONSIVE ARCHITECTURE (PORTRAIT & LANDSCAPE MODES)
+     ========================================================================== */
+
+  /* Double-tap Seek Ripple Overlays */
+  .double-tap-ripple {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 15;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .double-tap-ripple.left {
+    left: 0;
+    border-radius: 0 50% 50% 0;
+    background: radial-gradient(circle at 25% 50%, rgba(255, 255, 255, 0.25), transparent 70%);
+  }
+  .double-tap-ripple.right {
+    right: 0;
+    border-radius: 50% 0 0 50%;
+    background: radial-gradient(circle at 75% 50%, rgba(255, 255, 255, 0.25), transparent 70%);
+  }
+  .double-tap-ripple.active {
+    opacity: 1;
+  }
+  .ripple-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.85);
+  }
+  .ripple-content svg {
+    width: 36px;
+    height: 36px;
+    fill: currentColor;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.85));
   }
 
+  /* Mobile Touch Strip in Drop Zone */
+  .mobile-touch-strip {
+    display: none;
+    margin-top: 14px;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .mobile-touch-strip span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    padding: 5px 11px;
+    border-radius: 999px;
+  }
+
+  /* Mobile More Button (Hidden on Desktop) */
+  .mobile-more-btn {
+    display: none;
+  }
+
+  /* Jump to Latest Floating Button in Chat */
+  .chat-jump-btn {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 8;
+    background: var(--panel);
+    color: var(--blue);
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    animation: bouncePill 1.6s infinite ease-in-out;
+  }
+  @keyframes bouncePill {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, -4px); }
+  }
+
+  /* Mobile Action Sheet Backdrop & Container */
+  .mobile-sheet-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 17, 0.72);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+  }
+  .mobile-sheet-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .mobile-sheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 88dvh;
+    background: var(--panel);
+    border: 1px solid var(--line-strong);
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+    z-index: 9999;
+    transform: translateY(105%);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -12px 40px rgba(0,0,0,0.65);
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+  .mobile-sheet.open {
+    transform: translateY(0);
+  }
+  .sheet-drag-handle {
+    width: 42px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--dim);
+    opacity: 0.45;
+    margin: 10px auto 4px;
+    flex: none;
+  }
+  .sheet-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 18px 12px;
+    border-bottom: 1px solid var(--line);
+    flex: none;
+  }
+  .sheet-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .sheet-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+  }
+  .card-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+  .card-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--accent-glow);
+    color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  .card-sub {
+    font-size: 11px;
+    color: var(--dim);
+  }
+  .card-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sheet-pill-btn {
+    padding: 6px 14px;
+    background: var(--accent);
+    color: var(--ink);
+    border: none;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    flex: none;
+  }
+  .sheet-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 4px;
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--dim);
+  }
+  .mode-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    font-size: 13.5px;
+    color: var(--text);
+  }
+  .mode-switch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .themes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
+    margin-top: 2px;
+  }
+  .m-theme-opt {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 9px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    font-size: 12px;
+    color: var(--text);
+    cursor: pointer;
+    justify-content: flex-start;
+    text-align: start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .m-theme-opt.active {
+    border-color: var(--blue);
+    background: var(--accent-glow);
+    font-weight: 700;
+  }
+  .m-theme-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    flex: none;
+  }
+  .sheet-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 4px;
+  }
+  .sheet-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: start;
+  }
+  .sheet-nav-item:hover, .sheet-nav-item:active {
+    background: var(--hover);
+    border-color: var(--line-strong);
+  }
+  .sheet-nav-item .i {
+    width: 18px;
+    height: 18px;
+    color: var(--blue);
+    flex: none;
+  }
+  .sheet-nav-item .nav-badge {
+    margin-inline-start: auto;
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--accent-glow);
+    color: var(--blue);
+  }
+  .sheet-nav-item .nav-ext {
+    margin-inline-start: auto;
+    color: var(--dim);
+  }
+
+  /* Native Mobile Bottom Sheet styling for all <dialog> modals */
   @media (max-width: 640px) {
-    html, body { height: 100dvh; }
-    select, input[type=text] { font-size: 16px; }
-    header { gap: 6px; padding: 6px 10px; padding-top: calc(6px + env(safe-area-inset-top)); }
-    header .meta, #curThemeLbl, #installPwaBtn span { display: none; }
-    header #openBtn { margin-inline-start: auto; padding: 0 10px; font-size: 13px; white-space: nowrap; }
-    header button, header a.iconbtn { padding: 0 9px; min-width: 36px; flex: none; }
-    .lang { padding: 0 7px; }
-    .stage { max-height: 50dvh; }
-    .drop { padding: 20px 16px 24px; }
-    .shortcut-strip { display: none; }
-    .time, #vol, .row .grow { display: none; }
-    .vol-group { padding: 0 4px; }
-    .row { flex-wrap: nowrap; justify-content: space-between; gap: 3px; margin-top: 2px; }
-    .row .iconbtn, .row .tbtn { flex: 1 1 0; min-width: 0; max-width: 46px; width: auto; height: 36px; padding: 0; }
-    .tbtn span { display: none; }
-    #speed { flex: 1.5 1 0; min-width: 0; max-width: 66px; height: 36px; padding: 0 2px; text-align: center; text-align-last: center; }
-    dialog { width: 96vw; max-height: 92dvh; }
-    .tab:not(.on) > span { display: none; }
+    dialog {
+      position: fixed;
+      margin: auto 0 0 0;
+      inset-inline-start: 0;
+      inset-inline-end: 0;
+      bottom: 0;
+      width: 100vw;
+      max-width: 100vw;
+      max-height: 90dvh;
+      border-radius: 20px 20px 0 0;
+      border-bottom: none;
+      padding-bottom: max(14px, env(safe-area-inset-bottom));
+      box-shadow: 0 -14px 44px rgba(0,0,0,0.75);
+    }
+    dialog::backdrop {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     1. MOBILE PORTRAIT MODE (WIDTH <= 768px, PORTRAIT)
+     -------------------------------------------------------------------------- */
+  @media (max-width: 768px) and (orientation: portrait), (max-width: 680px) {
+    html, body {
+      height: 100dvh;
+      overflow: hidden;
+    }
+    select, input[type=text] {
+      font-size: 16px; /* Prevents auto-zoom on iOS Safari */
+    }
+    header {
+      gap: 6px;
+      padding: 6px 10px;
+      padding-top: calc(6px + env(safe-area-inset-top));
+      padding-left: max(10px, env(safe-area-inset-left));
+      padding-right: max(10px, env(safe-area-inset-right));
+      height: 48px;
+      flex: none;
+    }
+    header h1 .brand-title {
+      font-size: 15px;
+    }
+    /* Hide desktop-only buttons in mobile header */
+    header .meta,
+    #libHeaderBtn,
+    #installPwaBtn,
+    #aboutBtn,
+    #githubBtn,
+    .theme-menu-wrap,
+    #themeBtn,
+    #profileBtn {
+      display: none !important;
+    }
+    /* Show mobile more menu button */
+    .mobile-more-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--r);
+      background: var(--panel2);
+      border: 1px solid var(--line);
+      color: var(--text);
+      cursor: pointer;
+      flex: none;
+    }
+    header #openBtn {
+      margin-inline-start: auto;
+      padding: 0 10px;
+      font-size: 12.5px;
+      height: 34px;
+      white-space: nowrap;
+    }
+    header #langBtn {
+      height: 34px;
+      padding: 0 8px;
+    }
+
+    /* Main Container: Vertical Stack */
+    main {
+      flex-direction: column;
+      padding: 6px;
+      gap: 6px;
+      height: calc(100dvh - 48px);
+      padding-bottom: max(6px, env(safe-area-inset-bottom));
+      padding-left: max(6px, env(safe-area-inset-left));
+      padding-right: max(6px, env(safe-area-inset-right));
+    }
+    .stage-wrap {
+      flex: none;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .stage {
+      flex: none;
+      width: 100%;
+      aspect-ratio: var(--ar, 16 / 9);
+      max-height: 38dvh;
+      min-height: 180px;
+      border-radius: var(--r);
+    }
+    .drop {
+      padding: 16px 12px;
+    }
+    .drop-title {
+      font-size: 16px;
+      margin: 8px 0 4px;
+    }
+    .drop-sub {
+      font-size: 11.5px;
+      margin-bottom: 12px;
+      max-width: 300px;
+    }
+    .drop button {
+      height: 36px;
+      font-size: 12px;
+      padding: 0 12px;
+    }
+    .shortcut-strip {
+      display: none !important;
+    }
+    .mobile-touch-strip {
+      display: flex;
+    }
+
+    /* Docked 2-Row Controls Beneath Stage */
+    .controls-zone {
+      position: relative;
+      inset: auto;
+      height: auto;
+      padding: 0;
+      margin-top: 4px;
+      pointer-events: auto;
+    }
+    .controls {
+      opacity: 1 !important;
+      transform: none !important;
+      border-radius: var(--r);
+      padding: 8px 10px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: none;
+    }
+    .seekrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      margin-bottom: 6px;
+    }
+    .seek {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      touch-action: none;
+    }
+    .seek .track {
+      height: 6px;
+    }
+    .seek .knob {
+      width: 14px;
+      height: 14px;
+      margin-top: -7px;
+      margin-left: -7px;
+      opacity: 1 !important;
+    }
+    .row {
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: 4px;
+      margin-top: 0;
+    }
+    .row .iconbtn, .row .tbtn {
+      flex: 1 1 0;
+      min-width: 40px;
+      max-width: 48px;
+      width: auto;
+      height: 42px;
+      padding: 0;
+      border-radius: var(--r);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .row .iconbtn svg, .row .tbtn svg {
+      width: 19px;
+      height: 19px;
+    }
+    #play {
+      flex: 1.4 1 0;
+      max-width: 56px;
+      background: var(--blue);
+      color: var(--ink);
+      border-color: var(--blue);
+    }
+    #play svg {
+      fill: currentColor;
+    }
+    #speed {
+      flex: 1.4 1 0;
+      min-width: 0;
+      max-width: 60px;
+      height: 42px;
+      padding: 0 2px;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      text-align-last: center;
+      border-radius: var(--r);
+    }
+    .tbtn span {
+      display: none;
+    }
+    .time, #vol, .row .grow, #pinBtn, .vol-group {
+      display: none !important;
+    }
+
+    /* Live Chat Stream in Lower Half */
+    aside.chat {
+      flex: 1;
+      width: 100%;
+      min-height: 0;
+      border-radius: var(--r);
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+    .chat-head {
+      padding: 8px 12px;
+      height: 42px;
+      flex: none;
+    }
+    #chatClose {
+      display: none !important; /* Pinned in vertical stack */
+    }
+    .msgs {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 8px;
+    }
+    .msg {
+      padding: 8px 10px;
+      font-size: 13.5px;
+      line-height: 1.45;
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+     2. MOBILE LANDSCAPE CINEMA MODE (HEIGHT <= 520px, LANDSCAPE)
+     -------------------------------------------------------------------------- */
+  @media (max-height: 520px) and (orientation: landscape), (max-width: 950px) and (orientation: landscape) and (max-height: 560px) {
+    html, body {
+      height: 100dvh;
+      overflow: hidden;
+    }
+    /* Completely hide top header for maximum presentation view */
+    header {
+      display: none !important;
+    }
+    /* Full-bleed cinema viewport */
+    main {
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100dvw !important;
+      height: 100dvh !important;
+      max-width: 100dvw !important;
+      max-height: 100dvh !important;
+      overflow: hidden;
+      position: relative;
+      background: #000;
+      flex-direction: row;
+    }
+    .stage-wrap {
+      width: 100% !important;
+      height: 100% !important;
+      flex: 1 !important;
+      border-radius: 0 !important;
+      position: relative;
+    }
+    .stage {
+      width: 100% !important;
+      height: 100% !important;
+      max-height: 100dvh !important;
+      border-radius: 0 !important;
+      background: #000 !important;
+    }
+    canvas#screen {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: none !important;
+      max-height: none !important;
+      object-fit: contain !important;
+    }
+    .drop {
+      padding: 20px 24px;
+      background: radial-gradient(circle at 50% 50%, var(--accent-glow) 0%, transparent 75%);
+    }
+    .drop-title {
+      font-size: 18px;
+    }
+    .drop-sub {
+      font-size: 12px;
+      max-width: 440px;
+      margin-bottom: 12px;
+    }
+    .shortcut-strip {
+      display: none !important;
+    }
+    .mobile-touch-strip {
+      display: flex;
+    }
+
+    /* Auto-hiding Cinema Controls Overlay */
+    .controls-zone {
+      position: absolute !important;
+      inset: 0 !important;
+      height: 100% !important;
+      pointer-events: none !important;
+      z-index: 25;
+      padding: 0 !important;
+      display: flex !important;
+      align-items: flex-end !important;
+    }
+    .controls {
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(12px);
+      direction: ltr;
+      width: 100%;
+      border-radius: 0 !important;
+      border: none !important;
+      padding: 10px 18px !important;
+      padding-bottom: max(10px, env(safe-area-inset-bottom)) !important;
+      padding-left: max(18px, env(safe-area-inset-left)) !important;
+      padding-right: max(18px, env(safe-area-inset-right)) !important;
+      background: linear-gradient(to top, rgba(5, 8, 17, 0.92) 0%, rgba(5, 8, 17, 0.55) 60%, transparent 100%) !important;
+      box-shadow: none !important;
+    }
+    /* When active (tapped or hovering), smoothly reveal */
+    .controls.active,
+    .controls.mouse-active,
+    body:not(.is-playing) .controls {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      pointer-events: auto !important;
+    }
+    .seekrow {
+      margin-bottom: 6px;
+    }
+    .seek {
+      height: 32px;
+      touch-action: none;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: space-between;
+    }
+    .row .iconbtn, .row .tbtn {
+      height: 38px;
+      min-width: 38px;
+      border-radius: var(--r);
+    }
+    #play {
+      min-width: 44px;
+      height: 38px;
+      background: var(--blue);
+      color: var(--ink);
+      border-color: var(--blue);
+    }
+    #play svg {
+      fill: currentColor;
+    }
+    #speed {
+      height: 38px;
+      font-size: 13px;
+      padding: 0 4px;
+    }
+    .tbtn span {
+      display: inline;
+    }
+    #vol, .vol-group {
+      display: none !important;
+    }
+    #pinBtn {
+      display: none !important;
+    }
+
+    /* Slide-Over Glass Chat Drawer in Landscape */
+    aside.chat {
+      position: fixed !important;
+      top: 0 !important;
+      bottom: 0 !important;
+      inset-inline-end: 0 !important;
+      width: min(340px, 44vw) !important;
+      height: 100dvh !important;
+      z-index: 50 !important;
+      border-radius: 0 !important;
+      border-top: none !important;
+      border-bottom: none !important;
+      background: var(--glass) !important;
+      backdrop-filter: blur(24px) !important;
+      -webkit-backdrop-filter: blur(24px) !important;
+      box-shadow: -10px 0 35px rgba(0,0,0,0.75) !important;
+      display: flex !important;
+      transform: translateX(110%);
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-inline-end: env(safe-area-inset-right);
+    }
+    html[dir="rtl"] aside.chat {
+      transform: translateX(-110%);
+    }
+    body.chat-drawer-open aside.chat {
+      transform: translateX(0) !important;
+    }
+    #chatClose {
+      display: inline-flex !important;
+    }
   }
 </style>
 </head>
@@ -1369,6 +2149,9 @@
     <symbol id="i-info" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></symbol>
     <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M18 2H6c-1.2 0-2 .8-2 2v16c0 1.2.8 2 2 2h12c1.2 0 2-.8 2-2V4c0-1.2-.8-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></symbol>
   </defs>
 </svg>
 
@@ -1429,6 +2212,12 @@
     </svg>
   </button>
 
+  <!-- SVU Course Directory Button -->
+  <button id="headerCourseDirBtn" class="profile-btn" data-i18n-title="courseDirBtnTitle" title="SVU Course Directory">
+    <svg class="i"><use href="#i-book"/></svg>
+    <span data-i18n="courseDirBtn">دليل المواد</span>
+  </button>
+
   <!-- Profile & Storage Manager Button (Beside Language Toggle) -->
   <button id="profileBtn" class="profile-btn" data-i18n-title="profileBtnTitle" title="Profiles &amp; Course Presets Manager">
     <svg class="i"><use href="#i-user"/></svg>
@@ -1440,6 +2229,13 @@
     <span class="flag ar">AR</span>
     <span class="flag en">EN</span>
   </button>
+
+  <!-- Mobile Quick Menu More Button -->
+  <button id="mobileMoreBtn" class="mobile-more-btn" data-i18n-title="moreOptions" aria-label="More options">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
+    </svg>
+  </button>
   <input type="file" id="file" accept=".lrec,.LREC" hidden>
 </header>
 
@@ -1450,6 +2246,20 @@
       <div class="caption" id="caption" dir="auto" hidden></div>
       <div class="vnotice" id="vnotice" data-i18n="videoFail" hidden></div>
       <button class="bigplay" id="bigplay" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+
+      <!-- Double-tap Seek Ripple Overlays -->
+      <div class="double-tap-ripple left" id="doubleTapBack" aria-hidden="true">
+        <div class="ripple-content">
+          <svg viewBox="0 0 24 24"><path d="M12 5V2L7 6.5 12 11V8a5 5 0 1 1-5 5H5a7 7 0 1 0 7-8z"/></svg>
+          <span>-10s</span>
+        </div>
+      </div>
+      <div class="double-tap-ripple right" id="doubleTapFwd" aria-hidden="true">
+        <div class="ripple-content">
+          <svg viewBox="0 0 24 24"><path d="M12 5V2l5 4.5L12 11V8a5 5 0 1 0 5 5h2a7 7 0 1 1-7-8z"/></svg>
+          <span>+10s</span>
+        </div>
+      </div>
 
       <div class="drop" id="drop">
         <div class="hero-emblem" aria-hidden="true">
@@ -1473,6 +2283,11 @@
           <span><kbd>M</kbd> <span data-i18n="scMute">Mute</span></span>
           <span><kbd>F</kbd> <span data-i18n="scFs">Fullscreen</span></span>
           <span><kbd>C</kbd> <span data-i18n="scChat">Chat</span></span>
+        </div>
+        <div class="mobile-touch-strip" aria-hidden="true">
+          <span>👆 <span data-i18n="touchHintTap">Tap for controls</span></span>
+          <span>✌️ <span data-i18n="touchHintDouble">Double tap ±10s</span></span>
+          <span>📱 <span data-i18n="touchHintRotate">Rotate for Cinema</span></span>
         </div>
       </div>
 
@@ -1539,6 +2354,9 @@
       </button>
     </div>
     <div class="msgs" id="msgs"><div class="empty" data-i18n="chatEmpty">Open a recording to see its chat.</div></div>
+    <button class="chat-jump-btn" id="chatJumpBtn" aria-label="Jump to latest messages" hidden>
+      <span data-i18n="jumpLatest">Jump to latest ↓</span>
+    </button>
   </aside>
 </main>
 
@@ -1671,6 +2489,7 @@
           <span class="muted" id="usage"></span>
         </div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button id="libCourseDirBtn" style="height:32px;padding:0 11px;font-size:12px;" data-i18n-title="courseDirBtnTitle"><svg class="i"><use href="#i-book"/></svg><span data-i18n="courseDirBtn">دليل المواد</span></button>
           <button id="libCheckNewBtn" style="height:32px;padding:0 11px;font-size:12px;"><svg class="i"><use href="#i-refresh"/></svg><span data-i18n="libCheckNewBtn">Check for new lectures</span></button>
           <button class="primary" id="libGoBatchBtn" style="height:32px;padding:0 11px;font-size:12px;"><svg class="i"><use href="#i-download"/></svg><span data-i18n="tabBatch">Batch download</span></button>
         </div>
@@ -1935,6 +2754,42 @@
   </div>
 </dialog>
 
+<!-- SVU Course Directory Modal (#courseDirModal) -->
+<dialog id="courseDirModal" class="course-dir-dlg">
+  <div class="dlg-head">
+    <span class="dlg-title"><svg class="i"><use href="#i-book"/></svg><span data-i18n="courseDirTitle">دليل مواد الجامعة الافتراضية السورية</span></span>
+    <span style="flex:1"></span>
+    <span class="badge" id="courseDirTotalBadge" style="font-size:12px;font-weight:600;padding:3px 9px;border-radius:12px;background:var(--panel2);color:var(--text);border:1px solid var(--line);">1,163 مادة</span>
+    <button class="iconbtn" id="courseDirClose" data-i18n-aria="close" aria-label="Close"><svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="course-dir-body">
+    <div class="muted" data-i18n="courseDirSub" style="font-size:12.5px;line-height:1.5;margin-bottom:4px;">بحث فوري في جميع مقررات ومواد الجامعة الافتراضية (١١٦٣ مادة) برموزها الدقيقة ومسمياتها الرسمية بالعربية والإنجليزية.</div>
+
+    <!-- Search Bar & Faculty Chips -->
+    <div class="course-dir-controls">
+      <div class="course-dir-search-wrap">
+        <svg class="i" style="position:absolute;inset-inline-start:13px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--dim);pointer-events:none;"><use href="#i-search"/></svg>
+        <input type="text" id="courseDirSearch" data-i18n-ph="courseDirSearchPh" placeholder="ابحث برمز المادة، اسمها بالعربية، أو بالإنجليزية (مثال: BPG401 أو البرمجة أو Programming)…">
+        <button id="courseDirClearSearch" class="iconbtn" style="position:absolute;inset-inline-end:8px;top:50%;transform:translateY(-50%);width:26px;height:26px;" hidden><svg class="i" style="width:14px;height:14px;"><use href="#i-close"/></svg></button>
+      </div>
+      <div class="course-dir-faculties" id="courseDirFaculties">
+        <button class="dir-chip on" data-prefix="ALL" data-i18n="courseDirAllFaculties">الكل (1,163)</button>
+        <button class="dir-chip" data-prefix="B">B — بكالوريوس تقانة وهندسة (ITE / BAIT / TIC)</button>
+        <button class="dir-chip" data-prefix="G">G — المقررات العامة (General)</button>
+        <button class="dir-chip" data-prefix="M">M — ماجستير (Master Programs)</button>
+        <button class="dir-chip" data-prefix="T">T — السياحة والإدارة الفندقية</button>
+        <button class="dir-chip" data-prefix="I">I — المعاهد والمشاريع المعلوماتية</button>
+      </div>
+    </div>
+
+    <!-- Summary status -->
+    <div class="course-dir-status" id="courseDirStatus"></div>
+
+    <!-- Course Cards Grid -->
+    <div class="course-dir-grid" id="courseDirGrid"></div>
+  </div>
+</dialog>
+
 <div class="updatebar" id="updateBar" hidden role="status">
   <span data-i18n="updateAvail">A new version is available.</span>
   <button class="primary" id="updateNow"><svg class="i"><use href="#i-refresh"/></svg><span data-i18n="updateNow">Update now</span></button>
@@ -2025,6 +2880,90 @@
     <button class="primary" id="welcomeStart"><svg class="i"><use href="#i-play"/></svg><span data-i18n="welcomeStart">Get started</span></button>
   </div>
 </dialog>
+
+<!-- Mobile Quick Menu Bottom Action Sheet -->
+<div class="mobile-sheet-backdrop" id="mobileSheetBackdrop" aria-hidden="true"></div>
+<div class="mobile-sheet" id="mobileMenuSheet" role="dialog" aria-modal="true" aria-labelledby="mobileSheetTitle" aria-hidden="true">
+  <div class="sheet-drag-handle" aria-hidden="true"></div>
+  <div class="sheet-head">
+    <div class="sheet-title" id="mobileSheetTitle">
+      <svg class="i" style="width:18px;height:18px"><use href="#i-globe"/></svg>
+      <span data-i18n="mobileMenuTitle">Quick Menu</span>
+    </div>
+    <button class="iconbtn sheet-close" id="mobileSheetClose" aria-label="Close">
+      <svg class="i" style="width:16px;height:16px"><use href="#i-close"/></svg>
+    </button>
+  </div>
+  <div class="sheet-body">
+    <!-- Active Student Profile Card -->
+    <div class="sheet-card profile-card" id="mobileProfileCard">
+      <div class="card-left">
+        <div class="card-avatar"><svg class="i" style="width:20px;height:20px"><use href="#i-user"/></svg></div>
+        <div>
+          <div class="card-sub" data-i18n="activeProfileHeader">Active Student Profile</div>
+          <div class="card-name" id="mobileProfileName">البروفايل</div>
+        </div>
+      </div>
+      <button class="sheet-pill-btn" id="mobileProfileManageBtn" data-i18n="profileModalTitle">Manage</button>
+    </div>
+
+    <!-- Appearance & Themes -->
+    <div class="sheet-section">
+      <div class="section-title">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/></svg>
+        <span data-i18n="appearance">Appearance &amp; Themes</span>
+      </div>
+      <div class="sheet-row mode-row">
+        <span data-i18n="modeToggleTitle">Dark / Light Mode</span>
+        <button id="mobileModeToggle" class="mode-switch-btn" aria-label="Toggle mode">
+          <span class="mode-tag dark">🌙 Dark</span>
+          <span class="mode-tag light" style="display:none">☀️ Light</span>
+        </button>
+      </div>
+      <div class="themes-grid" id="mobileThemesGrid">
+        <button class="m-theme-opt active" data-theme-opt="default"><span class="m-theme-dot" style="background:linear-gradient(135deg,#38BDF8,#F59E0B)"></span><span data-i18n="themeDefault">Default</span></button>
+        <button class="m-theme-opt" data-theme-opt="whatsapp"><span class="m-theme-dot" style="background:#00A884"></span><span data-i18n="themeWhatsapp">WhatsApp</span></button>
+        <button class="m-theme-opt" data-theme-opt="telegram"><span class="m-theme-dot" style="background:#2AABEE"></span><span data-i18n="themeTelegram">Telegram</span></button>
+        <button class="m-theme-opt" data-theme-opt="win98"><span class="m-theme-dot" style="background:#008080"></span><span data-i18n="themeWin98">Win 98</span></button>
+        <button class="m-theme-opt" data-theme-opt="winxp"><span class="m-theme-dot" style="background:linear-gradient(135deg,#0054E3,#3C9A2E)"></span><span data-i18n="themeWinxp">Win XP</span></button>
+        <button class="m-theme-opt" data-theme-opt="win7"><span class="m-theme-dot" style="background:#36A9E1"></span><span data-i18n="themeWin7">Win 7</span></button>
+        <button class="m-theme-opt" data-theme-opt="hacker"><span class="m-theme-dot" style="background:#00FF41"></span><span data-i18n="themeHacker">Hacker</span></button>
+        <button class="m-theme-opt" data-theme-opt="vscode"><span class="m-theme-dot" style="background:#007ACC"></span><span data-i18n="themeVscode">VS Code</span></button>
+        <button class="m-theme-opt" data-theme-opt="terminal"><span class="m-theme-dot" style="background:#FFB000"></span><span data-i18n="themeTerminal">Terminal</span></button>
+      </div>
+    </div>
+
+    <!-- Navigation & Tools -->
+    <div class="sheet-nav-list">
+      <button class="sheet-nav-item" id="mobileLibBtn">
+        <svg class="i"><use href="#i-save"/></svg>
+        <span data-i18n="studentLibBtn">Student library</span>
+        <span class="nav-badge" id="mobileLibBadge"></span>
+      </button>
+      <button class="sheet-nav-item" id="mobileBatchBtn">
+        <svg class="i"><use href="#i-download"/></svg>
+        <span data-i18n="tabBatch">Batch download</span>
+      </button>
+      <button class="sheet-nav-item" id="mobileCourseDirBtn">
+        <svg class="i"><use href="#i-book"/></svg>
+        <span data-i18n="courseDirBtn">Course Directory</span>
+      </button>
+      <button class="sheet-nav-item" id="mobilePwaBtn">
+        <svg class="i"><use href="#i-download"/></svg>
+        <span data-i18n="installPwaTitle">Install App (PWA)</span>
+      </button>
+      <button class="sheet-nav-item" id="mobileAboutBtn">
+        <svg class="i"><use href="#i-info"/></svg>
+        <span data-i18n="aboutTitle">Help &amp; Guide</span>
+      </button>
+      <a href="https://github.com/ibrahim4433/svu-player" target="_blank" rel="noopener noreferrer" class="sheet-nav-item">
+        <svg class="i" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span data-i18n="githubBtnTitle">GitHub Repository</span>
+        <span class="nav-ext" style="font-size:12px;opacity:.7">↗</span>
+      </a>
+    </div>
+  </div>
+</div>
 
 <audio id="audio" preload="auto"></audio>
 
