@@ -164,7 +164,14 @@ def bundle():
         with open(path, "r", encoding="utf-8") as f:
             content = f.read().strip()
             if content:
-                parts.append(content)
+                # Isolate each module: an uncaught error in one module must not
+                # abort the rest of the bundle (which would leave most buttons dead).
+                name = os.path.basename(path)
+                parts.append(
+                    "try {\n" + content + "\n} catch (err) {\n"
+                    f"  console.error(\"[SVU] module {name} failed to initialise:\", err);\n"
+                    "}"
+                )
 
     bundled_code = "\n;\n".join(parts) + "\n"
     with open(OUTPUT_FILE, "w", encoding="utf-8", newline="\n") as f:

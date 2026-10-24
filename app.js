@@ -1,3 +1,4 @@
+try {
 /**
  * SVU Player — runtime configuration (local standalone mode)
  * ----------------------------------------------------------
@@ -127,7 +128,11 @@ window.SVU_PREFS = {
     docEl.dir = savedLang === "en" ? "ltr" : "rtl";
   } catch (err) {}
 })();
+} catch (err) {
+  console.error("[SVU] module config.js failed to initialise:", err);
+}
 ;
+try {
 (function () {
   'use strict';
   const Dsp = {
@@ -255,7 +260,11 @@ window.SVU_PREFS = {
   };
   globalThis.Dsp = Dsp;
 })();
+} catch (err) {
+  console.error("[SVU] module 01-dsp.js failed to initialise:", err);
+}
 ;
+try {
 (function (ns) {
   'use strict';
 
@@ -556,6 +565,9 @@ window.SVU_PREFS = {
       touchHintRotate: "Rotate for Cinema",
       cinemaExit: "Exit Cinema",
       activeProfileHeader: "Active Student Profile",
+      manageProfilesBtn: "Manage",
+      installAppPwa: "Install App (PWA)",
+      touchHintGesture: "👆 Tap: controls · ✌️ Double-tap: ±10s · 📱 Rotate: Cinema",
       jumpLatest: "Jump to latest ↓",
       courseDirBtn: "Course Directory",
       courseDirBtnTitle: "Browse all 1,163 SVU course codes & titles",
@@ -866,6 +878,9 @@ window.SVU_PREFS = {
       touchHintRotate: "تدوير الشاشة للعرض الكامل",
       cinemaExit: "خروج من العرض الكامل",
       activeProfileHeader: "الملف الدراسي النشط",
+      manageProfilesBtn: "إدارة",
+      installAppPwa: "تثبيت التطبيق (PWA)",
+      touchHintGesture: "👆 نقرة: للتحكم · ✌️ نقرتان: ±10ث · 📱 تدوير: شاشة كاملة",
       jumpLatest: "الانتقال للأحدث ↓",
       courseDirBtn: "دليل المواد",
       courseDirBtnTitle: "تصفح والبحث في جميع مواد الجامعة الـ ١١٦٣ برمزها واسمها",
@@ -979,7 +994,11 @@ window.SVU_PREFS = {
 ;
 
 ;
+} catch (err) {
+  console.error("[SVU] module 03-i18n.js failed to initialise:", err);
+}
 ;
+try {
 (function (ns) {
   'use strict';
 
@@ -1101,7 +1120,11 @@ window.SVU_PREFS = {
 
   ns.MaterialsDB = MaterialsDB;
 })(globalThis);
+} catch (err) {
+  console.error("[SVU] module 04-materials.js failed to initialise:", err);
+}
 ;
+try {
 (function (ns) {
   "use strict";
   const AUDIO_RATE = 8000;
@@ -1395,7 +1418,11 @@ window.SVU_PREFS = {
 ;
 
 ;
+} catch (err) {
+  console.error("[SVU] module 05-lrec.js failed to initialise:", err);
+}
 ;
+try {
 (function (ns) {
   'use strict';
 
@@ -1523,13 +1550,20 @@ window.SVU_PREFS = {
 ;
 
 ;
+} catch (err) {
+  console.error("[SVU] module 06-library-db.js failed to initialise:", err);
+}
 ;
+try {
 (function () {
   'use strict';
 
-  document.addEventListener("contextmenu", event => event.preventDefault());
+  // Block context menu / text selection on app chrome, but keep them working in
+  // editable fields (mobile long-press paste, cursor placement, text selection).
+  const isEditable = el => !!(el && el.closest && el.closest("input, textarea, select, [contenteditable=''], [contenteditable='true']"));
+  document.addEventListener("contextmenu", event => { if (!isEditable(event.target)) event.preventDefault(); });
   document.addEventListener("dragstart", event => event.preventDefault());
-  document.addEventListener("selectstart", event => event.preventDefault());
+  document.addEventListener("selectstart", event => { if (!isEditable(event.target)) event.preventDefault(); });
   const byId = id => document.getElementById(id);
   const getPref = (k, def) => (window.SVU_PREFS ? window.SVU_PREFS.get(k, def) : def);
   const setPref = (k, val) => {
@@ -1899,6 +1933,18 @@ window.SVU_PREFS = {
     renderTime(time * 1000);
     updateChat(time * 1000, true);
   }
+  function seekBy(deltaSec) {
+    if (!session) {
+      return;
+    }
+    seekTo(audio.currentTime + deltaSec);
+  }
+  function drawFrame() {
+    if (!session) {
+      return;
+    }
+    session.vs.draw(ctx, screen);
+  }
   function syncPlayIcon() {
     const playing = !audio.paused && !audio.ended;
     byId("icoPlay").style.display = playing ? "none" : "";
@@ -1991,8 +2037,8 @@ window.SVU_PREFS = {
   byId("play").addEventListener("click", togglePlay);
   byId("bigplay").addEventListener("click", togglePlay);
   screen.addEventListener("click", togglePlay);
-  byId("back").addEventListener("click", () => session && seekTo(audio.currentTime - 10));
-  byId("fwd").addEventListener("click", () => session && seekTo(audio.currentTime + 10));
+  byId("back").addEventListener("click", () => seekBy(-10));
+  byId("fwd").addEventListener("click", () => seekBy(10));
   byId("speed").addEventListener("change", event => {
     audio.playbackRate = +event.target.value;
   });
@@ -2110,11 +2156,11 @@ window.SVU_PREFS = {
   function toggleFullscreen() {
     if (document.fullscreenElement) {
       document.exitFullscreen().catch(() => {});
-      try { screen.orientation?.unlock?.(); } catch (e) {}
+      try { window.screen.orientation?.unlock?.(); } catch (e) {}
     } else if (document.documentElement.requestFullscreen) {
       document.documentElement.requestFullscreen().then(() => {
         if (window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
-          try { screen.orientation?.lock?.("landscape").catch(() => {}); } catch (e) {}
+          try { window.screen.orientation?.lock?.("landscape").catch(() => {}); } catch (e) {}
         }
       }).catch(() => {});
     }
@@ -2372,8 +2418,6 @@ window.SVU_PREFS = {
   }
   document.addEventListener("langchange", () => {
     applyTheme(curTheme, curMode);
-  window.__svuApplyTheme = applyTheme;
-  window.__svuGetTheme = () => ({ theme: curTheme, mode: curMode });
     if (session && session.key) {
       renderSessionMeta(session.key);
     }
@@ -2579,7 +2623,6 @@ window.SVU_PREFS = {
     if (!isLandscape && document.body.classList.contains("chat-drawer-open")) {
       document.body.classList.remove("chat-drawer-open");
     }
-    drawFrame();
   }
   window.addEventListener("resize", handleScreenResize, PASSIVE);
   window.addEventListener("orientationchange", () => setTimeout(handleScreenResize, 150), PASSIVE);
@@ -2597,7 +2640,11 @@ window.SVU_PREFS = {
 ;
 
 ;
+} catch (err) {
+  console.error("[SVU] module 07-player.js failed to initialise:", err);
+}
 ;
+try {
 (function () {
   'use strict';
 
@@ -5832,7 +5879,11 @@ window.SVU_PREFS = {
 ;
 
 ;
+} catch (err) {
+  console.error("[SVU] module 08-browse.js failed to initialise:", err);
+}
 ;
+try {
 (function () {
   "use strict";
   const byId = id => document.getElementById(id);
@@ -5942,7 +5993,11 @@ window.SVU_PREFS = {
 ;
 
 ;
+} catch (err) {
+  console.error("[SVU] module 09-captions.js failed to initialise:", err);
+}
 ;
+try {
 (function () {
   'use strict';
 
@@ -6114,7 +6169,11 @@ window.SVU_PREFS = {
 ;
 
 ;
+} catch (err) {
+  console.error("[SVU] module 10-enhance.js failed to initialise:", err);
+}
 ;
+try {
 (function () {
   'use strict';
 
@@ -6312,7 +6371,11 @@ window.SVU_PREFS = {
 ;
 
 ;
+} catch (err) {
+  console.error("[SVU] module 11-tour.js failed to initialise:", err);
+}
 ;
+try {
 (function () {
   'use strict';
 
@@ -6343,3 +6406,6 @@ window.SVU_PREFS = {
     byId("reloadLatestBtn").addEventListener("click", reloadLatest);
   }
 })();
+} catch (err) {
+  console.error("[SVU] module 12-updates.js failed to initialise:", err);
+}

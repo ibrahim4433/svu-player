@@ -1,9 +1,12 @@
 (function () {
   'use strict';
 
-  document.addEventListener("contextmenu", event => event.preventDefault());
+  // Block context menu / text selection on app chrome, but keep them working in
+  // editable fields (mobile long-press paste, cursor placement, text selection).
+  const isEditable = el => !!(el && el.closest && el.closest("input, textarea, select, [contenteditable=''], [contenteditable='true']"));
+  document.addEventListener("contextmenu", event => { if (!isEditable(event.target)) event.preventDefault(); });
   document.addEventListener("dragstart", event => event.preventDefault());
-  document.addEventListener("selectstart", event => event.preventDefault());
+  document.addEventListener("selectstart", event => { if (!isEditable(event.target)) event.preventDefault(); });
   const byId = id => document.getElementById(id);
   const getPref = (k, def) => (window.SVU_PREFS ? window.SVU_PREFS.get(k, def) : def);
   const setPref = (k, val) => {
@@ -373,6 +376,18 @@
     renderTime(time * 1000);
     updateChat(time * 1000, true);
   }
+  function seekBy(deltaSec) {
+    if (!session) {
+      return;
+    }
+    seekTo(audio.currentTime + deltaSec);
+  }
+  function drawFrame() {
+    if (!session) {
+      return;
+    }
+    session.vs.draw(ctx, screen);
+  }
   function syncPlayIcon() {
     const playing = !audio.paused && !audio.ended;
     byId("icoPlay").style.display = playing ? "none" : "";
@@ -465,8 +480,8 @@
   byId("play").addEventListener("click", togglePlay);
   byId("bigplay").addEventListener("click", togglePlay);
   screen.addEventListener("click", togglePlay);
-  byId("back").addEventListener("click", () => session && seekTo(audio.currentTime - 10));
-  byId("fwd").addEventListener("click", () => session && seekTo(audio.currentTime + 10));
+  byId("back").addEventListener("click", () => seekBy(-10));
+  byId("fwd").addEventListener("click", () => seekBy(10));
   byId("speed").addEventListener("change", event => {
     audio.playbackRate = +event.target.value;
   });
@@ -584,11 +599,11 @@
   function toggleFullscreen() {
     if (document.fullscreenElement) {
       document.exitFullscreen().catch(() => {});
-      try { screen.orientation?.unlock?.(); } catch (e) {}
+      try { window.screen.orientation?.unlock?.(); } catch (e) {}
     } else if (document.documentElement.requestFullscreen) {
       document.documentElement.requestFullscreen().then(() => {
         if (window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
-          try { screen.orientation?.lock?.("landscape").catch(() => {}); } catch (e) {}
+          try { window.screen.orientation?.lock?.("landscape").catch(() => {}); } catch (e) {}
         }
       }).catch(() => {});
     }
@@ -846,8 +861,6 @@
   }
   document.addEventListener("langchange", () => {
     applyTheme(curTheme, curMode);
-  window.__svuApplyTheme = applyTheme;
-  window.__svuGetTheme = () => ({ theme: curTheme, mode: curMode });
     if (session && session.key) {
       renderSessionMeta(session.key);
     }
@@ -1053,7 +1066,6 @@
     if (!isLandscape && document.body.classList.contains("chat-drawer-open")) {
       document.body.classList.remove("chat-drawer-open");
     }
-    drawFrame();
   }
   window.addEventListener("resize", handleScreenResize, PASSIVE);
   window.addEventListener("orientationchange", () => setTimeout(handleScreenResize, 150), PASSIVE);

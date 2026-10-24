@@ -1532,36 +1532,40 @@
   .profile-card {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 12px;
-    padding: 12px 14px;
-    background: var(--panel2);
-    border: 1px solid var(--line);
+    padding: 12px 16px;
+    background: linear-gradient(135deg, var(--panel2) 0%, rgba(56, 189, 248, 0.08) 100%);
+    border: 1px solid var(--line-strong);
     border-radius: var(--r-lg);
   }
-  .card-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
-  }
   .card-avatar {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background: var(--accent-glow);
+    border: 1.5px solid var(--blue);
     color: var(--blue);
     display: flex;
     align-items: center;
     justify-content: center;
     flex: none;
   }
+  .card-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
   .card-sub {
     font-size: 11px;
+    font-weight: 600;
     color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
   }
   .card-name {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--text);
     white-space: nowrap;
@@ -1569,15 +1573,19 @@
     text-overflow: ellipsis;
   }
   .sheet-pill-btn {
-    padding: 6px 14px;
-    background: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: var(--blue);
     color: var(--ink);
     border: none;
     border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 12.5px;
+    font-weight: 700;
     cursor: pointer;
     flex: none;
+    box-shadow: 0 2px 8px var(--accent-glow);
   }
   .sheet-section {
     display: flex;
@@ -1659,42 +1667,48 @@
     padding-top: 4px;
   }
   .sheet-nav-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    background: var(--panel2);
-    border: 1px solid var(--line);
-    border-radius: var(--r);
-    font-size: 13.5px;
-    font-weight: 600;
-    color: var(--text);
-    text-decoration: none;
-    cursor: pointer;
-    width: 100%;
-    text-align: start;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 0 16px !important;
+    height: 48px !important;
+    background: var(--panel2) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--r) !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    color: var(--text) !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    text-align: center !important;
+    position: relative !important;
+    transition: background 0.18s, border-color 0.18s;
   }
   .sheet-nav-item:hover, .sheet-nav-item:active {
-    background: var(--hover);
-    border-color: var(--line-strong);
+    background: var(--hover) !important;
+    border-color: var(--line-strong) !important;
   }
   .sheet-nav-item .i {
-    width: 18px;
-    height: 18px;
-    color: var(--blue);
-    flex: none;
+    width: 18px !important;
+    height: 18px !important;
+    color: var(--blue) !important;
+    flex: none !important;
   }
   .sheet-nav-item .nav-badge {
-    margin-inline-start: auto;
-    font-size: 11px;
-    padding: 2px 7px;
-    border-radius: 999px;
-    background: var(--accent-glow);
-    color: var(--blue);
+    position: absolute !important;
+    inset-inline-end: 14px !important;
+    font-size: 11px !important;
+    padding: 2px 8px !important;
+    border-radius: 999px !important;
+    background: var(--accent-glow) !important;
+    color: var(--blue) !important;
   }
   .sheet-nav-item .nav-ext {
-    margin-inline-start: auto;
-    color: var(--dim);
+    position: absolute !important;
+    inset-inline-end: 14px !important;
+    color: var(--dim) !important;
   }
 
   /* Native Mobile Bottom Sheet styling for all <dialog> modals */
@@ -1799,32 +1813,67 @@
       flex: none;
       width: 100%;
       aspect-ratio: var(--ar, 16 / 9);
-      max-height: 38dvh;
-      min-height: 180px;
+      max-height: 42dvh;
+      min-height: 220px;
       border-radius: var(--r);
     }
     .drop {
-      padding: 16px 12px;
+      padding: 12px 14px;
+      justify-content: center;
+    }
+    .drop .hero-emblem {
+      display: none; /* Hide large emblem in mobile portrait to prevent vertical crowding */
     }
     .drop-title {
-      font-size: 16px;
-      margin: 8px 0 4px;
+      font-size: 15px;
+      margin: 0 0 2px;
+      font-weight: 700;
     }
     .drop-sub {
-      font-size: 11.5px;
-      margin-bottom: 12px;
-      max-width: 300px;
+      font-size: 11px;
+      margin-bottom: 10px;
+      max-width: 290px;
+      line-height: 1.35;
+      opacity: 0.85;
     }
-    .drop button {
-      height: 36px;
+    .drop-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      width: 100%;
+      max-width: 330px;
+    }
+    .drop-actions button {
+      flex: 1;
+      height: 38px;
       font-size: 12px;
-      padding: 0 12px;
+      padding: 0 10px;
+      white-space: nowrap;
+    }
+    #dropBatchBtn {
+      display: none !important; /* Batch download is in the quick menu; leaves 2 clean balanced buttons: Browse & Library */
     }
     .shortcut-strip {
       display: none !important;
     }
     .mobile-touch-strip {
       display: flex;
+      margin-top: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+    .touch-hint-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--dim);
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 999px;
+      white-space: nowrap;
     }
 
     /* Docked 2-Row Controls Beneath Stage */
@@ -2272,7 +2321,7 @@
         </div>
         <h2 class="drop-title" data-i18n="dropHeroTitle">Ready to Watch a Session</h2>
         <p class="drop-sub" data-i18n="dropHeroSub">Browse the university session catalog, paste a direct link, or drop any .lrec file right here.</p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <div class="drop-actions" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
           <button class="primary" id="dropBrowseBtn"><svg class="i"><use href="#i-globe"/></svg><span data-i18n="browseSessions">Browse Sessions</span></button>
           <button id="dropBatchBtn"><svg class="i"><use href="#i-download"/></svg><span data-i18n="tabBatch">Batch download</span></button>
           <button id="dropLibBtn"><svg class="i"><use href="#i-save"/></svg><span data-i18n="studentLibBtn">Student library</span></button>
@@ -2285,9 +2334,7 @@
           <span><kbd>C</kbd> <span data-i18n="scChat">Chat</span></span>
         </div>
         <div class="mobile-touch-strip" aria-hidden="true">
-          <span>👆 <span data-i18n="touchHintTap">Tap for controls</span></span>
-          <span>✌️ <span data-i18n="touchHintDouble">Double tap ±10s</span></span>
-          <span>📱 <span data-i18n="touchHintRotate">Rotate for Cinema</span></span>
+          <span class="touch-hint-pill" data-i18n="touchHintGesture">👆 Tap: controls · ✌️ Double-tap: ±10s · 📱 Rotate: Cinema</span>
         </div>
       </div>
 
@@ -2897,14 +2944,15 @@
   <div class="sheet-body">
     <!-- Active Student Profile Card -->
     <div class="sheet-card profile-card" id="mobileProfileCard">
-      <div class="card-left">
-        <div class="card-avatar"><svg class="i" style="width:20px;height:20px"><use href="#i-user"/></svg></div>
-        <div>
-          <div class="card-sub" data-i18n="activeProfileHeader">Active Student Profile</div>
-          <div class="card-name" id="mobileProfileName">البروفايل</div>
-        </div>
+      <div class="card-avatar"><svg class="i" style="width:22px;height:22px"><use href="#i-user"/></svg></div>
+      <div class="card-info">
+        <div class="card-sub" data-i18n="activeProfileHeader">Active Student Profile</div>
+        <div class="card-name" id="mobileProfileName">البروفايل</div>
       </div>
-      <button class="sheet-pill-btn" id="mobileProfileManageBtn" data-i18n="profileModalTitle">Manage</button>
+      <button class="sheet-pill-btn" id="mobileProfileManageBtn">
+        <svg class="i" style="width:13px;height:13px"><use href="#i-user"/></svg>
+        <span data-i18n="manageProfilesBtn">Manage</span>
+      </button>
     </div>
 
     <!-- Appearance & Themes -->
@@ -2950,7 +2998,7 @@
       </button>
       <button class="sheet-nav-item" id="mobilePwaBtn">
         <svg class="i"><use href="#i-download"/></svg>
-        <span data-i18n="installPwaTitle">Install App (PWA)</span>
+        <span data-i18n="installAppPwa">Install App (PWA)</span>
       </button>
       <button class="sheet-nav-item" id="mobileAboutBtn">
         <svg class="i"><use href="#i-info"/></svg>
