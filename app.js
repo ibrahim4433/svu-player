@@ -451,33 +451,47 @@ try {
       exitSessionTitle: "Return to Student Hub",
       backToHub: "Hub",
     backToHome: "Back to Home",
-exportProfileBtn: "Export Profile Backup",
-    exportProfileShort: "Export Backup",
-    importProfileBtn: "Import Profile Backup",
-    importProfileShort: "Import Backup",
-    exportProfileTitle: "Export Profile Backup",
-    backupSelectTitle: "Select data to include in backup file:",
-    backupOptSettings: "Profile Settings & Preferences",
-    backupOptSettingsDesc: "Name, theme, appearance, language, and pre-configured courses.",
-    backupOptWatched: "Watched History & Progress",
-    backupOptWatchedDesc: "Watched checkmarks (✓) and completion dates.",
-    backupOptBatch: "Batch Download Selection & Last Session",
-    backupOptBatchDesc: "Selected courses state and last played lecture.",
-    backupOptLectures: "Offline Saved Video Lectures (.lrec)",
-    backupOptLecturesDesc: "Includes local video/audio lecture files for 100% offline transfer to another device.",
-    backupTargetFile: "Auto-generated export filename:",
-    exportDownloadBtn: "Export & Download Backup",
-    importProfileTitle: "Import Profile Backup",
-    importDestTitle: "Choose import destination:",
-    importModeNew: "Create as a New Profile",
-    importModeNewDesc: "Creates a separate profile with isolated storage without modifying existing profiles.",
-    importModeMerge: "Overwrite / Merge into Active Profile",
-    importModeMergeDesc: "Merges lectures and updates settings of the current profile.",
-    importItemsTitle: "Select items to restore:",
-    importConfirmBtn: "Start Import Now",
-    exportSuccess: "Profile backup exported successfully!",
-    importSuccess: "Profile imported successfully!",
-    importInvalidFile: "Invalid or unrecognized SVU profile backup file.",
+      profExportModalTitle: "Export Profile Backup",
+      profExportSelectItems: "Select data to include in backup file:",
+      profExportOptSettings: "Profile Settings & Preferences",
+      profExportOptSettingsDesc: "Name, theme, appearance, language, and pre-configured courses.",
+      profExportOptHistory: "Watched History & Progress",
+      profExportOptHistoryDesc: "Watched checkmarks (✓) and completion dates.",
+      profExportOptBatch: "Batch Download Selection & Queue",
+      profExportOptBatchDesc: "Selected courses state and queue in batch downloader.",
+      profExportOptVideos: "Offline Saved Video Lectures (.lrec)",
+      profExportOptVideosDesc: "Includes local video/audio lecture files for 100% offline transfer to another device.",
+      profExportLecOne: "lecture",
+      profExportLecMany: "lectures",
+      profBackupFileName: "Auto-generated export filename:",
+      profExportStatusPreparing: "Preparing backup package...",
+      profExportStatusPacking: "Packing lecture {current} of {total} ({name})...",
+      profExportStatusGenerating: "Generating and downloading backup file...",
+      profExportStatusDone: "Export completed successfully!",
+      profExportStartBtn: "Export & Download Backup",
+      profExportBtnShort: "Export Backup",
+      profExportTooltip: "Export a backup bundle of this profile",
+      profExportSuccess: "Profile backup exported successfully!\nFile: {filename}",
+      profExportError: "Failed to export profile",
+
+      profImportBtn: "Import Backup",
+      profImportBtnShort: "Import Backup",
+      profImportModalTitle: "Import Profile Backup",
+      profImportDestTitle: "Choose import destination:",
+      profImportDestNew: "Create as a New Profile",
+      profImportDestNewDesc: "Creates a separate profile with isolated storage without modifying existing profiles.",
+      profImportDestMerge: "Overwrite / Merge into Active Profile",
+      profImportDestMergeDesc: "Merges lectures and updates settings of the current profile.",
+      profImportSelectItems: "Select items to restore:",
+      profImportMetaSub: "Exported: {date} · Version: {ver}",
+      profImportStatusPreparing: "Preparing import...",
+      profImportStatusWriting: "Restoring lecture {current} of {total} ({name})...",
+      profImportStatusDone: "Import completed successfully!",
+      profImportStartBtn: "Start Import Now",
+      profImportInvalidFile: "Invalid or unrecognized SVU profile backup file.",
+      profImportSuccess: "Profile imported successfully!",
+      profImportError: "Failed to import profile",
+      profileImportedDefaultName: "Imported Profile",
       introBadge: "SVU Player Studio",
       introTitle: "Syrian Virtual University Session Studio & Offline Library",
       introDesc: "A standalone web app working 100% locally and offline. Replay synchronized Linktivity (.lrec) lectures with video, crystal-clear 4-stage DSP voice enhancement, and interactive live chat, with safe batch downloads.",
@@ -866,33 +880,47 @@ slide1Tag: "Smart Student Hub",
       exitSessionTitle: "العودة إلى لوحة الطالب",
       backToHub: "الرئيسية",
     backToHome: "العودة للرئيسية",
-exportProfileBtn: "تصدير نسخة احتياطية للبروفايل",
-    exportProfileShort: "تصدير البروفايل",
-    importProfileBtn: "استيراد نسخة بروفايل",
-    importProfileShort: "استيراد نسخة",
-    exportProfileTitle: "تصدير نسخة احتياطية للبروفايل",
-    backupSelectTitle: "حدد البيانات المراد تضمينها في ملف النسخة الاحتياطية:",
-    backupOptSettings: "إعدادات وتفضيلات البروفايل",
-    backupOptSettingsDesc: "الاسم، السمة، المظهر، اللغة، والمقررات والشعب المحددة مسبقاً.",
-    backupOptWatched: "سجل المشاهدة والمحاضرات المنتهية",
-    backupOptWatchedDesc: "علامات إتمام المحاضرات (✓) وتاريخ مشاهدتها.",
-    backupOptBatch: "حالة التنزيل والمفضلات",
-    backupOptBatchDesc: "بيانات المواد المحددة في التنزيل المجمّع وآخر جلسة تم فتحها.",
-    backupOptLectures: "المحاضرات وملفات الفيديو المحفوظة أوفلاين (.lrec)",
-    backupOptLecturesDesc: "تضمين جميع فيديوهات وملفات المحاضرات المحفوظة محلياً لنقلها لجهاز آخر دون إعادة تنزيلها.",
-    backupTargetFile: "اسم ملف التصدير التلقائي:",
-    exportDownloadBtn: "تصدير وتنزيل الملف الآن",
-    importProfileTitle: "استيراد نسخة احتياطية للبروفايل",
-    importDestTitle: "طريقة استيراد البيانات:",
-    importModeNew: "إنشاء كبروفايل جديد ومستقل",
-    importModeNewDesc: "سيتم إنشاء بروفايل إضافي جديد مع ذاكرة تخزين ومكتبة منفصلة دون التأثير على بروفايلاتك الحالية.",
-    importModeMerge: "الكتابة فوق/دمج مع البروفايل الحالي النشط",
-    importModeMergeDesc: "سيتم دمج المحاضرات وتحديث إعدادات البروفايل النشط حالياً.",
-    importItemsTitle: "العناصر المراد استعادتها:",
-    importConfirmBtn: "بدء الاستيراد الآن",
-    exportSuccess: "تم تصدير النسخة الاحتياطية للبروفايل بنجاح!",
-    importSuccess: "تم استيراد البروفايل بنجاح!",
-    importInvalidFile: "ملف النسخة الاحتياطية غير صالح أو تالف.",
+      profExportModalTitle: "تصدير نسخة احتياطية للبروفايل",
+      profExportSelectItems: "حدد البيانات المراد تضمينها في ملف النسخة الاحتياطية:",
+      profExportOptSettings: "إعدادات وتفضيلات البروفايل",
+      profExportOptSettingsDesc: "الاسم، السمة، المظهر، اللغة، والمقررات والشعب المحددة مسبقاً.",
+      profExportOptHistory: "سجل المشاهدة والمحاضرات المنتهية",
+      profExportOptHistoryDesc: "علامات إتمام المحاضرات (✓) وتاريخ مشاهدتها.",
+      profExportOptBatch: "حالة التنزيل والمفضلات",
+      profExportOptBatchDesc: "بيانات المواد المحددة في التنزيل المجمّع وقائمة الانتظار.",
+      profExportOptVideos: "المحاضرات وملفات الفيديو المحفوظة أوفلاين (.lrec)",
+      profExportOptVideosDesc: "تضمين جميع فيديوهات وملفات المحاضرات المحفوظة محلياً داخل ملف النسخة لنقلها لجهاز آخر.",
+      profExportLecOne: "محاضرة",
+      profExportLecMany: "محاضرة",
+      profBackupFileName: "اسم ملف التصدير التلقائي:",
+      profExportStatusPreparing: "جارٍ تجهيز ملف النسخة الاحتياطية...",
+      profExportStatusPacking: "جارٍ تجميع محاضرة {current} من {total} ({name})...",
+      profExportStatusGenerating: "جارٍ إنشاء وتنزيل ملف النسخة الاحتياطية...",
+      profExportStatusDone: "اكتمل التصدير بنجاح!",
+      profExportStartBtn: "بدء تصدير النسخة الاحتياطية",
+      profExportBtnShort: "تصدير نسخة",
+      profExportTooltip: "تصدير نسخة احتياطية من هذا البروفايل",
+      profExportSuccess: "تم تصدير النسخة الاحتياطية للبروفايل بنجاح!\nالملف: {filename}",
+      profExportError: "فشل تصدير البروفايل",
+
+      profImportBtn: "استيراد نسخة",
+      profImportBtnShort: "استيراد نسخة",
+      profImportModalTitle: "استيراد نسخة بروفايل احتياطية",
+      profImportDestTitle: "طريقة استيراد البيانات:",
+      profImportDestNew: "إنشاء كبروفايل جديد ومستقل",
+      profImportDestNewDesc: "سيتم إنشاء بروفايل إضافي جديد مع ذاكرة تخزين ومكتبة منفصلة دون التأثير على بروفايلاتك الحالية.",
+      profImportDestMerge: "الكتابة فوق / دمج مع البروفايل الحالي النشط",
+      profImportDestMergeDesc: "سيتم دمج المحاضرات وتحديث إعدادات البروفايل النشط حالياً دون مسح الموجود.",
+      profImportSelectItems: "العناصر المراد استعادتها:",
+      profImportMetaSub: "تاريخ التصدير: {date} · النسخة: {ver}",
+      profImportStatusPreparing: "جارٍ تجهيز استيراد البيانات...",
+      profImportStatusWriting: "جارٍ حفظ محاضرة {current} من {total} ({name})...",
+      profImportStatusDone: "اكتمل الاستيراد بنجاح!",
+      profImportStartBtn: "بدء الاستيراد",
+      profImportInvalidFile: "ملف النسخة الاحتياطية غير صالح أو تالف.",
+      profImportSuccess: "تم استيراد البروفايل بنجاح!",
+      profImportError: "فشل استيراد البروفايل",
+      profileImportedDefaultName: "بروفايل مستورد",
       introBadge: "استوديو مشغّل SVU",
       introTitle: "مشغّل ومكتبة محاضرات الجامعة الافتراضية السورية",
       introDesc: "تطبيق ويب مستقل ومجاني، يعمل بالكامل محلياً ودون إنترنت (١٠٠٪ Offline). يتيح لطلاب الجامعة الافتراضية تشغيل ملفات Linktivity (.lrec) المتزامنة (الشاشة، الصوت، والدردشة المباشرة)، مع معالجة ذكية لصوت المدرس وتنزيل جميع المواد بأمان وبضغطة واحدة.",
@@ -5965,13 +5993,15 @@ try {
   }
 
   /* ====================================================================== *
-   * PROFILE ONE-SHOT BACKUP & RESTORE CONTROLLER (EXPORT / IMPORT)
+   * PROFILE HIGH-CAPACITY BACKUP & RESTORE CONTROLLER (EXPORT / IMPORT)
+   * Binary Container Format "SVUBACK1" (supports 100+ lectures & multi-GBs)
    * ====================================================================== */
   const profExportDlg = byId("profExportDlg");
   const profImportDlg = byId("profImportDlg");
   const profImportFileInput = byId("profImportFileInput");
   let currentExportProfId = null;
   let pendingImportBundle = null;
+  let pendingImportSource = null;
 
   function getBackupFileName(profName) {
     const safeName = (profName || "Profile")
@@ -6037,15 +6067,6 @@ try {
     });
   }
 
-  function blobToDataUrl(blob) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
-  }
-
   async function dataUrlToBlob(dataUrl, defaultType) {
     if (!dataUrl) return null;
     try {
@@ -6078,6 +6099,8 @@ try {
     currentExportProfId = profId || activeProfileId || "default";
     const prof = profilesList.find(p => p.id === currentExportProfId) || profilesList[0];
     if (!prof) return;
+
+    if (window.I18N && window.I18N.apply) window.I18N.apply();
 
     const profName = getProfileDisplayName(prof);
     if (byId("exportProfName")) byId("exportProfName").textContent = profName;
@@ -6166,11 +6189,13 @@ try {
       }
 
       // 4. Library (Videos & Transcripts)
-      const libraryBundle = { files: [], transcripts: [], enhanced: [] };
+      const libraryMeta = { files: [], transcripts: [], enhanced: [] };
+      const rawBlobs = [];
+
       if (optVideos) {
         const records = await getAllRecordsFromProfDB(prof.id);
-        libraryBundle.transcripts = records.transcripts || [];
-        libraryBundle.enhanced = records.enhanced || [];
+        libraryMeta.transcripts = records.transcripts || [];
+        libraryMeta.enhanced = records.enhanced || [];
 
         const totalFiles = records.files.length;
         for (let i = 0; i < totalFiles; i++) {
@@ -6185,38 +6210,55 @@ try {
             });
           }
 
-          let dataUrl = "";
-          if (f.blob) {
-            dataUrl = await blobToDataUrl(f.blob);
+          let fileBlob = f.blob;
+          if (!fileBlob && f.dataUrl) {
+            fileBlob = await dataUrlToBlob(f.dataUrl, f.type);
           }
-          libraryBundle.files.push({
+          const blobSize = fileBlob ? fileBlob.size : (f.size || 0);
+
+          libraryMeta.files.push({
             id: f.id,
             name: f.name,
-            size: f.size,
-            type: f.type,
-            savedAt: f.savedAt,
-            meta: f.meta,
-            dataUrl: dataUrl
+            size: blobSize,
+            type: f.type || "application/octet-stream",
+            savedAt: f.savedAt || Date.now(),
+            meta: f.meta || {}
           });
+
+          if (fileBlob) {
+            rawBlobs.push(fileBlob);
+          } else {
+            rawBlobs.push(new Blob([], { type: "application/octet-stream" }));
+          }
         }
       }
 
-      if (progressFill) progressFill.style.width = "95%";
+      if (progressFill) progressFill.style.width = "92%";
       if (progressStatus) progressStatus.textContent = t("profExportStatusGenerating");
 
-      const bundle = {
+      const bundleMeta = {
         format: "svu-profile-backup",
-        version: 1,
+        version: 2,
         exportedAt: new Date().toISOString(),
+        appVersion: (window.__svu_version && window.__svu_version.version) || "2.7.7",
         profile: profileData,
         watched: watchedData,
         batchState: batchStateData,
-        library: libraryBundle
+        library: libraryMeta
       };
 
-      const jsonStr = JSON.stringify(bundle, null, 2);
-      const blob = new Blob([jsonStr], { type: "application/json" });
-      const downloadUrl = URL.createObjectURL(blob);
+      // Construct High-Capacity Binary Bundle "SVUBACK1"
+      const metaUtf8 = new TextEncoder().encode(JSON.stringify(bundleMeta));
+      const headerBuf = new ArrayBuffer(12);
+      const headView = new DataView(headerBuf);
+      const magicStr = "SVUBACK1";
+      for (let i = 0; i < 8; i++) headView.setUint8(i, magicStr.charCodeAt(i));
+      headView.setUint32(8, metaUtf8.byteLength, true);
+
+      const blobParts = [headerBuf, metaUtf8, ...rawBlobs];
+      const finalBackupBlob = new Blob(blobParts, { type: "application/octet-stream" });
+
+      const downloadUrl = URL.createObjectURL(finalBackupBlob);
       const fileName = getBackupFileName(getProfileDisplayName(prof));
 
       const a = document.createElement("a");
@@ -6227,7 +6269,7 @@ try {
       setTimeout(() => {
         URL.revokeObjectURL(downloadUrl);
         a.remove();
-      }, 3000);
+      }, 5000);
 
       if (progressFill) progressFill.style.width = "100%";
       if (progressStatus) progressStatus.textContent = t("profExportStatusDone");
@@ -6235,7 +6277,7 @@ try {
       setTimeout(() => {
         if (profExportDlg) profExportDlg.close();
         alert(t("profExportSuccess", { filename: fileName }));
-      }, 600);
+      }, 500);
 
     } catch (err) {
       console.error("Profile export error:", err);
@@ -6245,12 +6287,15 @@ try {
     }
   }
 
-  function openImportModal(bundle, fileName) {
+  function openImportModal(bundle, fileName, sourceFile) {
     pendingImportBundle = bundle;
+    pendingImportSource = sourceFile || null;
     if (!bundle) return;
 
+    if (window.I18N && window.I18N.apply) window.I18N.apply();
+
     const prof = bundle.profile || {};
-    const profName = (prof.name && prof.name.trim()) || fileName.replace(/\.[^/.]+$/, "") || "البروفايل المستورد";
+    const profName = (prof.name && prof.name.trim()) || fileName.replace(/\.[^/.]+$/, "") || t("profileImportedDefaultName");
 
     if (byId("importProfFileName")) byId("importProfFileName").textContent = profName;
     if (byId("importProfMeta")) {
@@ -6304,6 +6349,7 @@ try {
   async function executeProfileImport() {
     if (!pendingImportBundle) return;
     const bundle = pendingImportBundle;
+    const sourceFile = pendingImportSource;
 
     const destChoice = document.querySelector('input[name="profImportDest"]:checked')?.value || "new";
     const optSettings = byId("importOptSettings")?.checked;
@@ -6409,6 +6455,9 @@ try {
       if (optVideos && bundle.library && Array.isArray(bundle.library.files) && bundle.library.files.length) {
         const filesToSave = [];
         const totalFiles = bundle.library.files.length;
+        const isBinaryContainer = (bundle._isBinaryContainer && sourceFile);
+        let fileOffset = isBinaryContainer ? bundle._fileOffsetStart : 0;
+
         for (let i = 0; i < totalFiles; i++) {
           const item = bundle.library.files[i];
           const pct = Math.round(55 + ((i + 1) / Math.max(1, totalFiles)) * 40);
@@ -6422,9 +6471,14 @@ try {
           }
 
           let blob = null;
-          if (item.dataUrl) {
+          if (isBinaryContainer) {
+            const itemSize = item.size || 0;
+            blob = sourceFile.slice(fileOffset, fileOffset + itemSize, item.type || "application/octet-stream");
+            fileOffset += itemSize;
+          } else if (item.dataUrl) {
             blob = await dataUrlToBlob(item.dataUrl, item.type);
           }
+
           filesToSave.push({
             id: item.id,
             name: item.name,
@@ -6489,21 +6543,37 @@ try {
 
   // Backup Events & Listeners
   if (profImportFileInput) {
-    profImportFileInput.addEventListener("change", (e) => {
+    profImportFileInput.addEventListener("change", async (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        try {
-          const json = JSON.parse(evt.target.result);
-          if (!json || typeof json !== "object") throw new Error("Invalid format");
-          openImportModal(json, file.name);
-        } catch (err) {
-          alert(t("profImportInvalidFile"));
+
+      try {
+        const headBuf = await file.slice(0, 12).arrayBuffer();
+        const headView = new DataView(headBuf);
+        let magic = "";
+        for (let i = 0; i < 8; i++) magic += String.fromCharCode(headView.getUint8(i));
+
+        if (magic === "SVUBACK1") {
+          const metaLen = headView.getUint32(8, true);
+          const metaBuf = await file.slice(12, 12 + metaLen).arrayBuffer();
+          const metaText = new TextDecoder("utf-8").decode(metaBuf);
+          const json = JSON.parse(metaText);
+          json._isBinaryContainer = true;
+          json._fileOffsetStart = 12 + metaLen;
+          openImportModal(json, file.name, file);
+        } else {
+          // Legacy JSON backup fallback
+          const text = await file.text();
+          const json = JSON.parse(text);
+          json._isBinaryContainer = false;
+          openImportModal(json, file.name, file);
         }
-      };
-      reader.readAsText(file);
-      profImportFileInput.value = "";
+      } catch (err) {
+        console.error("Profile import read error:", err);
+        alert(t("profImportInvalidFile"));
+      } finally {
+        profImportFileInput.value = "";
+      }
     });
   }
 

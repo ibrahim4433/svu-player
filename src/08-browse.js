@@ -3017,13 +3017,15 @@
   }
 
   /* ====================================================================== *
-   * PROFILE ONE-SHOT BACKUP & RESTORE CONTROLLER (EXPORT / IMPORT)
+   * PROFILE HIGH-CAPACITY BACKUP & RESTORE CONTROLLER (EXPORT / IMPORT)
+   * Binary Container Format "SVUBACK1" (supports 100+ lectures & multi-GBs)
    * ====================================================================== */
   const profExportDlg = byId("profExportDlg");
   const profImportDlg = byId("profImportDlg");
   const profImportFileInput = byId("profImportFileInput");
   let currentExportProfId = null;
   let pendingImportBundle = null;
+  let pendingImportSource = null;
 
   function getBackupFileName(profName) {
     const safeName = (profName || "Profile")
@@ -3089,15 +3091,6 @@
     });
   }
 
-  function blobToDataUrl(blob) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
-  }
-
   async function dataUrlToBlob(dataUrl, defaultType) {
     if (!dataUrl) return null;
     try {
@@ -3130,6 +3123,8 @@
     currentExportProfId = profId || activeProfileId || "default";
     const prof = profilesList.find(p => p.id === currentExportProfId) || profilesList[0];
     if (!prof) return;
+
+    if (window.I18N && window.I18N.apply) window.I18N.apply();
 
     const profName = getProfileDisplayName(prof);
     if (byId("exportProfName")) byId("exportProfName").textContent = profName;
@@ -3218,11 +3213,13 @@
       }
 
       // 4. Library (Videos & Transcripts)
-      const libraryBundle = { files: [], transcripts: [], enhanced: [] };
+      const libraryMeta = { files: [], transcripts: [], enhanced: [] };
+      const rawBlobs = [];
+
       if (optVideos) {
         const records = await getAllRecordsFromProfDB(prof.id);
-        libraryBundle.transcripts = records.transcripts || [];
-        libraryBundle.enhanced = records.enhanced || [];
+        libraryMeta.transcripts = records.transcripts || [];
+        libraryMeta.enhanced = records.enhanced || [];
 
         const totalFiles = records.files.length;
         for (let i = 0; i < totalFiles; i++) {
@@ -3237,38 +3234,55 @@
             });
           }
 
-          let dataUrl = "";
-          if (f.blob) {
-            dataUrl = await blobToDataUrl(f.blob);
+          let fileBlob = f.blob;
+          if (!fileBlob && f.dataUrl) {
+            fileBlob = await dataUrlToBlob(f.dataUrl, f.type);
           }
-          libraryBundle.files.push({
+          const blobSize = fileBlob ? fileBlob.size : (f.size || 0);
+
+          libraryMeta.files.push({
             id: f.id,
             name: f.name,
-            size: f.size,
-            type: f.type,
-            savedAt: f.savedAt,
-            meta: f.meta,
-            dataUrl: dataUrl
+            size: blobSize,
+            type: f.type || "application/octet-stream",
+            savedAt: f.savedAt || Date.now(),
+            meta: f.meta || {}
           });
+
+          if (fileBlob) {
+            rawBlobs.push(fileBlob);
+          } else {
+            rawBlobs.push(new Blob([], { type: "application/octet-stream" }));
+          }
         }
       }
 
-      if (progressFill) progressFill.style.width = "95%";
+      if (progressFill) progressFill.style.width = "92%";
       if (progressStatus) progressStatus.textContent = t("profExportStatusGenerating");
 
-      const bundle = {
+      const bundleMeta = {
         format: "svu-profile-backup",
-        version: 1,
+        version: 2,
         exportedAt: new Date().toISOString(),
+        appVersion: (window.__svu_version && window.__svu_version.version) || "2.7.7",
         profile: profileData,
         watched: watchedData,
         batchState: batchStateData,
-        library: libraryBundle
+        library: libraryMeta
       };
 
-      const jsonStr = JSON.stringify(bundle, null, 2);
-      const blob = new Blob([jsonStr], { type: "application/json" });
-      const downloadUrl = URL.createObjectURL(blob);
+      // Construct High-Capacity Binary Bundle "SVUBACK1"
+      const metaUtf8 = new TextEncoder().encode(JSON.stringify(bundleMeta));
+      const headerBuf = new ArrayBuffer(12);
+      const headView = new DataView(headerBuf);
+      const magicStr = "SVUBACK1";
+      for (let i = 0; i < 8; i++) headView.setUint8(i, magicStr.charCodeAt(i));
+      headView.setUint32(8, metaUtf8.byteLength, true);
+
+      const blobParts = [headerBuf, metaUtf8, ...rawBlobs];
+      const finalBackupBlob = new Blob(blobParts, { type: "application/octet-stream" });
+
+      const downloadUrl = URL.createObjectURL(finalBackupBlob);
       const fileName = getBackupFileName(getProfileDisplayName(prof));
 
       const a = document.createElement("a");
@@ -3279,7 +3293,7 @@
       setTimeout(() => {
         URL.revokeObjectURL(downloadUrl);
         a.remove();
-      }, 3000);
+      }, 5000);
 
       if (progressFill) progressFill.style.width = "100%";
       if (progressStatus) progressStatus.textContent = t("profExportStatusDone");
@@ -3287,7 +3301,7 @@
       setTimeout(() => {
         if (profExportDlg) profExportDlg.close();
         alert(t("profExportSuccess", { filename: fileName }));
-      }, 600);
+      }, 500);
 
     } catch (err) {
       console.error("Profile export error:", err);
@@ -3297,12 +3311,15 @@
     }
   }
 
-  function openImportModal(bundle, fileName) {
+  function openImportModal(bundle, fileName, sourceFile) {
     pendingImportBundle = bundle;
+    pendingImportSource = sourceFile || null;
     if (!bundle) return;
 
+    if (window.I18N && window.I18N.apply) window.I18N.apply();
+
     const prof = bundle.profile || {};
-    const profName = (prof.name && prof.name.trim()) || fileName.replace(/\.[^/.]+$/, "") || "البروفايل المستورد";
+    const profName = (prof.name && prof.name.trim()) || fileName.replace(/\.[^/.]+$/, "") || t("profileImportedDefaultName");
 
     if (byId("importProfFileName")) byId("importProfFileName").textContent = profName;
     if (byId("importProfMeta")) {
@@ -3356,6 +3373,7 @@
   async function executeProfileImport() {
     if (!pendingImportBundle) return;
     const bundle = pendingImportBundle;
+    const sourceFile = pendingImportSource;
 
     const destChoice = document.querySelector('input[name="profImportDest"]:checked')?.value || "new";
     const optSettings = byId("importOptSettings")?.checked;
@@ -3461,6 +3479,9 @@
       if (optVideos && bundle.library && Array.isArray(bundle.library.files) && bundle.library.files.length) {
         const filesToSave = [];
         const totalFiles = bundle.library.files.length;
+        const isBinaryContainer = (bundle._isBinaryContainer && sourceFile);
+        let fileOffset = isBinaryContainer ? bundle._fileOffsetStart : 0;
+
         for (let i = 0; i < totalFiles; i++) {
           const item = bundle.library.files[i];
           const pct = Math.round(55 + ((i + 1) / Math.max(1, totalFiles)) * 40);
@@ -3474,9 +3495,14 @@
           }
 
           let blob = null;
-          if (item.dataUrl) {
+          if (isBinaryContainer) {
+            const itemSize = item.size || 0;
+            blob = sourceFile.slice(fileOffset, fileOffset + itemSize, item.type || "application/octet-stream");
+            fileOffset += itemSize;
+          } else if (item.dataUrl) {
             blob = await dataUrlToBlob(item.dataUrl, item.type);
           }
+
           filesToSave.push({
             id: item.id,
             name: item.name,
@@ -3541,21 +3567,37 @@
 
   // Backup Events & Listeners
   if (profImportFileInput) {
-    profImportFileInput.addEventListener("change", (e) => {
+    profImportFileInput.addEventListener("change", async (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        try {
-          const json = JSON.parse(evt.target.result);
-          if (!json || typeof json !== "object") throw new Error("Invalid format");
-          openImportModal(json, file.name);
-        } catch (err) {
-          alert(t("profImportInvalidFile"));
+
+      try {
+        const headBuf = await file.slice(0, 12).arrayBuffer();
+        const headView = new DataView(headBuf);
+        let magic = "";
+        for (let i = 0; i < 8; i++) magic += String.fromCharCode(headView.getUint8(i));
+
+        if (magic === "SVUBACK1") {
+          const metaLen = headView.getUint32(8, true);
+          const metaBuf = await file.slice(12, 12 + metaLen).arrayBuffer();
+          const metaText = new TextDecoder("utf-8").decode(metaBuf);
+          const json = JSON.parse(metaText);
+          json._isBinaryContainer = true;
+          json._fileOffsetStart = 12 + metaLen;
+          openImportModal(json, file.name, file);
+        } else {
+          // Legacy JSON backup fallback
+          const text = await file.text();
+          const json = JSON.parse(text);
+          json._isBinaryContainer = false;
+          openImportModal(json, file.name, file);
         }
-      };
-      reader.readAsText(file);
-      profImportFileInput.value = "";
+      } catch (err) {
+        console.error("Profile import read error:", err);
+        alert(t("profImportInvalidFile"));
+      } finally {
+        profImportFileInput.value = "";
+      }
     });
   }
 
