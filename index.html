@@ -669,7 +669,7 @@
     padding: 2px 8px; border-radius: 6px; pointer-events: none; display: none; white-space: nowrap; font-variant-numeric: tabular-nums;
   }
   .seek:hover .tip, .seek.drag .tip { display: block; }
-  .row { display: flex; align-items: center; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+  .row { display: flex; align-items: center; gap: 6px; margin-top: 4px; flex-wrap: nowrap; }
   .row .grow { flex: 1; }
   .iconbtn { width: 36px; height: 36px; padding: 0; flex: none; display: inline-flex; align-items: center; justify-content: center; }
   #play.iconbtn {
@@ -2026,9 +2026,16 @@
      1. MOBILE PORTRAIT MODE (WIDTH <= 768px, PORTRAIT)
      -------------------------------------------------------------------------- */
   @media (max-width: 768px) and (orientation: portrait), (max-width: 680px) {
-    html, body {
+    html.has-session, body.has-session {
       height: 100dvh;
       overflow: hidden;
+    }
+    html:not(.has-session), body:not(.has-session) {
+      height: auto !important;
+      min-height: 100dvh !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      touch-action: pan-y !important;
     }
     select, input[type=text] {
       font-size: 16px; /* Prevents auto-zoom on iOS Safari */
@@ -2095,6 +2102,11 @@
       padding-bottom: max(6px, env(safe-area-inset-bottom));
       padding-left: max(6px, env(safe-area-inset-left));
       padding-right: max(6px, env(safe-area-inset-right));
+    }
+    body:not(.has-session) main {
+      height: auto !important;
+      min-height: calc(100dvh - 48px) !important;
+      overflow: visible !important;
     }
     .stage-wrap {
       flex: none;
@@ -2402,19 +2414,29 @@
       touch-action: none;
     }
     .row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      justify-content: space-between;
+      display: flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      justify-content: space-between !important;
+      flex-wrap: nowrap !important;
+      width: 100% !important;
     }
     .row .iconbtn, .row .tbtn {
-      height: 38px;
-      min-width: 38px;
+      height: 36px !important;
+      min-width: 32px !important;
+      max-width: 44px !important;
+      flex: 1 1 0 !important;
+      padding: 0 !important;
       border-radius: var(--r);
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
     #play {
-      min-width: 44px;
-      height: 38px;
+      min-width: 36px !important;
+      max-width: 48px !important;
+      flex: 1.3 1 0 !important;
+      height: 36px !important;
       background: var(--blue);
       color: var(--ink);
       border-color: var(--blue);
@@ -2423,12 +2445,21 @@
       fill: currentColor;
     }
     #speed {
-      height: 38px;
-      font-size: 13px;
-      padding: 0 4px;
+      height: 36px !important;
+      font-size: 12px !important;
+      padding: 0 2px !important;
+      max-width: 52px !important;
+      flex: 1.2 1 0 !important;
+      border-radius: var(--r);
     }
     .tbtn span {
-      display: inline;
+      display: none !important;
+    }
+    .time {
+      display: none !important;
+    }
+    .row .grow {
+      display: none !important;
     }
     #vol, .vol-group {
       display: none !important;
@@ -2874,12 +2905,100 @@
 
   /* Intro Onboarding Studio Card */
   .hub-intro-card {
-    background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, var(--panel) 100%);
-    border: 1px solid var(--line-strong);
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.14) 0%, rgba(99, 102, 241, 0.12) 50%, var(--panel) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    box-shadow: 0 4px 20px -2px rgba(14, 165, 233, 0.12), 0 2px 6px rgba(0, 0, 0, 0.2);
     border-radius: var(--r-lg);
     overflow: hidden;
     transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
+  }
+  .hub-divider {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent 0%, var(--line-strong) 25%, var(--line-strong) 75%, transparent 100%);
+    margin: 8px 0;
+    opacity: 0.65;
+  }
+  .hub-tile-course-dir {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    cursor: pointer;
+    text-align: start;
+    color: var(--text);
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 100%;
+  }
+  .hub-tile-course-dir:hover {
+    border-color: rgba(139, 92, 246, 0.45);
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, var(--panel2) 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(139, 92, 246, 0.15);
+  }
+  .hub-tile-course-dir .hub-tile-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: #a78bfa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  .hub-tile-course-dir .hub-tile-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .hub-tile-course-dir .hub-tile-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hub-tile-course-dir .hub-badge-pill {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: rgba(139, 92, 246, 0.15);
+    color: #a78bfa;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+  }
+  .hub-tile-course-dir .hub-tile-arrow {
+    flex: none;
+    color: var(--dim);
+    transition: transform 0.18s ease;
+    margin-inline-start: auto;
+  }
+  .hub-tile-course-dir:hover .hub-tile-arrow {
+    color: #a78bfa;
+    transform: translateX(-3px);
+  }
+  html[dir="ltr"] .hub-tile-course-dir:hover .hub-tile-arrow {
+    transform: translateX(3px);
+  }
+  .player-hub-btn {
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    color: var(--text);
+    border-radius: var(--r);
+    transition: all 0.16s ease;
+  }
+  .player-hub-btn:hover {
+    background: var(--blue);
+    color: var(--ink);
+    border-color: var(--blue);
   }
   .intro-full {
     padding: 16px 18px;
@@ -3753,6 +3872,263 @@
     }
   }
 
+
+  /* ==================== REAL PRACTICAL GUIDE UI STYLES ==================== */
+  .real-ui-panel {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .real-ui-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+    background: rgba(56, 189, 248, 0.12);
+    padding: 3px 10px;
+    border-radius: 99px;
+    align-self: flex-start;
+  }
+  .real-ui-buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  @media (max-width: 600px) {
+    .real-ui-buttons-grid {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+  }
+  .real-btn-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 6px 10px;
+  }
+  .real-btn-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--panel);
+    border: 1px solid var(--line-strong);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text);
+    flex: none;
+    white-space: nowrap;
+  }
+  .real-btn-chip.hub {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: rgba(56, 189, 248, 0.35);
+    color: #38bdf8;
+  }
+  .real-btn-chip.play {
+    background: var(--blue);
+    color: var(--ink);
+    border-color: var(--blue);
+  }
+  .real-btn-chip.enh {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.35);
+    color: #f59e0b;
+  }
+  .real-btn-chip.chat {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.35);
+    color: #10b981;
+  }
+  .real-btn-desc {
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Hub services slide */
+  .real-hub-services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .real-hub-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 8px 10px;
+  }
+  .real-hub-item-icon {
+    font-size: 18px;
+    flex: none;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .real-hub-item-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .real-hub-item-text b {
+    font-size: 12px;
+    color: var(--text);
+  }
+  .real-hub-item-text p {
+    margin: 0;
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.35;
+  }
+
+  /* Chat seek demo slide */
+  .real-chat-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .real-chat-msg {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 6px 10px;
+    font-size: 11.5px;
+  }
+  .real-chat-msg.active {
+    background: rgba(56, 189, 248, 0.10);
+    border-color: rgba(56, 189, 248, 0.35);
+  }
+  .chat-ts-pill {
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 99px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    color: var(--dim);
+  }
+  .chat-ts-pill.active {
+    background: var(--blue);
+    color: var(--ink);
+    border-color: var(--blue);
+  }
+  .chat-author {
+    font-weight: 700;
+    color: var(--text);
+  }
+  .chat-body {
+    color: var(--dim);
+  }
+  .chat-jump-hint {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--blue);
+    width: 100%;
+    margin-top: 2px;
+  }
+
+  /* DSP 4 stages slide */
+  .real-dsp-stages {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  @media (max-width: 600px) {
+    .real-dsp-stages {
+      grid-template-columns: 1fr;
+    }
+  }
+  .dsp-stage-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 6px 10px;
+  }
+  .stage-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.18);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #f59e0b;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  .stage-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .stage-info b {
+    font-size: 11.5px;
+    color: var(--text);
+  }
+  .stage-info span {
+    font-size: 10.5px;
+    color: var(--dim);
+    line-height: 1.3;
+  }
+
+  /* Gestures slide */
+  .real-gestures-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  @media (max-width: 600px) {
+    .real-gestures-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .gesture-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 8px 10px;
+  }
+  .g-icon {
+    font-size: 18px;
+    flex: none;
+  }
+  .g-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .g-text b {
+    font-size: 11.5px;
+    color: var(--text);
+  }
+  .g-text small {
+    font-size: 10.5px;
+    color: var(--dim);
+  }
+
 </style>
 </head>
 <body>
@@ -3934,6 +4310,7 @@
         <span data-i18n="hubResumeBtn">متابعة</span>
       </button>
     </div>
+    <div class="hub-divider" id="hubResumeDivider" hidden></div>
 
     <!-- 4 Primary Action Tiles (2x2 Grid) -->
     <div class="hub-grid">
@@ -3981,7 +4358,31 @@
       </button>
     </div>
 
-    <!-- Recent / Saved Lectures Quick Section -->
+    <div class="hub-divider"></div>
+
+    <!-- Bug 8: Course Directory Featured Action Tile -->
+    <button class="hub-tile-course-dir" id="hubCourseDirTile" type="button">
+      <div class="hub-tile-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          <line x1="9" y1="7" x2="15" y2="7"/>
+          <line x1="9" y1="11" x2="13" y2="11"/>
+        </svg>
+      </div>
+      <div class="hub-tile-body">
+        <div class="hub-tile-title-row">
+          <b data-i18n="courseDirectoryTitle">دليل المقررات والبرامج الدراسية</b>
+          <span class="hub-badge-pill" data-i18n="courseDirBadge">تصفح شامل</span>
+        </div>
+        <span data-i18n="courseDirSub">استعراض البرامج والسنوات الدراسية وتصفح ملفات المحاضرات وسلاسل الـ LMS</span>
+      </div>
+      <svg class="hub-tile-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+
+    <div class="hub-divider"></div>
+
+    <!-- Recent / Saved Lectures Quick Section (Bug 6 Spacing) -->
     <div class="hub-recent-card">
       <div class="hub-recent-head">
         <h2 data-i18n="hubRecentTitle" class="hub-recent-heading">المحاضرات المحفوظة على هذا الجهاز</h2>
@@ -3993,11 +4394,7 @@
   <div class="stage-wrap">
     <div class="stage" id="stage">
       <canvas id="screen" width="640" height="360"></canvas>
-      <!-- Floating Return to Hub button in stage -->
-      <button class="stage-back-to-hub-btn" id="stageBackToHubBtn" data-i18n-title="exitSessionTitle" title="العودة إلى لوحة الطالب" aria-label="العودة إلى لوحة الطالب">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-        <span data-i18n="backToHub">الرئيسية</span>
-      </button>
+
       <div class="caption" id="caption" dir="auto" hidden></div>
       <div class="vnotice" id="vnotice" data-i18n="videoFail" hidden></div>
       <button class="bigplay" id="bigplay" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
@@ -4063,6 +4460,13 @@
           <span class="ttot" id="tTot">0:00</span>
         </div>
         <div class="row">
+          <!-- Return to Hub Button (First in control bar) -->
+          <button class="iconbtn player-hub-btn" id="playerHubBtn" data-i18n-title="exitSessionTitle" data-i18n-aria="exitSessionTitle" title="العودة إلى لوحة الطالب" aria-label="العودة إلى لوحة الطالب">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </button>
           <!-- Left Group: Play/Pause + Seek Back + Seek Next + Time + Enhance -->
           <button class="iconbtn" id="play" data-i18n-aria="playPause" data-i18n-title="playPause" aria-label="Play/Pause" title="Play/Pause (Space)">
             <svg id="icoPlay" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -4574,105 +4978,191 @@
     </button>
   </div>
 
-  <!-- Interactive Visual App Showcase Slider -->
+  <!-- Interactive Visual App Showcase Slider (Real UI Reference) -->
   <div class="guide-slider" id="guideSlider">
     <div class="guide-slides" id="guideSlides">
-      <!-- Slide 1: Smart Student Hub -->
+      <!-- Slide 1: Player Controls Bar Breakdown -->
       <div class="guide-slide active" data-slide="0">
         <div class="slide-visual">
-          <div class="slide-mockup hub-mockup">
-            <div class="mock-hdr"><span class="m-dot red"></span><span class="m-dot yel"></span><span class="m-dot grn"></span><span class="m-lbl">SVU Player Studio</span></div>
-            <div class="mock-hub-body">
-              <div class="mock-hub-pill">⚡ SVU Studio • 100% Offline PWA</div>
-              <div class="mock-hub-tiles">
-                <div class="mock-tile blue"><span>📥</span><b>Batch Download</b></div>
-                <div class="mock-tile green"><span>💾</span><b>Student Library</b></div>
-                <div class="mock-tile purple"><span>🌐</span><b>SVU Sessions</b></div>
-                <div class="mock-tile gold"><span>📁</span><b>Open .lrec</b></div>
+          <div class="real-ui-panel">
+            <div class="real-ui-badge">شريط التحكم السفلي · Player Bar</div>
+            <div class="real-ui-buttons-grid">
+              <div class="real-btn-item">
+                <span class="real-btn-chip hub"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> <b>Hub</b></span>
+                <span class="real-btn-desc" data-i18n="guideBtnHub">العودة للرئيسية وإغلاق الجلسة</span>
+              </div>
+              <div class="real-btn-item">
+                <span class="real-btn-chip play"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> <b>Play / Pause</b></span>
+                <span class="real-btn-desc" data-i18n="guideBtnPlay">تشغيل أو إيقاف المحاضرة (مسطرة Space)</span>
+              </div>
+              <div class="real-btn-item">
+                <span class="real-btn-chip"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 5V2L7 6.5 12 11V8a5 5 0 1 1-5 5H5a7 7 0 1 0 7-8z"/></svg> <b>±10s Seek</b></span>
+                <span class="real-btn-desc" data-i18n="guideBtnSeek">تقديم أو ترجيع 10 ثوانٍ (الأسهم ← →)</span>
+              </div>
+              <div class="real-btn-item">
+                <span class="real-btn-chip enh"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5v14M7 9v6"/></svg> <b>Enhance</b></span>
+                <span class="real-btn-desc" data-i18n="guideBtnEnh">فلتر تنقية الصوت وعزل الصفير وهواء القاعة</span>
+              </div>
+              <div class="real-btn-item">
+                <span class="real-btn-chip"><b>1.25× Speed</b></span>
+                <span class="real-btn-desc" data-i18n="guideBtnSpeed">تسريع أو إبطاء صوت المحاضرة (0.75× - 2×)</span>
+              </div>
+              <div class="real-btn-item">
+                <span class="real-btn-chip chat"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> <b>Chat</b></span>
+                <span class="real-btn-desc" data-i18n="guideBtnChat">إظهار أو إخفاء محادثات الطلاب المتزامنة</span>
               </div>
             </div>
           </div>
         </div>
         <div class="slide-caption">
-          <span class="slide-tag" data-i18n="slide1Tag">لوحة الطالب الذكية</span>
-          <h4 data-i18n="slide1Title">الوصول السريع والتشغيل الفوري دون إنترنت</h4>
-          <p data-i18n="slide1Desc">شاشة رئيسية موحدة تجمع التنزيل المجمّع، مكتبة محاضراتك المحفوظة، واستئناف آخر محاضرة شاهدتها بضغطة واحدة.</p>
+          <span class="slide-tag" data-i18n="slide1Tag">شريط تحكم المشغّل</span>
+          <h4 data-i18n="slide1Title">كل أدوات التحكم بالصوت، الفيديو، والتنقل السريع</h4>
+          <p data-i18n="slide1Desc">شريط تحكم سفلي مدمج يمنحك سرعة الوصول لجميع الوظائف: زر Hub للعودة لشاشة الطالب، تسريع الصوت، تنقية الشرح، والتنقل الدقيق بالثواني.</p>
         </div>
       </div>
 
-      <!-- Slide 2: Dual Video & Synced Chat -->
+      <!-- Slide 2: Student Hub Services -->
       <div class="guide-slide" data-slide="1">
         <div class="slide-visual">
-          <div class="slide-mockup player-mockup">
-            <div class="mock-hdr"><span class="m-dot red"></span><span class="m-dot yel"></span><span class="m-dot grn"></span><span class="m-lbl">Cinema Split View</span></div>
-            <div class="mock-player-split">
-              <div class="mock-stage"><div class="mock-slide-prev"><span class="m-icon">▶</span></div><div class="mock-bar"></div></div>
-              <div class="mock-chat-col"><div class="mock-msg"><span class="m-ts">04:12</span><span class="m-line"></span></div><div class="mock-msg active"><span class="m-ts">11:05</span><span class="m-line active"></span></div><div class="mock-msg"><span class="m-ts">21:40</span><span class="m-line"></span></div></div>
+          <div class="real-ui-panel">
+            <div class="real-ui-badge">خدمات لوحة الطالب · Student Hub</div>
+            <div class="real-hub-services-list">
+              <div class="real-hub-item">
+                <div class="real-hub-item-icon dl">📥</div>
+                <div class="real-hub-item-text">
+                  <b data-i18n="tabBatch">التنزيل المجمّع (Batch Download)</b>
+                  <p data-i18n="guideHubBatchHint">اختر كليتك وفصلك ونزل كامل محاضرات المادة بضغطة واحدة وبمعدل آمن يمنع حظر حسابك.</p>
+                </div>
+              </div>
+              <div class="real-hub-item">
+                <div class="real-hub-item-icon lib">💾</div>
+                <div class="real-hub-item-text">
+                  <b data-i18n="tabSaved">مكتبة الطالب المحفوظة</b>
+                  <p data-i18n="guideHubLibHint">استعرض جميع المحاضرات المحفوظة محلياً، مع إمكانية تعليم المحاضرات المشاهدة (✓) أو حذفها لتفريغ الذاكرة.</p>
+                </div>
+              </div>
+              <div class="real-hub-item">
+                <div class="real-hub-item-icon dir">📚</div>
+                <div class="real-hub-item-text">
+                  <b data-i18n="courseDirectoryTitle">دليل المقررات الشامل</b>
+                  <p data-i18n="guideHubDirHint">تصفح البرامج الدراسية وسلاسل الـ LMS والبحث السريع في أكثر من 1,160 مادة جامعية معتمدة.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div class="slide-caption">
-          <span class="slide-tag" data-i18n="slide2Tag">شاشة عريضة ودردشة متزامنة</span>
-          <h4 data-i18n="slide2Title">تزامن حي ودقيق للأسئلة مع قفز فوري بالفيديو</h4>
-          <p data-i18n="slide2Desc">شات المحاضرة يتدفق بالثانية بالتزامن مع صوت المدرس. اضغط على أي رسالة أو توقيت للانتقال مباشرة لتلك الدقيقة في الشرح.</p>
+          <span class="slide-tag" data-i18n="slide2Tag">خدمات الطالب والأوفلاين</span>
+          <h4 data-i18n="slide2Title">تنزيل المحاضرات وإدارتها للدراسة ١٠٠٪ دون إنترنت</h4>
+          <p data-i18n="slide2Desc">من شاشة الطالب يمكنك تنزيل مقرراتك دفعة واحدة، متابعة تقدمك الدراسي، واستئناف مشاهدة آخر محاضرة توقفت عندها بضغطة واحدة.</p>
         </div>
       </div>
 
-      <!-- Slide 3: 4-Stage DSP Voice Clarity -->
+      <!-- Slide 3: Synchronized Live Chat & Seek -->
       <div class="guide-slide" data-slide="2">
         <div class="slide-visual">
-          <div class="slide-mockup dsp-mockup">
-            <div class="mock-hdr"><span class="m-dot red"></span><span class="m-dot yel"></span><span class="m-dot grn"></span><span class="m-lbl">WebAssembly 4-Stage DSP</span></div>
-            <div class="mock-dsp-grid">
-              <div class="mock-dsp-chip active"><span>🎙️</span><b>Noise Gate</b><small>عزل الصفير</small></div>
-              <div class="mock-dsp-chip active"><span>✂️</span><b>High-Pass</b><small>قص هواء القاعة</small></div>
-              <div class="mock-dsp-chip active"><span>🎚️</span><b>Vocal EQ</b><small>تضخيم نبرة الصوت</small></div>
-              <div class="mock-dsp-chip active"><span>🛡️</span><b>Limiter</b><small>حماية من التشويش</small></div>
+          <div class="real-ui-panel">
+            <div class="real-ui-badge">الدردشة المتزامنة · Live Synced Chat</div>
+            <div class="real-chat-demo">
+              <div class="real-chat-msg">
+                <span class="chat-ts-pill">04:18</span>
+                <span class="chat-author">أحمد سلامة:</span>
+                <span class="chat-body">دكتور هل هذه الشريحة مطلوبة في الامتحان؟</span>
+              </div>
+              <div class="real-chat-msg active">
+                <span class="chat-ts-pill active">11:05 ⚡</span>
+                <span class="chat-author">سارة العلي:</span>
+                <span class="chat-body">ممكن إعادة شرح الخطوة الأخيرة من فضلك؟</span>
+                <span class="chat-jump-hint">👈 اضغط للقفز بالفيديو للدقيقة 11:05</span>
+              </div>
+              <div class="real-chat-msg">
+                <span class="chat-ts-pill">24:40</span>
+                <span class="chat-author">المدرس:</span>
+                <span class="chat-body">نعم سنشرح هذا المثال بالتفصيل الآن.</span>
+              </div>
             </div>
           </div>
         </div>
         <div class="slide-caption">
-          <span class="slide-tag" data-i18n="slide3Tag">فلتر الصوت الرقمي (DSP)</span>
-          <h4 data-i18n="slide3Title">تنقية وتوضيح صوت المدرس بأعلى نقاء</h4>
-          <p data-i18n="slide3Desc">تفعيل زر Enhance يزيل ضجيج الميكروفون وهواء القاعة تلقائياً ويبرز صوت الشرح بوضوح فائق حتى مع التسجيلات الرديئة.</p>
+          <span class="slide-tag" data-i18n="slide3Tag">الدردشة والقفز الذكي</span>
+          <h4 data-i18n="slide3Title">تزامن حي لأسئلة الطلاب مع قفز فوري بالفيديو</h4>
+          <p data-i18n="slide3Desc">تتدفق رسائل الطلاب بالثانية تزامناً مع كلام المدرس. اضغط على أي رسالة أو توقيتها الزمني للانتقال بالفيديو فوراً لتلك اللحظة في الشرح!</p>
         </div>
       </div>
 
-      <!-- Slide 4: Safe Sequential Batch Downloader -->
+      <!-- Slide 4: 4-Stage DSP Audio Processor -->
       <div class="guide-slide" data-slide="3">
         <div class="slide-visual">
-          <div class="slide-mockup dl-mockup">
-            <div class="mock-hdr"><span class="m-dot red"></span><span class="m-dot yel"></span><span class="m-dot grn"></span><span class="m-lbl">Safe Anti-Ban Batch Engine</span></div>
-            <div class="mock-dl-progress">
-              <div class="mock-dl-item ok"><span>✓</span><span>BAS401 - Lesson 01</span><b>7.3 MB</b></div>
-              <div class="mock-dl-item ok"><span>✓</span><span>BAS401 - Lesson 02</span><b>8.1 MB</b></div>
-              <div class="mock-dl-item prog"><span>⏳</span><span>BAS401 - Lesson 03</span><b>64%</b></div>
+          <div class="real-ui-panel">
+            <div class="real-ui-badge">معالج الصوت الرقمي · WebAssembly DSP</div>
+            <div class="real-dsp-stages">
+              <div class="dsp-stage-card">
+                <div class="stage-num">1</div>
+                <div class="stage-info">
+                  <b>Noise Gate</b>
+                  <span>عزل الصفير والهمس أثناء فترات الصمت</span>
+                </div>
+              </div>
+              <div class="dsp-stage-card">
+                <div class="stage-num">2</div>
+                <div class="stage-info">
+                  <b>High-Pass Filter</b>
+                  <span>قص ترددات هواء القاعة وأزيز التكييف</span>
+                </div>
+              </div>
+              <div class="dsp-stage-card">
+                <div class="stage-num">3</div>
+                <div class="stage-info">
+                  <b>Vocal Formant EQ</b>
+                  <span>تضخيم نبرة صوت المدرس (1-4 kHz) ليصبح واضحاً</span>
+                </div>
+              </div>
+              <div class="dsp-stage-card">
+                <div class="stage-num">4</div>
+                <div class="stage-info">
+                  <b>Fast Peak Limiter</b>
+                  <span>حماية من التشويه والفرقعات الصوتية المفاجئة</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div class="slide-caption">
-          <span class="slide-tag" data-i18n="slide4Tag">التنزيل المجمّع الآمن</span>
-          <h4 data-i18n="slide4Title">تنزيل كامل مقرراتك دون خطر الحظر</h4>
-          <p data-i18n="slide4Desc">اختر كليتك وفصلك ونزل جميع المحاضرات دفعة واحدة بمعدل تسلسلي آمن، مع حفظها مباشرة في ذاكرة المتصفح للعمل دون إنترنت.</p>
+          <span class="slide-tag" data-i18n="slide4Tag">تنقية الصوت (DSP)</span>
+          <h4 data-i18n="slide4Title">توضيح صوت الدكتور بأعلى نقاء بضغطة زر</h4>
+          <p data-i18n="slide4Desc">زر Enhance في شريط التحكم يفعل معالج صوت رقمي احترافي يحول التسجيلات الصوتية المشوشة إلى صوت واضح ونقي ومريح للأذن أثناء المذاكرة.</p>
         </div>
       </div>
 
-      <!-- Slide 5: Touch Gestures & Cinema Split -->
+      <!-- Slide 5: Mobile Gestures & Split View -->
       <div class="guide-slide" data-slide="4">
         <div class="slide-visual">
-          <div class="slide-mockup gesture-mockup">
-            <div class="mock-hdr"><span class="m-dot red"></span><span class="m-dot yel"></span><span class="m-dot grn"></span><span class="m-lbl">Mobile Touch Gestures</span></div>
-            <div class="mock-gestures-wrap">
-              <div class="mock-gesture-pill"><span>👆</span><b>نقرة واحدة:</b> إظهار/إخفاء عناصر التحكم</div>
-              <div class="mock-gesture-pill"><span>✌️</span><b>نقرتان:</b> تقديم / ترجيع ±١٠ ثوانٍ</div>
-              <div class="mock-gesture-pill"><span>📱</span><b>تدوير الهاتف:</b> وضع السينما العريض المقسم</div>
+          <div class="real-ui-panel">
+            <div class="real-ui-badge">التحكم باللمس والمفاتيح · Gestures & Shortcuts</div>
+            <div class="real-gestures-grid">
+              <div class="gesture-item">
+                <span class="g-icon">👆</span>
+                <div class="g-text"><b>نقرة واحدة</b><small>إظهار/إخفاء شريط التحكم</small></div>
+              </div>
+              <div class="gesture-item">
+                <span class="g-icon">✌️</span>
+                <div class="g-text"><b>نقرتان يمين / يسار</b><small>تقديم / ترجيع ±١٠ ثوانٍ</small></div>
+              </div>
+              <div class="gesture-item">
+                <span class="g-icon">📱</span>
+                <div class="g-text"><b>تدوير الموبايل</b><small>وضع السينما العريض مع تقسيم الدردشة</small></div>
+              </div>
+              <div class="gesture-item">
+                <span class="g-icon">⌨️</span>
+                <div class="g-text"><b><kbd>Space</kbd> <kbd>←</kbd> <kbd>→</kbd> <kbd>M</kbd> <kbd>F</kbd></b><small>اختصارات التشغيل، التخطي، وكتم الصوت</small></div>
+              </div>
             </div>
           </div>
         </div>
         <div class="slide-caption">
-          <span class="slide-tag" data-i18n="slide5Tag">إيماءات اللمس الذكية</span>
-          <h4 data-i18n="slide5Title">تحكم كامل ومريح على شاشات الموبايل</h4>
-          <p data-i18n="slide5Desc">إيماءات سريعة لتقديم وترجيع المحاضرة، وتدوير الهاتف يفتح وضع السينما الواسع مع الدردشة جنباً إلى جنب دون تغطية الشاشة.</p>
+          <span class="slide-tag" data-i18n="slide5Tag">إيماءات الموبايل والاختصارات</span>
+          <h4 data-i18n="slide5Title">تحكم مرن وسريع عبر اللمس أو لوحة المفاتيح</h4>
+          <p data-i18n="slide5Desc">إيماءات نقر سريعة على جانبي الشاشة للتنقل، وتدوير الهاتف يفصل الشاشة بين الشريحة والدردشة جنباً إلى جنب دون أن تحجب الدردشة محتوى المحاضرة.</p>
         </div>
       </div>
     </div>
@@ -4693,16 +5183,17 @@
 
   <div class="guide-body">
     <div class="guide-grid">
-      <!-- Card 1: Touch Gestures -->
+      <!-- Card 1: Player Controls Bar -->
       <div class="guide-card">
         <div class="guide-card-icon touch">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 9V5a3 3 0 0 0-6 0v7a2 2 0 0 1-2 2H5a2 2 0 0 0-2 2v2a6 6 0 0 0 6 6h6a6 6 0 0 0 6-6V9a3 3 0 0 0-6 0z"/>
+            <rect x="2" y="6" width="20" height="12" rx="2"/>
+            <polygon points="10 9 15 12 10 15 10 9" fill="currentColor"/>
           </svg>
         </div>
         <div class="guide-card-content">
-          <h3 data-i18n="guideTouchTitle">📱 إيماءات اللمس السريعة</h3>
-          <p data-i18n="guideTouchDesc">نقرة واحدة لإظهار أو إخفاء عناصر التحكم · نقرة مزدوجة على اليمين أو اليسار للتقديم والترجيع ±١٠ ثوانٍ · تدوير الهاتف يفعّل وضع السينما العريض.</p>
+          <h3 data-i18n="slide1Tag">🕹️ شريط تحكم المشغّل</h3>
+          <p data-i18n="guideBtnDescAll">زر <b>Hub</b> للعودة للرئيسية وإغلاق الجلسة · زر <b>Play</b> للتشغيل والإيقاف · زرا <b>±10s</b> للقفز السريع · زر <b>Speed</b> للتحكم بالسرعة حتى 2× · وزر <b>Fullscreen</b> لملء الشاشة.</p>
         </div>
       </div>
 
@@ -4742,12 +5233,12 @@
           </svg>
         </div>
         <div class="guide-card-content">
-          <h3 data-i18n="guideBatchTitle">⚡ التنزيل المجمّع والحفظ محلياً</h3>
+          <h3 data-i18n="guideBatchTitle">⚡ التنزيل المجمّع ومكتبة الطالب</h3>
           <p data-i18n="guideBatchDesc">اختر كليتك وفصلك ونزل كامل محاضرات المقرر دفعة واحدة بمعدل آمن يمنع حظر الحساب. تُحفظ المحاضرات محلياً (IndexedDB) وتشاهدها ١٠٠٪ دون إنترنت.</p>
         </div>
       </div>
 
-      <!-- Card 5: Keyboard Shortcuts -->
+      <!-- Card 5: Keyboard Shortcuts & Mobile Gestures -->
       <div class="guide-card shortcuts">
         <div class="guide-card-icon kbd">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -4755,7 +5246,7 @@
           </svg>
         </div>
         <div class="guide-card-content">
-          <h3 data-i18n="guideKbdTitle">⌨️ اختصارات لوحة المفاتيح (للأجهزة اللوحية والحاسوب)</h3>
+          <h3 data-i18n="guideKbdTitle">⌨️ اختصارات لوحة المفاتيح واللمس</h3>
           <p data-i18n="guideKbdDesc"><kbd>Space</kbd> تشغيل/إيقاف · <kbd>←</kbd> <kbd>→</kbd> تقديم/ترجيع ٥ ث · <kbd>M</kbd> كتم الصوت · <kbd>F</kbd> ملء الشاشة · <kbd>C</kbd> إظهار الدردشة · <kbd>S</kbd> تمديد الشاشة</p>
         </div>
       </div>
@@ -4856,6 +5347,6 @@
 
 <audio id="audio" preload="auto"></audio>
 
-<script src="app.js?v=2.7.3"></script>
+<script src="app.js?v=2.7.4"></script>
 </body>
 </html>

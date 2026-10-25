@@ -1133,10 +1133,10 @@
     closeSession: closeSession
   };
 
-  // Stage Floating Back to Hub button (for landscape/fullscreen mode)
-  const stageBackBtn = byId("stageBackToHubBtn");
-  if (stageBackBtn) {
-    stageBackBtn.addEventListener("click", closeSession);
+  // Bottom Control Bar & Header Return to Hub buttons
+  const playerHubBtn = byId("playerHubBtn");
+  if (playerHubBtn) {
+    playerHubBtn.addEventListener("click", closeSession);
   }
   const headerBackBtn = byId("headerBackToHubBtn");
   if (headerBackBtn) {

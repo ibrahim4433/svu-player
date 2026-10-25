@@ -3273,29 +3273,32 @@
     }
 
     // 2. Control Onboarding Studio Card (#hubIntroCard)
+    // Default always to opened full details unless user explicitly clicked hide details
     const introCard = byId("hubIntroCard");
     const introMini = byId("introMini");
     const introFull = byId("introFull");
     if (introCard && introMini && introFull) {
-      if (savedRecordsCache.length === 0) {
-        introCard.classList.remove("is-compact");
+      let isCollapsed = false;
+      try {
+        isCollapsed = localStorage.getItem("svu_intro_collapsed") === "1";
+      } catch (_) {}
+
+      if (isCollapsed) {
+        introCard.classList.add("is-compact");
         introCard.classList.remove("is-expanded");
+        introMini.style.display = "flex";
+        introFull.style.display = "none";
+      } else {
+        introCard.classList.remove("is-compact");
+        introCard.classList.add("is-expanded");
         introMini.style.display = "none";
         introFull.style.display = "";
-      } else {
-        introCard.classList.add("is-compact");
-        introMini.style.display = "flex";
-        // If not explicitly toggled by student, keep full body hidden
-        if (!introCard.classList.contains("is-expanded")) {
-          introFull.style.display = "none";
-        } else {
-          introFull.style.display = "";
-        }
       }
     }
 
     // 3. Resume Last Played Card (#hubResumeCard)
     const resumeCard = byId("hubResumeCard");
+    const resumeDivider = byId("hubResumeDivider");
     if (resumeCard) {
       let lastPlayed = null;
       try {
@@ -3354,8 +3357,10 @@
           };
         }
         resumeCard.hidden = false;
+        if (resumeDivider) resumeDivider.hidden = false;
       } else {
         resumeCard.hidden = true;
+        if (resumeDivider) resumeDivider.hidden = true;
       }
     }
 
@@ -3498,28 +3503,50 @@
         byId("file").click();
       });
     }
+
+    // Bug 8: Course Directory featured tile
+    const courseDirTile = byId("hubCourseDirTile");
+    if (courseDirTile) {
+      courseDirTile.addEventListener("click", () => {
+        openCourseDirectory();
+      });
+    }
+
     const viewAllBtn = byId("hubViewAllSavedBtn");
     if (viewAllBtn) {
       viewAllBtn.addEventListener("click", () => openDialog("saved"));
     }
 
-    // Intro Card Toggle (Mini pill click, toggle btn, and collapse btn)
+    // Bug 7: Intro Card Expand / Collapse with LocalStorage persistence
     const introCard = byId("hubIntroCard");
     const introMini = byId("introMini");
     const introFull = byId("introFull");
     const introMiniToggle = byId("introMiniToggleBtn");
     const introCollapse = byId("introCollapseBtn");
 
-    function toggleIntroCard(e) {
+    function collapseIntroCard(e) {
       if (e) e.stopPropagation();
-      if (!introCard || !introFull) return;
-      const isExp = introCard.classList.toggle("is-expanded");
-      introFull.style.display = isExp ? "" : "none";
+      if (!introCard || !introFull || !introMini) return;
+      introCard.classList.add("is-compact");
+      introCard.classList.remove("is-expanded");
+      introMini.style.display = "flex";
+      introFull.style.display = "none";
+      try { localStorage.setItem("svu_intro_collapsed", "1"); } catch (_) {}
     }
 
-    if (introMini) introMini.addEventListener("click", toggleIntroCard);
-    if (introMiniToggle) introMiniToggle.addEventListener("click", toggleIntroCard);
-    if (introCollapse) introCollapse.addEventListener("click", toggleIntroCard);
+    function expandIntroCard(e) {
+      if (e) e.stopPropagation();
+      if (!introCard || !introFull || !introMini) return;
+      introCard.classList.remove("is-compact");
+      introCard.classList.add("is-expanded");
+      introMini.style.display = "none";
+      introFull.style.display = "";
+      try { localStorage.removeItem("svu_intro_collapsed"); } catch (_) {}
+    }
+
+    if (introMini) introMini.addEventListener("click", expandIntroCard);
+    if (introMiniToggle) introMiniToggle.addEventListener("click", expandIntroCard);
+    if (introCollapse) introCollapse.addEventListener("click", collapseIntroCard);
     const introInstallBtn = byId("introInstallBtn");
     if (introInstallBtn) {
       introInstallBtn.addEventListener("click", () => {

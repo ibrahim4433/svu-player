@@ -470,6 +470,17 @@ guideModalTitle: "SVU Player Guide",
     guideKbdTitle: "⌨️ Keyboard Shortcuts (Tablet & Laptop)",
     guideKbdDesc: "Space: Play/Pause · ← →: Skip 5s · M: Mute · F: Fullscreen · C: Chat toggle · S: Stretch",
     welcomeStartBtn: "✓ Understood, Let's Begin",
+guideBtnHub: "Return to Student Hub & close session",
+    guideBtnPlay: "Play or pause lecture (Spacebar)",
+    guideBtnSeek: "Skip backward or forward 10s (Arrow keys)",
+    guideBtnEnh: "4-Stage DSP vocal clarifier & noise gate",
+    guideBtnSpeed: "Speed up or slow down voice (0.75× - 2×)",
+    guideBtnChat: "Toggle synchronized student chat",
+    guideHubBatchHint: "Select your college and semester to download all lectures with safe rate-limiting.",
+    guideHubLibHint: "Access saved lectures offline, toggle watched status (✓), or delete to free memory.",
+    guideHubDirHint: "Browse academic degree programs, LMS chains, and search over 1,160 accredited courses.",
+    courseDirBadge: "Browse Directory",
+    guideBtnDescAll: "Hub button to exit to dashboard · Play/Pause for playback · ±10s for quick seeking · Speed up to 2× · and Fullscreen mode.",
 slide1Tag: "Smart Student Hub",
     slide1Title: "Quick access & instant 100% offline replay",
     slide1Desc: "All-in-one home screen bringing batch downloading, your offline library, and 1-tap lecture resume together.",
@@ -836,6 +847,17 @@ guideModalTitle: "دليل استخدام مشغّل SVU",
     guideKbdTitle: "⌨️ اختصارات لوحة المفاتيح (للأجهزة اللوحية والحاسوب)",
     guideKbdDesc: "المسافة: تشغيل/إيقاف مؤقت · ← →: تقديم/ترجيع ٥ ثوانٍ · M: كتم الصوت · F: ملء الشاشة · C: إظهار الدردشة · S: تمديد الشاشة",
     welcomeStartBtn: "✓ فهمت، لنبدأ الاستخدام",
+guideBtnHub: "العودة للرئيسية وإغلاق الجلسة",
+    guideBtnPlay: "تشغيل أو إيقاف المحاضرة (مسطرة Space)",
+    guideBtnSeek: "تقديم أو ترجيع 10 ثوانٍ (الأسهم ← →)",
+    guideBtnEnh: "فلتر تنقية الصوت وعزل الصفير وهواء القاعة",
+    guideBtnSpeed: "تسريع أو إبطاء صوت المحاضرة (0.75× - 2×)",
+    guideBtnChat: "إظهار أو إخفاء محادثات الطلاب المتزامنة",
+    guideHubBatchHint: "اختر كليتك وفصلك ونزل كامل محاضرات المادة بضغطة واحدة وبمعدل آمن يمنع حظر حسابك.",
+    guideHubLibHint: "استعرض جميع المحاضرات المحفوظة محلياً، مع إمكانية تعليم المحاضرات المشاهدة (✓) أو حذفها لتفريغ الذاكرة.",
+    guideHubDirHint: "تصفح البرامج الدراسية وسلاسل الـ LMS والبحث السريع في أكثر من 1,160 مادة جامعية معتمدة.",
+    courseDirBadge: "تصفح شامل",
+    guideBtnDescAll: "زر Hub للعودة للرئيسية وإغلاق الجلسة · زر Play للتشغيل والإيقاف · زرا ±10s للقفز السريع · زر Speed للتحكم بالسرعة حتى 2× · وزر Fullscreen لملء الشاشة.",
 slide1Tag: "لوحة الطالب الذكية",
     slide1Title: "الوصول السريع والتشغيل الفوري دون إنترنت",
     slide1Desc: "شاشة رئيسية موحدة تجمع التنزيل المجمّع، مكتبة محاضراتك المحفوظة، واستئناف آخر محاضرة شاهدتها بضغطة واحدة.",
@@ -2796,10 +2818,10 @@ try {
     closeSession: closeSession
   };
 
-  // Stage Floating Back to Hub button (for landscape/fullscreen mode)
-  const stageBackBtn = byId("stageBackToHubBtn");
-  if (stageBackBtn) {
-    stageBackBtn.addEventListener("click", closeSession);
+  // Bottom Control Bar & Header Return to Hub buttons
+  const playerHubBtn = byId("playerHubBtn");
+  if (playerHubBtn) {
+    playerHubBtn.addEventListener("click", closeSession);
   }
   const headerBackBtn = byId("headerBackToHubBtn");
   if (headerBackBtn) {
@@ -6089,29 +6111,32 @@ try {
     }
 
     // 2. Control Onboarding Studio Card (#hubIntroCard)
+    // Default always to opened full details unless user explicitly clicked hide details
     const introCard = byId("hubIntroCard");
     const introMini = byId("introMini");
     const introFull = byId("introFull");
     if (introCard && introMini && introFull) {
-      if (savedRecordsCache.length === 0) {
-        introCard.classList.remove("is-compact");
+      let isCollapsed = false;
+      try {
+        isCollapsed = localStorage.getItem("svu_intro_collapsed") === "1";
+      } catch (_) {}
+
+      if (isCollapsed) {
+        introCard.classList.add("is-compact");
         introCard.classList.remove("is-expanded");
+        introMini.style.display = "flex";
+        introFull.style.display = "none";
+      } else {
+        introCard.classList.remove("is-compact");
+        introCard.classList.add("is-expanded");
         introMini.style.display = "none";
         introFull.style.display = "";
-      } else {
-        introCard.classList.add("is-compact");
-        introMini.style.display = "flex";
-        // If not explicitly toggled by student, keep full body hidden
-        if (!introCard.classList.contains("is-expanded")) {
-          introFull.style.display = "none";
-        } else {
-          introFull.style.display = "";
-        }
       }
     }
 
     // 3. Resume Last Played Card (#hubResumeCard)
     const resumeCard = byId("hubResumeCard");
+    const resumeDivider = byId("hubResumeDivider");
     if (resumeCard) {
       let lastPlayed = null;
       try {
@@ -6170,8 +6195,10 @@ try {
           };
         }
         resumeCard.hidden = false;
+        if (resumeDivider) resumeDivider.hidden = false;
       } else {
         resumeCard.hidden = true;
+        if (resumeDivider) resumeDivider.hidden = true;
       }
     }
 
@@ -6314,28 +6341,50 @@ try {
         byId("file").click();
       });
     }
+
+    // Bug 8: Course Directory featured tile
+    const courseDirTile = byId("hubCourseDirTile");
+    if (courseDirTile) {
+      courseDirTile.addEventListener("click", () => {
+        openCourseDirectory();
+      });
+    }
+
     const viewAllBtn = byId("hubViewAllSavedBtn");
     if (viewAllBtn) {
       viewAllBtn.addEventListener("click", () => openDialog("saved"));
     }
 
-    // Intro Card Toggle (Mini pill click, toggle btn, and collapse btn)
+    // Bug 7: Intro Card Expand / Collapse with LocalStorage persistence
     const introCard = byId("hubIntroCard");
     const introMini = byId("introMini");
     const introFull = byId("introFull");
     const introMiniToggle = byId("introMiniToggleBtn");
     const introCollapse = byId("introCollapseBtn");
 
-    function toggleIntroCard(e) {
+    function collapseIntroCard(e) {
       if (e) e.stopPropagation();
-      if (!introCard || !introFull) return;
-      const isExp = introCard.classList.toggle("is-expanded");
-      introFull.style.display = isExp ? "" : "none";
+      if (!introCard || !introFull || !introMini) return;
+      introCard.classList.add("is-compact");
+      introCard.classList.remove("is-expanded");
+      introMini.style.display = "flex";
+      introFull.style.display = "none";
+      try { localStorage.setItem("svu_intro_collapsed", "1"); } catch (_) {}
     }
 
-    if (introMini) introMini.addEventListener("click", toggleIntroCard);
-    if (introMiniToggle) introMiniToggle.addEventListener("click", toggleIntroCard);
-    if (introCollapse) introCollapse.addEventListener("click", toggleIntroCard);
+    function expandIntroCard(e) {
+      if (e) e.stopPropagation();
+      if (!introCard || !introFull || !introMini) return;
+      introCard.classList.remove("is-compact");
+      introCard.classList.add("is-expanded");
+      introMini.style.display = "none";
+      introFull.style.display = "";
+      try { localStorage.removeItem("svu_intro_collapsed"); } catch (_) {}
+    }
+
+    if (introMini) introMini.addEventListener("click", expandIntroCard);
+    if (introMiniToggle) introMiniToggle.addEventListener("click", expandIntroCard);
+    if (introCollapse) introCollapse.addEventListener("click", collapseIntroCard);
     const introInstallBtn = byId("introInstallBtn");
     if (introInstallBtn) {
       introInstallBtn.addEventListener("click", () => {
