@@ -4129,6 +4129,215 @@
     color: var(--dim);
   }
 
+
+  /* ==================== SUB-WINDOW TAB INTROS & BUTTON ENHANCEMENTS ==================== */
+  .tab-pane-intro {
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .tab-pane-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .tab-pane-desc {
+    font-size: 12px;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  /* Standalone Check for New Lectures Button in Saved Library */
+  .lib-standalone-action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .lib-check-new-btn {
+    height: 38px;
+    padding: 0 14px;
+    font-size: 12.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.16s ease;
+  }
+  .lib-check-new-btn:hover {
+    border-color: var(--blue);
+    background: rgba(56, 189, 248, 0.10);
+    color: var(--blue);
+  }
+
+  /* Batch Step 2 Search & Course Directory Button */
+  .batch-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .batch-search {
+    flex: 1;
+    min-width: 0;
+    height: 38px;
+    padding: 0 12px;
+    background: var(--bg);
+    color: var(--text);
+    border: 1.5px solid rgba(56, 189, 248, 0.4);
+    border-radius: var(--r);
+    font: inherit;
+    font-size: 13px;
+    transition: all 0.18s ease;
+  }
+  .batch-search:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+  }
+  .batch-course-dir-btn {
+    height: 38px;
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: var(--r);
+    background: rgba(139, 92, 246, 0.12);
+    color: #a78bfa;
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    cursor: pointer;
+    white-space: nowrap;
+    flex: none;
+    transition: all 0.18s ease;
+  }
+  .batch-course-dir-btn:hover {
+    background: rgba(139, 92, 246, 0.22);
+    border-color: rgba(139, 92, 246, 0.55);
+    transform: translateY(-1px);
+  }
+
+  /* Batch Bottom Box: Centered Action & Structured Statistics */
+  .batch-foot-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    text-align: center;
+    padding: 8px 0;
+  }
+  .batch-summary-chips {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .batch-stat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-size: 11.5px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    color: var(--dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .batch-stat-pill b {
+    color: var(--text);
+    font-weight: 700;
+  }
+  .batch-stat-pill.primary {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.35);
+    color: var(--blue);
+  }
+  .batch-stat-pill.primary b {
+    color: var(--blue);
+  }
+  .batch-stat-pill.saved {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.35);
+    color: #10b981;
+  }
+  .batch-stat-pill.saved b {
+    color: #10b981;
+  }
+  .batch-stat-pill.ready {
+    background: rgba(245, 158, 11, 0.12);
+    border-color: rgba(245, 158, 11, 0.35);
+    color: #f59e0b;
+  }
+  .batch-stat-pill.ready b {
+    color: #f59e0b;
+  }
+  .batch-foot-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .batch-start-btn {
+    height: 42px;
+    padding: 0 24px;
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+
+  /* Universal Disabled Button Grey-Out */
+  button:disabled,
+  button[disabled] {
+    opacity: 0.45 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+  }
+  button.primary:disabled,
+  button.primary[disabled] {
+    background: var(--panel2) !important;
+    color: var(--dim) !important;
+    border: 1px solid var(--line) !important;
+    box-shadow: none !important;
+  }
+
+  /* Quick Menu Sheet Clicking */
+  .sheet-card.profile-card {
+    cursor: pointer;
+    transition: background 0.16s ease, transform 0.12s ease;
+  }
+  .sheet-card.profile-card:hover {
+    background: var(--panel2);
+  }
+  .sheet-card.profile-card:active {
+    transform: scale(0.99);
+  }
+  .sheet-row.mode-row {
+    cursor: pointer;
+    transition: background 0.16s ease, transform 0.12s ease;
+    border-radius: var(--r);
+    padding: 8px 10px;
+    margin: 0 -10px;
+  }
+  .sheet-row.mode-row:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .sheet-row.mode-row:active {
+    transform: scale(0.99);
+  }
+
 </style>
 </head>
 <body>
@@ -4532,6 +4741,10 @@
   <div class="dlg-body">
     <!-- Tab 1: SVU Session Catalog -->
     <div id="paneRemote">
+      <div class="tab-pane-intro">
+        <div class="tab-pane-title" data-i18n="remoteTabTitle">جلسات ومحاضرات الجامعة (SVU)</div>
+        <div class="tab-pane-desc muted" data-i18n="remoteTabSub">استعراض الدليل المباشر للجامعة الافتراضية السورية وتصفّح المحاضرات حسب الفصل، البرنامج، المادة، والمدرس للتشغيل الفوري أو الحفظ أوفلاين.</div>
+      </div>
       <div id="noserver" class="muted" data-i18n="noServer" hidden style="margin-bottom:10px;"></div>
       <div class="cascade" id="cascade">
         <label for="selTerm" data-i18n="lblTerm">Term</label><select id="selTerm" disabled><option value="" data-i18n="selTerm">Select Term</option></select>
@@ -4549,8 +4762,10 @@
 
     <!-- Tab 2: Smart Batch Course Downloader -->
     <div id="paneBatch" hidden>
-      <div style="margin-bottom:6px;font-weight:700;font-size:15px;color:var(--text)" data-i18n="batchTitle">Smart Batch Course Downloader</div>
-      <div class="muted" data-i18n="batchSub" style="margin-bottom:12px;">Select your Term &amp; College, check the materials you study, pick Tutor, Class &amp; Lessons (or ALL), and download everything safely with one click. Already downloaded lectures are skipped automatically.</div>
+      <div class="tab-pane-intro">
+        <div class="tab-pane-title" data-i18n="batchTitle">تنزيل المقررات دفعة واحدة (Batch Downloader)</div>
+        <div class="tab-pane-desc muted" data-i18n="batchSub">اختر كليتك وفصلك، حدد المقررات التي تدرسها، واختر المدرس والشعبة لتنزيل كامل المحاضرات دفعة واحدة بمعدل آمن يمنع حظر حسابك.</div>
+      </div>
 
       <!-- Step 1: Term & College -->
       <div class="batch-step-box" id="batchStep1Box">
@@ -4577,7 +4792,11 @@
           </div>
         </div>
         <div class="batch-toolbar">
-          <input type="text" class="batch-search" id="batchCourseFilter" data-i18n-ph="batchFilterPh" placeholder="Search materials (e.g. BPG401)…">
+          <input type="text" class="batch-search" id="batchCourseFilter" data-i18n-ph="batchFilterPh" placeholder="بحث عن مادة (مثل BPG401، برمجة 1)…">
+          <button type="button" class="batch-course-dir-btn" id="batchCourseDirBtn" data-i18n-title="courseDirBtnTitle">
+            <svg class="i" style="width:14px;height:14px"><use href="#i-book"/></svg>
+            <span data-i18n="courseDirBtn">دليل المقررات</span>
+          </button>
         </div>
         <div class="batch-courses-list" id="batchCoursesList">
           <div class="muted" data-i18n="batchNoCollege" style="padding:18px;text-align:center;">Select a Term and College above to load all available materials.</div>
@@ -4586,15 +4805,22 @@
 
       <!-- Step 3: Safe Sequential Queue & Action Bar -->
       <div class="batch-footer">
-        <div class="batch-foot-row">
-          <div>
-            <div class="batch-summary-txt" id="batchSummaryTxt">0 materials · 0 lessons selected</div>
-            <div class="batch-safe-note" data-i18n="batchSafeNote">🛡 Safe Anti-Ban Mode: Downloads sequentially with polite delays to protect your connection.</div>
+        <div class="batch-foot-centered">
+          <!-- Structured Statistics Badges -->
+          <div class="batch-summary-chips" id="batchSummaryChips">
+            <span class="batch-stat-pill"><b id="statCoursesCount">0</b> <span data-i18n="statCourses">مقرر</span></span>
+            <span class="batch-stat-pill primary"><b id="statLessonsCount">0</b> <span data-i18n="statLessons">محاضرة محددة</span></span>
+            <span class="batch-stat-pill saved"><b id="statSavedCount">0</b> <span data-i18n="statSaved">محفوظة</span></span>
+            <span class="batch-stat-pill ready"><b id="statToDlCount">0</b> <span data-i18n="statToDl">جاهزة للتنزيل</span></span>
           </div>
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <button class="primary" id="batchStartBtn" disabled><svg class="i"><use href="#i-download"/></svg><span data-i18n="batchStartBtn">Download Selected Lectures Safely</span></button>
-            <button id="batchStopBtn" hidden><svg class="i"><use href="#i-close"/></svg><span data-i18n="batchStopBtn">Stop Queue</span></button>
-            <button id="batchOpenLibBtn" hidden><svg class="i"><use href="#i-save"/></svg><span data-i18n="batchOpenLib">Open Student Library</span></button>
+
+          <!-- Fallback text container for compatibility -->
+          <div class="batch-summary-txt" id="batchSummaryTxt" hidden>0 materials · 0 lessons selected</div>
+
+          <div class="batch-foot-actions">
+            <button class="primary batch-start-btn" id="batchStartBtn" disabled><svg class="i"><use href="#i-download"/></svg><span data-i18n="batchStartBtn">Download Selected Lectures Safely</span></button>
+            <button id="batchStopBtn" class="batch-stop-btn" hidden><svg class="i"><use href="#i-close"/></svg><span data-i18n="batchStopBtn">Stop Queue</span></button>
+            <button id="batchOpenLibBtn" class="batch-open-lib-btn" hidden><svg class="i"><use href="#i-save"/></svg><span data-i18n="batchOpenLib">Open Student Library</span></button>
           </div>
         </div>
         <div class="batch-queue-box" id="batchQueueBox" hidden>
@@ -4611,8 +4837,10 @@
 
     <!-- Tab 3: Direct .lrec Link (Separate Tab) -->
     <div id="paneLink" hidden>
-      <div style="margin-bottom:8px;font-weight:600;font-size:14px;" data-i18n="linkTitle">Download from Direct SVU Recording Link</div>
-      <div class="muted" data-i18n="linkSub" style="margin-bottom:12px;">Paste a direct .lrec URL from sessions.svuonline.org to download and play it immediately.</div>
+      <div class="tab-pane-intro">
+        <div class="tab-pane-title" data-i18n="linkTitle">تنزيل المحاضرة عبر الرابط المباشر</div>
+        <div class="tab-pane-desc muted" data-i18n="linkSub">الصق رابط .lrec مباشر من سيرفر جلسات الجامعة (sessions.svuonline.org) لتنزيله وتشغيله فوراً.</div>
+      </div>
       <div class="row-item static" id="urlPaste">
         <input type="text" id="pasteUrl" placeholder="http://sessions.svuonline.org/files/.../session.lrec" dir="ltr" style="flex:1;min-width:200px;padding:9px 12px;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:var(--r);font:inherit;">
         <button class="primary" id="pasteGo"><svg class="i"><use href="#i-download"/></svg><span data-i18n="downloadPlay">Download &amp; play</span></button>
@@ -4632,6 +4860,10 @@
 
     <!-- Tab 4: Open Local File -->
     <div id="paneFile" hidden>
+      <div class="tab-pane-intro">
+        <div class="tab-pane-title" data-i18n="fileTabTitle">تشغيل ملف محلي من جهازك (.lrec)</div>
+        <div class="tab-pane-desc muted" data-i18n="fileTabSub">اختر أو اسحب أي ملف محاضرة (.lrec) مسجل على هاتفك أو حاسوبك لتشغيله فوراً وبأعلى نقاء صوتي ودردشة متزامنة دون اتصال بالإنترنت.</div>
+      </div>
       <button class="dropzone" id="dropzone">
         <svg class="i"><use href="#i-upload"/></svg>
         <b data-i18n="dropTitle">Drop a .lrec file here</b>
@@ -4641,18 +4873,15 @@
 
     <!-- Tab 5: Organized Student Lecture Library -->
     <div id="paneSaved" hidden>
-      <div class="lib-top-bar">
-        <div class="lib-stats">
-          <span id="libStatsSummary"></span>
-          <span class="muted" id="usage"></span>
-        </div>
-        <div class="lib-top-actions">
-          <div class="lib-top-actions-row">
-            <button id="libCourseDirBtn" style="height:36px;padding:0 11px;font-size:12px;" data-i18n-title="courseDirBtnTitle"><svg class="i"><use href="#i-book"/></svg><span data-i18n="courseDirBtn">دليل المواد</span></button>
-            <button id="libCheckNewBtn" style="height:36px;padding:0 11px;font-size:12px;"><svg class="i"><use href="#i-refresh"/></svg><span data-i18n="libCheckNewBtn">Check for new lectures</span></button>
-          </div>
-          <button class="primary lib-batch-btn" id="libGoBatchBtn" style="height:36px;padding:0 11px;font-size:12px;"><svg class="i"><use href="#i-download"/></svg><span data-i18n="tabBatch">Batch download</span></button>
-        </div>
+      <div class="tab-pane-intro">
+        <div class="tab-pane-title" data-i18n="savedTabTitle">مكتبة الطالب للمحاضرات المحفوظة أوفلاين</div>
+        <div class="tab-pane-desc muted" data-i18n="savedTabSub">استعراض وإدارة جميع محاضراتك المحفوظة محلياً على هذا الجهاز للتشغيل ١٠٠٪ دون إنترنت، مع إمكانية تمييز المحاضرات المنتهية أو تفريغ المساحة.</div>
+      </div>
+
+      <!-- Item 1: Standalone Check for New Lectures Button separated at top -->
+      <div class="lib-standalone-action">
+        <button id="libCheckNewBtn" class="lib-check-new-btn"><svg class="i"><use href="#i-refresh"/></svg><span data-i18n="libCheckNewBtn">Check for new lectures</span></button>
+        <span class="muted" id="usage" style="font-size:11.5px;margin-inline-start:auto;"></span>
       </div>
 
       <!-- Sync / New Lectures Banner -->
@@ -5347,6 +5576,6 @@
 
 <audio id="audio" preload="auto"></audio>
 
-<script src="app.js?v=2.7.4"></script>
+<script src="app.js?v=2.7.5"></script>
 </body>
 </html>

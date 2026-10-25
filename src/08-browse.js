@@ -1586,9 +1586,17 @@
         d: tasks.length
       });
     }
+
+    // Structured Statistics Badges
+    if (byId("statCoursesCount")) byId("statCoursesCount").textContent = selectedCoursesCount;
+    if (byId("statLessonsCount")) byId("statLessonsCount").textContent = totalSelectedLessons;
+    if (byId("statSavedCount")) byId("statSavedCount").textContent = alreadySavedCount;
+    if (byId("statToDlCount")) byId("statToDlCount").textContent = tasks.length;
+
+    // Disabled when queue is running OR no lessons are selected OR 0 to download
     const startBtn = byId("batchStartBtn");
     if (startBtn) {
-      startBtn.disabled = batchQueueRunning || tasks.length === 0;
+      startBtn.disabled = batchQueueRunning || totalSelectedLessons === 0 || tasks.length === 0;
     }
   }
 
@@ -1804,6 +1812,11 @@
       batchState.showSelectedOnly = false;
       saveBatchState();
       renderBatchCoursesList(false);
+    });
+  }
+  if (byId("batchCourseDirBtn")) {
+    byId("batchCourseDirBtn").addEventListener("click", () => {
+      openCourseDirectory();
     });
   }
   if (byId("batchRefreshBtn")) {

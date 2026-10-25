@@ -1091,13 +1091,26 @@
       if (byId("aboutBtn")) byId("aboutBtn").click();
     });
   }
-  if (byId("mobileProfileManageBtn")) {
+  // Item 5: Quick Menu - clicking the big boxes also triggers profile and theme toggle
+  const mobileProfileCard = byId("mobileProfileCard");
+  if (mobileProfileCard) {
+    mobileProfileCard.addEventListener("click", () => {
+      closeMobileSheet();
+      if (byId("profileBtn")) byId("profileBtn").click();
+    });
+  } else if (byId("mobileProfileManageBtn")) {
     byId("mobileProfileManageBtn").addEventListener("click", () => {
       closeMobileSheet();
       if (byId("profileBtn")) byId("profileBtn").click();
     });
   }
-  if (byId("mobileModeToggle")) {
+
+  const mobileModeRow = document.querySelector(".sheet-row.mode-row");
+  if (mobileModeRow) {
+    mobileModeRow.addEventListener("click", () => {
+      applyTheme(curTheme, curMode === "light" ? "dark" : "light");
+    });
+  } else if (byId("mobileModeToggle")) {
     byId("mobileModeToggle").addEventListener("click", () => {
       applyTheme(curTheme, curMode === "light" ? "dark" : "light");
     });
