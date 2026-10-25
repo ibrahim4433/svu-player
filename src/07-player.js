@@ -557,10 +557,36 @@
   // Pin / Auto-hide bottom controls + 3-second mouse movement visibility inside player window
   let mouseIdleTimer = null;
   let isHoveringControls = false;
+  let isForceHidden = false;
   const stageWrap = stage.closest(".stage-wrap") || stage;
   const stageBackBtn = byId("stageBackToHubBtn");
+  const hideControlsBtn = byId("hideControlsBtn");
+
+  function forceHideAll() {
+    isForceHidden = true;
+    if (mouseIdleTimer) {
+      clearTimeout(mouseIdleTimer);
+      mouseIdleTimer = null;
+    }
+    if (cinemaTimer) {
+      clearTimeout(cinemaTimer);
+      cinemaTimer = null;
+    }
+    controls.classList.remove("mouse-active", "active");
+    if (stageBackBtn) stageBackBtn.classList.remove("visible");
+    stageWrap.classList.add("cursor-none");
+  }
+
+  function handleUserMovement() {
+    if (isForceHidden) {
+      isForceHidden = false;
+      stageWrap.classList.remove("cursor-none");
+    }
+    showControlsOnMouseActivity();
+  }
 
   function showControlsOnMouseActivity() {
+    if (isForceHidden) return;
     controls.classList.add("mouse-active");
     if (stageBackBtn) stageBackBtn.classList.add("visible");
     if (mouseIdleTimer) {
@@ -574,8 +600,8 @@
     }, 3000);
   }
 
-  stageWrap.addEventListener("mousemove", showControlsOnMouseActivity, { passive: true });
-  stageWrap.addEventListener("pointermove", showControlsOnMouseActivity, { passive: true });
+  stageWrap.addEventListener("mousemove", handleUserMovement, { passive: true });
+  stageWrap.addEventListener("pointermove", handleUserMovement, { passive: true });
   stageWrap.addEventListener("mouseleave", () => {
     if (mouseIdleTimer) {
       clearTimeout(mouseIdleTimer);
@@ -596,7 +622,7 @@
   });
   controls.addEventListener("mouseleave", () => {
     isHoveringControls = false;
-    showControlsOnMouseActivity();
+    handleUserMovement();
   });
 
   if (stageBackBtn) {
@@ -606,7 +632,14 @@
     });
     stageBackBtn.addEventListener("mouseleave", () => {
       isHoveringControls = false;
-      showControlsOnMouseActivity();
+      handleUserMovement();
+    });
+  }
+
+  if (hideControlsBtn) {
+    hideControlsBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      forceHideAll();
     });
   }
 
@@ -759,6 +792,15 @@
       case "k":
         event.preventDefault();
         togglePlay();
+        break;
+      case "h":
+      case "H":
+        event.preventDefault();
+        if (controls.classList.contains("mouse-active") || controls.classList.contains("active")) {
+          forceHideAll();
+        } else {
+          handleUserMovement();
+        }
         break;
       case "ArrowLeft":
         event.preventDefault();

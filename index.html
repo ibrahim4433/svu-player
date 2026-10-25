@@ -4416,25 +4416,44 @@
     border-color: var(--blue);
     transform: translateY(0) scale(1.03);
   }
-  /* Visible ONLY when bottom controls cell is visible or player is paused */
-  body:not(.is-playing) .stage-back-to-hub-btn,
-  .stage-back-to-hub-btn.visible,
-  .stage-back-to-hub-btn.pinned,
-  .stage-wrap:has(.controls.mouse-active) .stage-back-to-hub-btn,
-  .stage-wrap:has(.controls.active) .stage-back-to-hub-btn,
-  .stage-wrap:has(.controls.pinned) .stage-back-to-hub-btn,
-  .stage-wrap:has(.controls:hover) .stage-back-to-hub-btn,
-  .stage-wrap:has(.controls-zone:hover) .stage-back-to-hub-btn,
-  .stage-wrap:has(.seek.drag) .stage-back-to-hub-btn,
-  .stage-back-to-hub-btn:hover {
+
+  /* PC UI: Hide redundant Exit Session button from header tags (only header < Hub button is used) */
+  .exit-session-btn {
+    display: none !important;
+  }
+
+  /* PC UI: In non-fullscreen, hide media corner back button completely (header < Hub button is right above it) */
+  @media (min-width: 769px) {
+    body:not(.fs) .stage-back-to-hub-btn {
+      display: none !important;
+    }
+  }
+
+  /* In fullscreen on PC, or on mobile landscape: reveal ONLY when .visible class is added in sync with controls */
+  .stage-back-to-hub-btn.visible {
     opacity: 1 !important;
     pointer-events: auto !important;
     transform: translateY(0) !important;
   }
+
+  /* If hovering directly over the button while visible, keep it visible */
+  .stage-back-to-hub-btn.visible:hover {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Force hide cursor and controls when Cinema Hide is active */
+  .stage-wrap.cursor-none,
+  .stage-wrap.cursor-none * {
+    cursor: none !important;
+  }
+
+  /* Always hide if no session is loaded */
   body:not(.has-session) .stage-back-to-hub-btn {
     display: none !important;
   }
-  /* Only show in horizontal mode; hide in portrait */
+
+  /* Hide in mobile portrait mode (where header < Hub is visible) */
   @media (orientation: portrait), (max-width: 680px) and (orientation: portrait) {
     .stage-back-to-hub-btn {
       display: none !important;
@@ -4980,6 +4999,12 @@
           <button class="tbtn on" id="stretchBtn" aria-pressed="true" data-i18n-title="stretchTitle" title="Enlarge the view to fill the available space (S)"><svg class="i"><use href="#i-stretch"/></svg><span data-i18n="stretch">Stretch</span></button>
           <button class="tbtn on" id="chatToggle" aria-pressed="true" data-i18n-title="chatTitle" title="Show/hide chat (C)"><svg class="i"><use href="#i-chat"/></svg><span data-i18n="chat">Chat</span></button>
           <button class="iconbtn" id="fsBtn" data-i18n-title="fullscreen" data-i18n-aria="fullscreen" title="Fullscreen (F)"><svg viewBox="0 0 24 24"><path d="M5 5h5v2H7v3H5zm9 0h5v5h-2V7h-3zM5 14h2v3h3v2H5zm12 0h2v5h-5v-2h3z"/></svg></button>
+          <button class="iconbtn" id="hideControlsBtn" data-i18n-title="hideControlsTitle" data-i18n-aria="hideControlsTitle" title="Hide controls & cursor (H)" aria-label="Hide controls & cursor">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+              <line x1="1" y1="1" x2="23" y2="23"/>
+            </svg>
+          </button>
           <button class="iconbtn" id="pinBtn" aria-pressed="false" data-i18n-title="pinControls" data-i18n-aria="pinControls" title="Pin / auto-hide controls">
             <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
           </button>
