@@ -1169,6 +1169,81 @@
     border: 1px solid var(--line); border-radius: var(--r); font-family: "Consolas", monospace; font-size: 12px; resize: vertical;
   }
 
+  /* Profile Backup & Restore Dialogs (#profExportDlg, #profImportDlg) */
+  dialog.backup-dlg { width: min(620px, 95vw); max-height: 90vh; }
+  .backup-dlg-body { padding: 16px 20px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+  .backup-target-info {
+    display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+    border-radius: var(--r-lg); background: var(--panel2); border: 1px solid var(--line-strong);
+  }
+  .backup-avatar {
+    width: 40px; height: 40px; border-radius: var(--r); background: var(--hover);
+    display: flex; align-items: center; justify-content: center; color: var(--blue); flex: none;
+  }
+  .backup-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .backup-prof-name { font-size: 14px; font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .backup-prof-sub { font-size: 11.5px; color: var(--dim); }
+
+  .backup-section-title { font-size: 12px; font-weight: 700; color: var(--dim); margin-top: 4px; }
+  .backup-checklist { display: flex; flex-direction: column; gap: 8px; }
+  .backup-check-item, .backup-radio-item {
+    display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px;
+    border-radius: var(--r); background: var(--bg); border: 1.5px solid var(--line);
+    cursor: pointer; transition: all 0.15s ease;
+  }
+  .backup-check-item:hover, .backup-radio-item:hover { border-color: var(--blue); background: var(--panel2); }
+  .backup-check-item input, .backup-radio-item input { margin-top: 3px; accent-color: var(--blue); cursor: pointer; flex: none; }
+  .backup-item-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .backup-item-text b { font-size: 12.5px; color: var(--text); }
+  .backup-item-text span { font-size: 11.5px; color: var(--dim); line-height: 1.4; }
+  .backup-count-badge {
+    font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px;
+    background: var(--panel2); border: 1px solid var(--line); color: var(--blue); flex: none; align-self: center;
+  }
+
+  .backup-dest-choices { display: flex; flex-direction: column; gap: 8px; }
+  .backup-filename-preview {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+    padding: 9px 12px; border-radius: var(--r); background: var(--panel2); border: 1px dashed var(--line-strong);
+  }
+  .backup-fn-label { font-size: 12px; font-weight: 600; color: var(--dim); }
+  .backup-filename-code {
+    font-family: "Consolas", monospace; font-size: 12px; font-weight: 700;
+    color: var(--gold-hi); background: rgba(0,0,0,0.25); padding: 3px 8px; border-radius: 4px;
+    word-break: break-all;
+  }
+
+  .backup-progress-wrap { display: flex; flex-direction: column; gap: 6px; padding-top: 4px; }
+  .backup-progress-bar {
+    width: 100%; height: 8px; border-radius: 99px; background: rgba(0,0,0,0.3);
+    overflow: hidden; border: 1px solid var(--line);
+  }
+  .backup-progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), #4ADE80); transition: width 0.15s ease; }
+  .backup-progress-status { font-size: 12px; color: var(--text); font-weight: 600; text-align: center; }
+
+  .dlg-actions {
+    display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+    padding: 12px 16px; border-top: 1px solid var(--line); background: var(--panel);
+  }
+
+  /* Sheet Profile Quick Action Chips */
+  .sheet-profile-actions {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 4px 0 12px;
+  }
+  .sheet-action-chip {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 8px 10px; border-radius: var(--r); background: var(--panel2);
+    border: 1px solid var(--line); color: var(--text); font-size: 12px; font-weight: 600;
+    transition: all 0.15s ease; cursor: pointer;
+  }
+  .sheet-action-chip:hover { border-color: var(--blue); background: var(--hover); color: var(--blue); }
+
+  /* Profile Card Export Button */
+  .prof-export-btn {
+    height: 32px; padding: 0 11px; font-size: 12px; display: inline-flex; align-items: center; gap: 5px;
+  }
+  .prof-export-btn svg { width: 13px; height: 13px; color: var(--blue); }
+
   /* ---------- SVU Course Directory Modal (#courseDirModal) ---------- */
   dialog.course-dir-dlg { width: min(920px, 96vw); max-height: 88vh; }
   .course-dir-body { padding: 16px 20px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
@@ -5275,6 +5350,7 @@
   <div class="dlg-head">
     <span class="dlg-title"><svg class="i"><use href="#i-user"/></svg><span data-i18n="profileModalTitle">Student Profiles &amp; Isolated Storage</span></span>
     <span style="flex:1"></span>
+    <button id="profImportBtn" style="height:32px;padding:0 12px;font-size:12px;display:inline-flex;align-items:center;gap:6px;" data-i18n="profImportBtn"><svg class="i" style="width:13px;height:13px"><use href="#i-upload"/></svg><span data-i18n="profImportBtnShort">استيراد نسخة</span></button>
     <button class="primary" id="profNewBtn" style="height:32px;padding:0 12px;font-size:12px;" data-i18n="profileNewBtn">+ New Profile</button>
     <button class="iconbtn" id="profileClose" data-i18n-aria="close" aria-label="Close"><svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg></button>
   </div>
@@ -5363,6 +5439,173 @@
         <button class="primary" id="profSaveAndLoadBtn" data-i18n="profileSaveAndLoadBtn">Save &amp; Open in Batch Download</button>
       </div>
     </div>
+  </div>
+</dialog>
+
+<!-- Hidden File Input for Profile Backup Import -->
+<input type="file" id="profImportFileInput" accept=".svubackup,.svuprofile,.json" style="display:none">
+
+<!-- Profile Export Modal (#profExportDlg) -->
+<dialog id="profExportDlg" class="backup-dlg">
+  <div class="dlg-head">
+    <span class="dlg-title">
+      <svg class="i"><use href="#i-download"/></svg>
+      <span data-i18n="profExportModalTitle">تصدير بيانات البروفايل</span>
+    </span>
+    <span style="flex:1"></span>
+    <button class="iconbtn" id="profExportClose" aria-label="Close">
+      <svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg>
+    </button>
+  </div>
+  <div class="backup-dlg-body">
+    <div class="backup-target-info">
+      <div class="backup-avatar"><svg class="i" style="width:20px;height:20px"><use href="#i-user"/></svg></div>
+      <div class="backup-meta">
+        <div class="backup-prof-name" id="exportProfName">اسم البروفايل</div>
+        <div class="backup-prof-sub" id="exportProfSub">SVU Profile Backup</div>
+      </div>
+    </div>
+    
+    <div class="backup-section-title" data-i18n="profExportSelectItems">اختر البيانات المراد تضمينها في النسخة الاحتياطية:</div>
+    <div class="backup-checklist">
+      <label class="backup-check-item">
+        <input type="checkbox" id="exportOptSettings" checked>
+        <div class="backup-item-text">
+          <b data-i18n="profExportOptSettings">إعدادات البروفايل والمقررات</b>
+          <span data-i18n="profExportOptSettingsDesc">الثيم، اللغة، الفصل، البرنامج، والمقررات والشعب المسجلة.</span>
+        </div>
+      </label>
+      <label class="backup-check-item">
+        <input type="checkbox" id="exportOptHistory" checked>
+        <div class="backup-item-text">
+          <b data-i18n="profExportOptHistory">سجل المشاهدة والمحاضرات المنتهية</b>
+          <span data-i18n="profExportOptHistoryDesc">حالة الإتمام (Done) وتاريخ آخر مشاهدة لكل جلسة.</span>
+        </div>
+      </label>
+      <label class="backup-check-item">
+        <input type="checkbox" id="exportOptBatch" checked>
+        <div class="backup-item-text">
+          <b data-i18n="profExportOptBatch">جلسة التنزيل الجماعي وقائمة الانتظار</b>
+          <span data-i18n="profExportOptBatchDesc">حالة التنزيل الحالية والمحاضرات المحفوظة في قائمة الفحص.</span>
+        </div>
+      </label>
+      <label class="backup-check-item">
+        <input type="checkbox" id="exportOptVideos" checked>
+        <div class="backup-item-text">
+          <b data-i18n="profExportOptVideos">ملفات المحاضرات المحفوظة أوفلاين (الفيديوهات والـ .lrec)</b>
+          <span data-i18n="profExportOptVideosDesc" id="exportOptVideosDesc">تضمين جميع الجلسات المسجلة في المكتبة داخل ملف النسخة الاحتياطية.</span>
+        </div>
+        <span class="backup-count-badge" id="exportLecturesCountBadge">0 محاضرة</span>
+      </label>
+    </div>
+
+    <div class="backup-filename-preview">
+      <span class="backup-fn-label" data-i18n="profBackupFileName">اسم الملف المتولد:</span>
+      <code id="exportFileNamePreview" class="backup-filename-code">SVU_Profile_Backup.svubackup</code>
+    </div>
+
+    <div class="backup-progress-wrap" id="exportProgressWrap" style="display:none;">
+      <div class="backup-progress-bar">
+        <div class="backup-progress-fill" id="exportProgressFill" style="width:0%"></div>
+      </div>
+      <div class="backup-progress-status" id="exportProgressStatus">جارٍ تجهيز ملف النسخة الاحتياطية...</div>
+    </div>
+  </div>
+  <div class="dlg-actions">
+    <button id="profExportCancelBtn" data-i18n="profileCancelBtn">إلغاء</button>
+    <button class="primary" id="profExportStartBtn" style="display:inline-flex;align-items:center;gap:6px;">
+      <svg class="i" style="width:14px;height:14px"><use href="#i-download"/></svg>
+      <span data-i18n="profExportStartBtn">بدء تصدير النسخة الاحتياطية</span>
+    </button>
+  </div>
+</dialog>
+
+<!-- Profile Import Modal (#profImportDlg) -->
+<dialog id="profImportDlg" class="backup-dlg">
+  <div class="dlg-head">
+    <span class="dlg-title">
+      <svg class="i"><use href="#i-upload"/></svg>
+      <span data-i18n="profImportModalTitle">استيراد نسخة بروفايل احتياطية</span>
+    </span>
+    <span style="flex:1"></span>
+    <button class="iconbtn" id="profImportClose" aria-label="Close">
+      <svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg>
+    </button>
+  </div>
+  <div class="backup-dlg-body">
+    <div class="backup-target-info">
+      <div class="backup-avatar"><svg class="i" style="width:20px;height:20px"><use href="#i-folder"/></svg></div>
+      <div class="backup-meta">
+        <div class="backup-prof-name" id="importProfFileName">ملف النسخة الاحتياطية</div>
+        <div class="backup-prof-sub" id="importProfMeta">تاريخ التصدير: -- | النسخة: --</div>
+      </div>
+    </div>
+
+    <!-- Import Mode: Create New Profile or Merge -->
+    <div class="backup-section-title" data-i18n="profImportDestTitle">وجهة الاستيراد:</div>
+    <div class="backup-dest-choices">
+      <label class="backup-radio-item">
+        <input type="radio" name="profImportDest" value="new" checked>
+        <div>
+          <b data-i18n="profImportDestNew">إنشاء بروفايل جديد منفصل ومستقل</b>
+          <span data-i18n="profImportDestNewDesc">يتم إنشاء بروفايل جديد باسم الملف أو اسم البروفايل الأصلي مع تخزين معزول.</span>
+        </div>
+      </label>
+      <label class="backup-radio-item">
+        <input type="radio" name="profImportDest" value="merge">
+        <div>
+          <b data-i18n="profImportDestMerge">دمج البيانات في البروفايل الحالي النشط</b>
+          <span data-i18n="profImportDestMergeDesc">إضافة المحاضرات وسجل المشاهدة إلى البروفايل النشط حالياً دون مسح الموجود.</span>
+        </div>
+      </label>
+    </div>
+
+    <div class="backup-section-title" data-i18n="profImportSelectItems">اختر البيانات المراد استيرادها:</div>
+    <div class="backup-checklist">
+      <label class="backup-check-item">
+        <input type="checkbox" id="importOptSettings" checked>
+        <div class="backup-item-text">
+          <b data-i18n="profExportOptSettings">إعدادات البروفايل والمقررات</b>
+          <span id="importSettingsDesc" data-i18n="profExportOptSettingsDesc">الثيم، اللغة، الفصل، البرنامج والمقررات.</span>
+        </div>
+      </label>
+      <label class="backup-check-item">
+        <input type="checkbox" id="importOptHistory" checked>
+        <div class="backup-item-text">
+          <b data-i18n="profExportOptHistory">سجل المشاهدة والمحاضرات المنتهية</b>
+          <span id="importHistoryDesc" data-i18n="profExportOptHistoryDesc">سجل المشاهدة وحالة الإتمام.</span>
+        </div>
+      </label>
+      <label class="backup-check-item">
+        <input type="checkbox" id="importOptBatch" checked>
+        <div class="backup-item-text">
+          <b data-i18n="profExportOptBatch">جلسة التنزيل الجماعي</b>
+          <span id="importBatchDesc" data-i18n="profExportOptBatchDesc">قائمة التنزيل الجماعي.</span>
+        </div>
+      </label>
+      <label class="backup-check-item">
+        <input type="checkbox" id="importOptVideos" checked>
+        <div class="backup-item-text">
+          <b data-i18n="profExportOptVideos">ملفات المحاضرات المحفوظة أوفلاين (.lrec)</b>
+          <span id="importVideosDesc" data-i18n="profExportOptVideosDesc">استعادة ملفات الفيديو المسجلة إلى المكتبة المعزولة.</span>
+        </div>
+        <span class="backup-count-badge" id="importLecturesCountBadge">0 محاضرة</span>
+      </label>
+    </div>
+
+    <div class="backup-progress-wrap" id="importProgressWrap" style="display:none;">
+      <div class="backup-progress-bar">
+        <div class="backup-progress-fill" id="importProgressFill" style="width:0%"></div>
+      </div>
+      <div class="backup-progress-status" id="importProgressStatus">جارٍ استيراد البيانات...</div>
+    </div>
+  </div>
+  <div class="dlg-actions">
+    <button id="profImportCancelBtn" data-i18n="profileCancelBtn">إلغاء</button>
+    <button class="primary" id="profImportStartBtn" style="display:inline-flex;align-items:center;gap:6px;">
+      <svg class="i" style="width:14px;height:14px"><use href="#i-upload"/></svg>
+      <span data-i18n="profImportStartBtn">بدء الاستيراد</span>
+    </button>
   </div>
 </dialog>
 
@@ -5734,6 +5977,18 @@
       <button class="sheet-pill-btn" id="mobileProfileManageBtn">
         <svg class="i" style="width:13px;height:13px"><use href="#i-user"/></svg>
         <span data-i18n="manageProfilesBtn">Manage</span>
+      </button>
+    </div>
+
+    <!-- Active Profile Quick Backup / Restore Actions -->
+    <div class="sheet-profile-actions">
+      <button class="sheet-action-chip" id="mobileExportProfileBtn" title="تصدير البروفايل">
+        <svg class="i" style="width:13px;height:13px"><use href="#i-download"/></svg>
+        <span data-i18n="profExportBtnShort">تصدير نسخة</span>
+      </button>
+      <button class="sheet-action-chip" id="mobileImportProfileBtn" title="استيراد بروفايل">
+        <svg class="i" style="width:13px;height:13px"><use href="#i-upload"/></svg>
+        <span data-i18n="profImportBtnShort">استيراد نسخة</span>
       </button>
     </div>
 

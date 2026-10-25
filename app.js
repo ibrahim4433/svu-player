@@ -451,6 +451,33 @@ try {
       exitSessionTitle: "Return to Student Hub",
       backToHub: "Hub",
     backToHome: "Back to Home",
+exportProfileBtn: "Export Profile Backup",
+    exportProfileShort: "Export Backup",
+    importProfileBtn: "Import Profile Backup",
+    importProfileShort: "Import Backup",
+    exportProfileTitle: "Export Profile Backup",
+    backupSelectTitle: "Select data to include in backup file:",
+    backupOptSettings: "Profile Settings & Preferences",
+    backupOptSettingsDesc: "Name, theme, appearance, language, and pre-configured courses.",
+    backupOptWatched: "Watched History & Progress",
+    backupOptWatchedDesc: "Watched checkmarks (✓) and completion dates.",
+    backupOptBatch: "Batch Download Selection & Last Session",
+    backupOptBatchDesc: "Selected courses state and last played lecture.",
+    backupOptLectures: "Offline Saved Video Lectures (.lrec)",
+    backupOptLecturesDesc: "Includes local video/audio lecture files for 100% offline transfer to another device.",
+    backupTargetFile: "Auto-generated export filename:",
+    exportDownloadBtn: "Export & Download Backup",
+    importProfileTitle: "Import Profile Backup",
+    importDestTitle: "Choose import destination:",
+    importModeNew: "Create as a New Profile",
+    importModeNewDesc: "Creates a separate profile with isolated storage without modifying existing profiles.",
+    importModeMerge: "Overwrite / Merge into Active Profile",
+    importModeMergeDesc: "Merges lectures and updates settings of the current profile.",
+    importItemsTitle: "Select items to restore:",
+    importConfirmBtn: "Start Import Now",
+    exportSuccess: "Profile backup exported successfully!",
+    importSuccess: "Profile imported successfully!",
+    importInvalidFile: "Invalid or unrecognized SVU profile backup file.",
       introBadge: "SVU Player Studio",
       introTitle: "Syrian Virtual University Session Studio & Offline Library",
       introDesc: "A standalone web app working 100% locally and offline. Replay synchronized Linktivity (.lrec) lectures with video, crystal-clear 4-stage DSP voice enhancement, and interactive live chat, with safe batch downloads.",
@@ -839,6 +866,33 @@ slide1Tag: "Smart Student Hub",
       exitSessionTitle: "العودة إلى لوحة الطالب",
       backToHub: "الرئيسية",
     backToHome: "العودة للرئيسية",
+exportProfileBtn: "تصدير نسخة احتياطية للبروفايل",
+    exportProfileShort: "تصدير البروفايل",
+    importProfileBtn: "استيراد نسخة بروفايل",
+    importProfileShort: "استيراد نسخة",
+    exportProfileTitle: "تصدير نسخة احتياطية للبروفايل",
+    backupSelectTitle: "حدد البيانات المراد تضمينها في ملف النسخة الاحتياطية:",
+    backupOptSettings: "إعدادات وتفضيلات البروفايل",
+    backupOptSettingsDesc: "الاسم، السمة، المظهر، اللغة، والمقررات والشعب المحددة مسبقاً.",
+    backupOptWatched: "سجل المشاهدة والمحاضرات المنتهية",
+    backupOptWatchedDesc: "علامات إتمام المحاضرات (✓) وتاريخ مشاهدتها.",
+    backupOptBatch: "حالة التنزيل والمفضلات",
+    backupOptBatchDesc: "بيانات المواد المحددة في التنزيل المجمّع وآخر جلسة تم فتحها.",
+    backupOptLectures: "المحاضرات وملفات الفيديو المحفوظة أوفلاين (.lrec)",
+    backupOptLecturesDesc: "تضمين جميع فيديوهات وملفات المحاضرات المحفوظة محلياً لنقلها لجهاز آخر دون إعادة تنزيلها.",
+    backupTargetFile: "اسم ملف التصدير التلقائي:",
+    exportDownloadBtn: "تصدير وتنزيل الملف الآن",
+    importProfileTitle: "استيراد نسخة احتياطية للبروفايل",
+    importDestTitle: "طريقة استيراد البيانات:",
+    importModeNew: "إنشاء كبروفايل جديد ومستقل",
+    importModeNewDesc: "سيتم إنشاء بروفايل إضافي جديد مع ذاكرة تخزين ومكتبة منفصلة دون التأثير على بروفايلاتك الحالية.",
+    importModeMerge: "الكتابة فوق/دمج مع البروفايل الحالي النشط",
+    importModeMergeDesc: "سيتم دمج المحاضرات وتحديث إعدادات البروفايل النشط حالياً.",
+    importItemsTitle: "العناصر المراد استعادتها:",
+    importConfirmBtn: "بدء الاستيراد الآن",
+    exportSuccess: "تم تصدير النسخة الاحتياطية للبروفايل بنجاح!",
+    importSuccess: "تم استيراد البروفايل بنجاح!",
+    importInvalidFile: "ملف النسخة الاحتياطية غير صالح أو تالف.",
       introBadge: "استوديو مشغّل SVU",
       introTitle: "مشغّل ومكتبة محاضرات الجامعة الافتراضية السورية",
       introDesc: "تطبيق ويب مستقل ومجاني، يعمل بالكامل محلياً ودون إنترنت (١٠٠٪ Offline). يتيح لطلاب الجامعة الافتراضية تشغيل ملفات Linktivity (.lrec) المتزامنة (الشاشة، الصوت، والدردشة المباشرة)، مع معالجة ذكية لصوت المدرس وتنزيل جميع المواد بأمان وبضغطة واحدة.",
@@ -5827,6 +5881,13 @@ try {
       editBtn.addEventListener("click", () => openProfileEditor(prof));
       actions.appendChild(editBtn);
 
+      const exportBtn = document.createElement("button");
+      exportBtn.className = "prof-export-btn";
+      exportBtn.title = t("profExportTooltip");
+      exportBtn.innerHTML = "<svg class=\"i\"><use href=\"#i-download\"/></svg><span>" + escapeHtml(t("profExportBtnShort")) + "</span>";
+      exportBtn.addEventListener("click", () => openProfileExportModal(prof.id));
+      actions.appendChild(exportBtn);
+
       if (prof.id !== "default") {
         const delBtn = document.createElement("button");
         delBtn.innerHTML = "<svg class=\"i\"><use href=\"#i-trash\"/></svg><span>" + escapeHtml(t("profileDeleteBtn")) + "</span>";
@@ -5902,6 +5963,598 @@ try {
   if (byId("profSaveAndLoadBtn")) {
     byId("profSaveAndLoadBtn").addEventListener("click", () => saveProfileFromEditor(true));
   }
+
+  /* ====================================================================== *
+   * PROFILE ONE-SHOT BACKUP & RESTORE CONTROLLER (EXPORT / IMPORT)
+   * ====================================================================== */
+  const profExportDlg = byId("profExportDlg");
+  const profImportDlg = byId("profImportDlg");
+  const profImportFileInput = byId("profImportFileInput");
+  let currentExportProfId = null;
+  let pendingImportBundle = null;
+
+  function getBackupFileName(profName) {
+    const safeName = (profName || "Profile")
+      .trim()
+      .replace(/[\\/:*?"<>|\s]+/g, "_")
+      .replace(/^_+|_+$/g, "") || "Profile";
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const dd = String(now.getDate()).padStart(2, "0");
+    return "SVU_Profile_" + safeName + "_" + yyyy + "-" + mm + "-" + dd + ".svubackup";
+  }
+
+  function getDbNameForProf(profId) {
+    if (!profId || profId === "default") return "lrec-library";
+    return "lrec-library-" + profId.replace(/[^a-zA-Z0-9_-]/g, "_");
+  }
+
+  function openProfIndexedDB(profId) {
+    return new Promise((resolve, reject) => {
+      const dbName = getDbNameForProf(profId);
+      const req = indexedDB.open(dbName, 3);
+      req.onupgradeneeded = () => {
+        const db = req.result;
+        if (!db.objectStoreNames.contains("files")) db.createObjectStore("files", { keyPath: "id" });
+        if (!db.objectStoreNames.contains("transcripts")) db.createObjectStore("transcripts", { keyPath: "id" });
+        if (!db.objectStoreNames.contains("enhanced")) db.createObjectStore("enhanced", { keyPath: "id" });
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  async function getAllRecordsFromProfDB(profId) {
+    const db = await openProfIndexedDB(profId);
+    return new Promise((resolve, reject) => {
+      try {
+        const tx = db.transaction(["files", "transcripts", "enhanced"], "readonly");
+        const filesStore = tx.objectStore("files");
+        const transStore = tx.objectStore("transcripts");
+        const enhStore = tx.objectStore("enhanced");
+
+        const reqFiles = filesStore.getAll();
+        const reqTrans = transStore.getAll();
+        const reqEnh = enhStore.getAll();
+
+        tx.oncomplete = () => {
+          db.close();
+          resolve({
+            files: reqFiles.result || [],
+            transcripts: reqTrans.result || [],
+            enhanced: reqEnh.result || []
+          });
+        };
+        tx.onerror = tx.onabort = () => {
+          db.close();
+          reject(tx.error);
+        };
+      } catch (e) {
+        db.close();
+        resolve({ files: [], transcripts: [], enhanced: [] });
+      }
+    });
+  }
+
+  function blobToDataUrl(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  async function dataUrlToBlob(dataUrl, defaultType) {
+    if (!dataUrl) return null;
+    try {
+      const res = await fetch(dataUrl);
+      return await res.blob();
+    } catch (e) {
+      const comma = dataUrl.indexOf(",");
+      const header = comma >= 0 ? dataUrl.slice(0, comma) : "";
+      const b64 = comma >= 0 ? dataUrl.slice(comma + 1) : dataUrl;
+      const match = header.match(/:(.*?);/);
+      const mime = (match && match[1]) || defaultType || "application/octet-stream";
+      const binStr = atob(b64);
+      const len = binStr.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binStr.charCodeAt(i);
+      }
+      return new Blob([bytes], { type: mime });
+    }
+  }
+
+  function formatBackupBytes(bytes) {
+    if (!bytes || bytes <= 0) return "0 B";
+    const units = ["B", "KB", "MB", "GB"];
+    const i = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+    return (bytes / Math.pow(1024, i)).toFixed(1) + " " + units[i];
+  }
+
+  async function openProfileExportModal(profId) {
+    currentExportProfId = profId || activeProfileId || "default";
+    const prof = profilesList.find(p => p.id === currentExportProfId) || profilesList[0];
+    if (!prof) return;
+
+    const profName = getProfileDisplayName(prof);
+    if (byId("exportProfName")) byId("exportProfName").textContent = profName;
+    if (byId("exportProfSub")) {
+      byId("exportProfSub").textContent = (prof.program || "SVU") + " · " + (prof.term || "Term") + " · " + (prof.theme || "default");
+    }
+    const genFileName = getBackupFileName(profName);
+    if (byId("exportFileNamePreview")) byId("exportFileNamePreview").textContent = genFileName;
+
+    // Reset options
+    if (byId("exportOptSettings")) byId("exportOptSettings").checked = true;
+    if (byId("exportOptHistory")) byId("exportOptHistory").checked = true;
+    if (byId("exportOptBatch")) byId("exportOptBatch").checked = true;
+    if (byId("exportOptVideos")) byId("exportOptVideos").checked = true;
+
+    // Reset progress
+    const progressWrap = byId("exportProgressWrap");
+    if (progressWrap) progressWrap.style.display = "none";
+    const startBtn = byId("profExportStartBtn");
+    if (startBtn) startBtn.disabled = false;
+
+    // Calculate lectures count & size
+    try {
+      const records = await getAllRecordsFromProfDB(prof.id);
+      const fileCount = records.files.length;
+      let totalSize = 0;
+      for (const f of records.files) totalSize += (f.size || 0);
+
+      const countBadge = byId("exportLecturesCountBadge");
+      if (countBadge) {
+        countBadge.textContent = fileCount + " " + (fileCount === 1 ? t("profExportLecOne") : t("profExportLecMany")) + (totalSize > 0 ? " (" + formatBackupBytes(totalSize) + ")" : "");
+      }
+      const desc = byId("exportOptVideosDesc");
+      if (desc) {
+        desc.textContent = t("profExportOptVideosDesc") + " (" + fileCount + " " + (fileCount === 1 ? t("profExportLecOne") : t("profExportLecMany")) + ", " + formatBackupBytes(totalSize) + ")";
+      }
+    } catch (e) {
+      if (byId("exportLecturesCountBadge")) byId("exportLecturesCountBadge").textContent = "0";
+    }
+
+    if (profExportDlg) {
+      profExportDlg.showModal();
+    }
+  }
+
+  async function executeProfileExport() {
+    const prof = profilesList.find(p => p.id === currentExportProfId) || profilesList[0];
+    if (!prof) return;
+
+    const optSettings = byId("exportOptSettings")?.checked;
+    const optHistory = byId("exportOptHistory")?.checked;
+    const optBatch = byId("exportOptBatch")?.checked;
+    const optVideos = byId("exportOptVideos")?.checked;
+
+    const progressWrap = byId("exportProgressWrap");
+    const progressFill = byId("exportProgressFill");
+    const progressStatus = byId("exportProgressStatus");
+    const startBtn = byId("profExportStartBtn");
+
+    if (progressWrap) progressWrap.style.display = "flex";
+    if (startBtn) startBtn.disabled = true;
+
+    try {
+      if (progressStatus) progressStatus.textContent = t("profExportStatusPreparing");
+      if (progressFill) progressFill.style.width = "10%";
+
+      // 1. Settings
+      const profileData = optSettings ? { ...prof } : { id: prof.id, name: prof.name };
+
+      // 2. Watched history
+      let watchedData = {};
+      if (optHistory) {
+        const wk = prof.id === "default" ? "svu.watched.v1" : ("svu.watched.v1." + prof.id);
+        try {
+          watchedData = JSON.parse(localStorage.getItem(wk) || getPref(wk, "{}") || "{}");
+        } catch (e) {}
+      }
+
+      // 3. Batch state
+      let batchStateData = {};
+      if (optBatch) {
+        const bk = prof.id === "default" ? "svu.batch.state.v2" : ("svu.batch.state.v2." + prof.id);
+        try {
+          batchStateData = JSON.parse(localStorage.getItem(bk) || getPref(bk, "{}") || "{}");
+        } catch (e) {}
+      }
+
+      // 4. Library (Videos & Transcripts)
+      const libraryBundle = { files: [], transcripts: [], enhanced: [] };
+      if (optVideos) {
+        const records = await getAllRecordsFromProfDB(prof.id);
+        libraryBundle.transcripts = records.transcripts || [];
+        libraryBundle.enhanced = records.enhanced || [];
+
+        const totalFiles = records.files.length;
+        for (let i = 0; i < totalFiles; i++) {
+          const f = records.files[i];
+          const pct = Math.round(15 + ((i + 1) / Math.max(1, totalFiles)) * 75);
+          if (progressFill) progressFill.style.width = pct + "%";
+          if (progressStatus) {
+            progressStatus.textContent = t("profExportStatusPacking", {
+              current: i + 1,
+              total: totalFiles,
+              name: f.name || ("Lec " + (i + 1))
+            });
+          }
+
+          let dataUrl = "";
+          if (f.blob) {
+            dataUrl = await blobToDataUrl(f.blob);
+          }
+          libraryBundle.files.push({
+            id: f.id,
+            name: f.name,
+            size: f.size,
+            type: f.type,
+            savedAt: f.savedAt,
+            meta: f.meta,
+            dataUrl: dataUrl
+          });
+        }
+      }
+
+      if (progressFill) progressFill.style.width = "95%";
+      if (progressStatus) progressStatus.textContent = t("profExportStatusGenerating");
+
+      const bundle = {
+        format: "svu-profile-backup",
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        profile: profileData,
+        watched: watchedData,
+        batchState: batchStateData,
+        library: libraryBundle
+      };
+
+      const jsonStr = JSON.stringify(bundle, null, 2);
+      const blob = new Blob([jsonStr], { type: "application/json" });
+      const downloadUrl = URL.createObjectURL(blob);
+      const fileName = getBackupFileName(getProfileDisplayName(prof));
+
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        URL.revokeObjectURL(downloadUrl);
+        a.remove();
+      }, 3000);
+
+      if (progressFill) progressFill.style.width = "100%";
+      if (progressStatus) progressStatus.textContent = t("profExportStatusDone");
+
+      setTimeout(() => {
+        if (profExportDlg) profExportDlg.close();
+        alert(t("profExportSuccess", { filename: fileName }));
+      }, 600);
+
+    } catch (err) {
+      console.error("Profile export error:", err);
+      alert(t("profExportError") + ": " + (err.message || err));
+      if (progressWrap) progressWrap.style.display = "none";
+      if (startBtn) startBtn.disabled = false;
+    }
+  }
+
+  function openImportModal(bundle, fileName) {
+    pendingImportBundle = bundle;
+    if (!bundle) return;
+
+    const prof = bundle.profile || {};
+    const profName = (prof.name && prof.name.trim()) || fileName.replace(/\.[^/.]+$/, "") || "البروفايل المستورد";
+
+    if (byId("importProfFileName")) byId("importProfFileName").textContent = profName;
+    if (byId("importProfMeta")) {
+      const dateStr = bundle.exportedAt ? bundle.exportedAt.slice(0, 10) : "--";
+      byId("importProfMeta").textContent = t("profImportMetaSub", { date: dateStr, ver: bundle.version || 1 });
+    }
+
+    // Default to 'new' profile
+    const radioNew = document.querySelector('input[name="profImportDest"][value="new"]');
+    if (radioNew) radioNew.checked = true;
+
+    // Check available sections in bundle
+    const hasSettings = !!bundle.profile;
+    const hasHistory = bundle.watched && Object.keys(bundle.watched).length > 0;
+    const hasBatch = bundle.batchState && Object.keys(bundle.batchState).length > 0;
+    const libFiles = (bundle.library && Array.isArray(bundle.library.files)) ? bundle.library.files : [];
+    const hasVideos = libFiles.length > 0;
+
+    let totalSize = 0;
+    libFiles.forEach(f => { totalSize += (f.size || 0); });
+
+    if (byId("importOptSettings")) {
+      byId("importOptSettings").checked = hasSettings;
+      byId("importOptSettings").disabled = !hasSettings;
+    }
+    if (byId("importOptHistory")) {
+      byId("importOptHistory").checked = hasHistory;
+      byId("importOptHistory").disabled = !hasHistory;
+    }
+    if (byId("importOptBatch")) {
+      byId("importOptBatch").checked = hasBatch;
+      byId("importOptBatch").disabled = !hasBatch;
+    }
+    if (byId("importOptVideos")) {
+      byId("importOptVideos").checked = hasVideos;
+      byId("importOptVideos").disabled = !hasVideos;
+    }
+
+    if (byId("importLecturesCountBadge")) {
+      byId("importLecturesCountBadge").textContent = libFiles.length + " " + (libFiles.length === 1 ? t("profExportLecOne") : t("profExportLecMany")) + (totalSize > 0 ? " (" + formatBackupBytes(totalSize) + ")" : "");
+    }
+
+    const progressWrap = byId("importProgressWrap");
+    if (progressWrap) progressWrap.style.display = "none";
+    const startBtn = byId("profImportStartBtn");
+    if (startBtn) startBtn.disabled = false;
+
+    if (profImportDlg) profImportDlg.showModal();
+  }
+
+  async function executeProfileImport() {
+    if (!pendingImportBundle) return;
+    const bundle = pendingImportBundle;
+
+    const destChoice = document.querySelector('input[name="profImportDest"]:checked')?.value || "new";
+    const optSettings = byId("importOptSettings")?.checked;
+    const optHistory = byId("importOptHistory")?.checked;
+    const optBatch = byId("importOptBatch")?.checked;
+    const optVideos = byId("importOptVideos")?.checked;
+
+    const progressWrap = byId("importProgressWrap");
+    const progressFill = byId("importProgressFill");
+    const progressStatus = byId("importProgressStatus");
+    const startBtn = byId("profImportStartBtn");
+
+    if (progressWrap) progressWrap.style.display = "flex";
+    if (startBtn) startBtn.disabled = true;
+
+    try {
+      if (progressStatus) progressStatus.textContent = t("profImportStatusPreparing");
+      if (progressFill) progressFill.style.width = "10%";
+
+      let targetProfId = activeProfileId;
+
+      if (destChoice === "new") {
+        const newId = "prof_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+        let baseName = (bundle.profile && bundle.profile.name && bundle.profile.name.trim()) || t("profileImportedDefaultName");
+        if (profilesList.some(p => p.name === baseName)) {
+          baseName = baseName + " (1)";
+        }
+        const newProf = {
+          id: newId,
+          name: baseName,
+          theme: (bundle.profile && bundle.profile.theme) || "default",
+          mode: (bundle.profile && bundle.profile.mode) || "dark",
+          lang: (bundle.profile && bundle.profile.lang) || "ar",
+          term: (bundle.profile && bundle.profile.term) || "F25",
+          program: (bundle.profile && bundle.profile.program) || "ITE",
+          materials: (bundle.profile && Array.isArray(bundle.profile.materials)) ? bundle.profile.materials : []
+        };
+        profilesList.push(newProf);
+        saveProfilesToStorage();
+        targetProfId = newId;
+      } else {
+        const activeProf = profilesList.find(p => p.id === activeProfileId);
+        if (activeProf && optSettings && bundle.profile) {
+          if (bundle.profile.theme) activeProf.theme = bundle.profile.theme;
+          if (bundle.profile.mode) activeProf.mode = bundle.profile.mode;
+          if (bundle.profile.lang) activeProf.lang = bundle.profile.lang;
+          if (bundle.profile.term) activeProf.term = bundle.profile.term;
+          if (bundle.profile.program) activeProf.program = bundle.profile.program;
+          if (Array.isArray(bundle.profile.materials) && bundle.profile.materials.length) {
+            const existingCourses = new Set((activeProf.materials || []).map(m => normCode(m.course)));
+            activeProf.materials = activeProf.materials || [];
+            for (const m of bundle.profile.materials) {
+              if (m && m.course && !existingCourses.has(normCode(m.course))) {
+                activeProf.materials.push(m);
+              }
+            }
+          }
+          saveProfilesToStorage();
+        }
+      }
+
+      if (progressFill) progressFill.style.width = "30%";
+
+      // 2. Watched History
+      if (optHistory && bundle.watched) {
+        const wk = targetProfId === "default" ? "svu.watched.v1" : ("svu.watched.v1." + targetProfId);
+        let existingWatched = {};
+        if (destChoice === "merge") {
+          try {
+            existingWatched = JSON.parse(localStorage.getItem(wk) || getPref(wk, "{}") || "{}");
+          } catch (e) {}
+        }
+        const mergedWatched = Object.assign({}, existingWatched, bundle.watched);
+        const s = JSON.stringify(mergedWatched);
+        try { localStorage.setItem(wk, s); } catch (e) {}
+        setPref(wk, s);
+      }
+
+      if (progressFill) progressFill.style.width = "45%";
+
+      // 3. Batch State
+      if (optBatch && bundle.batchState) {
+        const bk = targetProfId === "default" ? "svu.batch.state.v2" : ("svu.batch.state.v2." + targetProfId);
+        let targetBatchState = bundle.batchState;
+        if (destChoice === "merge") {
+          let existingBatch = {};
+          try {
+            existingBatch = JSON.parse(localStorage.getItem(bk) || getPref(bk, "{}") || "{}");
+          } catch (e) {}
+          targetBatchState = Object.assign({}, existingBatch, bundle.batchState);
+          if (existingBatch.courses && bundle.batchState.courses) {
+            targetBatchState.courses = Object.assign({}, existingBatch.courses, bundle.batchState.courses);
+          }
+        }
+        const s = JSON.stringify(targetBatchState);
+        try { localStorage.setItem(bk, s); } catch (e) {}
+        setPref(bk, s);
+      }
+
+      if (progressFill) progressFill.style.width = "55%";
+
+      // 4. Offline Saved Lectures (.lrec files to IndexedDB)
+      if (optVideos && bundle.library && Array.isArray(bundle.library.files) && bundle.library.files.length) {
+        const filesToSave = [];
+        const totalFiles = bundle.library.files.length;
+        for (let i = 0; i < totalFiles; i++) {
+          const item = bundle.library.files[i];
+          const pct = Math.round(55 + ((i + 1) / Math.max(1, totalFiles)) * 40);
+          if (progressFill) progressFill.style.width = pct + "%";
+          if (progressStatus) {
+            progressStatus.textContent = t("profImportStatusWriting", {
+              current: i + 1,
+              total: totalFiles,
+              name: item.name || ("Lec " + (i + 1))
+            });
+          }
+
+          let blob = null;
+          if (item.dataUrl) {
+            blob = await dataUrlToBlob(item.dataUrl, item.type);
+          }
+          filesToSave.push({
+            id: item.id,
+            name: item.name,
+            size: item.size || (blob ? blob.size : 0),
+            type: item.type || "application/octet-stream",
+            savedAt: item.savedAt || Date.now(),
+            meta: item.meta || {},
+            blob: blob
+          });
+        }
+
+        const db = await openProfIndexedDB(targetProfId);
+        await new Promise((resolve, reject) => {
+          try {
+            const tx = db.transaction(["files", "transcripts", "enhanced"], "readwrite");
+            const filesStore = tx.objectStore("files");
+            const transStore = tx.objectStore("transcripts");
+            const enhStore = tx.objectStore("enhanced");
+
+            if (Array.isArray(bundle.library.transcripts)) {
+              for (const tRec of bundle.library.transcripts) {
+                if (tRec && tRec.id) transStore.put(tRec);
+              }
+            }
+            if (Array.isArray(bundle.library.enhanced)) {
+              for (const eRec of bundle.library.enhanced) {
+                if (eRec && eRec.id) enhStore.put(eRec);
+              }
+            }
+            for (const fRec of filesToSave) {
+              if (fRec && fRec.id) filesStore.put(fRec);
+            }
+
+            tx.oncomplete = () => { db.close(); resolve(); };
+            tx.onerror = tx.onabort = () => { db.close(); reject(tx.error); };
+          } catch (err) {
+            db.close();
+            reject(err);
+          }
+        });
+      }
+
+      if (progressFill) progressFill.style.width = "100%";
+      if (progressStatus) progressStatus.textContent = t("profImportStatusDone");
+
+      // Activate target profile
+      await activateProfile(targetProfId, false);
+      renderProfilesList();
+
+      setTimeout(() => {
+        if (profImportDlg) profImportDlg.close();
+        alert(t("profImportSuccess"));
+      }, 500);
+
+    } catch (err) {
+      console.error("Profile import error:", err);
+      alert(t("profImportError") + ": " + (err.message || err));
+      if (progressWrap) progressWrap.style.display = "none";
+      if (startBtn) startBtn.disabled = false;
+    }
+  }
+
+  // Backup Events & Listeners
+  if (profImportFileInput) {
+    profImportFileInput.addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        try {
+          const json = JSON.parse(evt.target.result);
+          if (!json || typeof json !== "object") throw new Error("Invalid format");
+          openImportModal(json, file.name);
+        } catch (err) {
+          alert(t("profImportInvalidFile"));
+        }
+      };
+      reader.readAsText(file);
+      profImportFileInput.value = "";
+    });
+  }
+
+  if (byId("profImportBtn")) {
+    byId("profImportBtn").addEventListener("click", () => {
+      if (profImportFileInput) profImportFileInput.click();
+    });
+  }
+
+  if (byId("mobileExportProfileBtn")) {
+    byId("mobileExportProfileBtn").addEventListener("click", () => {
+      const sheet = byId("mobileMenuSheet");
+      if (sheet && sheet.classList.contains("open")) {
+        const closeBtn = byId("mobileSheetClose");
+        if (closeBtn) closeBtn.click();
+      }
+      openProfileExportModal(activeProfileId);
+    });
+  }
+
+  if (byId("mobileImportProfileBtn")) {
+    byId("mobileImportProfileBtn").addEventListener("click", () => {
+      const sheet = byId("mobileMenuSheet");
+      if (sheet && sheet.classList.contains("open")) {
+        const closeBtn = byId("mobileSheetClose");
+        if (closeBtn) closeBtn.click();
+      }
+      if (profImportFileInput) profImportFileInput.click();
+    });
+  }
+
+  if (byId("profExportClose") && profExportDlg) {
+    byId("profExportClose").addEventListener("click", () => profExportDlg.close());
+  }
+  if (byId("profExportCancelBtn") && profExportDlg) {
+    byId("profExportCancelBtn").addEventListener("click", () => profExportDlg.close());
+  }
+  if (byId("profExportStartBtn")) {
+    byId("profExportStartBtn").addEventListener("click", () => executeProfileExport());
+  }
+
+  if (byId("profImportClose") && profImportDlg) {
+    byId("profImportClose").addEventListener("click", () => profImportDlg.close());
+  }
+  if (byId("profImportCancelBtn") && profImportDlg) {
+    byId("profImportCancelBtn").addEventListener("click", () => profImportDlg.close());
+  }
+  if (byId("profImportStartBtn")) {
+    byId("profImportStartBtn").addEventListener("click", () => executeProfileImport());
+  }
+
 
   const pasteUi = {
     play: byId("pasteGo"),
