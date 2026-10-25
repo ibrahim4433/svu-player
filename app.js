@@ -439,6 +439,27 @@ try {
       copiedCmd: "Copied!",
       tabBatch: "Batch download",
       studentLibBtn: "Student library",
+      hubResumeTitle: "Resume Watching",
+      hubResumeBtn: "Resume",
+      hubBatchSub: "Select your faculty and term to download all lectures at once",
+      hubLibSub: "Locally saved recordings for 100% offline study",
+      hubBrowseSub: "Browse the live university recording directory",
+      hubFileSub: "Play any local .lrec file from your computer or phone",
+      hubRecentTitle: "Saved Lectures on This Device",
+      hubViewAllSaved: "View All in Library →",
+      exitSession: "Exit Session",
+      exitSessionTitle: "Return to Student Hub",
+      backToHub: "Hub",
+      introBadge: "SVU Player Studio",
+      introTitle: "Syrian Virtual University Session Studio & Offline Library",
+      introDesc: "A standalone web app working 100% locally and offline. Replay synchronized Linktivity (.lrec) lectures with video, crystal-clear 4-stage DSP voice enhancement, and interactive live chat, with safe batch downloads.",
+      introFeat1: "4-Stage DSP Voice Clarity",
+      introFeat2: "Synchronized Chat & Seek",
+      introFeat3: "Safe Batch Downloader",
+      introMiniTitle: "SVU Studio • Offline Session Replay & Library",
+      introDetails: "Details",
+      hubViewAllSavedCount: "View All ({n}) in Library →",
+      hubNoSavedHint: "No lectures saved yet. Use Batch Download or Browse Sessions to get started.",
       batchTitle: "Smart Batch Course Downloader",
       batchSub: "Select your Term & College, check the materials you study, pick Tutor, Class & Lessons (or ALL), and download everything safely with one click. Already downloaded lectures are skipped automatically.",
       batchStep1: "1. Select Term & College (Program)",
@@ -752,6 +773,27 @@ try {
       copiedCmd: "تم النسخ!",
       tabBatch: "تنزيل المواد (دفعة واحدة)",
       studentLibBtn: "مكتبة الطالب",
+      hubResumeTitle: "استئناف المشاهدة",
+      hubResumeBtn: "متابعة",
+      hubBatchSub: "اختر كليتك وفصلك ونزّل محاضراتك بضغطة واحدة",
+      hubLibSub: "المحاضرات المحفوظة محليًا للتشغيل دون إنترنت",
+      hubBrowseSub: "تصفّح دليل المحاضرات مباشرة من موقع الجامعة",
+      hubFileSub: "تشغيل أي ملف .lrec مسجل على هاتفك أو حاسوبك",
+      hubRecentTitle: "المحاضرات المحفوظة على هذا الجهاز",
+      hubViewAllSaved: "عرض الكل في المكتبة ←",
+      exitSession: "خروج من الجلسة",
+      exitSessionTitle: "العودة إلى لوحة الطالب",
+      backToHub: "الرئيسية",
+      introBadge: "استوديو مشغّل SVU",
+      introTitle: "مشغّل ومكتبة محاضرات الجامعة الافتراضية السورية",
+      introDesc: "تطبيق ويب مستقل ومجاني، يعمل بالكامل محلياً ودون إنترنت (١٠٠٪ Offline). يتيح لطلاب الجامعة الافتراضية تشغيل ملفات Linktivity (.lrec) المتزامنة (الشاشة، الصوت، والدردشة المباشرة)، مع معالجة ذكية لصوت المدرس وتنزيل جميع المواد بأمان وبضغطة واحدة.",
+      introFeat1: "فلتر ٤ مراحل لتوضيح الصوت",
+      introFeat2: "دردشة متزامنة وقفز زمني",
+      introFeat3: "تنزيل آمن متسلسل ومكتبة محلية",
+      introMiniTitle: "استوديو مشغّل SVU • تشغيل وحفظ دون إنترنت",
+      introDetails: "تفاصيل",
+      hubViewAllSavedCount: "عرض جميع المحاضرات ({n}) في المكتبة ←",
+      hubNoSavedHint: "لم يتم حفظ أي محاضرات بعد. يمكنك تنزيل مقرراتك دفعة واحدة أو تصفح جلسات الجامعة.",
       batchTitle: "التنزيل الذكي لجميع محاضرات المواد",
       batchSub: "اختر الفصل والكلية، حدّد المواد التي تدرسها، واختر المدرّس والشعبة والمحاضرات (أو الكل)، ثم نزّلها بضغطة واحدة وبأمان تام. يتم تخطّي المحاضرات المحفوظة مسبقًا تلقائيًا.",
       batchStep1: "١. اختر الفصل والكلية (البرنامج)",
@@ -1741,7 +1783,15 @@ try {
     if (info.lesson) tags.push("<span class=\"mtag mtag-lesson\">" + escHtml(t("metaLesson")) + " " + escHtml(info.lesson) + "</span>");
     if (info.date) tags.push("<span class=\"mtag mtag-date\">" + escHtml(info.date) + "</span>");
     tags.push("<span class=\"mtag mtag-file\" dir=\"ltr\" title=\"" + escHtml(name) + "\">" + escHtml(name) + "</span>");
+    tags.push("<button id=\"exitSessionBtn\" class=\"exit-session-btn\" title=\"" + escHtml(t("exitSessionTitle")) + "\"><svg style=\"width:13px;height:13px;vertical-align:middle;margin-inline-end:4px\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"/><line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"/></svg><span>" + escHtml(t("exitSession")) + "</span></button>");
     metaEl.innerHTML = tags.join("");
+    const exitBtn = byId("exitSessionBtn");
+    if (exitBtn) {
+      exitBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        closeSession();
+      });
+    }
   }
 
   function loadSession(file, parsed) {
@@ -1771,6 +1821,23 @@ try {
     renderTicks();
     seek.setAttribute("aria-valuemax", Math.floor(parsed.durationMs / 1000));
     controls.classList.remove("disabled");
+    document.body.classList.add("has-session");
+    try {
+      const pm = parseLrecFilename(file.name) || {};
+      const matTitle = (window.MaterialsDB && pm.material) ? window.MaterialsDB.getName(pm.material) : "";
+      localStorage.setItem("svu_last_played", JSON.stringify({
+        name: file.name,
+        material: pm.material || "",
+        matTitle: matTitle,
+        lesson: pm.lesson || "",
+        college: pm.college || "",
+        term: pm.term || "",
+        className: pm.className || pm.cls || "",
+        date: pm.date || "",
+        durationMs: parsed.durationMs || 0,
+        ts: Date.now()
+      }));
+    } catch (_) {}
     setStage("ready");
     stage.classList.add("paused");
     seekTo(0);
@@ -1800,6 +1867,10 @@ try {
     byId("chatCount").textContent = "";
     cursor = -1;
     syncPlayIcon();
+    document.body.classList.remove("has-session");
+    if (window.__refreshHub) {
+      window.__refreshHub();
+    }
   }
   const AVATAR_COLORS = ["#6cb6ff", "#f2994a", "#6fcf97", "#bb86fc", "#f2c94c", "#56ccf2", "#eb5757", "#9bd1a8", "#ff9ec4", "#a5b4fc"];
   function colorFor(str) {
@@ -2648,6 +2719,8 @@ try {
 ;
 
 ;
+
+window.__closeActiveSession = closeSession;
 } catch (err) {
   console.error("[SVU] module 07-player.js failed to initialise:", err);
 }
@@ -4495,6 +4568,7 @@ try {
         quota: formatSize(usage.quota)
       }) : "";
     }
+    refreshHub();
     return savedRecordsCache;
   }
 
@@ -4627,20 +4701,27 @@ try {
       gTitle.className = "lib-group-title";
       if (isLocal) {
         gTitle.innerHTML =
-          "<span class=\"mtag mtag-college\"><b>" + escapeHtml(t("localFilesGroup")) + "</b> (" + items.length + ")</span>";
+          "<div class=\"lib-course-head-info\"><h4 class=\"lib-course-title\">" + escapeHtml(t("localFilesGroup")) + "</h4><div class=\"lib-course-meta-line\">" + items.length + " " + escapeHtml(t("sessions")) + "</div></div>";
       } else if (groupMode === "course") {
         const mat = (window.MaterialsDB && gKey !== "OTHER") ? window.MaterialsDB.get(gKey) : null;
         const isEn = window.I18N && window.I18N.lang === "en";
         const primary = mat ? (isEn ? (mat.en || mat.ar) : (mat.ar || mat.en)) : "";
         const tooltip = mat ? window.MaterialsDB.getTooltip(gKey) : "";
+        const courseTitle = gKey + (primary ? (" — " + primary) : "");
+        const metaParts = [];
+        if (sample.college) metaParts.push(sample.college);
+        if (sample.term) metaParts.push(sample.term);
+        if (sample.className) metaParts.push(t("metaClass") + " " + sample.className);
+        if (sample.tutor) metaParts.push(sample.tutor);
+        const metaLine = metaParts.map(escapeHtml).join(" • ");
         gTitle.innerHTML =
-          "<span class=\"mtag mtag-material\" title=\"" + escapeHtml(tooltip) + "\"><b>" + escapeHtml(t("metaMaterial")) + " :</b> " + escapeHtml(gKey) + (primary ? (" — " + escapeHtml(primary)) : "") + "</span>" +
-          (sample.college ? "<span class=\"mtag mtag-college\"><b>" + escapeHtml(t("metaCollege")) + " :</b> " + escapeHtml(sample.college) + "</span>" : "") +
-          (sample.className ? "<span class=\"mtag mtag-class\"><b>" + escapeHtml(t("metaClass")) + " :</b> " + escapeHtml(sample.className) + "</span>" : "") +
-          (sample.term ? "<span class=\"mtag mtag-term\"><b>" + escapeHtml(t("metaTerm")) + " :</b> " + escapeHtml(sample.term) + "</span>" : "") +
-          (sample.tutor ? "<span class=\"muted\" style=\"font-weight:600;font-size:12px;\">" + escapeHtml(sample.tutor) + "</span>" : "");
+          "<div class=\"lib-course-head-info\" title=\"" + escapeHtml(tooltip) + "\">" +
+            "<h4 class=\"lib-course-title\">" + escapeHtml(courseTitle) + "</h4>" +
+            (metaLine ? ("<div class=\"lib-course-meta-line\">" + metaLine + "</div>") : "") +
+          "</div>";
       } else {
-        gTitle.innerHTML = "<span class=\"mtag mtag-college\">" + escapeHtml(gKey) + "</span> <span class=\"muted\">(" + items.length + ")</span>";
+        gTitle.innerHTML =
+          "<div class=\"lib-course-head-info\"><h4 class=\"lib-course-title\">" + escapeHtml(gKey) + "</h4><div class=\"lib-course-meta-line\">" + items.length + " " + escapeHtml(t("sessions")) + "</div></div>";
       }
 
       const gProg = document.createElement("div");
@@ -4678,62 +4759,52 @@ try {
     const row = document.createElement("div");
     row.className = "lec-row" + (rec.watched ? " is-watched" : "");
 
-    // 1-Click Watched / Unwatched Toggle Button
+    // 1-Click Watched Toggle (clean circular checkmark button)
     const watchBtn = document.createElement("button");
     watchBtn.className = "watch-btn" + (rec.watched ? " on" : "");
-    watchBtn.title = t("libMarkWatched");
+    watchBtn.setAttribute("aria-label", rec.watched ? t("libWatched") : t("libUnwatched"));
+    watchBtn.title = rec.watched ? t("libWatched") : t("libUnwatched");
     watchBtn.innerHTML = rec.watched
-      ? "<span>" + escapeHtml(t("libWatched")) + "</span>"
-      : "<span>○ " + escapeHtml(t("libUnwatched")) + "</span>";
+      ? "<svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>"
+      : "<svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='9'/></svg>";
     watchBtn.addEventListener("click", () => {
       setLectureWatched(rec.id, !rec.watched);
     });
 
-    // Structured Badges + Info (Inside Material Window: ONLY Lesson Number & Date tags!)
     const info = document.createElement("div");
     info.className = "lec-info";
-    const tags = document.createElement("div");
-    tags.className = "lec-tags";
-    if (m.lesson) {
-      tags.innerHTML += "<span class=\"mtag mtag-lesson\"><b>" + escapeHtml(t("batchLessonNum", { n: m.lesson })) + "</b></span>";
-    }
-    if (!insideMaterialWindow) {
-      if (m.material && m.material !== "__LOCAL_FILES__") {
-        if (window.MaterialsDB) {
-          tags.innerHTML += window.MaterialsDB.getBadgeHtml(m.material);
-        } else {
-          tags.innerHTML += "<span class=\"mtag mtag-material\">" + escapeHtml(m.material) + "</span>";
-        }
-      }
-      if (m.college) {
-        tags.innerHTML += "<span class=\"mtag mtag-college\">" + escapeHtml(m.college) + "</span>";
-      }
-      if (m.className) {
-        tags.innerHTML += "<span class=\"mtag mtag-class\">C" + escapeHtml(m.className) + "</span>";
-      }
-      if (m.term) {
-        tags.innerHTML += "<span class=\"mtag mtag-term\">" + escapeHtml(m.term) + "</span>";
-      }
-    }
-    if (m.date) {
-      tags.innerHTML += "<span class=\"mtag mtag-date\"><b>" + escapeHtml(t("metaDate")) + " :</b> " + escapeHtml(m.date) + "</span>";
+
+    const titleRow = document.createElement("div");
+    titleRow.className = "lec-title-row";
+    const lessonTitle = m.lesson ? t("batchLessonNum", { n: m.lesson }) : rec.name;
+    titleRow.innerHTML = "<b>" + escapeHtml(lessonTitle) + "</b>";
+
+    if (!insideMaterialWindow && m.material && m.material !== "__LOCAL_FILES__") {
+      const mat = (window.MaterialsDB) ? window.MaterialsDB.get(m.material) : null;
+      const isEn = window.I18N && window.I18N.lang === "en";
+      const mName = mat ? (isEn ? (mat.en || mat.ar) : (mat.ar || mat.en)) : "";
+      titleRow.innerHTML += "<span class=\"lec-course-tag\">" + escapeHtml(m.material + (mName ? " · " + mName : "")) + "</span>";
     }
 
     const sub = document.createElement("div");
     sub.className = "lec-sub";
-    sub.innerHTML =
-      "<code dir=\"ltr\">" + escapeHtml(rec.name) + "</code>" +
-      "<span>· " + formatSize(rec.size || 0) + "</span>";
+    const subParts = [];
+    if (m.date) subParts.push(m.date);
+    subParts.push(formatSize(rec.size || 0));
+    sub.innerHTML = "<span>" + subParts.map(escapeHtml).join(" • ") + "</span>";
 
-    info.append(tags, sub);
+    info.append(titleRow, sub);
 
     const playBtn = document.createElement("button");
-    playBtn.className = "primary";
-    playBtn.innerHTML = iconLabel("play", "play");
+    playBtn.className = "primary lec-play-btn";
+    playBtn.innerHTML = "<svg viewBox='0 0 24 24' width='14' height='14' fill='currentColor'><polygon points='6 3 20 12 6 21 6 3'/></svg><span>" + escapeHtml(t("play")) + "</span>";
     playBtn.addEventListener("click", () => playSaved(rec.id));
 
     const delBtn = document.createElement("button");
-    delBtn.innerHTML = iconLabel("trash", "del");
+    delBtn.className = "lec-del-btn";
+    delBtn.title = t("del");
+    delBtn.setAttribute("aria-label", t("del"));
+    delBtn.innerHTML = "<svg viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='currentColor' stroke-width='2'><polyline points='3 6 5 6 21 6'/><path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/></svg>";
     delBtn.addEventListener("click", async () => {
       if (confirm(t("confirmDelete", { name: rec.name }))) {
         await LibraryDB.remove(rec.id);
@@ -5886,10 +5957,246 @@ try {
       updateBatchSummary();
     }
   });
-})();
-;
 
-;
+  /* ====================================================================== *
+   * SMART STUDENT HUB LOGIC (#studentHub) - INSIDE IIFE
+   * ====================================================================== */
+  function refreshHub() {
+    const hub = byId("studentHub");
+    if (!hub) return;
+
+    // 1. Update Library Tile Count Badge
+    const libBadge = byId("hubLibCountBadge");
+    if (libBadge) {
+      libBadge.textContent = savedRecordsCache.length;
+    }
+
+    // 2. Control Onboarding Studio Card (#hubIntroCard)
+    const introCard = byId("hubIntroCard");
+    const introMini = byId("introMini");
+    const introFull = byId("introFull");
+    if (introCard && introMini && introFull) {
+      if (savedRecordsCache.length === 0) {
+        introCard.classList.remove("is-compact");
+        introCard.classList.remove("is-expanded");
+        introMini.style.display = "none";
+        introFull.style.display = "";
+      } else {
+        introCard.classList.add("is-compact");
+        introMini.style.display = "flex";
+        // If not explicitly toggled by student, keep full body hidden
+        if (!introCard.classList.contains("is-expanded")) {
+          introFull.style.display = "none";
+        } else {
+          introFull.style.display = "";
+        }
+      }
+    }
+
+    // 3. Resume Last Played Card (#hubResumeCard)
+    const resumeCard = byId("hubResumeCard");
+    if (resumeCard) {
+      let lastPlayed = null;
+      try {
+        const raw = localStorage.getItem("svu_last_played");
+        if (raw) lastPlayed = JSON.parse(raw);
+      } catch (_) {}
+
+      // If no lastPlayed in localStorage, but lectures exist, fallback to most recently saved
+      if ((!lastPlayed || !lastPlayed.name) && savedRecordsCache.length > 0) {
+        const first = savedRecordsCache[0];
+        const fm = first.parsedMeta;
+        lastPlayed = {
+          name: first.name,
+          id: first.id,
+          material: fm.material || "",
+          lesson: fm.lesson || "",
+          college: fm.college || "",
+          term: fm.term || "",
+          className: fm.className || "",
+          date: fm.date || ""
+        };
+      }
+
+      if (lastPlayed && lastPlayed.name) {
+        const titleEl = byId("hubResumeTitle");
+        const metaEl = byId("hubResumeMeta");
+        const lessonTxt = lastPlayed.lesson ? t("batchLessonNum", { n: lastPlayed.lesson }) : "";
+        const mat = (window.MaterialsDB && lastPlayed.material) ? window.MaterialsDB.get(lastPlayed.material) : null;
+        const isEn = window.I18N && window.I18N.lang === "en";
+        const mName = mat ? (isEn ? (mat.en || mat.ar) : (mat.ar || mat.en)) : "";
+        const matTxt = lastPlayed.material ? (lastPlayed.material + (mName ? (" — " + mName) : "")) : "";
+        if (titleEl) {
+          titleEl.textContent = (matTxt ? matTxt + " · " : "") + (lessonTxt || lastPlayed.name);
+        }
+        if (metaEl) {
+          const mParts = [];
+          if (lastPlayed.college) mParts.push(lastPlayed.college);
+          if (lastPlayed.term) mParts.push(lastPlayed.term);
+          if (lastPlayed.className) mParts.push(t("metaClass") + " " + lastPlayed.className);
+          if (lastPlayed.date) mParts.push(lastPlayed.date);
+          metaEl.textContent = mParts.join(" • ");
+        }
+
+        const resumeBtn = byId("hubResumeBtn");
+        if (resumeBtn) {
+          resumeBtn.onclick = () => {
+            const match = savedRecordsCache.find(r => r.name === lastPlayed.name || r.id === lastPlayed.name || (lastPlayed.id && r.id === lastPlayed.id));
+            if (match) {
+              playSaved(match.id);
+            } else if (savedRecordsCache.length > 0) {
+              playSaved(savedRecordsCache[0].id);
+            } else {
+              showTab("saved");
+              dialog.showModal();
+            }
+          };
+        }
+        resumeCard.hidden = false;
+      } else {
+        resumeCard.hidden = true;
+      }
+    }
+
+    // 4. Populate Recent Offline Lectures (Up to 5)
+    const recentList = byId("hubRecentList");
+    if (recentList) {
+      recentList.innerHTML = "";
+      if (!savedRecordsCache.length) {
+        recentList.innerHTML = "<div class=\"hub-empty-msg\">" + escapeHtml(t("hubNoSavedHint")) + "</div>";
+      } else {
+        const recentItems = savedRecordsCache.slice(0, 5);
+        for (const rec of recentItems) {
+          const m = rec.parsedMeta;
+          const item = document.createElement("div");
+          item.className = "hub-recent-item";
+
+          const mat = (window.MaterialsDB && m.material) ? window.MaterialsDB.get(m.material) : null;
+          const isEn = window.I18N && window.I18N.lang === "en";
+          const mName = mat ? (isEn ? (mat.en || mat.ar) : (mat.ar || mat.en)) : "";
+          const lessonTxt = m.lesson ? t("batchLessonNum", { n: m.lesson }) : rec.name;
+          const fullTitle = (m.material ? m.material + " · " : "") + (mName ? mName + " — " : "") + lessonTxt;
+
+          const info = document.createElement("div");
+          info.className = "hub-recent-item-info";
+          const metaParts = [];
+          if (m.date) metaParts.push(m.date);
+          metaParts.push(formatSize(rec.size || 0));
+          if (rec.watched) metaParts.push("✓ " + t("libWatched"));
+
+          info.innerHTML =
+            "<div class=\"hub-recent-item-title\">" + escapeHtml(fullTitle) + "</div>" +
+            "<div class=\"hub-recent-item-meta\">" + metaParts.map(escapeHtml).join(" • ") + "</div>";
+
+          const playBtn = document.createElement("button");
+          playBtn.className = "primary hub-recent-play-btn";
+          playBtn.innerHTML = "<svg viewBox='0 0 24 24' width='13' height='13' fill='currentColor'><polygon points='6 3 20 12 6 21 6 3'/></svg><span>" + escapeHtml(t("play")) + "</span>";
+          playBtn.onclick = (e) => {
+            e.stopPropagation();
+            playSaved(rec.id);
+          };
+
+          item.style.cursor = "pointer";
+          item.onclick = () => playSaved(rec.id);
+          item.append(info, playBtn);
+          recentList.appendChild(item);
+        }
+      }
+    }
+
+    const viewAllBtn = byId("hubViewAllSavedBtn");
+    if (viewAllBtn) {
+      viewAllBtn.textContent = t("hubViewAllSavedCount", { n: savedRecordsCache.length });
+    }
+
+    I18N.apply(hub);
+  }
+
+  function initStudentHub() {
+    const batchTile = byId("hubBatchTile");
+    if (batchTile) {
+      batchTile.addEventListener("click", () => {
+        showTab("batch");
+        dialog.showModal();
+      });
+    }
+    const libTile = byId("hubLibTile");
+    if (libTile) {
+      libTile.addEventListener("click", () => {
+        showTab("saved");
+        dialog.showModal();
+      });
+    }
+    const browseTile = byId("hubBrowseTile");
+    if (browseTile) {
+      browseTile.addEventListener("click", () => {
+        showTab("remote");
+        dialog.showModal();
+      });
+    }
+    const fileTile = byId("hubFileTile");
+    if (fileTile) {
+      fileTile.addEventListener("click", () => {
+        byId("file").click();
+      });
+    }
+    const viewAllBtn = byId("hubViewAllSavedBtn");
+    if (viewAllBtn) {
+      viewAllBtn.addEventListener("click", () => {
+        showTab("saved");
+        dialog.showModal();
+      });
+    }
+
+    // Intro Card Toggle
+    const introMini = byId("introMini");
+    if (introMini) {
+      introMini.addEventListener("click", () => {
+        const introCard = byId("hubIntroCard");
+        const introFull = byId("introFull");
+        if (introCard && introFull) {
+          const isExp = introCard.classList.toggle("is-expanded");
+          introFull.style.display = isExp ? "" : "none";
+        }
+      });
+    }
+    const introInstallBtn = byId("introInstallBtn");
+    if (introInstallBtn) {
+      introInstallBtn.addEventListener("click", () => {
+        if (byId("aboutInstallBtn")) byId("aboutInstallBtn").click();
+      });
+    }
+    const introAboutBtn = byId("introAboutBtn");
+    if (introAboutBtn) {
+      introAboutBtn.addEventListener("click", () => {
+        byId("about").showModal();
+      });
+    }
+
+    // Top Header Help & Back Buttons
+    const headerHelpBtn = byId("headerHelpBtn");
+    if (headerHelpBtn) {
+      headerHelpBtn.addEventListener("click", () => {
+        byId("welcome").showModal();
+      });
+    }
+    const headerBackToHubBtn = byId("headerBackToHubBtn");
+    if (headerBackToHubBtn) {
+      headerBackToHubBtn.addEventListener("click", () => {
+        if (window.__closeActiveSession) {
+          window.__closeActiveSession();
+        }
+      });
+    }
+
+    window.__refreshHub = refreshHub;
+    refreshHub();
+  }
+
+  initStudentHub();
+
+
+})();
 } catch (err) {
   console.error("[SVU] module 08-browse.js failed to initialise:", err);
 }

@@ -2466,6 +2466,588 @@
       opacity: 0.6 !important;
     }
   }
+
+  /* ==================== SMART STUDENT HUB STYLING ==================== */
+  .student-hub {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 4px 4px 28px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  body.has-session #studentHub {
+    display: none !important;
+  }
+  body:not(.has-session) .stage-wrap,
+  body:not(.has-session) aside.chat {
+    display: none !important;
+  }
+
+  .exit-session-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 28px;
+    padding: 0 10px;
+    background: rgba(239, 68, 68, 0.14);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #F87171;
+    border-radius: var(--r);
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-inline-start: 6px;
+  }
+  .exit-session-btn:hover {
+    background: rgba(239, 68, 68, 0.25);
+    border-color: #F87171;
+  }
+
+  .hub-resume-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), var(--panel));
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .hub-resume-icon {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--blue);
+    color: var(--ink);
+  }
+  .hub-resume-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .hub-resume-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .hub-resume-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hub-resume-meta {
+    font-size: 12px;
+    color: var(--dim);
+    margin-top: 2px;
+  }
+  .hub-resume-btn {
+    flex: none;
+    height: 38px;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: var(--r);
+  }
+
+  .hub-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .hub-tile {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    color: var(--text);
+    text-align: start;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    min-height: 80px;
+  }
+  .hub-tile:hover {
+    background: var(--hover);
+    border-color: var(--line-strong);
+    transform: translateY(-1px);
+  }
+  .hub-tile-primary {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.10), var(--panel));
+    border-color: rgba(56, 189, 248, 0.3);
+  }
+  .hub-tile-icon {
+    flex: none;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--panel2);
+    border-radius: var(--r);
+    color: var(--blue);
+    border: 1px solid var(--line);
+  }
+  .hub-tile-primary .hub-tile-icon {
+    background: var(--blue);
+    color: var(--ink);
+    border-color: var(--blue);
+  }
+  .hub-tile-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .hub-tile-body b {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .hub-tile-body span {
+    font-size: 11.5px;
+    color: var(--dim);
+    line-height: 1.35;
+  }
+  .hub-tile-title-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: space-between;
+  }
+  .hub-count-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 7px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    color: var(--blue);
+  }
+
+  .hub-recent-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .hub-recent-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .hub-recent-head h2, .hub-recent-head h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .hub-link-btn {
+    background: none;
+    border: none;
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 4px;
+  }
+  .hub-link-btn:hover {
+    text-decoration: underline;
+  }
+  .hub-recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .hub-recent-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    transition: all 0.15s ease;
+  }
+  .hub-recent-item:hover {
+    border-color: var(--line-strong);
+    background: var(--hover);
+  }
+  .hub-recent-item-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .hub-recent-item-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hub-recent-item-meta {
+    font-size: 11.5px;
+    color: var(--dim);
+    margin-top: 1px;
+  }
+  .hub-recent-play-btn {
+    flex: none;
+    height: 32px;
+    padding: 0 12px;
+    font-size: 12px;
+    border-radius: var(--r);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .hub-empty-msg {
+    padding: 18px 12px;
+    text-align: center;
+    color: var(--dim);
+    font-size: 13px;
+  }
+
+  /* Redesigned Library Cards & Clean Hierarchy */
+  .lib-course-head-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .lib-course-title {
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .lib-course-meta-line {
+    font-size: 12px;
+    color: var(--dim);
+    font-weight: 500;
+  }
+  .lec-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .lec-title-row b {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .lec-course-tag {
+    font-size: 11px;
+    color: var(--dim);
+    background: var(--panel2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+  .lec-play-btn {
+    height: 32px;
+    padding: 0 12px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: var(--r);
+  }
+  .lec-del-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dim);
+    border-radius: var(--r);
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    cursor: pointer;
+  }
+  .lec-del-btn:hover {
+    color: #F87171;
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.35);
+  }
+
+  /* Sticky Footer for Batch Downloader */
+  .batch-footer {
+    position: sticky;
+    bottom: 0;
+    background: var(--panel);
+    border-top: 1px solid var(--line);
+    padding: 10px 14px;
+    z-index: 10;
+    margin: 12px -20px -18px;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.25);
+  }
+
+  @media (max-width: 640px) {
+    .hub-grid {
+      grid-template-columns: 1fr;
+    }
+    .wlist {
+      padding-bottom: 40px !important;
+    }
+  }
+
+
+  /* Header Button Styles */
+  .header-icon-btn, .hamburger-btn {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    color: var(--text);
+    border-radius: var(--r);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex: none;
+    padding: 0;
+  }
+  .header-icon-btn:hover, .hamburger-btn:hover {
+    background: var(--hover);
+    border-color: var(--line-strong);
+    color: var(--blue);
+  }
+  .hub-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 32px;
+    padding: 0 11px;
+    background: var(--panel2);
+    border: 1px solid var(--line-strong);
+    color: var(--blue);
+    border-radius: var(--r);
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-inline-start: 8px;
+    flex: none;
+  }
+  .hub-back-btn:hover {
+    background: var(--hover);
+    color: #fff;
+    border-color: var(--blue);
+  }
+  body:not(.has-session) .hub-back-btn {
+    display: none !important;
+  }
+
+  /* Intro Onboarding Studio Card */
+  .hub-intro-card {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, var(--panel) 100%);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+  }
+  .intro-full {
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .intro-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--blue);
+    background: rgba(56, 189, 248, 0.12);
+    padding: 3px 10px;
+    border-radius: 99px;
+    align-self: flex-start;
+  }
+  .intro-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .intro-desc {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--dim);
+    line-height: 1.55;
+  }
+  .intro-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  .intro-feat {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    font-weight: 600;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    color: var(--text);
+    padding: 4px 9px;
+    border-radius: var(--r);
+  }
+  .intro-feat .i {
+    width: 13px;
+    height: 13px;
+    color: var(--blue);
+  }
+  .intro-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 2px;
+  }
+  .intro-btn {
+    height: 32px;
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--r);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    color: var(--text);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .intro-btn:hover {
+    background: var(--hover);
+    border-color: var(--line-strong);
+  }
+  .intro-btn.primary {
+    background: var(--blue);
+    color: var(--ink);
+    border-color: var(--blue);
+  }
+
+  /* Compact Mode for Intro Card */
+  .hub-intro-card.is-compact .intro-mini {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .hub-intro-card.is-compact .intro-mini-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .intro-mini-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10B981;
+    flex: none;
+  }
+  .intro-mini-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .intro-mini-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 2px 6px;
+  }
+  .intro-chevron {
+    transition: transform 0.25s ease;
+  }
+  .hub-intro-card.is-compact:not(.is-expanded) .intro-full {
+    display: none !important;
+  }
+  .hub-intro-card.is-compact.is-expanded .intro-mini {
+    border-bottom: 1px solid var(--line);
+  }
+  .hub-intro-card.is-compact.is-expanded .intro-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Widescreen / Horizontal Landscape Split */
+  @media (min-width: 769px) {
+    body.has-session main {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      height: calc(100vh - 48px);
+    }
+    body.has-session .stage-wrap {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+    }
+    body.has-session aside.chat {
+      width: min(360px, 38vw);
+      flex: none;
+      height: 100%;
+    }
+    body.has-session.nochat aside.chat {
+      display: none !important;
+    }
+  }
+
+  @media (max-height: 560px) and (orientation: landscape), (max-width: 950px) and (orientation: landscape) and (max-height: 560px) {
+    body.chat-drawer-open .stage-wrap {
+      width: calc(100% - min(350px, 45vw)) !important;
+      margin-inline-end: min(350px, 45vw) !important;
+      transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1), margin 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    body.chat-drawer-open aside.chat {
+      width: min(350px, 45vw) !important;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -2495,8 +3077,8 @@
 
 <noscript><p style="margin:0;padding:12px 16px;background:#111827;color:#f8fafc;text-align:center">SVU Player replays recorded Syrian Virtual University sessions (screen, audio and chat) in your browser. Please turn on JavaScript to use it.</p></noscript>
 <header>
-  <h1>
-    <span class="brand-emblem" aria-hidden="true">
+  <h1 class="brand">
+    <span class="logo">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
         <path d="M2 6.5C2 5.4 2.9 4.5 4 4.5H8.5C10.4 4.5 12 5.8 12 7.5V19.5C12 18.4 10.6 17.5 8.5 17.5H4C2.9 17.5 2 16.6 2 15.5V6.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="rgba(56,189,248,0.12)"/>
         <path d="M22 6.5C22 5.4 21.1 4.5 20 4.5H15.5C13.6 4.5 12 5.8 12 7.5V19.5C12 18.4 13.4 17.5 15.5 17.5H20C21.1 17.5 22 16.6 22 15.5V6.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="rgba(56,189,248,0.12)"/>
@@ -2506,39 +3088,24 @@
     </span>
     <span class="brand-title">SVU Player</span>
   </h1>
-  <div class="meta" id="meta" dir="auto"></div>
-  <button id="openBtn" class="primary"><svg class="i"><use href="#i-folder"/></svg><span data-i18n="tabFile">Open file</span></button>
-  <button id="libHeaderBtn" data-i18n-title="libTitle" title="Student Lecture Library"><svg class="i"><use href="#i-save"/></svg><span data-i18n="studentLibBtn">Student library</span><span id="libHeaderCount" style="font-size:11px;opacity:.85"></span></button>
-  <button id="installPwaBtn" class="pwa-btn" data-i18n-title="installPwaTitle" title="Install SVU Player for full offline playback (PWA)"><svg class="i"><use href="#i-download"/></svg><span data-i18n="installPwaShort">Install</span></button>
-  <button id="aboutBtn" data-i18n-title="aboutTitle" data-i18n-aria="aboutTitle" title="About" aria-label="About"><svg class="i" style="width:18px;height:18px"><use href="#i-info"/></svg></button>
-  <a href="https://github.com/ibrahim4433/svu-player" target="_blank" rel="noopener noreferrer" class="iconbtn github-btn" id="githubBtn" data-i18n-title="githubBtnTitle" data-i18n-aria="githubBtnTitle" title="GitHub Repository" aria-label="GitHub Repository">
-    <svg class="i" style="width:17px;height:17px" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-    </svg>
-  </a>
 
-  <!-- Theme Selector Menu Button (9 Themes) -->
-  <div class="theme-menu-wrap">
-    <button id="themeMenuBtn" data-i18n-title="themeMenuTitle" title="Choose theme" aria-label="Choose theme">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
-        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
-      </svg>
-      <span id="curThemeLbl" data-i18n="themesBtn">Themes</span>
-      <span style="font-size:10px;opacity:.7">▾</span>
-    </button>
-    <div class="theme-dropdown" id="themeDropdown" role="menu">
-      <button class="theme-opt active" data-theme-opt="default" role="menuitem"><span data-i18n="themeDefault">Default</span><span class="theme-dot" style="background:linear-gradient(135deg,#38BDF8,#F59E0B)"></span></button>
-      <button class="theme-opt" data-theme-opt="whatsapp" role="menuitem"><span data-i18n="themeWhatsapp">WhatsApp</span><span class="theme-dot" style="background:#00A884"></span></button>
-      <button class="theme-opt" data-theme-opt="telegram" role="menuitem"><span data-i18n="themeTelegram">Telegram</span><span class="theme-dot" style="background:#2AABEE"></span></button>
-      <button class="theme-opt" data-theme-opt="win98" role="menuitem"><span data-i18n="themeWin98">Windows 98</span><span class="theme-dot" style="background:#008080"></span></button>
-      <button class="theme-opt" data-theme-opt="winxp" role="menuitem"><span data-i18n="themeWinxp">Windows XP</span><span class="theme-dot" style="background:linear-gradient(135deg,#0054E3,#3C9A2E)"></span></button>
-      <button class="theme-opt" data-theme-opt="win7" role="menuitem"><span data-i18n="themeWin7">Windows 7</span><span class="theme-dot" style="background:#36A9E1"></span></button>
-      <button class="theme-opt" data-theme-opt="hacker" role="menuitem"><span data-i18n="themeHacker">Hacker</span><span class="theme-dot" style="background:#00FF41"></span></button>
-      <button class="theme-opt" data-theme-opt="vscode" role="menuitem"><span data-i18n="themeVscode">VS Code</span><span class="theme-dot" style="background:#007ACC"></span></button>
-      <button class="theme-opt" data-theme-opt="terminal" role="menuitem"><span data-i18n="themeTerminal">Terminal</span><span class="theme-dot" style="background:#FFB000"></span></button>
-    </div>
-  </div>
+  <!-- Return to Student Hub button (visible in session playback mode) -->
+  <button id="headerBackToHubBtn" class="hub-back-btn" data-i18n-title="exitSessionTitle" title="العودة إلى لوحة الطالب" aria-label="العودة إلى لوحة الطالب">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    <span data-i18n="backToHub">الرئيسية</span>
+  </button>
+
+  <div class="meta" id="meta" dir="auto"></div>
+  <div class="header-spacer" style="flex:1"></div>
+
+  <!-- Help Guide Button -->
+  <button id="headerHelpBtn" class="header-icon-btn" data-i18n-title="tour" title="دليل المساعدة" aria-label="دليل المساعدة">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+  </button>
 
   <!-- Dark / Light Mode Toggle Button -->
   <button id="themeBtn" class="theme-btn" data-i18n-title="modeToggleTitle" title="Toggle Dark / Light Mode" aria-label="Toggle Dark / Light Mode">
@@ -2550,34 +3117,155 @@
     </svg>
   </button>
 
-  <!-- SVU Course Directory Button -->
-  <button id="headerCourseDirBtn" class="profile-btn" data-i18n-title="courseDirBtnTitle" title="SVU Course Directory">
-    <svg class="i"><use href="#i-book"/></svg>
-    <span data-i18n="courseDirBtn">دليل المواد</span>
-  </button>
-
-  <!-- Profile & Storage Manager Button (Beside Language Toggle) -->
-  <button id="profileBtn" class="profile-btn" data-i18n-title="profileBtnTitle" title="Profiles &amp; Course Presets Manager">
-    <svg class="i"><use href="#i-user"/></svg>
-    <span id="activeProfileLbl" data-i18n="profileDefaultName">البروفايل</span>
-  </button>
-
   <!-- Language Toggle Button (AR / EN Text) -->
   <button id="langBtn" class="lang is-ar" role="switch" aria-checked="true" title="التبديل إلى الإنجليزية" aria-label="التبديل إلى الإنجليزية">
     <span class="flag ar">AR</span>
     <span class="flag en">EN</span>
   </button>
 
-  <!-- Mobile Quick Menu More Button -->
-  <button id="mobileMoreBtn" class="mobile-more-btn" data-i18n-title="moreOptions" aria-label="More options">
+  <!-- Hamburger Menu Button (3 horizontal bars) -->
+  <button id="mobileMoreBtn" class="hamburger-btn" data-i18n-title="moreOptions" aria-label="القائمة">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
     </svg>
   </button>
+
+  <!-- Hidden proxy elements needed for compatibility -->
+  <div style="display:none" aria-hidden="true">
+    <button id="openBtn"></button>
+    <button id="libHeaderBtn"><span id="libHeaderCount"></span></button>
+    <button id="installPwaBtn"></button>
+    <button id="aboutBtn"></button>
+    <a id="githubBtn"></a>
+    <button id="themeMenuBtn"><span id="curThemeLbl"></span></button>
+    <div id="themeDropdown"></div>
+    <button id="headerCourseDirBtn"></button>
+    <button id="profileBtn"><span id="activeProfileLbl"></span></button>
+  </div>
   <input type="file" id="file" accept=".lrec,.LREC" hidden>
 </header>
 
 <main>
+  <!-- ==================== 0. SMART STUDENT HUB (IDLE MODE) ==================== -->
+  <section class="student-hub" id="studentHub">
+    <!-- Onboarding Studio Card (Full when 0 lectures, Compact Expandable when lectures saved) -->
+    <div class="hub-intro-card" id="hubIntroCard">
+      <!-- Full State -->
+      <div class="intro-full" id="introFull">
+        <div class="intro-badge">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <span data-i18n="introBadge">استوديو مشغّل SVU</span>
+        </div>
+        <h2 class="intro-title" data-i18n="introTitle">مشغّل ومكتبة محاضرات الجامعة الافتراضية السورية</h2>
+        <p class="intro-desc" data-i18n="introDesc">
+          تطبيق ويب مستقل ومجاني، يعمل بالكامل محلياً ودون إنترنت (١٠٠٪ Offline). يتيح لطلاب الجامعة الافتراضية تشغيل ملفات Linktivity (.lrec) المتزامنة (الشاشة، الصوت، والدردشة المباشرة)، مع معالجة ذكية لصوت المدرس وتنزيل جميع المواد بأمان وبضغطة واحدة.
+        </p>
+        <div class="intro-features">
+          <span class="intro-feat"><svg class="i"><use href="#i-wand"/></svg><span data-i18n="introFeat1">فلتر ٤ مراحل لتوضيح الصوت</span></span>
+          <span class="intro-feat"><svg class="i"><use href="#i-chat"/></svg><span data-i18n="introFeat2">دردشة متزامنة وقفز زمني</span></span>
+          <span class="intro-feat"><svg class="i"><use href="#i-download"/></svg><span data-i18n="introFeat3">تنزيل آمن متسلسل ومكتبة محلية</span></span>
+        </div>
+        <div class="intro-actions">
+          <button class="primary intro-btn" id="introInstallBtn">
+            <svg class="i"><use href="#i-download"/></svg>
+            <span data-i18n="installPwa">تثبيت التطبيق (PWA)</span>
+          </button>
+          <button class="intro-btn" id="introAboutBtn">
+            <svg class="i"><use href="#i-info"/></svg>
+            <span data-i18n="aboutTitle">عن التطبيق والمطور</span>
+          </button>
+          <a href="https://github.com/ibrahim4433/svu-player" target="_blank" rel="noopener noreferrer" class="intro-btn" id="introGithubBtn">
+            <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Compact Mini Bar -->
+      <div class="intro-mini" id="introMini" style="display:none">
+        <div class="intro-mini-left">
+          <span class="intro-mini-dot"></span>
+          <b class="intro-mini-title" data-i18n="introMiniTitle">استوديو مشغّل SVU • تشغيل وحفظ دون إنترنت</b>
+        </div>
+        <button class="intro-mini-toggle-btn" id="introMiniToggleBtn" aria-label="Toggle details">
+          <span data-i18n="introDetails">تفاصيل</span>
+          <svg class="intro-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Hero / Resume Card (Shown when a last played lecture exists) -->
+    <div class="hub-resume-card" id="hubResumeCard" hidden>
+      <div class="hub-resume-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+      </div>
+      <div class="hub-resume-info">
+        <div class="hub-resume-tag" data-i18n="hubResumeTitle">استئناف المشاهدة</div>
+        <h2 class="hub-resume-title" id="hubResumeTitle"></h2>
+        <div class="hub-resume-meta" id="hubResumeMeta"></div>
+      </div>
+      <button class="primary hub-resume-btn" id="hubResumeBtn">
+        <svg class="i" style="width:14px;height:14px"><use href="#i-play"/></svg>
+        <span data-i18n="hubResumeBtn">متابعة</span>
+      </button>
+    </div>
+
+    <!-- 4 Primary Action Tiles (2x2 Grid) -->
+    <div class="hub-grid">
+      <button class="hub-tile hub-tile-primary" id="hubBatchTile">
+        <div class="hub-tile-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <div class="hub-tile-body">
+          <b data-i18n="tabBatch">تنزيل المواد (دفعة واحدة)</b>
+          <span data-i18n="hubBatchSub">اختر كليتك وفصلك ونزّل محاضراتك بضغطة واحدة</span>
+        </div>
+      </button>
+
+      <button class="hub-tile" id="hubLibTile">
+        <div class="hub-tile-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        </div>
+        <div class="hub-tile-body">
+          <div class="hub-tile-title-row">
+            <b data-i18n="studentLibBtn">مكتبة الطالب المحفوظة</b>
+            <span class="hub-count-badge" id="hubLibCountBadge">0</span>
+          </div>
+          <span data-i18n="hubLibSub">المحاضرات المحفوظة محليًا للتشغيل دون إنترنت</span>
+        </div>
+      </button>
+
+      <button class="hub-tile" id="hubBrowseTile">
+        <div class="hub-tile-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="hub-tile-body">
+          <b data-i18n="tabRemote">جلسات الجامعة</b>
+          <span data-i18n="hubBrowseSub">تصفّح دليل المحاضرات مباشرة من موقع الجامعة</span>
+        </div>
+      </button>
+
+      <button class="hub-tile" id="hubFileTile">
+        <div class="hub-tile-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="hub-tile-body">
+          <b data-i18n="tabFile">فتح ملف من الجهاز</b>
+          <span data-i18n="hubFileSub">تشغيل أي ملف .lrec مسجل على هاتفك أو حاسوبك</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Recent / Saved Lectures Quick Section -->
+    <div class="hub-recent-card">
+      <div class="hub-recent-head">
+        <h2 data-i18n="hubRecentTitle" class="hub-recent-heading">المحاضرات المحفوظة على هذا الجهاز</h2>
+        <button class="hub-link-btn" id="hubViewAllSavedBtn" data-i18n="hubViewAllSaved">عرض الكل في المكتبة ←</button>
+      </div>
+      <div class="hub-recent-list" id="hubRecentList"></div>
+    </div>
+  </section>
   <div class="stage-wrap">
     <div class="stage" id="stage">
       <canvas id="screen" width="640" height="360"></canvas>

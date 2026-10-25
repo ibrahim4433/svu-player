@@ -184,7 +184,15 @@
     if (info.lesson) tags.push("<span class=\"mtag mtag-lesson\">" + escHtml(t("metaLesson")) + " " + escHtml(info.lesson) + "</span>");
     if (info.date) tags.push("<span class=\"mtag mtag-date\">" + escHtml(info.date) + "</span>");
     tags.push("<span class=\"mtag mtag-file\" dir=\"ltr\" title=\"" + escHtml(name) + "\">" + escHtml(name) + "</span>");
+    tags.push("<button id=\"exitSessionBtn\" class=\"exit-session-btn\" title=\"" + escHtml(t("exitSessionTitle")) + "\"><svg style=\"width:13px;height:13px;vertical-align:middle;margin-inline-end:4px\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"/><line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"/></svg><span>" + escHtml(t("exitSession")) + "</span></button>");
     metaEl.innerHTML = tags.join("");
+    const exitBtn = byId("exitSessionBtn");
+    if (exitBtn) {
+      exitBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        closeSession();
+      });
+    }
   }
 
   function loadSession(file, parsed) {
@@ -214,6 +222,23 @@
     renderTicks();
     seek.setAttribute("aria-valuemax", Math.floor(parsed.durationMs / 1000));
     controls.classList.remove("disabled");
+    document.body.classList.add("has-session");
+    try {
+      const pm = parseLrecFilename(file.name) || {};
+      const matTitle = (window.MaterialsDB && pm.material) ? window.MaterialsDB.getName(pm.material) : "";
+      localStorage.setItem("svu_last_played", JSON.stringify({
+        name: file.name,
+        material: pm.material || "",
+        matTitle: matTitle,
+        lesson: pm.lesson || "",
+        college: pm.college || "",
+        term: pm.term || "",
+        className: pm.className || pm.cls || "",
+        date: pm.date || "",
+        durationMs: parsed.durationMs || 0,
+        ts: Date.now()
+      }));
+    } catch (_) {}
     setStage("ready");
     stage.classList.add("paused");
     seekTo(0);
@@ -243,6 +268,10 @@
     byId("chatCount").textContent = "";
     cursor = -1;
     syncPlayIcon();
+    document.body.classList.remove("has-session");
+    if (window.__refreshHub) {
+      window.__refreshHub();
+    }
   }
   const AVATAR_COLORS = ["#6cb6ff", "#f2994a", "#6fcf97", "#bb86fc", "#f2c94c", "#56ccf2", "#eb5757", "#9bd1a8", "#ff9ec4", "#a5b4fc"];
   function colorFor(str) {
@@ -1091,3 +1120,5 @@
 ;
 
 ;
+
+window.__closeActiveSession = closeSession;
