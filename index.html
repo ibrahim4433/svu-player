@@ -3432,37 +3432,7 @@
     overflow: visible !important;
   }
 
-  /* ==================== STAGE FLOATING BACK BUTTON ==================== */
-  .stage-back-to-hub-btn {
-    position: absolute;
-    top: 12px;
-    inset-inline-start: 12px;
-    z-index: 20;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
-    background: rgba(15, 23, 42, 0.82);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--line-strong);
-    border-radius: 99px;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.18s ease;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.45);
-  }
-  .stage-back-to-hub-btn:hover {
-    background: var(--blue);
-    color: var(--ink);
-    border-color: var(--blue);
-    transform: scale(1.02);
-  }
-  body:not(.has-session) .stage-back-to-hub-btn {
-    display: none !important;
-  }
+
 
   /* ==================== STEP-BY-STEP BATCH LOCKING ==================== */
   .batch-step-box.is-locked {
@@ -4434,9 +4404,9 @@
     font-weight: 700;
     cursor: pointer;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
-    pointer-events: auto;
     user-select: none;
     opacity: 0;
+    pointer-events: none;
     transform: translateY(-6px);
     transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), background 0.18s ease;
   }
@@ -4446,12 +4416,23 @@
     border-color: var(--blue);
     transform: translateY(0) scale(1.03);
   }
+  /* Visible ONLY when bottom controls cell is visible or player is paused */
   body:not(.is-playing) .stage-back-to-hub-btn,
   .stage-back-to-hub-btn.visible,
-  .stage:hover .stage-back-to-hub-btn {
+  .stage-back-to-hub-btn.pinned,
+  .stage-wrap:has(.controls.mouse-active) .stage-back-to-hub-btn,
+  .stage-wrap:has(.controls.active) .stage-back-to-hub-btn,
+  .stage-wrap:has(.controls.pinned) .stage-back-to-hub-btn,
+  .stage-wrap:has(.controls:hover) .stage-back-to-hub-btn,
+  .stage-wrap:has(.controls-zone:hover) .stage-back-to-hub-btn,
+  .stage-wrap:has(.seek.drag) .stage-back-to-hub-btn,
+  .stage-back-to-hub-btn:hover {
     opacity: 1 !important;
     pointer-events: auto !important;
     transform: translateY(0) !important;
+  }
+  body:not(.has-session) .stage-back-to-hub-btn {
+    display: none !important;
   }
   /* Only show in horizontal mode; hide in portrait */
   @media (orientation: portrait), (max-width: 680px) and (orientation: portrait) {

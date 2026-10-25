@@ -2378,6 +2378,7 @@ try {
   controls.addEventListener("mouseenter", () => {
     isHoveringControls = true;
     controls.classList.add("mouse-active");
+    if (stageBackBtn) stageBackBtn.classList.add("visible");
     if (mouseIdleTimer) {
       clearTimeout(mouseIdleTimer);
     }
@@ -2387,8 +2388,20 @@ try {
     showControlsOnMouseActivity();
   });
 
+  if (stageBackBtn) {
+    stageBackBtn.addEventListener("mouseenter", () => {
+      isHoveringControls = true;
+      if (mouseIdleTimer) clearTimeout(mouseIdleTimer);
+    });
+    stageBackBtn.addEventListener("mouseleave", () => {
+      isHoveringControls = false;
+      showControlsOnMouseActivity();
+    });
+  }
+
   const setPinned = on => {
     controls.classList.toggle("pinned", !!on);
+    if (stageBackBtn) stageBackBtn.classList.toggle("pinned", !!on);
     if (byId("pinBtn")) {
       byId("pinBtn").classList.toggle("on", !!on);
       byId("pinBtn").setAttribute("aria-pressed", String(!!on));
@@ -2513,6 +2526,7 @@ try {
       cinemaTimer = setTimeout(() => {
         if (!controls.matches(":hover") && !controls.classList.contains("pinned")) {
           controls.classList.remove("active", "mouse-active");
+          if (stageBackBtn) stageBackBtn.classList.remove("visible");
         }
       }, 3200);
     }
