@@ -1471,11 +1471,13 @@
     -webkit-backdrop-filter: blur(8px);
     z-index: 9998;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.28s ease;
+    transition: opacity 0.28s ease, visibility 0.28s ease;
   }
   .mobile-sheet-backdrop.open {
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
   }
   .mobile-sheet {
@@ -1490,7 +1492,9 @@
     border-radius: 20px 20px 0 0;
     z-index: 9999;
     transform: translateY(105%);
-    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.32s;
     display: flex;
     flex-direction: column;
     box-shadow: 0 -12px 40px rgba(0,0,0,0.65);
@@ -1498,6 +1502,8 @@
   }
   .mobile-sheet.open {
     transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
   }
   .sheet-drag-handle {
     width: 42px;
@@ -2047,34 +2053,37 @@
     #aboutBtn,
     #githubBtn,
     .theme-menu-wrap,
-    #themeBtn,
     #profileBtn {
       display: none !important;
     }
-    /* Show mobile more menu button */
-    .mobile-more-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      border-radius: var(--r);
-      background: var(--panel2);
-      border: 1px solid var(--line);
-      color: var(--text);
-      cursor: pointer;
-      flex: none;
-    }
-    header #openBtn {
-      margin-inline-start: auto;
-      padding: 0 10px;
-      font-size: 12.5px;
-      height: 34px;
-      white-space: nowrap;
+    /* Action buttons in mobile header: Help, Theme, Lang, Hamburger */
+    .header-icon-btn,
+    .theme-btn,
+    .hamburger-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 36px !important;
+      height: 36px !important;
+      min-width: 36px !important;
+      border-radius: var(--r) !important;
+      background: var(--panel2) !important;
+      border: 1px solid var(--line) !important;
+      color: var(--text) !important;
+      cursor: pointer !important;
+      touch-action: manipulation !important;
+      -webkit-tap-highlight-color: transparent !important;
+      flex: none !important;
+      padding: 0 !important;
     }
     header #langBtn {
-      height: 34px;
-      padding: 0 8px;
+      height: 36px !important;
+      padding: 0 8px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      touch-action: manipulation !important;
+      -webkit-tap-highlight-color: transparent !important;
+      flex: none !important;
     }
 
     /* Main Container: Vertical Stack */
@@ -2904,27 +2913,35 @@
     color: var(--dim);
     line-height: 1.55;
   }
-  .intro-features {
+  .intro-feature-list {
     display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-  }
-  .intro-feat {
-    display: inline-flex;
-    align-items: center;
+    flex-direction: column;
     gap: 6px;
-    font-size: 11.5px;
-    font-weight: 600;
-    background: var(--panel2);
-    border: 1px solid var(--line);
-    color: var(--text);
-    padding: 4px 9px;
-    border-radius: var(--r);
+    margin: 2px 0 4px;
   }
-  .intro-feat .i {
-    width: 13px;
-    height: 13px;
-    color: var(--blue);
+  .intro-feat-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--text);
+    line-height: 1.4;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+  .feat-check {
+    width: 15px;
+    height: 15px;
+    color: #10B981;
+    flex: none;
+  }
+  .feat-text {
+    flex: 1;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    opacity: 0.95;
   }
   .intro-actions {
     display: flex;
@@ -2934,13 +2951,14 @@
     padding-top: 2px;
   }
   .intro-btn {
-    height: 32px;
-    padding: 0 12px;
+    min-height: 36px;
+    padding: 0 14px;
     font-size: 12px;
     font-weight: 600;
     border-radius: var(--r);
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     background: var(--panel2);
     border: 1px solid var(--line);
@@ -2948,6 +2966,8 @@
     cursor: pointer;
     text-decoration: none;
     transition: all 0.15s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   .intro-btn:hover {
     background: var(--hover);
@@ -3045,6 +3065,158 @@
     }
     body.chat-drawer-open aside.chat {
       width: min(350px, 45vw) !important;
+    }
+  }
+
+
+  /* ==================== POCKET GUIDE MODAL ==================== */
+  dialog.guide-dlg {
+    width: min(720px, 94vw);
+    max-height: 86dvh;
+    padding: 0;
+    border-radius: var(--r-lg);
+    background: var(--panel);
+    border: 1px solid var(--line-strong);
+    color: var(--text);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  dialog.guide-dlg:not([open]) {
+    display: none;
+  }
+  .guide-head {
+    padding: 14px 20px 6px;
+    text-align: start;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel2);
+  }
+  .guide-head h2 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .guide-head p {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--dim);
+    line-height: 1.45;
+  }
+  .guide-body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 16px 20px;
+  }
+  .guide-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  @media (min-width: 640px) {
+    .guide-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .guide-card.shortcuts {
+      grid-column: 1 / -1;
+    }
+  }
+  .guide-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    text-align: start;
+    transition: border-color 0.15s ease;
+  }
+  .guide-card:hover {
+    border-color: var(--line-strong);
+  }
+  .guide-card-icon {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border: 1px solid var(--line);
+  }
+  .guide-card-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .guide-card-icon.touch { color: #38BDF8; background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.25); }
+  .guide-card-icon.dsp { color: #F59E0B; background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.25); }
+  .guide-card-icon.chat { color: #C084FC; background: rgba(192, 132, 252, 0.12); border-color: rgba(192, 132, 252, 0.25); }
+  .guide-card-icon.download { color: #34D399; background: rgba(52, 211, 153, 0.12); border-color: rgba(52, 211, 153, 0.25); }
+  .guide-card-icon.kbd { color: #94A3B8; background: rgba(148, 163, 184, 0.12); border-color: rgba(148, 163, 184, 0.25); }
+
+  .guide-card-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .guide-card-content h3 {
+    margin: 0 0 4px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .guide-card-content p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--dim);
+    line-height: 1.45;
+  }
+  .guide-card-content kbd {
+    display: inline-block;
+    padding: 1px 6px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--text);
+  }
+  .guide-foot {
+    padding: 14px 20px 16px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
+    border-top: 1px solid var(--line);
+    background: var(--panel2);
+    display: flex;
+    justify-content: flex-end;
+  }
+  .guide-start-btn {
+    min-height: 40px;
+    padding: 0 20px;
+    font-size: 13.5px;
+    font-weight: 700;
+    border-radius: var(--r);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+  }
+  @media (max-width: 640px) {
+    dialog.guide-dlg {
+      width: 100vw !important;
+      max-width: 100vw !important;
+      margin: auto 0 0 0 !important;
+      border-radius: 20px 20px 0 0 !important;
+      max-height: 90dvh !important;
+    }
+    .guide-start-btn {
+      width: 100%;
+      justify-content: center;
     }
   }
 
@@ -3162,10 +3334,25 @@
         <p class="intro-desc" data-i18n="introDesc">
           تطبيق ويب مستقل ومجاني، يعمل بالكامل محلياً ودون إنترنت (١٠٠٪ Offline). يتيح لطلاب الجامعة الافتراضية تشغيل ملفات Linktivity (.lrec) المتزامنة (الشاشة، الصوت، والدردشة المباشرة)، مع معالجة ذكية لصوت المدرس وتنزيل جميع المواد بأمان وبضغطة واحدة.
         </p>
-        <div class="intro-features">
-          <span class="intro-feat"><svg class="i"><use href="#i-wand"/></svg><span data-i18n="introFeat1">فلتر ٤ مراحل لتوضيح الصوت</span></span>
-          <span class="intro-feat"><svg class="i"><use href="#i-chat"/></svg><span data-i18n="introFeat2">دردشة متزامنة وقفز زمني</span></span>
-          <span class="intro-feat"><svg class="i"><use href="#i-download"/></svg><span data-i18n="introFeat3">تنزيل آمن متسلسل ومكتبة محلية</span></span>
+        <div class="intro-feature-list">
+          <div class="intro-feat-row">
+            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span class="feat-text" data-i18n="introFeat1">فلتر ٤ مراحل لتوضيح الصوت وعزل الضجيج (DSP)</span>
+          </div>
+          <div class="intro-feat-row">
+            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span class="feat-text" data-i18n="introFeat2">دردشة متزامنة بالثواني مع إمكانية القفز للأسئلة</span>
+          </div>
+          <div class="intro-feat-row">
+            <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span class="feat-text" data-i18n="introFeat3">تنزيل تسلسلي آمن للمقررات وحفظها محلياً دون إنترنت</span>
+          </div>
         </div>
         <div class="intro-actions">
           <button class="primary intro-btn" id="introInstallBtn">
@@ -3823,88 +4010,104 @@
   <button id="updateLater" data-i18n="later">Later</button>
 </div>
 
-<dialog id="welcome" class="wide">
+<dialog id="welcome" class="guide-dlg">
   <div class="dlg-head">
-    <span class="dlg-title"><svg class="i"><use href="#i-info"/></svg><span data-i18n="tour">Feature tour</span></span>
+    <div class="dlg-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      <span data-i18n="guideModalTitle">دليل استخدام مشغّل SVU</span>
+    </div>
     <span style="flex:1"></span>
     <button class="lang is-ar" id="welcomeLangBtn" title="Language / تغيير اللغة" aria-label="Language / تغيير اللغة" style="margin-inline-end:8px">
       <span class="flag ar">AR</span>
       <span class="flag en">EN</span>
     </button>
-    <button class="iconbtn" id="welcomeClose" data-i18n-aria="close" aria-label="Close"><svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg></button>
+    <button class="iconbtn" id="welcomeClose" data-i18n-aria="close" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
   </div>
-  <div class="w-head">
-    <h2 data-i18n="welcomeTitle">Welcome to SVU Player Studio</h2>
-    <p data-i18n="welcomeSub">Replay recorded university sessions with synchronized screen, enhanced vocal audio, and interactive chat — 100% locally and offline:</p>
+  <div class="guide-head">
+    <h2 data-i18n="guideHeading">دليلك السريع للاستفادة الكاملة من مميزات المشغّل</h2>
+    <p data-i18n="guideSub">كل ما تحتاجه لتشغيل المحاضرات، توضيح الصوت، والوصول السريع للمحتوى على هاتفك أو حاسوبك:</p>
   </div>
-  <div class="w-body">
-    <div class="w-fit" id="wfit">
-      <div class="wstage" id="wstage">
-        <div class="mock">
-          <!-- Miniature Top Bar -->
-          <div class="m-head">
-            <img src="/favicon.svg" alt="">
-            <span class="m-tags" id="wm-meta">
-              <span class="m-tag" style="background:rgba(56,189,248,0.18);color:#38BDF8">ITE</span>
-              <span class="m-tag" style="background:rgba(168,85,247,0.18);color:#C084FC">BPG401</span>
-              <span class="m-tag" style="background:rgba(34,197,94,0.18);color:#4ADE80">C15</span>
-              <span class="m-tag" style="background:rgba(245,158,11,0.18);color:#FBBF24">F25</span>
-            </span>
-            <span class="sp"></span>
-            <span id="wm-open" style="display:inline-flex;gap:4px">
-              <span class="m-btn gold"><svg><use href="#i-folder"/></svg><span data-i18n="tabFile">Open file</span></span>
-              <span class="m-btn pwa"><svg><use href="#i-download"/></svg><span data-i18n="installPwaShort">Install</span></span>
-            </span>
-            <span id="wm-themes" style="display:inline-flex;gap:4px">
-              <span class="m-btn"><span data-i18n="themesBtn">Themes</span> ▾</span>
-              <span class="m-btn" style="color:#F59E0B">☀</span>
-              <span class="m-btn" style="font-weight:700">AR/EN</span>
-            </span>
-          </div>
-
-          <!-- Miniature Bento Stage + Chat -->
-          <div class="m-mid">
-            <div class="m-screen" id="wm-screen">
-              <div class="m-slide"><i class="t"></i><i></i><i style="width:92%"></i><i style="width:86%"></i><i style="width:94%"></i><i style="width:60%"></i><i style="margin-top:8px;width:88%"></i><i style="width:80%"></i></div>
-            </div>
-            <div class="m-chat">
-              <div class="ch" id="wm-chathead">
-                <svg><use href="#i-chat"/></svg><span data-i18n="chat">Chat</span>
-                <span class="m-pill" data-i18n="showAll">Show all</span>
-                <span class="m-x">✕</span>
-              </div>
-              <div class="m-msgs-wrap" id="wm-chat">
-                <div class="m-msgs-list">
-                  <div class="m-msg"><span class="a" style="background:#6cb6ff"></span><span class="l"><span class="w"><b></b><em>▶ 04:12</em></span><i style="width:90%"></i></span></div>
-                  <div class="m-msg"><span class="a" style="background:#f2994a"></span><span class="l"><span class="w"><b></b><em>▶ 11:05</em></span><i style="width:72%"></i></span></div>
-                  <div class="m-msg cur"><span class="a" style="background:#6fcf97"></span><span class="l"><span class="w"><b></b><em>▶ 21:43</em></span><i style="width:84%"></i><i style="width:45%"></i></span></div>
-                </div>
-                <div class="m-sbar"><i></i></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Miniature Auto-Hide Glass Control Bar -->
-          <div class="m-ctl">
-            <div class="m-seek" id="wm-seek"><span class="f"></span><span class="t" style="left:12%"></span><span class="t" style="left:27%"></span><span class="t" style="left:46%"></span><span class="t" style="left:55%"></span><span class="t" style="left:74%"></span><span class="k"></span></div>
-            <div class="m-row">
-              <span id="wm-play" style="display:inline-flex;gap:4px"><span class="m-ic play" data-clone="#icoPlay"></span><span class="m-ic" data-clone="#back svg"></span><span class="m-ic" data-clone="#fwd svg"></span></span>
-              <span class="m-btn enh-on" id="wm-enh"><svg><use href="#i-wand"/></svg><span data-i18n="enhanceOn">Enhance ON</span></span>
-              <span style="flex:1"></span>
-              <span id="wm-vol" style="display:inline-flex;align-items:center;gap:4px"><span class="m-ic" data-clone="#icoVol"></span><span class="m-vol"></span><span class="m-sel">1×</span></span>
-              <span id="wm-stretch" style="display:inline-flex;gap:4px"><span class="m-btn on"><svg><use href="#i-stretch"/></svg><span data-i18n="stretch">Stretch</span></span><span class="m-btn on"><svg><use href="#i-chat"/></svg><span data-i18n="chat">Chat</span></span></span>
-              <span id="wm-pin" style="display:inline-flex;gap:4px"><span class="m-ic" data-clone="#fsBtn svg"></span><span class="m-ic" data-clone="#pinBtn svg"></span></span>
-            </div>
-          </div>
+  <div class="guide-body">
+    <div class="guide-grid">
+      <!-- Card 1: Touch Gestures -->
+      <div class="guide-card">
+        <div class="guide-card-icon touch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 9V5a3 3 0 0 0-6 0v7a2 2 0 0 1-2 2H5a2 2 0 0 0-2 2v2a6 6 0 0 0 6 6h6a6 6 0 0 0 6-6V9a3 3 0 0 0-6 0z"/>
+          </svg>
         </div>
-        <svg class="w-arrows" id="warrows"><defs><marker id="wtip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" style="fill:var(--blue);stroke:none"/></marker></defs></svg>
+        <div class="guide-card-content">
+          <h3 data-i18n="guideTouchTitle">📱 إيماءات اللمس السريعة</h3>
+          <p data-i18n="guideTouchDesc">نقرة واحدة لإظهار أو إخفاء عناصر التحكم · نقرة مزدوجة على اليمين أو اليسار للتقديم والترجيع ±١٠ ثوانٍ · تدوير الهاتف يفعّل وضع السينما العريض.</p>
+        </div>
+      </div>
+
+      <!-- Card 2: 4-Stage DSP Voice Clarity -->
+      <div class="guide-card">
+        <div class="guide-card-icon dsp">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M17 5v14M7 9v6M22 10v4M2 10v4"/>
+          </svg>
+        </div>
+        <div class="guide-card-content">
+          <h3 data-i18n="guideDspTitle">🎙️ فلتر ٤ مراحل لتوضيح صوت المدرس</h3>
+          <p data-i18n="guideDspDesc">زر Enhance في شريط التحكم يشغّل معالج صوت WebAssembly: عزل الضجيج والصفير، قص هواء القاعة، وتضخيم ترددات الصوت البشري لتسمع الشرح بنقاء فائق.</p>
+        </div>
+      </div>
+
+      <!-- Card 3: Synchronized Chat & Seek -->
+      <div class="guide-card">
+        <div class="guide-card-icon chat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="guide-card-content">
+          <h3 data-i18n="guideChatTitle">💬 الدردشة المتزامنة والقفز للأسئلة</h3>
+          <p data-i18n="guideChatDesc">أسئلة الطلاب تظهر في نفس لحظة طرحها أثناء المحاضرة. اضغط على أي رسالة أو توقيت زمني للقفز بالفيديو مباشرة لتلك اللحظة في الشرح.</p>
+        </div>
+      </div>
+
+      <!-- Card 4: Safe Batch Downloader & Offline Storage -->
+      <div class="guide-card">
+        <div class="guide-card-icon download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </div>
+        <div class="guide-card-content">
+          <h3 data-i18n="guideBatchTitle">⚡ التنزيل المجمّع والحفظ محلياً</h3>
+          <p data-i18n="guideBatchDesc">اختر كليتك وفصلك ونزل كامل محاضرات المقرر دفعة واحدة بمعدل آمن يمنع حظر الحساب. تُحفظ المحاضرات محلياً (IndexedDB) وتشاهدها ١٠٠٪ دون إنترنت.</p>
+        </div>
+      </div>
+
+      <!-- Card 5: Keyboard Shortcuts -->
+      <div class="guide-card shortcuts">
+        <div class="guide-card-icon kbd">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6" y2="8"/><line x1="10" y1="8" x2="10" y2="8"/><line x1="14" y1="8" x2="14" y2="8"/><line x1="18" y1="8" x2="18" y2="8"/><line x1="8" y1="16" x2="16" y2="16"/>
+          </svg>
+        </div>
+        <div class="guide-card-content">
+          <h3 data-i18n="guideKbdTitle">⌨️ اختصارات لوحة المفاتيح (للأجهزة اللوحية والحاسوب)</h3>
+          <p data-i18n="guideKbdDesc"><kbd>Space</kbd> تشغيل/إيقاف · <kbd>←</kbd> <kbd>→</kbd> تقديم/ترجيع ٥ ث · <kbd>M</kbd> كتم الصوت · <kbd>F</kbd> ملء الشاشة · <kbd>C</kbd> إظهار الدردشة · <kbd>S</kbd> تمديد الشاشة</p>
+        </div>
       </div>
     </div>
-    <ul class="wlist" id="wlist"></ul>
   </div>
-  <div class="w-foot">
-    <div class="tip" data-i18n="shortcuts">Shortcuts: Space play/pause · ← → skip 5 s · M mute · F fullscreen · C chat · S stretch</div>
-    <button class="primary" id="welcomeStart"><svg class="i"><use href="#i-play"/></svg><span data-i18n="welcomeStart">Get started</span></button>
+  <div class="guide-foot">
+    <button class="primary guide-start-btn" id="welcomeStart">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <span data-i18n="welcomeStartBtn">✓ فهمت، لنبدأ الاستخدام</span>
+    </button>
   </div>
 </dialog>
 
@@ -3995,6 +4198,6 @@
 
 <audio id="audio" preload="auto"></audio>
 
-<script src="app.js"></script>
+<script src="app.js?v=2.7.2"></script>
 </body>
 </html>

@@ -1023,9 +1023,13 @@
     syncMobileBadges();
     sheet.classList.add("open");
     sheet.setAttribute("aria-hidden", "false");
+    sheet.style.visibility = "visible";
+    sheet.style.pointerEvents = "auto";
     if (sheetBackdrop) {
       sheetBackdrop.classList.add("open");
       sheetBackdrop.setAttribute("aria-hidden", "false");
+      sheetBackdrop.style.visibility = "visible";
+      sheetBackdrop.style.pointerEvents = "auto";
     }
     document.body.style.overflow = "hidden";
   }
@@ -1034,9 +1038,13 @@
     if (!sheet) return;
     sheet.classList.remove("open");
     sheet.setAttribute("aria-hidden", "true");
+    sheet.style.visibility = "hidden";
+    sheet.style.pointerEvents = "none";
     if (sheetBackdrop) {
       sheetBackdrop.classList.remove("open");
       sheetBackdrop.setAttribute("aria-hidden", "true");
+      sheetBackdrop.style.visibility = "hidden";
+      sheetBackdrop.style.pointerEvents = "none";
     }
     document.body.style.overflow = "";
   }
@@ -1053,13 +1061,19 @@
   if (byId("mobileLibBtn")) {
     byId("mobileLibBtn").addEventListener("click", () => {
       closeMobileSheet();
-      if (byId("libHeaderBtn")) byId("libHeaderBtn").click();
+      if (window.openBrowseDialog) {
+        window.openBrowseDialog("saved");
+      } else if (byId("libHeaderBtn")) {
+        byId("libHeaderBtn").click();
+      }
     });
   }
   if (byId("mobileBatchBtn")) {
     byId("mobileBatchBtn").addEventListener("click", () => {
       closeMobileSheet();
-      if (byId("tabBatch")) {
+      if (window.openBrowseDialog) {
+        window.openBrowseDialog("batch");
+      } else if (byId("tabBatch")) {
         byId("tabBatch").click();
         if (byId("dlg")) byId("dlg").showModal();
       }

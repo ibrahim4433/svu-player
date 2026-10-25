@@ -2265,6 +2265,7 @@
   });
 
   async function openDialog(tab) {
+    window.openBrowseDialog = openDialog;
     dialog.showModal();
     await refreshSaved();
     showTab(tab);
@@ -3387,24 +3388,15 @@
   function initStudentHub() {
     const batchTile = byId("hubBatchTile");
     if (batchTile) {
-      batchTile.addEventListener("click", () => {
-        showTab("batch");
-        dialog.showModal();
-      });
+      batchTile.addEventListener("click", () => openDialog("batch"));
     }
     const libTile = byId("hubLibTile");
     if (libTile) {
-      libTile.addEventListener("click", () => {
-        showTab("saved");
-        dialog.showModal();
-      });
+      libTile.addEventListener("click", () => openDialog("saved"));
     }
     const browseTile = byId("hubBrowseTile");
     if (browseTile) {
-      browseTile.addEventListener("click", () => {
-        showTab("remote");
-        dialog.showModal();
-      });
+      browseTile.addEventListener("click", () => openDialog("remote"));
     }
     const fileTile = byId("hubFileTile");
     if (fileTile) {
@@ -3414,10 +3406,7 @@
     }
     const viewAllBtn = byId("hubViewAllSavedBtn");
     if (viewAllBtn) {
-      viewAllBtn.addEventListener("click", () => {
-        showTab("saved");
-        dialog.showModal();
-      });
+      viewAllBtn.addEventListener("click", () => openDialog("saved"));
     }
 
     // Intro Card Toggle

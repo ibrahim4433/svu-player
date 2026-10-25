@@ -453,9 +453,23 @@ try {
       introBadge: "SVU Player Studio",
       introTitle: "Syrian Virtual University Session Studio & Offline Library",
       introDesc: "A standalone web app working 100% locally and offline. Replay synchronized Linktivity (.lrec) lectures with video, crystal-clear 4-stage DSP voice enhancement, and interactive live chat, with safe batch downloads.",
-      introFeat1: "4-Stage DSP Voice Clarity",
-      introFeat2: "Synchronized Chat & Seek",
-      introFeat3: "Safe Batch Downloader",
+      introFeat1: "4-Stage DSP Voice Clarity & Noise Removal",
+      introFeat2: "Synchronized Live Chat & Timestamp Seek",
+      introFeat3: "Safe Sequential Batch Downloader & Offline Storage",
+guideModalTitle: "SVU Player Guide",
+    guideHeading: "Quick guide to SVU Player features",
+    guideSub: "Everything you need to play sessions, clarify teacher audio, and access offline content on mobile & desktop:",
+    guideTouchTitle: "📱 Touch Gestures",
+    guideTouchDesc: "Single tap: show/hide controls · Double tap left/right: seek ±10s · Rotate phone: cinema split view.",
+    guideDspTitle: "🎙️ 4-Stage DSP Voice Clarity",
+    guideDspDesc: "WebAssembly audio processor: noise gate, high-pass vocal cut, equalizer, and limiter to make lecture audio crystal clear.",
+    guideChatTitle: "💬 Synchronized Chat & Seek",
+    guideChatDesc: "Student questions scroll in sync with speech. Tap any timestamp or message to seek directly to that moment.",
+    guideBatchTitle: "⚡ Safe Batch Downloader & Offline Storage",
+    guideBatchDesc: "Download full courses in one click with safe rate-limiting. Saved locally in browser storage for 100% offline playback.",
+    guideKbdTitle: "⌨️ Keyboard Shortcuts (Tablet & Laptop)",
+    guideKbdDesc: "Space: Play/Pause · ← →: Skip 5s · M: Mute · F: Fullscreen · C: Chat toggle · S: Stretch",
+    welcomeStartBtn: "✓ Understood, Let's Begin",
       introMiniTitle: "SVU Studio • Offline Session Replay & Library",
       introDetails: "Details",
       hubViewAllSavedCount: "View All ({n}) in Library →",
@@ -787,9 +801,23 @@ try {
       introBadge: "استوديو مشغّل SVU",
       introTitle: "مشغّل ومكتبة محاضرات الجامعة الافتراضية السورية",
       introDesc: "تطبيق ويب مستقل ومجاني، يعمل بالكامل محلياً ودون إنترنت (١٠٠٪ Offline). يتيح لطلاب الجامعة الافتراضية تشغيل ملفات Linktivity (.lrec) المتزامنة (الشاشة، الصوت، والدردشة المباشرة)، مع معالجة ذكية لصوت المدرس وتنزيل جميع المواد بأمان وبضغطة واحدة.",
-      introFeat1: "فلتر ٤ مراحل لتوضيح الصوت",
-      introFeat2: "دردشة متزامنة وقفز زمني",
-      introFeat3: "تنزيل آمن متسلسل ومكتبة محلية",
+      introFeat1: "فلتر ٤ مراحل لتوضيح الصوت وعزل الضجيج (DSP)",
+      introFeat2: "دردشة متزامنة بالثواني مع إمكانية القفز للأسئلة",
+      introFeat3: "تنزيل تسلسلي آمن للمقررات وحفظها محلياً دون إنترنت",
+guideModalTitle: "دليل استخدام مشغّل SVU",
+    guideHeading: "دليلك السريع للاستفادة الكاملة من مميزات المشغّل",
+    guideSub: "كل ما تحتاجه لتشغيل المحاضرات، توضيح الصوت، والوصول السريع للمحتوى على هاتفك أو حاسوبك:",
+    guideTouchTitle: "📱 إيماءات اللمس السريعة",
+    guideTouchDesc: "نقرة واحدة لإظهار أو إخفاء عناصر التحكم · نقرة مزدوجة على اليمين أو اليسار للتقديم والترجيع ±١٠ ثوانٍ · تدوير الهاتف يفعّل وضع السينما العريض.",
+    guideDspTitle: "🎙️ فلتر ٤ مراحل لتوضيح صوت المدرس",
+    guideDspDesc: "زر Enhance في شريط التحكم يشغّل معالج صوت WebAssembly: عزل الضجيج والصفير، قص هواء القاعة، وتضخيم ترددات الصوت البشري لتسمع الشرح بنقاء فائق.",
+    guideChatTitle: "💬 الدردشة المتزامنة والقفز للأسئلة",
+    guideChatDesc: "أسئلة الطلاب تظهر في نفس لحظة طرحها أثناء المحاضرة. اضغط على أي رسالة أو توقيت زمني للقفز بالفيديو مباشرة لتلك اللحظة في الشرح.",
+    guideBatchTitle: "⚡ التنزيل المجمّع والحفظ محلياً",
+    guideBatchDesc: "اختر كليتك وفصلك ونزل كامل محاضرات المقرر دفعة واحدة بمعدل آمن يمنع حظر الحساب. تُحفظ المحاضرات محلياً (IndexedDB) وتشاهدها ١٠٠٪ دون إنترنت.",
+    guideKbdTitle: "⌨️ اختصارات لوحة المفاتيح (للأجهزة اللوحية والحاسوب)",
+    guideKbdDesc: "المسافة: تشغيل/إيقاف مؤقت · ← →: تقديم/ترجيع ٥ ثوانٍ · M: كتم الصوت · F: ملء الشاشة · C: إظهار الدردشة · S: تمديد الشاشة",
+    welcomeStartBtn: "✓ فهمت، لنبدأ الاستخدام",
       introMiniTitle: "استوديو مشغّل SVU • تشغيل وحفظ دون إنترنت",
       introDetails: "تفاصيل",
       hubViewAllSavedCount: "عرض جميع المحاضرات ({n}) في المكتبة ←",
@@ -2622,9 +2650,13 @@ try {
     syncMobileBadges();
     sheet.classList.add("open");
     sheet.setAttribute("aria-hidden", "false");
+    sheet.style.visibility = "visible";
+    sheet.style.pointerEvents = "auto";
     if (sheetBackdrop) {
       sheetBackdrop.classList.add("open");
       sheetBackdrop.setAttribute("aria-hidden", "false");
+      sheetBackdrop.style.visibility = "visible";
+      sheetBackdrop.style.pointerEvents = "auto";
     }
     document.body.style.overflow = "hidden";
   }
@@ -2633,9 +2665,13 @@ try {
     if (!sheet) return;
     sheet.classList.remove("open");
     sheet.setAttribute("aria-hidden", "true");
+    sheet.style.visibility = "hidden";
+    sheet.style.pointerEvents = "none";
     if (sheetBackdrop) {
       sheetBackdrop.classList.remove("open");
       sheetBackdrop.setAttribute("aria-hidden", "true");
+      sheetBackdrop.style.visibility = "hidden";
+      sheetBackdrop.style.pointerEvents = "none";
     }
     document.body.style.overflow = "";
   }
@@ -2652,13 +2688,19 @@ try {
   if (byId("mobileLibBtn")) {
     byId("mobileLibBtn").addEventListener("click", () => {
       closeMobileSheet();
-      if (byId("libHeaderBtn")) byId("libHeaderBtn").click();
+      if (window.openBrowseDialog) {
+        window.openBrowseDialog("saved");
+      } else if (byId("libHeaderBtn")) {
+        byId("libHeaderBtn").click();
+      }
     });
   }
   if (byId("mobileBatchBtn")) {
     byId("mobileBatchBtn").addEventListener("click", () => {
       closeMobileSheet();
-      if (byId("tabBatch")) {
+      if (window.openBrowseDialog) {
+        window.openBrowseDialog("batch");
+      } else if (byId("tabBatch")) {
         byId("tabBatch").click();
         if (byId("dlg")) byId("dlg").showModal();
       }
@@ -4993,6 +5035,7 @@ try {
   });
 
   async function openDialog(tab) {
+    window.openBrowseDialog = openDialog;
     dialog.showModal();
     await refreshSaved();
     showTab(tab);
@@ -6115,24 +6158,15 @@ try {
   function initStudentHub() {
     const batchTile = byId("hubBatchTile");
     if (batchTile) {
-      batchTile.addEventListener("click", () => {
-        showTab("batch");
-        dialog.showModal();
-      });
+      batchTile.addEventListener("click", () => openDialog("batch"));
     }
     const libTile = byId("hubLibTile");
     if (libTile) {
-      libTile.addEventListener("click", () => {
-        showTab("saved");
-        dialog.showModal();
-      });
+      libTile.addEventListener("click", () => openDialog("saved"));
     }
     const browseTile = byId("hubBrowseTile");
     if (browseTile) {
-      browseTile.addEventListener("click", () => {
-        showTab("remote");
-        dialog.showModal();
-      });
+      browseTile.addEventListener("click", () => openDialog("remote"));
     }
     const fileTile = byId("hubFileTile");
     if (fileTile) {
@@ -6142,10 +6176,7 @@ try {
     }
     const viewAllBtn = byId("hubViewAllSavedBtn");
     if (viewAllBtn) {
-      viewAllBtn.addEventListener("click", () => {
-        showTab("saved");
-        dialog.showModal();
-      });
+      viewAllBtn.addEventListener("click", () => openDialog("saved"));
     }
 
     // Intro Card Toggle
@@ -6497,150 +6528,33 @@ try {
 
   const byId = id => document.getElementById(id);
   const welcome = byId("welcome");
-  const wstage = byId("wstage");
-  const wfit = byId("wfit");
-  const warrows = byId("warrows");
-  const W_WIDTH = 1040;
-  const W_HEIGHT = 690;
+  if (!welcome) return;
+
   const TOUR_KEY = "svu.welcome.v4";
-  const MARKS = [
-    ["wm-meta", "wMeta", "top", 252, 10],
-    ["wm-open", "wOpen", "top", 472, 10],
-    ["wm-themes", "wThemes", "top", 692, 10],
-    ["wm-screen", "wScreen", "left", 12, 165],
-    ["wm-seek", "wSeek", "left", 12, 315],
-    ["wm-play", "wPlay", "left", 12, 445],
-    ["wm-chathead", "wChatHead", "right", 823, 155],
-    ["wm-chat", "wChat", "right", 823, 295],
-    ["wm-pin", "wPin", "right", 823, 445],
-    ["wm-enh", "wEnh", "bottom", 252, 596],
-    ["wm-vol", "wVol", "bottom", 472, 596],
-    ["wm-stretch", "wStr", "bottom", 692, 596]
-  ];
-  document.querySelectorAll("#welcome [data-clone]").forEach(slot => {
-    const src = document.querySelector(slot.dataset.clone);
-    if (src) {
-      const clone = src.cloneNode(true);
-      clone.removeAttribute("id");
-      clone.style.display = "";
-      slot.appendChild(clone);
-    }
-  });
-  const marks = MARKS.map(([target, key, side, x, y]) => {
-    const label = document.createElement("div");
-    label.className = "wlabel";
-    label.style.left = x + "px";
-    label.style.top = y + "px";
-    label.innerHTML = "<b data-i18n=\"" + key + "T\"></b><span data-i18n=\"" + key + "D\"></span>";
-    wstage.appendChild(label);
-    const item = document.createElement("li");
-    item.innerHTML = "<b data-i18n=\"" + key + "T\"></b><span data-i18n=\"" + key + "D\"></span>";
-    byId("wlist").appendChild(item);
-    return {
-      target: target,
-      side: side,
-      el: label
-    };
-  });
-  I18N.apply(welcome);
-  function edgePoint(rect, point) {
-    const cx = rect.x + rect.w / 2;
-    const cy = rect.y + rect.h / 2;
-    const dx = point.x - cx;
-    const dy = point.y - cy;
-    const tx = dx ? (rect.w / 2 + 4) / Math.abs(dx) : Infinity;
-    const ty = dy ? (rect.h / 2 + 4) / Math.abs(dy) : Infinity;
-    const t = Math.min(tx, ty, 1);
-    return {
-      x: cx + dx * t,
-      y: cy + dy * t
-    };
-  }
-  function layout() {
-    if (!welcome.open) {
-      return;
-    }
-    if (getComputedStyle(wfit).display === "none") {
-      welcome.style.width = "";
-      return;
-    }
-    const PAD = 28;
-    const w = Math.min(1120, window.innerWidth * 0.96) - PAD;
-    const h = Math.max(260, window.innerHeight * 0.88 - 220);
-    const scale = Math.min(1, w / W_WIDTH, h / W_HEIGHT);
-    welcome.style.width = Math.max(600, Math.round(W_WIDTH * scale + PAD)) + "px";
-    wfit.style.width = W_WIDTH * scale + "px";
-    wfit.style.height = W_HEIGHT * scale + "px";
-    wstage.style.transform = "scale(" + scale + ")";
-    const stageRect = wstage.getBoundingClientRect();
-    const relRect = el => {
-      const rect = el.getBoundingClientRect();
-      return {
-        x: (rect.left - stageRect.left) / scale,
-        y: (rect.top - stageRect.top) / scale,
-        w: rect.width / scale,
-        h: rect.height / scale
-      };
-    };
-    let paths = "";
-    for (const {
-      target: target,
-      side: side,
-      el: el
-    } of marks) {
-      const targetEl = byId(target);
-      if (!targetEl) continue;
-      const rect = relRect(targetEl);
-      const labelRect = relRect(el);
-      const anchor = side === "left" ? {
-        x: labelRect.x + labelRect.w,
-        y: labelRect.y + labelRect.h / 2
-      } : side === "right" ? {
-        x: labelRect.x,
-        y: labelRect.y + labelRect.h / 2
-      } : side === "top" ? {
-        x: labelRect.x + labelRect.w / 2,
-        y: labelRect.y + labelRect.h
-      } : {
-        x: labelRect.x + labelRect.w / 2,
-        y: labelRect.y
-      };
-      const edge = edgePoint(rect, anchor);
-      const vertical = side === "left" || side === "right";
-      const ctrl = vertical ? {
-        x: (anchor.x + edge.x) / 2,
-        y: anchor.y
-      } : {
-        x: anchor.x,
-        y: (anchor.y + edge.y) / 2
-      };
-      paths += "<path d=\"M" + anchor.x.toFixed(1) + " " + anchor.y.toFixed(1) + " Q" + ctrl.x.toFixed(1) + " " + ctrl.y.toFixed(1) + " " + edge.x.toFixed(1) + " " + edge.y.toFixed(1) + "\" marker-end=\"url(#wtip)\"/>";
-    }
-    warrows.querySelectorAll("path:not([style])").forEach(path => path.remove());
-    warrows.insertAdjacentHTML("beforeend", paths);
-  }
+
   function showTour() {
-    if (welcome.open) {
-      return;
-    }
+    if (welcome.open) return;
+    I18N.apply(welcome);
     welcome.showModal();
-    requestAnimationFrame(layout);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(layout);
-    }
   }
+
   function closeTour() {
     if (window.SVU_PREFS) {
       window.SVU_PREFS.set(TOUR_KEY, "1");
     } else {
-      try { localStorage.setItem(TOUR_KEY, "1"); } catch (err) {}
+      try { localStorage.setItem(TOUR_KEY, "1"); } catch (_) {}
     }
     if (welcome.open) {
       welcome.close();
     }
   }
-  byId("welcomeStart").addEventListener("click", closeTour);
-  byId("welcomeClose").addEventListener("click", closeTour);
+
+  const startBtn = byId("welcomeStart");
+  if (startBtn) startBtn.addEventListener("click", closeTour);
+
+  const closeBtn = byId("welcomeClose");
+  if (closeBtn) closeBtn.addEventListener("click", closeTour);
+
   const welcomeLangBtn = byId("welcomeLangBtn");
   if (welcomeLangBtn) {
     const syncWLang = () => {
@@ -6654,41 +6568,51 @@ try {
       I18N.toggle();
     });
   }
+
   welcome.addEventListener("close", () => {
     if (window.SVU_PREFS) {
       window.SVU_PREFS.set(TOUR_KEY, "1");
     } else {
-      try { localStorage.setItem(TOUR_KEY, "1"); } catch (err) {}
+      try { localStorage.setItem(TOUR_KEY, "1"); } catch (_) {}
     }
   });
+
   welcome.addEventListener("click", event => {
     if (event.target === welcome) {
       closeTour();
     }
   });
-  window.addEventListener("resize", () => requestAnimationFrame(layout));
-  document.addEventListener("langchange", () => { I18N.apply(welcome); requestAnimationFrame(layout); });
-  byId("tourBtn").addEventListener("click", () => {
-    const about = byId("about");
-    if (about.open) {
-      about.close();
+
+  document.addEventListener("langchange", () => {
+    if (welcome.open) {
+      I18N.apply(welcome);
     }
-    showTour();
   });
+
+  const tourBtn = byId("tourBtn");
+  if (tourBtn) {
+    tourBtn.addEventListener("click", () => {
+      const about = byId("about");
+      if (about && about.open) {
+        about.close();
+      }
+      showTour();
+    });
+  }
+
   let seen = false;
   if (window.SVU_PREFS) {
     seen = !!window.SVU_PREFS.get(TOUR_KEY, "");
   } else {
-    try { seen = !!localStorage.getItem(TOUR_KEY); } catch (err) {}
+    try { seen = !!localStorage.getItem(TOUR_KEY); } catch (_) {}
   }
   if (!seen) {
-    setTimeout(showTour, 350);
+    setTimeout(showTour, 400);
   }
+
+  if (!window.__lrec) window.__lrec = {};
   window.__lrec.showTour = showTour;
 })();
-;
-
-;
 } catch (err) {
   console.error("[SVU] module 11-tour.js failed to initialise:", err);
 }
