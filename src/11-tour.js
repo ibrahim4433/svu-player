@@ -7,18 +7,87 @@
 
   const TOUR_KEY = "svu.welcome.v4";
 
+  /* ==========================================================================
+     VISUAL TOP SLIDER / CAROUSEL CONTROLLER
+     ========================================================================== */
+  let currentSlide = 0;
+  const totalSlides = 5;
+  let sliderTimer = null;
+
+  function showSlide(index) {
+    currentSlide = (index + totalSlides) % totalSlides;
+    const slides = document.querySelectorAll("#guideSlides .guide-slide");
+    const dots = document.querySelectorAll("#sliderDots .dot");
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === currentSlide);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === currentSlide);
+    });
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  function startSliderTimer() {
+    stopSliderTimer();
+    sliderTimer = setInterval(nextSlide, 5500);
+  }
+
+  function stopSliderTimer() {
+    if (sliderTimer) {
+      clearInterval(sliderTimer);
+      sliderTimer = null;
+    }
+  }
+
+  function initSlider() {
+    const prevBtn = byId("sliderPrevBtn");
+    const nextBtn = byId("sliderNextBtn");
+    if (prevBtn) prevBtn.onclick = () => { prevSlide(); stopSliderTimer(); };
+    if (nextBtn) nextBtn.onclick = () => { nextSlide(); stopSliderTimer(); };
+
+    const dots = document.querySelectorAll("#sliderDots .dot");
+    dots.forEach(dot => {
+      dot.onclick = () => {
+        const s = parseInt(dot.dataset.slide, 10);
+        if (!isNaN(s)) {
+          showSlide(s);
+          stopSliderTimer();
+        }
+      };
+    });
+
+    const slider = byId("guideSlider");
+    if (slider) {
+      slider.onmouseenter = stopSliderTimer;
+      slider.onmouseleave = startSliderTimer;
+      slider.ontouchstart = stopSliderTimer;
+    }
+
+    showSlide(0);
+  }
+
+  /* ==========================================================================
+     GUIDE MODAL OPEN / CLOSE CONTROLLER
+     ========================================================================== */
   function showTour() {
     if (welcome.open) return;
     I18N.apply(welcome);
     welcome.showModal();
+    initSlider();
+    startSliderTimer();
   }
 
   function closeTour() {
-    if (window.SVU_PREFS) {
-      window.SVU_PREFS.set(TOUR_KEY, "1");
-    } else {
-      try { localStorage.setItem(TOUR_KEY, "1"); } catch (_) {}
-    }
+    stopSliderTimer();
+    try { localStorage.setItem(TOUR_KEY, "1"); } catch (_) {}
     if (welcome.open) {
       welcome.close();
     }
@@ -45,11 +114,8 @@
   }
 
   welcome.addEventListener("close", () => {
-    if (window.SVU_PREFS) {
-      window.SVU_PREFS.set(TOUR_KEY, "1");
-    } else {
-      try { localStorage.setItem(TOUR_KEY, "1"); } catch (_) {}
-    }
+    stopSliderTimer();
+    try { localStorage.setItem(TOUR_KEY, "1"); } catch (_) {}
   });
 
   welcome.addEventListener("click", event => {
@@ -75,14 +141,9 @@
     });
   }
 
-  let seen = false;
-  if (window.SVU_PREFS) {
-    seen = !!window.SVU_PREFS.get(TOUR_KEY, "");
-  } else {
-    try { seen = !!localStorage.getItem(TOUR_KEY); } catch (_) {}
-  }
-  if (!seen) {
-    setTimeout(showTour, 400);
+  // Requirement 7: Every time the app reloads to the main student hub, show the help guide window pop-up
+  if (!document.body.classList.contains("has-session")) {
+    setTimeout(showTour, 450);
   }
 
   if (!window.__lrec) window.__lrec = {};

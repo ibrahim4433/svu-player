@@ -1122,17 +1122,28 @@
   window.addEventListener("orientationchange", () => setTimeout(handleScreenResize, 150), PASSIVE);
   handleScreenResize();
 
+  window.__closeActiveSession = closeSession;
   window.__lrec = {
     get session() {
       return session;
     },
     audio: audio,
     seekTo: seekTo,
-    openFile: openFile
+    openFile: openFile,
+    closeSession: closeSession
   };
+
+  // Stage Floating Back to Hub button (for landscape/fullscreen mode)
+  const stageBackBtn = byId("stageBackToHubBtn");
+  if (stageBackBtn) {
+    stageBackBtn.addEventListener("click", closeSession);
+  }
+  const headerBackBtn = byId("headerBackToHubBtn");
+  if (headerBackBtn) {
+    headerBackBtn.addEventListener("click", closeSession);
+  }
 })();
 ;
 
 ;
 
-window.__closeActiveSession = closeSession;

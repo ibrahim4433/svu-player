@@ -470,6 +470,24 @@ guideModalTitle: "SVU Player Guide",
     guideKbdTitle: "⌨️ Keyboard Shortcuts (Tablet & Laptop)",
     guideKbdDesc: "Space: Play/Pause · ← →: Skip 5s · M: Mute · F: Fullscreen · C: Chat toggle · S: Stretch",
     welcomeStartBtn: "✓ Understood, Let's Begin",
+slide1Tag: "Smart Student Hub",
+    slide1Title: "Quick access & instant 100% offline replay",
+    slide1Desc: "All-in-one home screen bringing batch downloading, your offline library, and 1-tap lecture resume together.",
+    slide2Tag: "Widescreen & Synced Live Chat",
+    slide2Title: "Real-time question sync with instant video jump",
+    slide2Desc: "Live chat stream synchronized second-by-second with teacher voice. Tap any question timestamp to jump straight to that moment.",
+    slide3Tag: "4-Stage DSP Voice Clarity",
+    slide3Title: "WebAssembly vocal filters for crystal-clear sound",
+    slide3Desc: "The Enhance button automatically strips microphone hiss and room echo to make lecture speech crystal clear even on poor recordings.",
+    slide4Tag: "Safe Anti-Ban Batch Downloader",
+    slide4Title: "Download entire semesters safely with one click",
+    slide4Desc: "Sequential download queue with rate-limiting to protect your account. Lectures are stored in browser storage for 100% offline study.",
+    slide5Tag: "Touch Gestures & Mobile Cinema",
+    slide5Title: "Effortless gestures built for mobile screens",
+    slide5Desc: "Single tap for controls, double tap for ±10s seek, and rotating phone activates widescreen cinema split with side-by-side chat.",
+    introCollapse: "Hide details ▴",
+    hubCourseLectures: "{n} lectures",
+    hubCourseWatched: "({w} watched)",
       introMiniTitle: "SVU Studio • Offline Session Replay & Library",
       introDetails: "Details",
       hubViewAllSavedCount: "View All ({n}) in Library →",
@@ -818,6 +836,24 @@ guideModalTitle: "دليل استخدام مشغّل SVU",
     guideKbdTitle: "⌨️ اختصارات لوحة المفاتيح (للأجهزة اللوحية والحاسوب)",
     guideKbdDesc: "المسافة: تشغيل/إيقاف مؤقت · ← →: تقديم/ترجيع ٥ ثوانٍ · M: كتم الصوت · F: ملء الشاشة · C: إظهار الدردشة · S: تمديد الشاشة",
     welcomeStartBtn: "✓ فهمت، لنبدأ الاستخدام",
+slide1Tag: "لوحة الطالب الذكية",
+    slide1Title: "الوصول السريع والتشغيل الفوري دون إنترنت",
+    slide1Desc: "شاشة رئيسية موحدة تجمع التنزيل المجمّع، مكتبة محاضراتك المحفوظة، واستئناف آخر محاضرة شاهدتها بضغطة واحدة.",
+    slide2Tag: "شاشة عريضة ودردشة متزامنة",
+    slide2Title: "تزامن حي ودقيق للأسئلة مع قفز فوري بالفيديو",
+    slide2Desc: "شات المحاضرة يتدفق بالثانية بالتزامن مع صوت المدرس. اضغط على أي رسالة أو توقيت للانتقال مباشرة لتلك الدقيقة في الشرح.",
+    slide3Tag: "فلتر الصوت الرقمي (DSP)",
+    slide3Title: "تنقية وتوضيح صوت المدرس بأعلى نقاء",
+    slide3Desc: "تفعيل زر Enhance يزيل ضجيج الميكروفون وهواء القاعة تلقائياً ويبرز صوت الشرح بوضوح فائق حتى مع التسجيلات الرديئة.",
+    slide4Tag: "التنزيل المجمّع الآمن",
+    slide4Title: "تنزيل كامل مقرراتك دون خطر الحظر",
+    slide4Desc: "اختر كليتك وفصلك ونزل جميع المحاضرات دفعة واحدة بمعدل تسلسلي آمن، مع حفظها مباشرة في ذاكرة المتصفح للعمل دون إنترنت.",
+    slide5Tag: "إيماءات اللمس الذكية",
+    slide5Title: "تحكم كامل ومريح على شاشات الموبايل",
+    slide5Desc: "إيماءات سريعة لتقديم وترجيع المحاضرة، وتدوير الهاتف يفتح وضع السينما الواسع مع الدردشة جنباً إلى جنب دون تغطية الشاشة.",
+    introCollapse: "إخفاء التفاصيل ▴",
+    hubCourseLectures: "{n} محاضرات",
+    hubCourseWatched: "({w} تمت مشاهدتها)",
       introMiniTitle: "استوديو مشغّل SVU • تشغيل وحفظ دون إنترنت",
       introDetails: "تفاصيل",
       hubViewAllSavedCount: "عرض جميع المحاضرات ({n}) في المكتبة ←",
@@ -2749,20 +2785,30 @@ try {
   window.addEventListener("orientationchange", () => setTimeout(handleScreenResize, 150), PASSIVE);
   handleScreenResize();
 
+  window.__closeActiveSession = closeSession;
   window.__lrec = {
     get session() {
       return session;
     },
     audio: audio,
     seekTo: seekTo,
-    openFile: openFile
+    openFile: openFile,
+    closeSession: closeSession
   };
+
+  // Stage Floating Back to Hub button (for landscape/fullscreen mode)
+  const stageBackBtn = byId("stageBackToHubBtn");
+  if (stageBackBtn) {
+    stageBackBtn.addEventListener("click", closeSession);
+  }
+  const headerBackBtn = byId("headerBackToHubBtn");
+  if (headerBackBtn) {
+    headerBackBtn.addEventListener("click", closeSession);
+  }
 })();
 ;
 
 ;
-
-window.__closeActiveSession = closeSession;
 } catch (err) {
   console.error("[SVU] module 07-player.js failed to initialise:", err);
 }
@@ -3576,6 +3622,7 @@ try {
       await onBatchTermChange(batchState.program, forceRefresh);
     } else {
       fillSelect(byId("batchProgram"), [], "selProgram");
+      updateBatchStepProgression();
       renderBatchCoursesList(false);
     }
     syncCascadeStyles();
@@ -3593,6 +3640,7 @@ try {
     batchCourseCatalog = [];
     if (!termVal) {
       fillSelect(byId("batchProgram"), [], "selProgram");
+      updateBatchStepProgression();
       renderBatchCoursesList(false);
       updateBatchSummary();
       return;
@@ -4316,7 +4364,33 @@ try {
     };
   }
 
+    function updateBatchStepProgression() {
+    const termVal = byId("batchTerm") ? byId("batchTerm").value : "";
+    const progVal = byId("batchProgram") ? byId("batchProgram").value : "";
+    const step2Box = byId("batchStep2Box");
+    const isStep1Done = !!(termVal && progVal);
+
+    if (step2Box) {
+      if (!isStep1Done) {
+        step2Box.classList.add("is-locked");
+        step2Box.setAttribute("aria-disabled", "true");
+        if (byId("batchShowSelectedBtn")) byId("batchShowSelectedBtn").disabled = true;
+        if (byId("batchSelectAllBtn")) byId("batchSelectAllBtn").disabled = true;
+        if (byId("batchClearBtn")) byId("batchClearBtn").disabled = true;
+        if (byId("batchCourseFilter")) byId("batchCourseFilter").disabled = true;
+      } else {
+        step2Box.classList.remove("is-locked");
+        step2Box.removeAttribute("aria-disabled");
+        if (byId("batchShowSelectedBtn")) byId("batchShowSelectedBtn").disabled = false;
+        if (byId("batchSelectAllBtn")) byId("batchSelectAllBtn").disabled = false;
+        if (byId("batchClearBtn")) byId("batchClearBtn").disabled = false;
+        if (byId("batchCourseFilter")) byId("batchCourseFilter").disabled = false;
+      }
+    }
+  }
+
   function updateBatchSummary() {
+    updateBatchStepProgression();
     updateBatchShowSelectedBtn();
     const { tasks, selectedCoursesCount, totalSelectedLessons, alreadySavedCount } = collectBatchTasks();
     const sumEl = byId("batchSummaryTxt");
@@ -6101,48 +6175,114 @@ try {
       }
     }
 
-    // 4. Populate Recent Offline Lectures (Up to 5)
+    // 4. Populate All Saved Lectures Grouped by Material in Hub
     const recentList = byId("hubRecentList");
     if (recentList) {
       recentList.innerHTML = "";
       if (!savedRecordsCache.length) {
         recentList.innerHTML = "<div class=\"hub-empty-msg\">" + escapeHtml(t("hubNoSavedHint")) + "</div>";
       } else {
-        const recentItems = savedRecordsCache.slice(0, 5);
-        for (const rec of recentItems) {
+        const groupsMap = new Map();
+        for (const rec of savedRecordsCache) {
           const m = rec.parsedMeta;
-          const item = document.createElement("div");
-          item.className = "hub-recent-item";
+          const gKey = m.localGroup ? "__LOCAL_FILES__" : (m.material || "OTHER");
+          if (!groupsMap.has(gKey)) groupsMap.set(gKey, []);
+          groupsMap.get(gKey).push(rec);
+        }
 
-          const mat = (window.MaterialsDB && m.material) ? window.MaterialsDB.get(m.material) : null;
+        const sortedGroupKeys = Array.from(groupsMap.keys()).sort((a, b) => {
+          if (a === "__LOCAL_FILES__") return 1;
+          if (b === "__LOCAL_FILES__") return -1;
+          return a.localeCompare(b);
+        });
+
+        for (const gKey of sortedGroupKeys) {
+          const items = groupsMap.get(gKey).slice().sort((a, b) => {
+            const ma = a.parsedMeta, mb = b.parsedMeta;
+            if (ma.lessonNum !== mb.lessonNum) return ma.lessonNum - mb.lessonNum;
+            return String(ma.date).localeCompare(String(mb.date));
+          });
+          const isLocal = gKey === "__LOCAL_FILES__";
+          const mat = (window.MaterialsDB && gKey !== "OTHER" && !isLocal) ? window.MaterialsDB.get(gKey) : null;
           const isEn = window.I18N && window.I18N.lang === "en";
-          const mName = mat ? (isEn ? (mat.en || mat.ar) : (mat.ar || mat.en)) : "";
-          const lessonTxt = m.lesson ? t("batchLessonNum", { n: m.lesson }) : rec.name;
-          const fullTitle = (m.material ? m.material + " · " : "") + (mName ? mName + " — " : "") + lessonTxt;
+          const matName = mat ? (isEn ? (mat.en || mat.ar) : (mat.ar || mat.en)) : "";
+          const courseHeading = isLocal ? t("localFilesGroup") : ((gKey !== "OTHER" ? (gKey + " — ") : "") + (matName || gKey));
+          const watchedCount = items.filter(r => r.watched).length;
 
-          const info = document.createElement("div");
-          info.className = "hub-recent-item-info";
-          const metaParts = [];
-          if (m.date) metaParts.push(m.date);
-          metaParts.push(formatSize(rec.size || 0));
-          if (rec.watched) metaParts.push("✓ " + t("libWatched"));
+          const groupEl = document.createElement("div");
+          groupEl.className = "hub-course-group";
 
-          info.innerHTML =
-            "<div class=\"hub-recent-item-title\">" + escapeHtml(fullTitle) + "</div>" +
-            "<div class=\"hub-recent-item-meta\">" + metaParts.map(escapeHtml).join(" • ") + "</div>";
+          const headEl = document.createElement("div");
+          headEl.className = "hub-course-head";
+          headEl.innerHTML =
+            "<div class=\"hub-course-head-info\">" +
+              "<div class=\"hub-course-title\">" + escapeHtml(courseHeading) + "</div>" +
+              "<div class=\"hub-course-count\">" + escapeHtml(t("hubCourseLectures", { n: items.length })) + " " + escapeHtml(t("hubCourseWatched", { w: watchedCount })) + "</div>" +
+            "</div>";
 
-          const playBtn = document.createElement("button");
-          playBtn.className = "primary hub-recent-play-btn";
-          playBtn.innerHTML = "<svg viewBox='0 0 24 24' width='13' height='13' fill='currentColor'><polygon points='6 3 20 12 6 21 6 3'/></svg><span>" + escapeHtml(t("play")) + "</span>";
-          playBtn.onclick = (e) => {
-            e.stopPropagation();
-            playSaved(rec.id);
-          };
+          const listEl = document.createElement("div");
+          listEl.className = "hub-course-list";
 
-          item.style.cursor = "pointer";
-          item.onclick = () => playSaved(rec.id);
-          item.append(info, playBtn);
-          recentList.appendChild(item);
+          for (const rec of items) {
+            const m = rec.parsedMeta;
+            const row = document.createElement("div");
+            row.className = "hub-lec-row" + (rec.watched ? " is-watched" : "");
+
+            const watchBtn = document.createElement("button");
+            watchBtn.className = "watch-btn hub-watch-btn" + (rec.watched ? " on" : "");
+            watchBtn.setAttribute("aria-label", rec.watched ? t("libWatched") : t("libUnwatched"));
+            watchBtn.title = rec.watched ? t("libWatched") : t("libUnwatched");
+            watchBtn.innerHTML = rec.watched
+              ? "<svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>"
+              : "<svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='9'/></svg>";
+            watchBtn.onclick = (e) => {
+              e.stopPropagation();
+              setLectureWatched(rec.id, !rec.watched);
+            };
+
+            const info = document.createElement("div");
+            info.className = "hub-lec-info";
+            const lessonTitle = m.lesson ? t("batchLessonNum", { n: m.lesson }) : rec.name;
+            const metaParts = [];
+            if (m.date) metaParts.push(m.date);
+            metaParts.push(formatSize(rec.size || 0));
+            if (rec.watched) metaParts.push("✓ " + t("libWatched"));
+
+            info.innerHTML =
+              "<div class=\"hub-lec-title\">" + escapeHtml(lessonTitle) + "</div>" +
+              "<div class=\"hub-lec-meta\">" + metaParts.map(escapeHtml).join(" • ") + "</div>";
+
+            const actions = document.createElement("div");
+            actions.className = "hub-lec-actions";
+
+            const playBtn = document.createElement("button");
+            playBtn.className = "primary hub-lec-play-btn";
+            playBtn.innerHTML = "<svg viewBox='0 0 24 24' width='13' height='13' fill='currentColor'><polygon points='6 3 20 12 6 21 6 3'/></svg><span>" + escapeHtml(t("play")) + "</span>";
+            playBtn.onclick = (e) => {
+              e.stopPropagation();
+              playSaved(rec.id);
+            };
+
+            const delBtn = document.createElement("button");
+            delBtn.className = "hub-lec-del-btn";
+            delBtn.title = t("del");
+            delBtn.setAttribute("aria-label", t("del"));
+            delBtn.innerHTML = "<svg viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='currentColor' stroke-width='2'><polyline points='3 6 5 6 21 6'/><path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/></svg>";
+            delBtn.onclick = async (e) => {
+              e.stopPropagation();
+              if (confirm(t("confirmDelete", { name: rec.name }))) {
+                await LibraryDB.remove(rec.id);
+                refreshSaved();
+              }
+            };
+
+            actions.append(playBtn, delBtn);
+            row.append(watchBtn, info, actions);
+            listEl.appendChild(row);
+          }
+
+          groupEl.append(headEl, listEl);
+          recentList.appendChild(groupEl);
         }
       }
     }
@@ -6179,18 +6319,23 @@ try {
       viewAllBtn.addEventListener("click", () => openDialog("saved"));
     }
 
-    // Intro Card Toggle
+    // Intro Card Toggle (Mini pill click, toggle btn, and collapse btn)
+    const introCard = byId("hubIntroCard");
     const introMini = byId("introMini");
-    if (introMini) {
-      introMini.addEventListener("click", () => {
-        const introCard = byId("hubIntroCard");
-        const introFull = byId("introFull");
-        if (introCard && introFull) {
-          const isExp = introCard.classList.toggle("is-expanded");
-          introFull.style.display = isExp ? "" : "none";
-        }
-      });
+    const introFull = byId("introFull");
+    const introMiniToggle = byId("introMiniToggleBtn");
+    const introCollapse = byId("introCollapseBtn");
+
+    function toggleIntroCard(e) {
+      if (e) e.stopPropagation();
+      if (!introCard || !introFull) return;
+      const isExp = introCard.classList.toggle("is-expanded");
+      introFull.style.display = isExp ? "" : "none";
     }
+
+    if (introMini) introMini.addEventListener("click", toggleIntroCard);
+    if (introMiniToggle) introMiniToggle.addEventListener("click", toggleIntroCard);
+    if (introCollapse) introCollapse.addEventListener("click", toggleIntroCard);
     const introInstallBtn = byId("introInstallBtn");
     if (introInstallBtn) {
       introInstallBtn.addEventListener("click", () => {
@@ -6532,18 +6677,87 @@ try {
 
   const TOUR_KEY = "svu.welcome.v4";
 
+  /* ==========================================================================
+     VISUAL TOP SLIDER / CAROUSEL CONTROLLER
+     ========================================================================== */
+  let currentSlide = 0;
+  const totalSlides = 5;
+  let sliderTimer = null;
+
+  function showSlide(index) {
+    currentSlide = (index + totalSlides) % totalSlides;
+    const slides = document.querySelectorAll("#guideSlides .guide-slide");
+    const dots = document.querySelectorAll("#sliderDots .dot");
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === currentSlide);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === currentSlide);
+    });
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  function startSliderTimer() {
+    stopSliderTimer();
+    sliderTimer = setInterval(nextSlide, 5500);
+  }
+
+  function stopSliderTimer() {
+    if (sliderTimer) {
+      clearInterval(sliderTimer);
+      sliderTimer = null;
+    }
+  }
+
+  function initSlider() {
+    const prevBtn = byId("sliderPrevBtn");
+    const nextBtn = byId("sliderNextBtn");
+    if (prevBtn) prevBtn.onclick = () => { prevSlide(); stopSliderTimer(); };
+    if (nextBtn) nextBtn.onclick = () => { nextSlide(); stopSliderTimer(); };
+
+    const dots = document.querySelectorAll("#sliderDots .dot");
+    dots.forEach(dot => {
+      dot.onclick = () => {
+        const s = parseInt(dot.dataset.slide, 10);
+        if (!isNaN(s)) {
+          showSlide(s);
+          stopSliderTimer();
+        }
+      };
+    });
+
+    const slider = byId("guideSlider");
+    if (slider) {
+      slider.onmouseenter = stopSliderTimer;
+      slider.onmouseleave = startSliderTimer;
+      slider.ontouchstart = stopSliderTimer;
+    }
+
+    showSlide(0);
+  }
+
+  /* ==========================================================================
+     GUIDE MODAL OPEN / CLOSE CONTROLLER
+     ========================================================================== */
   function showTour() {
     if (welcome.open) return;
     I18N.apply(welcome);
     welcome.showModal();
+    initSlider();
+    startSliderTimer();
   }
 
   function closeTour() {
-    if (window.SVU_PREFS) {
-      window.SVU_PREFS.set(TOUR_KEY, "1");
-    } else {
-      try { localStorage.setItem(TOUR_KEY, "1"); } catch (_) {}
-    }
+    stopSliderTimer();
+    try { localStorage.setItem(TOUR_KEY, "1"); } catch (_) {}
     if (welcome.open) {
       welcome.close();
     }
@@ -6570,11 +6784,8 @@ try {
   }
 
   welcome.addEventListener("close", () => {
-    if (window.SVU_PREFS) {
-      window.SVU_PREFS.set(TOUR_KEY, "1");
-    } else {
-      try { localStorage.setItem(TOUR_KEY, "1"); } catch (_) {}
-    }
+    stopSliderTimer();
+    try { localStorage.setItem(TOUR_KEY, "1"); } catch (_) {}
   });
 
   welcome.addEventListener("click", event => {
@@ -6600,14 +6811,9 @@ try {
     });
   }
 
-  let seen = false;
-  if (window.SVU_PREFS) {
-    seen = !!window.SVU_PREFS.get(TOUR_KEY, "");
-  } else {
-    try { seen = !!localStorage.getItem(TOUR_KEY); } catch (_) {}
-  }
-  if (!seen) {
-    setTimeout(showTour, 400);
+  // Requirement 7: Every time the app reloads to the main student hub, show the help guide window pop-up
+  if (!document.body.classList.contains("has-session")) {
+    setTimeout(showTour, 450);
   }
 
   if (!window.__lrec) window.__lrec = {};
