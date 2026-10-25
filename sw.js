@@ -4,7 +4,7 @@
  * Caches the app shell so the player works 100% offline as an installable PWA.
  */
 
-const CACHE_NAME = "svu-player-local-v19";
+const CACHE_NAME = "svu-player-local-v20";
 
 const APP_SHELL = [
   "/",

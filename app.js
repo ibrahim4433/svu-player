@@ -450,6 +450,7 @@ try {
       exitSession: "Exit Session",
       exitSessionTitle: "Return to Student Hub",
       backToHub: "Hub",
+    backToHome: "Back to Home",
       introBadge: "SVU Player Studio",
       introTitle: "Syrian Virtual University Session Studio & Offline Library",
       introDesc: "A standalone web app working 100% locally and offline. Replay synchronized Linktivity (.lrec) lectures with video, crystal-clear 4-stage DSP voice enhancement, and interactive live chat, with safe batch downloads.",
@@ -837,6 +838,7 @@ slide1Tag: "Smart Student Hub",
       exitSession: "خروج من الجلسة",
       exitSessionTitle: "العودة إلى لوحة الطالب",
       backToHub: "الرئيسية",
+    backToHome: "العودة للرئيسية",
       introBadge: "استوديو مشغّل SVU",
       introTitle: "مشغّل ومكتبة محاضرات الجامعة الافتراضية السورية",
       introDesc: "تطبيق ويب مستقل ومجاني، يعمل بالكامل محلياً ودون إنترنت (١٠٠٪ Offline). يتيح لطلاب الجامعة الافتراضية تشغيل ملفات Linktivity (.lrec) المتزامنة (الشاشة، الصوت، والدردشة المباشرة)، مع معالجة ذكية لصوت المدرس وتنزيل جميع المواد بأمان وبضغطة واحدة.",
@@ -2263,15 +2265,18 @@ try {
   let mouseIdleTimer = null;
   let isHoveringControls = false;
   const stageWrap = stage.closest(".stage-wrap") || stage;
+  const stageBackBtn = byId("stageBackToHubBtn");
 
   function showControlsOnMouseActivity() {
     controls.classList.add("mouse-active");
+    if (stageBackBtn) stageBackBtn.classList.add("visible");
     if (mouseIdleTimer) {
       clearTimeout(mouseIdleTimer);
     }
     mouseIdleTimer = setTimeout(() => {
       if (!isHoveringControls && !controls.classList.contains("pinned")) {
         controls.classList.remove("mouse-active");
+        if (stageBackBtn) stageBackBtn.classList.remove("visible");
       }
     }, 3000);
   }
@@ -2285,6 +2290,7 @@ try {
     }
     if (!controls.classList.contains("pinned")) {
       controls.classList.remove("mouse-active");
+      if (stageBackBtn) stageBackBtn.classList.remove("visible");
     }
   });
   controls.addEventListener("mouseenter", () => {
@@ -2351,11 +2357,13 @@ try {
 
   function showCinemaControls() {
     controls.classList.add("active", "mouse-active");
+    if (stageBackBtn) stageBackBtn.classList.add("visible");
     if (cinemaTimer) clearTimeout(cinemaTimer);
     if (!audio.paused) {
       cinemaTimer = setTimeout(() => {
         if (!controls.matches(":hover") && !controls.classList.contains("pinned")) {
           controls.classList.remove("active", "mouse-active");
+          if (stageBackBtn) stageBackBtn.classList.remove("visible");
         }
       }, 3200);
     }
@@ -2408,6 +2416,7 @@ try {
       if (isLandscapeMobile() || window.innerWidth <= 768) {
         if (controls.classList.contains("active") || controls.classList.contains("mouse-active")) {
           controls.classList.remove("active", "mouse-active");
+          if (stageBackBtn) stageBackBtn.classList.remove("visible");
         } else {
           showCinemaControls();
         }
@@ -2429,6 +2438,7 @@ try {
   audio.addEventListener("pause", () => {
     document.body.classList.remove("is-playing");
     controls.classList.add("active", "mouse-active");
+    if (stageBackBtn) stageBackBtn.classList.add("visible");
   });
   document.addEventListener("keydown", event => {
     if (event.target.matches("input[type=range], select, input[type=checkbox]") && event.key !== " ") {
@@ -2851,14 +2861,27 @@ try {
     closeSession: closeSession
   };
 
-  // Bottom Control Bar & Header Return to Hub buttons
-  const playerHubBtn = byId("playerHubBtn");
-  if (playerHubBtn) {
-    playerHubBtn.addEventListener("click", closeSession);
+  // Stage Upper Corner & Header Return to Hub buttons (with Fullscreen Exit)
+  function returnToHubWithFsExit() {
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
+    if (document.body.classList.contains("fs")) {
+      document.body.classList.remove("fs");
+    }
+    closeSession();
+  }
+
+  if (stageBackBtn) {
+    stageBackBtn.addEventListener("click", returnToHubWithFsExit);
   }
   const headerBackBtn = byId("headerBackToHubBtn");
   if (headerBackBtn) {
-    headerBackBtn.addEventListener("click", closeSession);
+    headerBackBtn.addEventListener("click", returnToHubWithFsExit);
   }
 })();
 ;

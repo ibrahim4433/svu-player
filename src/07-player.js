@@ -558,15 +558,18 @@
   let mouseIdleTimer = null;
   let isHoveringControls = false;
   const stageWrap = stage.closest(".stage-wrap") || stage;
+  const stageBackBtn = byId("stageBackToHubBtn");
 
   function showControlsOnMouseActivity() {
     controls.classList.add("mouse-active");
+    if (stageBackBtn) stageBackBtn.classList.add("visible");
     if (mouseIdleTimer) {
       clearTimeout(mouseIdleTimer);
     }
     mouseIdleTimer = setTimeout(() => {
       if (!isHoveringControls && !controls.classList.contains("pinned")) {
         controls.classList.remove("mouse-active");
+        if (stageBackBtn) stageBackBtn.classList.remove("visible");
       }
     }, 3000);
   }
@@ -580,6 +583,7 @@
     }
     if (!controls.classList.contains("pinned")) {
       controls.classList.remove("mouse-active");
+      if (stageBackBtn) stageBackBtn.classList.remove("visible");
     }
   });
   controls.addEventListener("mouseenter", () => {
@@ -646,11 +650,13 @@
 
   function showCinemaControls() {
     controls.classList.add("active", "mouse-active");
+    if (stageBackBtn) stageBackBtn.classList.add("visible");
     if (cinemaTimer) clearTimeout(cinemaTimer);
     if (!audio.paused) {
       cinemaTimer = setTimeout(() => {
         if (!controls.matches(":hover") && !controls.classList.contains("pinned")) {
           controls.classList.remove("active", "mouse-active");
+          if (stageBackBtn) stageBackBtn.classList.remove("visible");
         }
       }, 3200);
     }
@@ -703,6 +709,7 @@
       if (isLandscapeMobile() || window.innerWidth <= 768) {
         if (controls.classList.contains("active") || controls.classList.contains("mouse-active")) {
           controls.classList.remove("active", "mouse-active");
+          if (stageBackBtn) stageBackBtn.classList.remove("visible");
         } else {
           showCinemaControls();
         }
@@ -724,6 +731,7 @@
   audio.addEventListener("pause", () => {
     document.body.classList.remove("is-playing");
     controls.classList.add("active", "mouse-active");
+    if (stageBackBtn) stageBackBtn.classList.add("visible");
   });
   document.addEventListener("keydown", event => {
     if (event.target.matches("input[type=range], select, input[type=checkbox]") && event.key !== " ") {
@@ -1146,14 +1154,27 @@
     closeSession: closeSession
   };
 
-  // Bottom Control Bar & Header Return to Hub buttons
-  const playerHubBtn = byId("playerHubBtn");
-  if (playerHubBtn) {
-    playerHubBtn.addEventListener("click", closeSession);
+  // Stage Upper Corner & Header Return to Hub buttons (with Fullscreen Exit)
+  function returnToHubWithFsExit() {
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
+    if (document.body.classList.contains("fs")) {
+      document.body.classList.remove("fs");
+    }
+    closeSession();
+  }
+
+  if (stageBackBtn) {
+    stageBackBtn.addEventListener("click", returnToHubWithFsExit);
   }
   const headerBackBtn = byId("headerBackToHubBtn");
   if (headerBackBtn) {
-    headerBackBtn.addEventListener("click", closeSession);
+    headerBackBtn.addEventListener("click", returnToHubWithFsExit);
   }
 })();
 ;
