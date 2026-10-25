@@ -759,6 +759,10 @@
     display: flex; align-items: center; gap: 6px; padding: 12px 16px;
     background: var(--panel); border-bottom: 1px solid var(--line); flex-wrap: wrap;
   }
+  .dlg-tabs-strip { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
+  .lib-top-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .lib-selects-row { display: flex; gap: 8px; align-items: center; }
+  .lec-actions { display: flex; align-items: center; gap: 6px; flex: none; }
   .tab {
     background: var(--bg); border: 1px solid var(--line); border-radius: var(--r);
     padding: 7px 12px; color: var(--dim); font-size: 12.5px; font-weight: 600;
@@ -1178,7 +1182,7 @@
   .course-dir-search-wrap input:focus { border-color: var(--blue); outline: none; }
   .course-dir-faculties { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
   .dir-chip {
-    flex-shrink: 0; padding: 5px 12px; font-size: 11.5px; font-weight: 600; border-radius: 99px;
+    flex-shrink: 0; white-space: nowrap; padding: 5px 12px; font-size: 11.5px; font-weight: 600; border-radius: 99px;
     background: var(--panel2); color: var(--dim); border: 1px solid var(--line); cursor: pointer;
     transition: all 0.15s ease;
   }
@@ -1731,6 +1735,285 @@
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
+    .dlg-head {
+      padding: 10px 12px;
+      gap: 8px;
+      flex-wrap: nowrap;
+    }
+    .dlg-tabs-strip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      min-width: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .dlg-tabs-strip::-webkit-scrollbar {
+      display: none;
+    }
+    .dlg-tabs-strip .tab {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      height: 36px;
+      padding: 0 13px;
+      border-radius: 999px;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dlg-head .iconbtn {
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+    }
+    .dlg-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    /* Cascade 1-Column Responsive Layout */
+    .cascade {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+    .cascade label {
+      margin-top: 6px;
+      margin-bottom: 2px;
+      font-size: 12px;
+      font-weight: 700;
+      display: block;
+    }
+    .cascade label:first-child {
+      margin-top: 0;
+    }
+    .cascade select {
+      width: 100%;
+      height: 44px;
+      font-size: 14px;
+      padding: 0 12px;
+      border-radius: var(--r);
+    }
+    .batch-top-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+    .batch-top-grid label {
+      margin-top: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .batch-top-grid select {
+      width: 100%;
+      height: 44px;
+      font-size: 14px;
+      padding: 0 12px;
+      border-radius: var(--r);
+    }
+    .batch-top-grid button {
+      width: 100%;
+      height: 44px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    .b-course-selects {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+    }
+    .b-course-selects label {
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .b-course-selects select {
+      height: 40px;
+      width: 100%;
+    }
+
+    /* Student Library (#paneSaved) Mobile Layout */
+    .lib-top-bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      padding: 10px 12px;
+    }
+    .lib-stats {
+      justify-content: space-between;
+      width: 100%;
+    }
+    .lib-top-actions {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 6px !important;
+      width: 100% !important;
+    }
+    .lib-top-actions button {
+      width: 100% !important;
+      height: 38px !important;
+      padding: 0 4px !important;
+      font-size: 11px !important;
+      white-space: nowrap !important;
+      justify-content: center !important;
+    }
+    .lib-controls-bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+    .lib-search {
+      width: 100%;
+      height: 38px;
+    }
+    .lib-selects-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      width: 100%;
+    }
+    .lib-selects-row select {
+      width: 100%;
+      height: 36px;
+    }
+    .lib-filter-pills {
+      width: 100%;
+      display: flex;
+    }
+    .lib-fpill {
+      flex: 1;
+      text-align: center;
+      justify-content: center;
+      height: 32px;
+      font-size: 11.5px;
+    }
+    .lec-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+      padding: 10px 12px;
+    }
+    .lec-info {
+      width: 100%;
+      min-width: 0;
+    }
+    .lec-sub code {
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .lec-actions {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+    .lec-actions button.primary {
+      flex: 1;
+      height: 38px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .lec-actions button:not(.primary) {
+      height: 38px;
+      padding: 0 14px;
+      font-size: 12px;
+    }
+
+    /* Course Directory (#courseDirModal) Mobile Layout */
+    .course-dir-body {
+      padding: 12px 14px 16px;
+      gap: 10px;
+    }
+    .course-dir-grid {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      max-height: 58dvh;
+    }
+    .dir-card {
+      padding: 12px 14px;
+    }
+    .dir-card-actions {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+    .dir-btn {
+      flex: 1;
+      height: 36px;
+      font-size: 11.5px;
+      justify-content: center;
+      border-radius: var(--r);
+    }
+
+    /* Welcome Tour Modal (#welcome) Mobile Layout */
+    .w-foot {
+      justify-content: center;
+      padding: 12px 16px;
+    }
+    .w-foot .tip {
+      display: none !important;
+    }
+    #welcomeStart {
+      width: 100% !important;
+      height: 42px !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      border-radius: var(--r) !important;
+      justify-content: center !important;
+    }
+
+    /* Profile Modal (#profileDlg) & About Modal (#about) Mobile Layout */
+    .prof-form-grid {
+      grid-template-columns: 1fr;
+    }
+    .prof-field[style*="span 2"] {
+      grid-column: span 1 !important;
+    }
+    .prof-card {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+    .prof-actions {
+      display: flex;
+      gap: 6px;
+      width: 100%;
+    }
+    .prof-actions button {
+      flex: 1;
+      height: 36px;
+    }
+    .about-hero {
+      flex-direction: column;
+      text-align: center;
+      padding: 14px;
+    }
+    .about-hero-txt {
+      text-align: center;
+    }
+    .about-title-row {
+      justify-content: center;
+    }
+    .about-badges {
+      justify-content: center;
+    }
+    #about .dlg-head button {
+      padding: 0 8px;
+      font-size: 11px;
+      height: 30px;
+    }
   }
 
   /* --------------------------------------------------------------------------
@@ -2150,32 +2433,37 @@
       position: fixed !important;
       top: 0 !important;
       bottom: 0 !important;
-      inset-inline-end: 0 !important;
-      width: min(340px, 44vw) !important;
+      right: 0 !important;
+      left: auto !important;
+      width: min(340px, 85vw) !important;
       height: 100dvh !important;
-      z-index: 50 !important;
+      z-index: 60 !important;
       border-radius: 0 !important;
-      border-top: none !important;
-      border-bottom: none !important;
-      background: var(--glass) !important;
+      border: none !important;
+      border-inline-start: 1px solid var(--line-strong) !important;
+      background: rgba(15, 23, 42, 0.90) !important;
       backdrop-filter: blur(24px) !important;
       -webkit-backdrop-filter: blur(24px) !important;
-      box-shadow: -10px 0 35px rgba(0,0,0,0.75) !important;
+      box-shadow: -10px 0 35px rgba(0,0,0,0.85) !important;
       display: flex !important;
-      transform: translateX(110%);
-      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      transform: translateX(105%) !important;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
       padding-inline-end: env(safe-area-inset-right);
-    }
-    html[dir="rtl"] aside.chat {
-      transform: translateX(-110%);
     }
     body.chat-drawer-open aside.chat {
       transform: translateX(0) !important;
     }
     #chatClose {
       display: inline-flex !important;
+    }
+    .seek .tick {
+      width: 1px !important;
+      height: 6px !important;
+      top: 0 !important;
+      background: rgba(255, 255, 255, 0.35) !important;
+      opacity: 0.6 !important;
     }
   }
 </style>
@@ -2410,12 +2698,13 @@
 
 <dialog id="dlg">
   <div class="dlg-head">
-    <button class="tab on" id="tabRemote"><svg class="i"><use href="#i-globe"/></svg><span data-i18n="tabRemote">SVU sessions</span></button>
-    <button class="tab" id="tabBatch"><svg class="i"><use href="#i-download"/></svg><span data-i18n="tabBatch">Batch download</span></button>
-    <button class="tab" id="tabSaved"><svg class="i"><use href="#i-save"/></svg><span data-i18n="tabSaved">Student library</span><span id="tabSavedCount"></span></button>
-    <button class="tab" id="tabLink"><svg class="i"><use href="#i-link"/></svg><span data-i18n="tabLink">Direct link</span></button>
-    <button class="tab" id="tabFile"><svg class="i"><use href="#i-folder"/></svg><span data-i18n="tabFile">Open file</span></button>
-    <span style="flex:1"></span>
+    <div class="dlg-tabs-strip">
+      <button class="tab on" id="tabRemote"><svg class="i"><use href="#i-globe"/></svg><span data-i18n="tabRemote">SVU sessions</span></button>
+      <button class="tab" id="tabBatch"><svg class="i"><use href="#i-download"/></svg><span data-i18n="tabBatch">Batch download</span></button>
+      <button class="tab" id="tabSaved"><svg class="i"><use href="#i-save"/></svg><span data-i18n="tabSaved">Student library</span><span id="tabSavedCount"></span></button>
+      <button class="tab" id="tabLink"><svg class="i"><use href="#i-link"/></svg><span data-i18n="tabLink">Direct link</span></button>
+      <button class="tab" id="tabFile"><svg class="i"><use href="#i-folder"/></svg><span data-i18n="tabFile">Open file</span></button>
+    </div>
     <span class="spin" id="dlspin" hidden></span>
     <button class="iconbtn" id="dlgClose" data-i18n-aria="close" aria-label="Close"><svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg></button>
   </div>
@@ -2536,7 +2825,7 @@
           <span id="libStatsSummary"></span>
           <span class="muted" id="usage"></span>
         </div>
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <div class="lib-top-actions">
           <button id="libCourseDirBtn" style="height:32px;padding:0 11px;font-size:12px;" data-i18n-title="courseDirBtnTitle"><svg class="i"><use href="#i-book"/></svg><span data-i18n="courseDirBtn">دليل المواد</span></button>
           <button id="libCheckNewBtn" style="height:32px;padding:0 11px;font-size:12px;"><svg class="i"><use href="#i-refresh"/></svg><span data-i18n="libCheckNewBtn">Check for new lectures</span></button>
           <button class="primary" id="libGoBatchBtn" style="height:32px;padding:0 11px;font-size:12px;"><svg class="i"><use href="#i-download"/></svg><span data-i18n="tabBatch">Batch download</span></button>
@@ -2552,19 +2841,21 @@
       <!-- Search, Group, Sort & Watched Filter Controls -->
       <div class="lib-controls-bar">
         <input type="text" class="lib-search" id="libSearch" data-i18n-ph="libSearchPh" placeholder="Search by material, college, lesson, tutor, class, or date…">
-        <select id="libGroup" style="height:34px;padding:0 10px;font-size:12px;">
-          <option value="course" data-i18n="libGroupCourse">By Material</option>
-          <option value="college" data-i18n="libGroupCollege">By College</option>
-          <option value="term" data-i18n="libGroupTerm">By Term</option>
-          <option value="none" data-i18n="libGroupNone">Flat List</option>
-        </select>
-        <select id="libSort" style="height:34px;padding:0 10px;font-size:12px;">
-          <option value="lesson_asc" data-i18n="libSortLessonAsc">Lesson (1 → 12)</option>
-          <option value="lesson_desc" data-i18n="libSortLessonDesc">Lesson (12 → 1)</option>
-          <option value="date_desc" data-i18n="libSortDateDesc">Date (Newest)</option>
-          <option value="date_asc" data-i18n="libSortDateAsc">Date (Oldest)</option>
-          <option value="saved_desc" data-i18n="libSortSaved">Recently Added</option>
-        </select>
+        <div class="lib-selects-row">
+          <select id="libGroup" style="height:34px;padding:0 10px;font-size:12px;">
+            <option value="course" data-i18n="libGroupCourse">By Material</option>
+            <option value="college" data-i18n="libGroupCollege">By College</option>
+            <option value="term" data-i18n="libGroupTerm">By Term</option>
+            <option value="none" data-i18n="libGroupNone">Flat List</option>
+          </select>
+          <select id="libSort" style="height:34px;padding:0 10px;font-size:12px;">
+            <option value="lesson_asc" data-i18n="libSortLessonAsc">Lesson (1 → 12)</option>
+            <option value="lesson_desc" data-i18n="libSortLessonDesc">Lesson (12 → 1)</option>
+            <option value="date_desc" data-i18n="libSortDateDesc">Date (Newest)</option>
+            <option value="date_asc" data-i18n="libSortDateAsc">Date (Oldest)</option>
+            <option value="saved_desc" data-i18n="libSortSaved">Recently Added</option>
+          </select>
+        </div>
         <div class="lib-filter-pills">
           <button class="lib-fpill on" data-wfilter="all" data-i18n="libFilterAll">All</button>
           <button class="lib-fpill" data-wfilter="unwatched" data-i18n="libFilterUnwatched">Unwatched</button>

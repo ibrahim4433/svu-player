@@ -2196,6 +2196,14 @@ try {
     if (event.target.closest("button, a, input, select, .controls, .controls-zone, .loading-box, .mobile-touch-strip, .shortcut-strip")) {
       return;
     }
+    if (document.body.classList.contains("chat-drawer-open")) {
+      document.body.classList.remove("chat-drawer-open");
+      if (byId("chatToggle")) {
+        byId("chatToggle").classList.remove("on");
+        byId("chatToggle").setAttribute("aria-pressed", "false");
+      }
+      return;
+    }
     const now = Date.now();
     const rect = stage.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -4733,7 +4741,10 @@ try {
       }
     });
 
-    row.append(watchBtn, info, playBtn, delBtn);
+    const actions = document.createElement("div");
+    actions.className = "lec-actions";
+    actions.append(playBtn, delBtn);
+    row.append(watchBtn, info, actions);
     return row;
   }
 

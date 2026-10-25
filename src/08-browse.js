@@ -2086,7 +2086,10 @@
       }
     });
 
-    row.append(watchBtn, info, playBtn, delBtn);
+    const actions = document.createElement("div");
+    actions.className = "lec-actions";
+    actions.append(playBtn, delBtn);
+    row.append(watchBtn, info, actions);
     return row;
   }
 
