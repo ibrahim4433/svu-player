@@ -550,6 +550,27 @@ remoteTabTitle: "SVU Session Catalog & Direct Replay",
     slide5Tag: "Touch Gestures & Mobile Cinema",
     slide5Title: "Effortless gestures built for mobile screens",
     slide5Desc: "Single tap for controls, double tap for ±10s seek, and rotating phone activates widescreen cinema split with side-by-side chat.",
+    guideStudioBadge: "Studio Guide",
+    guideNavTitle: "Guide Chapters",
+    guideNavSubtitle: "Select a topic to explore",
+    slide1Nav: "Player Bar & Tools",
+    slide1NavSub: "Playback, speed & seek",
+    slide2Nav: "Student Hub & Offline",
+    slide2NavSub: "Batch download & library",
+    slide3Nav: "Live Synced Chat",
+    slide3NavSub: "Smart timestamp jumping",
+    slide4Nav: "Vocal DSP Engine",
+    slide4NavSub: "Speech clarity & noise gate",
+    slide5Nav: "Shortcuts & Gestures",
+    slide5NavSub: "Master keyboard & touch",
+    guideProTipTitle: "Study Pro Tip",
+    guideProTipDesc: "Saved lectures in IndexedDB work 100% offline without internet. Your watch progress and timestamp are preserved automatically.",
+    guidePrevSection: "Previous",
+    guideNextSection: "Next",
+    guideFootNavHint: "to navigate chapters",
+    guideFootCloseHint: "to close",
+    guideSyriaNote: "Engineered for Syrian networks: Stored lectures run 100% locally from IndexedDB with zero telemetry and zero bandwidth.",
+    guideDspWhen: "When to use: Turn ON Enhance for distant, echoing, or muffled lecturer microphones to restore crystal-clear speech formants.",
     introCollapse: "Hide details ▴",
     hubCourseLectures: "{n} lectures",
     hubCourseWatched: "({w} watched)",
@@ -981,6 +1002,27 @@ remoteTabTitle: "جلسات ومحاضرات الجامعة (SVU)",
     slide5Tag: "إيماءات الموبايل والاختصارات",
     slide5Title: "تحكم مرن وسريع عبر اللمس أو لوحة المفاتيح",
     slide5Desc: "إيماءات نقر سريعة على جانبي الشاشة للتنقل، وتدوير الهاتف يفصل الشاشة بين الشريحة والدردشة جنباً إلى جنب دون أن تحجب الدردشة محتوى المحاضرة.",
+    guideStudioBadge: "دليل الاستوديو المكتبي",
+    guideNavTitle: "أبواب الدليل",
+    guideNavSubtitle: "اختر قسماً للاطلاع على تفاصيله",
+    slide1Nav: "شريط التحكم والمشغّل",
+    slide1NavSub: "التشغيل، السرعة، والتنقل",
+    slide2Nav: "لوحة الطالب والأوفلاين",
+    slide2NavSub: "التنزيل المجمّع والمكتبة",
+    slide3Nav: "الدردشة والقفز الذكي",
+    slide3NavSub: "التزامن الفوري مع الفيديو",
+    slide4Nav: "معالج الصوت الرقمي (DSP)",
+    slide4NavSub: "تنقية الصوت وعزل الضجيج",
+    slide5Nav: "الاختصارات والإيماءات",
+    slide5NavSub: "جدول التحكم بالكيبورد واللمس",
+    guideProTipTitle: "نصيحة للمذاكرة الأكاديمية",
+    guideProTipDesc: "المحاضرات المحفوظة في مكتبتك تعمل أوفلاين ١٠٠٪ دون أي اتصال بالإنترنت مع حفظ توقيت آخر دقيقة شاهدتها تلقائياً.",
+    guidePrevSection: "السابق",
+    guideNextSection: "التالي",
+    guideFootNavHint: "للتنقل بين الأقسام",
+    guideFootCloseHint: "للإغلاق",
+    guideSyriaNote: "مصمم لظروف الشبكة في سوريا: جميع الملفات المحفوظة تخزن بأمان محلياً (IndexedDB) وتعمل بكفاءة كاملة دون استهلاك أي رصيد بيانات.",
+    guideDspWhen: "متى تستخدم فلتر الصوت؟ فعّله في المحاضرات ذات التسجيل الضعيف أو صدى القاعة لرفع وضوح مخارج الحروف فوراً.",
     introCollapse: "إخفاء التفاصيل ▴",
     hubCourseLectures: "{n} محاضرات",
     hubCourseWatched: "({w} تمت مشاهدتها)",
@@ -7628,6 +7670,7 @@ try {
     currentSlide = (index + totalSlides) % totalSlides;
     const slides = document.querySelectorAll("#guideSlides .guide-slide");
     const dots = document.querySelectorAll("#sliderDots .dot");
+    const navItems = document.querySelectorAll(".guide-nav-item");
 
     slides.forEach((slide, i) => {
       slide.classList.toggle("active", i === currentSlide);
@@ -7635,6 +7678,23 @@ try {
     dots.forEach((dot, i) => {
       dot.classList.toggle("active", i === currentSlide);
     });
+    navItems.forEach((item, i) => {
+      const isActive = (i === currentSlide);
+      item.classList.toggle("active", isActive);
+      item.setAttribute("aria-selected", String(isActive));
+    });
+
+    const stepEl = byId("guideCurrentStep");
+    if (stepEl) stepEl.textContent = String(currentSlide + 1);
+
+    const titleEl = byId("guideCurrentTitle");
+    if (titleEl) {
+      const activeNav = navItems[currentSlide];
+      const titleSpan = activeNav ? activeNav.querySelector(".nav-title") : null;
+      if (titleSpan) {
+        titleEl.textContent = titleSpan.textContent;
+      }
+    }
   }
 
   function nextSlide() {
@@ -7647,6 +7707,8 @@ try {
 
   function startSliderTimer() {
     stopSliderTimer();
+    // Desktop users need calm, undisturbed reading time; only auto-slide on mobile
+    if (window.innerWidth > 768) return;
     sliderTimer = setInterval(nextSlide, 5500);
   }
 
@@ -7673,6 +7735,41 @@ try {
         }
       };
     });
+
+    // Desktop master-detail navigation tabs
+    const navItems = document.querySelectorAll(".guide-nav-item");
+    navItems.forEach(item => {
+      item.onclick = () => {
+        const s = parseInt(item.dataset.nav, 10);
+        if (!isNaN(s)) {
+          showSlide(s);
+          stopSliderTimer();
+        }
+      };
+    });
+
+    // Desktop footer prev / next buttons
+    const deskPrev = byId("guideDesktopPrev");
+    const deskNext = byId("guideDesktopNext");
+    if (deskPrev) deskPrev.onclick = () => { prevSlide(); stopSliderTimer(); };
+    if (deskNext) deskNext.onclick = () => { nextSlide(); stopSliderTimer(); };
+
+    // Keyboard navigation when guide modal is open
+    welcome.onkeydown = (e) => {
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+        nextSlide();
+        stopSliderTimer();
+        e.preventDefault();
+      } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+        prevSlide();
+        stopSliderTimer();
+        e.preventDefault();
+      } else if (e.key >= "1" && e.key <= "5") {
+        showSlide(parseInt(e.key, 10) - 1);
+        stopSliderTimer();
+        e.preventDefault();
+      }
+    };
 
     const slider = byId("guideSlider");
     if (slider) {

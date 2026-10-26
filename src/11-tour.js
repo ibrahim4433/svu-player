@@ -18,6 +18,7 @@
     currentSlide = (index + totalSlides) % totalSlides;
     const slides = document.querySelectorAll("#guideSlides .guide-slide");
     const dots = document.querySelectorAll("#sliderDots .dot");
+    const navItems = document.querySelectorAll(".guide-nav-item");
 
     slides.forEach((slide, i) => {
       slide.classList.toggle("active", i === currentSlide);
@@ -25,6 +26,23 @@
     dots.forEach((dot, i) => {
       dot.classList.toggle("active", i === currentSlide);
     });
+    navItems.forEach((item, i) => {
+      const isActive = (i === currentSlide);
+      item.classList.toggle("active", isActive);
+      item.setAttribute("aria-selected", String(isActive));
+    });
+
+    const stepEl = byId("guideCurrentStep");
+    if (stepEl) stepEl.textContent = String(currentSlide + 1);
+
+    const titleEl = byId("guideCurrentTitle");
+    if (titleEl) {
+      const activeNav = navItems[currentSlide];
+      const titleSpan = activeNav ? activeNav.querySelector(".nav-title") : null;
+      if (titleSpan) {
+        titleEl.textContent = titleSpan.textContent;
+      }
+    }
   }
 
   function nextSlide() {
@@ -37,6 +55,8 @@
 
   function startSliderTimer() {
     stopSliderTimer();
+    // Desktop users need calm, undisturbed reading time; only auto-slide on mobile
+    if (window.innerWidth > 768) return;
     sliderTimer = setInterval(nextSlide, 5500);
   }
 
@@ -63,6 +83,41 @@
         }
       };
     });
+
+    // Desktop master-detail navigation tabs
+    const navItems = document.querySelectorAll(".guide-nav-item");
+    navItems.forEach(item => {
+      item.onclick = () => {
+        const s = parseInt(item.dataset.nav, 10);
+        if (!isNaN(s)) {
+          showSlide(s);
+          stopSliderTimer();
+        }
+      };
+    });
+
+    // Desktop footer prev / next buttons
+    const deskPrev = byId("guideDesktopPrev");
+    const deskNext = byId("guideDesktopNext");
+    if (deskPrev) deskPrev.onclick = () => { prevSlide(); stopSliderTimer(); };
+    if (deskNext) deskNext.onclick = () => { nextSlide(); stopSliderTimer(); };
+
+    // Keyboard navigation when guide modal is open
+    welcome.onkeydown = (e) => {
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+        nextSlide();
+        stopSliderTimer();
+        e.preventDefault();
+      } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+        prevSlide();
+        stopSliderTimer();
+        e.preventDefault();
+      } else if (e.key >= "1" && e.key <= "5") {
+        showSlide(parseInt(e.key, 10) - 1);
+        stopSliderTimer();
+        e.preventDefault();
+      }
+    };
 
     const slider = byId("guideSlider");
     if (slider) {

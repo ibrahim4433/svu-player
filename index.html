@@ -3370,16 +3370,17 @@
 /* Landscape chat drawer handled cleanly in cinema section */
 
 
-  /* ==================== POCKET GUIDE MODAL ==================== */
+  /* ==================== PRO DESKTOP GUIDE STUDIO & MOBILE SLIDER ==================== */
   dialog.guide-dlg {
-    width: min(720px, 94vw);
+    width: min(1080px, 94vw);
+    height: min(680px, 86dvh);
     max-height: 86dvh;
     padding: 0;
     border-radius: var(--r-lg);
     background: var(--panel);
     border: 1px solid var(--line-strong);
     color: var(--text);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -3387,116 +3388,372 @@
   dialog.guide-dlg:not([open]) {
     display: none;
   }
-  .guide-head {
-    padding: 14px 20px 6px;
-    text-align: start;
-    border-bottom: 1px solid var(--line);
-    background: var(--panel2);
+  .guide-desktop-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin-inline-start: 10px;
   }
-  .guide-head h2 {
-    margin: 0 0 4px;
-    font-size: 16px;
+  .guide-container {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* Desktop Navigation Sidebar */
+  .guide-sidebar {
+    width: 275px;
+    flex: none;
+    background: var(--panel2);
+    border-inline-end: 1px solid var(--line);
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .guide-sidebar-header {
+    padding: 4px 8px 8px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .guide-sidebar-title {
+    font-size: 13px;
     font-weight: 700;
     color: var(--text);
   }
-  .guide-head p {
-    margin: 0;
-    font-size: 12.5px;
+  .guide-sidebar-subtitle {
+    font-size: 11px;
     color: var(--dim);
-    line-height: 1.45;
   }
-  .guide-body {
+  .guide-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     flex: 1;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 16px 20px;
   }
-  .guide-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  @media (min-width: 640px) {
-    .guide-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .guide-card.shortcuts {
-      grid-column: 1 / -1;
-    }
-  }
-  .guide-card {
+  .guide-nav-item {
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 12px 14px;
-    background: var(--panel2);
-    border: 1px solid var(--line);
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: transparent;
+    border: 1px solid transparent;
     border-radius: var(--r);
+    color: var(--text);
+    cursor: pointer;
     text-align: start;
-    transition: border-color 0.15s ease;
+    transition: all 0.15s ease;
+    width: 100%;
+    touch-action: manipulation;
   }
-  .guide-card:hover {
-    border-color: var(--line-strong);
+  .guide-nav-item:hover {
+    background: var(--hover);
+    border-color: var(--line);
   }
-  .guide-card-icon {
-    flex: none;
-    width: 36px;
-    height: 36px;
+  .guide-nav-item.active {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+  .guide-nav-icon {
+    width: 32px;
+    height: 32px;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--bg);
     border: 1px solid var(--line);
+    flex: none;
+    color: inherit;
   }
-  .guide-card-icon svg {
-    width: 18px;
-    height: 18px;
+  .guide-nav-item.active .guide-nav-icon {
+    border-color: rgba(56, 189, 248, 0.4);
+    background: rgba(56, 189, 248, 0.18);
+    color: var(--blue);
   }
-  .guide-card-icon.touch { color: #38BDF8; background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.25); }
-  .guide-card-icon.dsp { color: #F59E0B; background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.25); }
-  .guide-card-icon.chat { color: #C084FC; background: rgba(192, 132, 252, 0.12); border-color: rgba(192, 132, 252, 0.25); }
-  .guide-card-icon.download { color: #34D399; background: rgba(52, 211, 153, 0.12); border-color: rgba(52, 211, 153, 0.25); }
-  .guide-card-icon.kbd { color: #94A3B8; background: rgba(148, 163, 184, 0.12); border-color: rgba(148, 163, 184, 0.25); }
-
-  .guide-card-content {
+  .guide-nav-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
     flex: 1;
     min-width: 0;
   }
-  .guide-card-content h3 {
-    margin: 0 0 4px;
-    font-size: 13.5px;
+  .guide-nav-text .nav-title {
+    font-size: 12.5px;
     font-weight: 700;
+    line-height: 1.3;
     color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .guide-card-content p {
+  .guide-nav-item.active .guide-nav-text .nav-title {
+    color: var(--blue);
+  }
+  .guide-nav-text .nav-sub {
+    font-size: 11px;
+    color: var(--dim);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .guide-nav-item .nav-arrow {
+    font-size: 16px;
+    color: var(--dim);
+    opacity: 0.5;
+    transition: transform 0.15s ease;
+  }
+  [dir="rtl"] .guide-nav-item .nav-arrow {
+    transform: rotate(180deg);
+  }
+  .guide-nav-item.active .nav-arrow {
+    color: var(--blue);
+    opacity: 1;
+  }
+  .guide-sidebar-pro-tip {
+    padding: 10px 12px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .pro-tip-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--blue);
+  }
+  .pro-tip-desc {
     margin: 0;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--dim);
     line-height: 1.45;
   }
-  .guide-card-content kbd {
-    display: inline-block;
-    padding: 1px 6px;
+
+  /* Content Stage (Desktop) */
+  .guide-content-stage {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--panel);
+    min-height: 0;
+  }
+  .guide-content-stage .guide-slider {
+    flex: 1;
+    background: transparent;
+    border-bottom: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .guide-content-stage .guide-slides {
+    flex: 1;
+    overflow-y: auto;
+    padding: 22px 26px;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .guide-content-stage .guide-slides::-webkit-scrollbar {
+    width: 6px;
+  }
+  .guide-content-stage .guide-slides::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border-radius: 99px;
+  }
+  .guide-content-stage .guide-slides::-webkit-scrollbar-track {
+    background: var(--panel2);
+  }
+  .slide-headline {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.35;
+  }
+  .slide-summary {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--dim);
+    line-height: 1.5;
+  }
+  .guide-callout-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    font-size: 11.5px;
+    color: var(--dim);
+    line-height: 1.45;
+  }
+  .guide-callout-card svg {
+    flex: none;
+    margin-top: 2px;
+    color: var(--blue);
+  }
+  .guide-callout-card kbd {
     font-family: inherit;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
+    padding: 1px 6px;
     background: var(--bg);
-    border: 1px solid var(--line);
+    border: 1px solid var(--line-strong);
     border-radius: 4px;
     color: var(--text);
   }
+
+  /* Shortcuts Master Grid on Desktop */
+  .guide-shortcuts-table {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: 100%;
+  }
+  .shortcut-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 8px 12px;
+  }
+  .sc-keys {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex: none;
+  }
+  .sc-keys kbd {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    background: var(--bg);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    color: var(--text);
+  }
+  .sc-desc {
+    font-size: 11.5px;
+    color: var(--dim);
+  }
+
+  /* Stage Desktop Footer */
+  .guide-stage-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 24px;
+    background: var(--panel2);
+    border-top: 1px solid var(--line);
+    flex: none;
+  }
+  .stage-step-counter {
+    font-size: 12px;
+    color: var(--dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stage-step-counter .step-num {
+    font-weight: 700;
+    color: var(--blue);
+  }
+  .stage-step-counter .step-label {
+    color: var(--text);
+    font-weight: 600;
+    margin-inline-start: 4px;
+  }
+  .stage-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stage-nav-btn {
+    height: 32px;
+    padding: 0 14px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--r);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    touch-action: manipulation;
+  }
+  .stage-nav-btn:hover {
+    background: var(--hover);
+    border-color: var(--line-strong);
+  }
+  .stage-nav-btn.next {
+    background: var(--blue);
+    color: var(--ink);
+    border-color: var(--blue);
+    font-weight: 700;
+  }
+
+  /* Modal Bottom Footer */
   .guide-foot {
-    padding: 14px 20px 16px;
-    padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
+    flex: none;
+    padding: 18px 24px;
     border-top: 1px solid var(--line);
     background: var(--panel2);
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+  .guide-foot > * {
+    margin: 0;
+  }
+  .guide-foot-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    color: var(--dim);
+  }
+  .guide-foot-hint kbd {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 5px;
+    background: var(--bg);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    color: var(--text);
+  }
+  .guide-foot-hint .foot-dot {
+    color: var(--line-strong);
   }
   .guide-start-btn {
     min-height: 40px;
-    padding: 0 20px;
+    padding: 10px 22px;
     font-size: 13.5px;
     font-weight: 700;
     border-radius: var(--r);
@@ -3506,18 +3763,60 @@
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     cursor: pointer;
+    box-sizing: border-box;
   }
-  @media (max-width: 640px) {
+
+  /* Responsive Rules: Mobile vs Desktop */
+  @media (max-width: 768px) {
     dialog.guide-dlg {
       width: 100vw !important;
       max-width: 100vw !important;
+      height: auto !important;
+      max-height: 90dvh !important;
       margin: auto 0 0 0 !important;
       border-radius: 20px 20px 0 0 !important;
-      max-height: 90dvh !important;
+    }
+    .guide-desktop-badge,
+    .guide-sidebar,
+    .guide-stage-footer,
+    .desktop-only,
+    .guide-shortcuts-table {
+      display: none !important;
+    }
+    .guide-container {
+      flex-direction: column;
+    }
+    .guide-content-stage .guide-slider {
+      padding: 14px 16px 12px;
+      background: var(--panel2);
+      border-bottom: 1px solid var(--line);
+      overflow: visible;
+    }
+    .guide-content-stage .guide-slides {
+      padding: 0;
+      min-height: 200px;
+      overflow: visible;
+    }
+    .guide-slider-controls {
+      display: flex !important;
+    }
+    .guide-foot {
+      padding: 16px 20px 24px !important;
+      padding-bottom: max(24px, env(safe-area-inset-bottom, 24px)) !important;
+      box-sizing: border-box !important;
     }
     .guide-start-btn {
       width: 100%;
       justify-content: center;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .guide-slider-controls {
+      display: none !important;
+    }
+    .real-gestures-grid {
+      display: none !important;
     }
   }
 
@@ -5793,6 +6092,7 @@
       </svg>
       <span data-i18n="guideModalTitle">دليل استخدام مشغّل SVU</span>
     </div>
+    <span class="guide-desktop-badge" data-i18n="guideStudioBadge">دليل الاستوديو المكتبي</span>
     <span style="flex:1"></span>
     <button class="lang is-ar" id="welcomeLangBtn" title="Language / تغيير اللغة" aria-label="Language / تغيير اللغة" style="margin-inline-end:8px">
       <span class="flag ar">AR</span>
@@ -5803,212 +6103,334 @@
     </button>
   </div>
 
-  <!-- Interactive Visual App Showcase Slider (Real UI Reference) -->
-  <div class="guide-slider" id="guideSlider">
-    <div class="guide-slides" id="guideSlides">
-      <!-- Slide 1: Player Controls Bar Breakdown -->
-      <div class="guide-slide active" data-slide="0">
-        <div class="slide-visual">
-          <div class="real-ui-panel">
-            <div class="real-ui-badge">شريط التحكم السفلي · Player Bar</div>
-            <div class="real-ui-buttons-grid">
-              <div class="real-btn-item">
-                <span class="real-btn-chip hub"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> <b>Hub</b></span>
-                <span class="real-btn-desc" data-i18n="guideBtnHub">العودة للرئيسية وإغلاق الجلسة</span>
+  <!-- Master Layout: Desktop Navigation Sidebar + Content Stage -->
+  <div class="guide-container">
+    <!-- Desktop Navigation Sidebar -->
+    <nav class="guide-sidebar" aria-label="Guide Navigation">
+      <div class="guide-sidebar-header">
+        <span class="guide-sidebar-title" data-i18n="guideNavTitle">أبواب الدليل</span>
+        <span class="guide-sidebar-subtitle" data-i18n="guideNavSubtitle">اختر قسماً للاطلاع على تفاصيله</span>
+      </div>
+      <div class="guide-nav-list" role="tablist">
+        <button class="guide-nav-item active" role="tab" data-nav="0" id="guideTab0" aria-selected="true" aria-controls="guideSlide0">
+          <span class="guide-nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </span>
+          <div class="guide-nav-text">
+            <span class="nav-title" data-i18n="slide1Nav">شريط التحكم والمشغّل</span>
+            <span class="nav-sub" data-i18n="slide1NavSub">التشغيل، السرعة، والتنقل</span>
+          </div>
+          <span class="nav-arrow">›</span>
+        </button>
+        <button class="guide-nav-item" role="tab" data-nav="1" id="guideTab1" aria-selected="false" aria-controls="guideSlide1">
+          <span class="guide-nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </span>
+          <div class="guide-nav-text">
+            <span class="nav-title" data-i18n="slide2Nav">لوحة الطالب والأوفلاين</span>
+            <span class="nav-sub" data-i18n="slide2NavSub">التنزيل المجمّع والمكتبة</span>
+          </div>
+          <span class="nav-arrow">›</span>
+        </button>
+        <button class="guide-nav-item" role="tab" data-nav="2" id="guideTab2" aria-selected="false" aria-controls="guideSlide2">
+          <span class="guide-nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </span>
+          <div class="guide-nav-text">
+            <span class="nav-title" data-i18n="slide3Nav">الدردشة والقفز الذكي</span>
+            <span class="nav-sub" data-i18n="slide3NavSub">التزامن الفوري مع الفيديو</span>
+          </div>
+          <span class="nav-arrow">›</span>
+        </button>
+        <button class="guide-nav-item" role="tab" data-nav="3" id="guideTab3" aria-selected="false" aria-controls="guideSlide3">
+          <span class="guide-nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5v14M7 9v6"/></svg>
+          </span>
+          <div class="guide-nav-text">
+            <span class="nav-title" data-i18n="slide4Nav">معالج الصوت الرقمي (DSP)</span>
+            <span class="nav-sub" data-i18n="slide4NavSub">تنقية الصوت وعزل الضجيج</span>
+          </div>
+          <span class="nav-arrow">›</span>
+        </button>
+        <button class="guide-nav-item" role="tab" data-nav="4" id="guideTab4" aria-selected="false" aria-controls="guideSlide4">
+          <span class="guide-nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="10" y1="8" x2="10.01" y2="8"/><line x1="14" y1="8" x2="14.01" y2="8"/><line x1="18" y1="8" x2="18.01" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="6" y1="16" x2="18" y2="16"/></svg>
+          </span>
+          <div class="guide-nav-text">
+            <span class="nav-title" data-i18n="slide5Nav">الاختصارات والإيماءات</span>
+            <span class="nav-sub" data-i18n="slide5NavSub">جدول التحكم بالكيبورد واللمس</span>
+          </div>
+          <span class="nav-arrow">›</span>
+        </button>
+      </div>
+
+      <div class="guide-sidebar-pro-tip">
+        <div class="pro-tip-title">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span data-i18n="guideProTipTitle">نصيحة للمذاكرة الأكاديمية</span>
+        </div>
+        <p class="pro-tip-desc" data-i18n="guideProTipDesc">المحاضرات المحفوظة في مكتبتك تعمل أوفلاين ١٠٠٪ دون أي اتصال بالإنترنت مع حفظ توقيت آخر دقيقة شاهدتها تلقائياً.</p>
+      </div>
+    </nav>
+
+    <!-- Content Stage -->
+    <div class="guide-content-stage">
+      <div class="guide-slider" id="guideSlider">
+        <div class="guide-slides" id="guideSlides">
+          <!-- Slide 1: Player Controls Bar Breakdown -->
+          <div class="guide-slide active" id="guideSlide0" data-slide="0" role="tabpanel" aria-labelledby="guideTab0">
+            <div class="slide-caption">
+              <h3 class="slide-headline" data-i18n="slide1Title">كل أدوات التحكم بالصوت، الفيديو، والتنقل السريع</h3>
+              <p class="slide-summary" data-i18n="slide1Desc">شريط تحكم سفلي مدمج يمنحك سرعة الوصول لجميع الوظائف: زر Hub للعودة لشاشة الطالب، تسريع الصوت، تنقية الشرح، والتنقل الدقيق بالثواني.</p>
+            </div>
+            <div class="slide-visual">
+              <div class="real-ui-panel">
+                <div class="real-ui-buttons-grid">
+                  <div class="real-btn-item">
+                    <span class="real-btn-chip hub"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> <b>Hub</b></span>
+                    <span class="real-btn-desc" data-i18n="guideBtnHub">العودة للرئيسية وإغلاق الجلسة</span>
+                  </div>
+                  <div class="real-btn-item">
+                    <span class="real-btn-chip play"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> <b>Play / Pause</b></span>
+                    <span class="real-btn-desc" data-i18n="guideBtnPlay">تشغيل أو إيقاف المحاضرة (مسطرة Space)</span>
+                  </div>
+                  <div class="real-btn-item">
+                    <span class="real-btn-chip"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 5V2L7 6.5 12 11V8a5 5 0 1 1-5 5H5a7 7 0 1 0 7-8z"/></svg> <b>±10s Seek</b></span>
+                    <span class="real-btn-desc" data-i18n="guideBtnSeek">تقديم أو ترجيع 10 ثوانٍ (الأسهم ← →)</span>
+                  </div>
+                  <div class="real-btn-item">
+                    <span class="real-btn-chip enh"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5v14M7 9v6"/></svg> <b>Enhance</b></span>
+                    <span class="real-btn-desc" data-i18n="guideBtnEnh">فلتر تنقية الصوت وعزل الصفير وهواء القاعة</span>
+                  </div>
+                  <div class="real-btn-item">
+                    <span class="real-btn-chip"><b>1.25× Speed</b></span>
+                    <span class="real-btn-desc" data-i18n="guideBtnSpeed">تسريع أو إبطاء صوت المحاضرة (0.75× - 2×)</span>
+                  </div>
+                  <div class="real-btn-item">
+                    <span class="real-btn-chip chat"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> <b>Chat</b></span>
+                    <span class="real-btn-desc" data-i18n="guideBtnChat">إظهار أو إخفاء محادثات الطلاب المتزامنة</span>
+                  </div>
+                </div>
               </div>
-              <div class="real-btn-item">
-                <span class="real-btn-chip play"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> <b>Play / Pause</b></span>
-                <span class="real-btn-desc" data-i18n="guideBtnPlay">تشغيل أو إيقاف المحاضرة (مسطرة Space)</span>
+            </div>
+            <div class="guide-callout-card">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <span><kbd>H</kbd> <span>يخفي شريط التحكم والمؤشر معاً لشاشة نقية تماماً، واضغط أي زر أو حرك الماوس للإظهار فوراً.</span></span>
+            </div>
+          </div>
+
+          <!-- Slide 2: Student Hub Services -->
+          <div class="guide-slide" id="guideSlide1" data-slide="1" role="tabpanel" aria-labelledby="guideTab1">
+            <div class="slide-caption">
+              <h3 class="slide-headline" data-i18n="slide2Title">تنزيل المحاضرات وإدارتها للدراسة ١٠٠٪ دون إنترنت</h3>
+              <p class="slide-summary" data-i18n="slide2Desc">من شاشة الطالب يمكنك تنزيل مقرراتك دفعة واحدة بمعدل آمن، متابعة تقدمك الدراسي، واستئناف مشاهدة آخر محاضرة توقفت عندها بضغطة واحدة.</p>
+            </div>
+            <div class="slide-visual">
+              <div class="real-ui-panel">
+                <div class="real-hub-services-list">
+                  <div class="real-hub-item">
+                    <div class="real-hub-item-icon dl">📥</div>
+                    <div class="real-hub-item-text">
+                      <b data-i18n="tabBatch">التنزيل المجمّع (Batch Download)</b>
+                      <p data-i18n="guideHubBatchHint">اختر كليتك وفصلك ونزل كامل محاضرات المادة بضغطة واحدة وبمعدل آمن يمنع حظر حسابك.</p>
+                    </div>
+                  </div>
+                  <div class="real-hub-item">
+                    <div class="real-hub-item-icon lib">💾</div>
+                    <div class="real-hub-item-text">
+                      <b data-i18n="tabSaved">مكتبة الطالب المحفوظة</b>
+                      <p data-i18n="guideHubLibHint">استعرض جميع المحاضرات المحفوظة محلياً، مع إمكانية تعليم المحاضرات المشاهدة (✓) أو حذفها لتفريغ الذاكرة.</p>
+                    </div>
+                  </div>
+                  <div class="real-hub-item">
+                    <div class="real-hub-item-icon dir">📚</div>
+                    <div class="real-hub-item-text">
+                      <b data-i18n="courseDirTitle">دليل المقررات الشامل</b>
+                      <p data-i18n="guideHubDirHint">تصفح البرامج الدراسية وسلاسل الـ LMS والبحث السريع في أكثر من 1,160 مادة جامعية معتمدة.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="real-btn-item">
-                <span class="real-btn-chip"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 5V2L7 6.5 12 11V8a5 5 0 1 1-5 5H5a7 7 0 1 0 7-8z"/></svg> <b>±10s Seek</b></span>
-                <span class="real-btn-desc" data-i18n="guideBtnSeek">تقديم أو ترجيع 10 ثوانٍ (الأسهم ← →)</span>
+            </div>
+            <div class="guide-callout-card">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span data-i18n="guideSyriaNote">مصمم لظروف الشبكة في سوريا: جميع الملفات المحفوظة تخزن بأمان محلياً (IndexedDB) وتعمل بكفاءة كاملة دون استهلاك أي رصيد بيانات.</span>
+            </div>
+          </div>
+
+          <!-- Slide 3: Synchronized Live Chat & Seek -->
+          <div class="guide-slide" id="guideSlide2" data-slide="2" role="tabpanel" aria-labelledby="guideTab2">
+            <div class="slide-caption">
+              <h3 class="slide-headline" data-i18n="slide3Title">تزامن حي لأسئلة الطلاب مع قفز فوري بالفيديو</h3>
+              <p class="slide-summary" data-i18n="slide3Desc">تتدفق رسائل الطلاب بالثانية تزامناً مع كلام المدرس. اضغط على أي رسالة أو توقيتها الزمني للانتقال بالفيديو فوراً لتلك اللحظة في الشرح!</p>
+            </div>
+            <div class="slide-visual">
+              <div class="real-ui-panel">
+                <div class="real-chat-demo">
+                  <div class="real-chat-msg">
+                    <span class="chat-ts-pill">04:18</span>
+                    <span class="chat-author">أحمد سلامة:</span>
+                    <span class="chat-body">دكتور هل هذه الشريحة مطلوبة في الامتحان؟</span>
+                  </div>
+                  <div class="real-chat-msg active">
+                    <span class="chat-ts-pill active">11:05 ⚡</span>
+                    <span class="chat-author">سارة العلي:</span>
+                    <span class="chat-body">ممكن إعادة شرح الخطوة الأخيرة من فضلك؟</span>
+                    <span class="chat-jump-hint">👈 اضغط للقفز بالفيديو للدقيقة 11:05</span>
+                  </div>
+                  <div class="real-chat-msg">
+                    <span class="chat-ts-pill">24:40</span>
+                    <span class="chat-author">المدرس:</span>
+                    <span class="chat-body">نعم سنشرح هذا المثال بالتفصيل الآن.</span>
+                  </div>
+                </div>
               </div>
-              <div class="real-btn-item">
-                <span class="real-btn-chip enh"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5v14M7 9v6"/></svg> <b>Enhance</b></span>
-                <span class="real-btn-desc" data-i18n="guideBtnEnh">فلتر تنقية الصوت وعزل الصفير وهواء القاعة</span>
+            </div>
+            <div class="guide-callout-card">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span><kbd>C</kbd> <span>لفتح درج الدردشة الجانبي سريعاً والبحث في نصوص أسئلة الطلاب خلال المحاضرة.</span></span>
+            </div>
+          </div>
+
+          <!-- Slide 4: 4-Stage DSP Audio Processor -->
+          <div class="guide-slide" id="guideSlide3" data-slide="3" role="tabpanel" aria-labelledby="guideTab3">
+            <div class="slide-caption">
+              <h3 class="slide-headline" data-i18n="slide4Title">توضيح صوت الدكتور بأعلى نقاء بضغطة زر</h3>
+              <p class="slide-summary" data-i18n="slide4Desc">زر Enhance في شريط التحكم يفعّل معالج صوت رقمي احترافي يحول التسجيلات الصوتية المشوشة إلى صوت واضح ونقي ومريح للأذن أثناء المذاكرة.</p>
+            </div>
+            <div class="slide-visual">
+              <div class="real-ui-panel">
+                <div class="real-dsp-stages">
+                  <div class="dsp-stage-card">
+                    <div class="stage-num">1</div>
+                    <div class="stage-info">
+                      <b>Noise Gate</b>
+                      <span>عزل الصفير والهمس أثناء فترات الصمت</span>
+                    </div>
+                  </div>
+                  <div class="dsp-stage-card">
+                    <div class="stage-num">2</div>
+                    <div class="stage-info">
+                      <b>High-Pass Filter</b>
+                      <span>قص ترددات هواء القاعة وأزيز التكييف</span>
+                    </div>
+                  </div>
+                  <div class="dsp-stage-card">
+                    <div class="stage-num">3</div>
+                    <div class="stage-info">
+                      <b>Vocal Formant EQ</b>
+                      <span>تضخيم نبرة صوت المدرس (1-4 kHz) ليصبح واضحاً</span>
+                    </div>
+                  </div>
+                  <div class="dsp-stage-card">
+                    <div class="stage-num">4</div>
+                    <div class="stage-info">
+                      <b>Fast Peak Limiter</b>
+                      <span>حماية من التشويه والفرقعات الصوتية المفاجئة</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="real-btn-item">
-                <span class="real-btn-chip"><b>1.25× Speed</b></span>
-                <span class="real-btn-desc" data-i18n="guideBtnSpeed">تسريع أو إبطاء صوت المحاضرة (0.75× - 2×)</span>
-              </div>
-              <div class="real-btn-item">
-                <span class="real-btn-chip chat"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> <b>Chat</b></span>
-                <span class="real-btn-desc" data-i18n="guideBtnChat">إظهار أو إخفاء محادثات الطلاب المتزامنة</span>
+            </div>
+            <div class="guide-callout-card">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              <span data-i18n="guideDspWhen">متى تستخدم فلتر الصوت؟ فعّله في المحاضرات ذات التسجيل الضعيف أو صدى القاعة لرفع وضوح مخارج الحروف فوراً.</span>
+            </div>
+          </div>
+
+          <!-- Slide 5: Mobile Gestures & Desktop Shortcuts -->
+          <div class="guide-slide" id="guideSlide4" data-slide="4" role="tabpanel" aria-labelledby="guideTab4">
+            <div class="slide-caption">
+              <h3 class="slide-headline" data-i18n="slide5Title">تحكم مرن وسريع عبر اللمس أو لوحة المفاتيح</h3>
+              <p class="slide-summary" data-i18n="slide5Desc">إيماءات نقر سريعة على جانبي الشاشة للتنقل، وتدوير الهاتف يفصل الشاشة بين الشريحة والدردشة جنباً إلى جنب دون أن تحجب الدردشة محتوى المحاضرة.</p>
+            </div>
+            <div class="slide-visual">
+              <div class="real-ui-panel">
+                <!-- Desktop Keyboard Shortcuts Grid -->
+                <div class="guide-shortcuts-table">
+                  <div class="shortcut-row">
+                    <span class="sc-keys"><kbd>Space</kbd> / <kbd>K</kbd></span>
+                    <span class="sc-desc" data-i18n="guideBtnPlay">تشغيل أو إيقاف المحاضرة</span>
+                  </div>
+                  <div class="shortcut-row">
+                    <span class="sc-keys"><kbd>←</kbd> <kbd>→</kbd></span>
+                    <span class="sc-desc" data-i18n="guideBtnSeek">تقديم أو ترجيع 10 ثوانٍ</span>
+                  </div>
+                  <div class="shortcut-row">
+                    <span class="sc-keys"><kbd>F</kbd></span>
+                    <span class="sc-desc">ملء الشاشة Fullscreen</span>
+                  </div>
+                  <div class="shortcut-row">
+                    <span class="sc-keys"><kbd>H</kbd></span>
+                    <span class="sc-desc">إخفاء عناصر التحكم والمؤشر</span>
+                  </div>
+                  <div class="shortcut-row">
+                    <span class="sc-keys"><kbd>M</kbd></span>
+                    <span class="sc-desc">كتم أو تشغيل الصوت</span>
+                  </div>
+                  <div class="shortcut-row">
+                    <span class="sc-keys"><kbd>C</kbd></span>
+                    <span class="sc-desc" data-i18n="guideBtnChat">إظهار أو إخفاء الدردشة</span>
+                  </div>
+                </div>
+                <!-- Mobile Gestures Grid -->
+                <div class="real-gestures-grid">
+                  <div class="gesture-item">
+                    <span class="g-icon">👆</span>
+                    <div class="g-text"><b>نقرة واحدة</b><small>إظهار/إخفاء شريط التحكم</small></div>
+                  </div>
+                  <div class="gesture-item">
+                    <span class="g-icon">✌️</span>
+                    <div class="g-text"><b>نقرتان يمين / يسار</b><small>تقديم / ترجيع ±١٠ ثوانٍ</small></div>
+                  </div>
+                  <div class="gesture-item">
+                    <span class="g-icon">📱</span>
+                    <div class="g-text"><b>تدوير الموبايل</b><small>وضع السينما العريض مع تقسيم الدردشة</small></div>
+                  </div>
+                  <div class="gesture-item">
+                    <span class="g-icon">⌨️</span>
+                    <div class="g-text"><b>لوحة المفاتيح</b><small>تحكم كامل دون لمس الماوس</small></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="slide-caption">
-          <span class="slide-tag" data-i18n="slide1Tag">شريط تحكم المشغّل</span>
-          <h4 data-i18n="slide1Title">كل أدوات التحكم بالصوت، الفيديو، والتنقل السريع</h4>
-          <p data-i18n="slide1Desc">شريط تحكم سفلي مدمج يمنحك سرعة الوصول لجميع الوظائف: زر Hub للعودة لشاشة الطالب، تسريع الصوت، تنقية الشرح، والتنقل الدقيق بالثواني.</p>
+
+        <!-- Mobile Slider Controls (hidden on desktop) -->
+        <div class="guide-slider-controls">
+          <button class="slider-btn prev" id="sliderPrevBtn" aria-label="Previous slide">‹</button>
+          <div class="slider-dots" id="sliderDots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+            <span class="dot" data-slide="4"></span>
+          </div>
+          <button class="slider-btn next" id="sliderNextBtn" aria-label="Next slide">›</button>
         </div>
       </div>
 
-      <!-- Slide 2: Student Hub Services -->
-      <div class="guide-slide" data-slide="1">
-        <div class="slide-visual">
-          <div class="real-ui-panel">
-            <div class="real-ui-badge">خدمات لوحة الطالب · Student Hub</div>
-            <div class="real-hub-services-list">
-              <div class="real-hub-item">
-                <div class="real-hub-item-icon dl">📥</div>
-                <div class="real-hub-item-text">
-                  <b data-i18n="tabBatch">التنزيل المجمّع (Batch Download)</b>
-                  <p data-i18n="guideHubBatchHint">اختر كليتك وفصلك ونزل كامل محاضرات المادة بضغطة واحدة وبمعدل آمن يمنع حظر حسابك.</p>
-                </div>
-              </div>
-              <div class="real-hub-item">
-                <div class="real-hub-item-icon lib">💾</div>
-                <div class="real-hub-item-text">
-                  <b data-i18n="tabSaved">مكتبة الطالب المحفوظة</b>
-                  <p data-i18n="guideHubLibHint">استعرض جميع المحاضرات المحفوظة محلياً، مع إمكانية تعليم المحاضرات المشاهدة (✓) أو حذفها لتفريغ الذاكرة.</p>
-                </div>
-              </div>
-              <div class="real-hub-item">
-                <div class="real-hub-item-icon dir">📚</div>
-                <div class="real-hub-item-text">
-                  <b data-i18n="courseDirTitle">دليل المقررات الشامل</b>
-                  <p data-i18n="guideHubDirHint">تصفح البرامج الدراسية وسلاسل الـ LMS والبحث السريع في أكثر من 1,160 مادة جامعية معتمدة.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+      <!-- Desktop Section Footer Navigation (visible on desktop) -->
+      <div class="guide-stage-footer">
+        <div class="stage-step-counter">
+          <span class="step-num" id="guideCurrentStep">1</span> / <span>5</span>
+          <span class="step-label" id="guideCurrentTitle" data-i18n="slide1Nav">شريط التحكم والمشغّل</span>
         </div>
-        <div class="slide-caption">
-          <span class="slide-tag" data-i18n="slide2Tag">خدمات الطالب والأوفلاين</span>
-          <h4 data-i18n="slide2Title">تنزيل المحاضرات وإدارتها للدراسة ١٠٠٪ دون إنترنت</h4>
-          <p data-i18n="slide2Desc">من شاشة الطالب يمكنك تنزيل مقرراتك دفعة واحدة، متابعة تقدمك الدراسي، واستئناف مشاهدة آخر محاضرة توقفت عندها بضغطة واحدة.</p>
-        </div>
-      </div>
-
-      <!-- Slide 3: Synchronized Live Chat & Seek -->
-      <div class="guide-slide" data-slide="2">
-        <div class="slide-visual">
-          <div class="real-ui-panel">
-            <div class="real-ui-badge">الدردشة المتزامنة · Live Synced Chat</div>
-            <div class="real-chat-demo">
-              <div class="real-chat-msg">
-                <span class="chat-ts-pill">04:18</span>
-                <span class="chat-author">أحمد سلامة:</span>
-                <span class="chat-body">دكتور هل هذه الشريحة مطلوبة في الامتحان؟</span>
-              </div>
-              <div class="real-chat-msg active">
-                <span class="chat-ts-pill active">11:05 ⚡</span>
-                <span class="chat-author">سارة العلي:</span>
-                <span class="chat-body">ممكن إعادة شرح الخطوة الأخيرة من فضلك؟</span>
-                <span class="chat-jump-hint">👈 اضغط للقفز بالفيديو للدقيقة 11:05</span>
-              </div>
-              <div class="real-chat-msg">
-                <span class="chat-ts-pill">24:40</span>
-                <span class="chat-author">المدرس:</span>
-                <span class="chat-body">نعم سنشرح هذا المثال بالتفصيل الآن.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="slide-caption">
-          <span class="slide-tag" data-i18n="slide3Tag">الدردشة والقفز الذكي</span>
-          <h4 data-i18n="slide3Title">تزامن حي لأسئلة الطلاب مع قفز فوري بالفيديو</h4>
-          <p data-i18n="slide3Desc">تتدفق رسائل الطلاب بالثانية تزامناً مع كلام المدرس. اضغط على أي رسالة أو توقيتها الزمني للانتقال بالفيديو فوراً لتلك اللحظة في الشرح!</p>
-        </div>
-      </div>
-
-      <!-- Slide 4: 4-Stage DSP Audio Processor -->
-      <div class="guide-slide" data-slide="3">
-        <div class="slide-visual">
-          <div class="real-ui-panel">
-            <div class="real-ui-badge">معالج الصوت الرقمي · WebAssembly DSP</div>
-            <div class="real-dsp-stages">
-              <div class="dsp-stage-card">
-                <div class="stage-num">1</div>
-                <div class="stage-info">
-                  <b>Noise Gate</b>
-                  <span>عزل الصفير والهمس أثناء فترات الصمت</span>
-                </div>
-              </div>
-              <div class="dsp-stage-card">
-                <div class="stage-num">2</div>
-                <div class="stage-info">
-                  <b>High-Pass Filter</b>
-                  <span>قص ترددات هواء القاعة وأزيز التكييف</span>
-                </div>
-              </div>
-              <div class="dsp-stage-card">
-                <div class="stage-num">3</div>
-                <div class="stage-info">
-                  <b>Vocal Formant EQ</b>
-                  <span>تضخيم نبرة صوت المدرس (1-4 kHz) ليصبح واضحاً</span>
-                </div>
-              </div>
-              <div class="dsp-stage-card">
-                <div class="stage-num">4</div>
-                <div class="stage-info">
-                  <b>Fast Peak Limiter</b>
-                  <span>حماية من التشويه والفرقعات الصوتية المفاجئة</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="slide-caption">
-          <span class="slide-tag" data-i18n="slide4Tag">تنقية الصوت (DSP)</span>
-          <h4 data-i18n="slide4Title">توضيح صوت الدكتور بأعلى نقاء بضغطة زر</h4>
-          <p data-i18n="slide4Desc">زر Enhance في شريط التحكم يفعل معالج صوت رقمي احترافي يحول التسجيلات الصوتية المشوشة إلى صوت واضح ونقي ومريح للأذن أثناء المذاكرة.</p>
-        </div>
-      </div>
-
-      <!-- Slide 5: Mobile Gestures & Split View -->
-      <div class="guide-slide" data-slide="4">
-        <div class="slide-visual">
-          <div class="real-ui-panel">
-            <div class="real-ui-badge">التحكم باللمس والمفاتيح · Gestures & Shortcuts</div>
-            <div class="real-gestures-grid">
-              <div class="gesture-item">
-                <span class="g-icon">👆</span>
-                <div class="g-text"><b>نقرة واحدة</b><small>إظهار/إخفاء شريط التحكم</small></div>
-              </div>
-              <div class="gesture-item">
-                <span class="g-icon">✌️</span>
-                <div class="g-text"><b>نقرتان يمين / يسار</b><small>تقديم / ترجيع ±١٠ ثوانٍ</small></div>
-              </div>
-              <div class="gesture-item">
-                <span class="g-icon">📱</span>
-                <div class="g-text"><b>تدوير الموبايل</b><small>وضع السينما العريض مع تقسيم الدردشة</small></div>
-              </div>
-              <div class="gesture-item">
-                <span class="g-icon">⌨️</span>
-                <div class="g-text"><b><kbd>Space</kbd> <kbd>←</kbd> <kbd>→</kbd> <kbd>M</kbd> <kbd>F</kbd></b><small>اختصارات التشغيل، التخطي، وكتم الصوت</small></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="slide-caption">
-          <span class="slide-tag" data-i18n="slide5Tag">إيماءات الموبايل والاختصارات</span>
-          <h4 data-i18n="slide5Title">تحكم مرن وسريع عبر اللمس أو لوحة المفاتيح</h4>
-          <p data-i18n="slide5Desc">إيماءات نقر سريعة على جانبي الشاشة للتنقل، وتدوير الهاتف يفصل الشاشة بين الشريحة والدردشة جنباً إلى جنب دون أن تحجب الدردشة محتوى المحاضرة.</p>
+        <div class="stage-nav-actions">
+          <button class="stage-nav-btn prev" id="guideDesktopPrev" data-i18n="guidePrevSection">السابق</button>
+          <button class="stage-nav-btn next" id="guideDesktopNext" data-i18n="guideNextSection">التالي</button>
         </div>
       </div>
     </div>
-
-    <!-- Slider Controls -->
-    <div class="guide-slider-controls">
-      <button class="slider-btn prev" id="sliderPrevBtn" aria-label="Previous slide">‹</button>
-      <div class="slider-dots" id="sliderDots">
-        <span class="dot active" data-slide="0"></span>
-        <span class="dot" data-slide="1"></span>
-        <span class="dot" data-slide="2"></span>
-        <span class="dot" data-slide="3"></span>
-        <span class="dot" data-slide="4"></span>
-      </div>
-      <button class="slider-btn next" id="sliderNextBtn" aria-label="Next slide">›</button>
-    </div>
   </div>
 
-
-  </div>
   <div class="guide-foot">
+    <div class="guide-foot-hint desktop-only">
+      <kbd>↑</kbd> <kbd>↓</kbd> <span data-i18n="guideFootNavHint">للتنقل بين الأقسام</span>
+      <span class="foot-dot">·</span>
+      <kbd>Esc</kbd> <span data-i18n="guideFootCloseHint">للإغلاق</span>
+    </div>
     <button class="primary guide-start-btn" id="welcomeStart">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
       <span data-i18n="welcomeStartBtn">فهمت، لنبدأ الاستخدام</span>
