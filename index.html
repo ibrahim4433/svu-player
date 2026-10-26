@@ -633,6 +633,40 @@
   }
 
   
+  
+  /* ==================== BUGFIX: FORCEFUL HIDE CONTROLS, CURSOR & BACK-TO-HUB ==================== */
+  body.controls-forced-hidden .controls,
+  body.controls-forced-hidden .controls-zone,
+  body.controls-forced-hidden .stage-back-to-hub-btn,
+  .controls.force-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(28px) !important;
+    visibility: hidden !important;
+  }
+  body.controls-forced-hidden,
+  body.controls-forced-hidden *,
+  .stage-wrap.cursor-none,
+  .stage-wrap.cursor-none * {
+    cursor: none !important;
+  }
+
+  /* Hide HideControls button in mobile portrait mode */
+  @media (orientation: portrait), (max-width: 768px) and (orientation: portrait), (max-width: 680px) {
+    #hideControlsBtn {
+      display: none !important;
+    }
+  }
+
+  /* Hide CC button & CC status on all mobile viewports (portrait and landscape/horizontal) */
+  @media (max-width: 768px), (max-height: 560px) and (orientation: landscape), (max-width: 950px) and (orientation: landscape) {
+    #ccBtn,
+    #ccStatus,
+    .ccstatus {
+      display: none !important;
+    }
+  }
+
   /* Desktop Chunked Pods for Player Controls */
   @media (min-width: 769px) {
     .controls-pod {
@@ -2615,27 +2649,42 @@
       position: fixed !important;
       top: 0 !important;
       bottom: 0 !important;
-      right: 0 !important;
-      left: auto !important;
-      width: min(340px, 85vw) !important;
+      inset-inline-end: 0 !important;
+      inset-inline-start: auto !important;
+      width: min(340px, 42vw) !important;
       height: 100dvh !important;
       z-index: 60 !important;
       border-radius: 0 !important;
       border: none !important;
       border-inline-start: 1px solid var(--line-strong) !important;
-      background: rgba(15, 23, 42, 0.90) !important;
+      background: rgba(15, 23, 42, 0.94) !important;
       backdrop-filter: blur(24px) !important;
       -webkit-backdrop-filter: blur(24px) !important;
-      box-shadow: -10px 0 35px rgba(0,0,0,0.85) !important;
+      box-shadow: 0 0 35px rgba(0,0,0,0.85) !important;
       display: flex !important;
-      transform: translateX(105%) !important;
-      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
       padding-inline-end: env(safe-area-inset-right);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    html[dir="rtl"] aside.chat {
+      transform: translateX(-105%) !important;
+    }
+    html[dir="ltr"] aside.chat,
+    html:not([dir="rtl"]) aside.chat {
+      transform: translateX(105%) !important;
     }
     body.chat-drawer-open aside.chat {
       transform: translateX(0) !important;
+    }
+    body.chat-drawer-open .stage-wrap {
+      width: calc(100% - min(340px, 42vw)) !important;
+      margin: 0 !important;
+      transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    body:not(.chat-drawer-open) .stage-wrap {
+      width: 100% !important;
+      margin: 0 !important;
     }
     #chatClose {
       display: inline-flex !important;
@@ -3318,16 +3367,7 @@
     }
   }
 
-  @media (max-height: 560px) and (orientation: landscape), (max-width: 950px) and (orientation: landscape) and (max-height: 560px) {
-    body.chat-drawer-open .stage-wrap {
-      width: calc(100% - min(350px, 45vw)) !important;
-      margin-inline-end: min(350px, 45vw) !important;
-      transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1), margin 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    }
-    body.chat-drawer-open aside.chat {
-      width: min(350px, 45vw) !important;
-    }
-  }
+/* Landscape chat drawer handled cleanly in cinema section */
 
 
   /* ==================== POCKET GUIDE MODAL ==================== */
@@ -4441,7 +4481,7 @@
     transition: background 0.16s ease, transform 0.12s ease;
     border-radius: var(--r);
     padding: 8px 10px;
-    margin: 0 -10px;
+    margin: 0;
   }
   .sheet-row.mode-row:hover {
     background: rgba(255, 255, 255, 0.05);
@@ -5971,7 +6011,7 @@
   <div class="guide-foot">
     <button class="primary guide-start-btn" id="welcomeStart">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <span data-i18n="welcomeStartBtn">✓ فهمت، لنبدأ الاستخدام</span>
+      <span data-i18n="welcomeStartBtn">فهمت، لنبدأ الاستخدام</span>
     </button>
   </div>
 </dialog>

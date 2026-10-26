@@ -69,6 +69,51 @@
       slider.onmouseenter = stopSliderTimer;
       slider.ontouchstart = stopSliderTimer;
       slider.onpointerdown = stopSliderTimer;
+
+      // 1-Finger touch swipe gesture for mobile UI
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchEndX = 0;
+      let touchEndY = 0;
+
+      const onTouchStart = (e) => {
+        stopSliderTimer();
+        if (e.touches && e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          touchEndX = touchStartX;
+          touchEndY = touchStartY;
+        }
+      };
+
+      const onTouchMove = (e) => {
+        if (e.touches && e.touches.length === 1) {
+          touchEndX = e.touches[0].clientX;
+          touchEndY = e.touches[0].clientY;
+        }
+      };
+
+      const onTouchEnd = () => {
+        const dx = touchEndX - touchStartX;
+        const dy = touchEndY - touchStartY;
+        if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+          if (dx < 0) {
+            nextSlide();
+          } else {
+            prevSlide();
+          }
+        }
+      };
+
+      slider.addEventListener("touchstart", onTouchStart, { passive: true });
+      slider.addEventListener("touchmove", onTouchMove, { passive: true });
+      slider.addEventListener("touchend", onTouchEnd, { passive: true });
+
+      if (welcome) {
+        welcome.addEventListener("touchstart", onTouchStart, { passive: true });
+        welcome.addEventListener("touchmove", onTouchMove, { passive: true });
+        welcome.addEventListener("touchend", onTouchEnd, { passive: true });
+      }
     }
 
     showSlide(0);

@@ -513,7 +513,7 @@ guideModalTitle: "SVU Player Guide",
     guideBatchDesc: "Download full courses in one click with safe rate-limiting. Saved locally in browser storage for 100% offline playback.",
     guideKbdTitle: "⌨️ Keyboard Shortcuts (Tablet & Laptop)",
     guideKbdDesc: "Space: Play/Pause · ← →: Skip 5s · M: Mute · F: Fullscreen · C: Chat toggle · S: Stretch",
-    welcomeStartBtn: "✓ Understood, Let's Begin",
+    welcomeStartBtn: "Understood, Let's Begin",
 guideBtnHub: "Return to Student Hub & close session",
     guideBtnPlay: "Play or pause lecture (Spacebar)",
     guideBtnSeek: "Skip backward or forward 10s (Arrow keys)",
@@ -944,7 +944,7 @@ guideModalTitle: "دليل استخدام مشغّل SVU",
     guideBatchDesc: "اختر كليتك وفصلك ونزل كامل محاضرات المقرر دفعة واحدة بمعدل آمن يمنع حظر الحساب. تُحفظ المحاضرات محلياً (IndexedDB) وتشاهدها ١٠٠٪ دون إنترنت.",
     guideKbdTitle: "⌨️ اختصارات لوحة المفاتيح (للأجهزة اللوحية والحاسوب)",
     guideKbdDesc: "المسافة: تشغيل/إيقاف مؤقت · ← →: تقديم/ترجيع ٥ ثوانٍ · M: كتم الصوت · F: ملء الشاشة · C: إظهار الدردشة · S: تمديد الشاشة",
-    welcomeStartBtn: "✓ فهمت، لنبدأ الاستخدام",
+    welcomeStartBtn: "فهمت، لنبدأ الاستخدام",
 guideBtnHub: "العودة للرئيسية وإغلاق الجلسة",
     guideBtnPlay: "تشغيل أو إيقاف المحاضرة (مسطرة Space)",
     guideBtnSeek: "تقديم أو ترجيع 10 ثوانٍ (الأسهم ← →)",
@@ -2351,12 +2351,14 @@ try {
   let mouseIdleTimer = null;
   let isHoveringControls = false;
   let isForceHidden = false;
+  let forceHideTime = 0;
   const stageWrap = stage.closest(".stage-wrap") || stage;
   const stageBackBtn = byId("stageBackToHubBtn");
   const hideControlsBtn = byId("hideControlsBtn");
 
   function forceHideAll() {
     isForceHidden = true;
+    forceHideTime = Date.now();
     if (mouseIdleTimer) {
       clearTimeout(mouseIdleTimer);
       mouseIdleTimer = null;
@@ -2365,15 +2367,27 @@ try {
       clearTimeout(cinemaTimer);
       cinemaTimer = null;
     }
+    document.body.classList.add("controls-forced-hidden");
+    controls.classList.add("force-hidden");
     controls.classList.remove("mouse-active", "active");
     if (stageBackBtn) stageBackBtn.classList.remove("visible");
     stageWrap.classList.add("cursor-none");
   }
 
-  function handleUserMovement() {
+  function unhideAll() {
+    if (!isForceHidden) return;
+    isForceHidden = false;
+    document.body.classList.remove("controls-forced-hidden");
+    controls.classList.remove("force-hidden");
+    stageWrap.classList.remove("cursor-none");
+    showControlsOnMouseActivity();
+  }
+
+  function handleUserMovement(e) {
     if (isForceHidden) {
-      isForceHidden = false;
-      stageWrap.classList.remove("cursor-none");
+      if (Date.now() - forceHideTime < 450) return;
+      unhideAll();
+      return;
     }
     showControlsOnMouseActivity();
   }
@@ -2393,6 +2407,11 @@ try {
     }, 3000);
   }
 
+    stage.addEventListener("pointerdown", () => {
+    if (isForceHidden && Date.now() - forceHideTime > 200) {
+      unhideAll();
+    }
+  });
   stageWrap.addEventListener("mousemove", handleUserMovement, { passive: true });
   stageWrap.addEventListener("pointermove", handleUserMovement, { passive: true });
   stageWrap.addEventListener("mouseleave", () => {
@@ -2589,10 +2608,16 @@ try {
       case "h":
       case "H":
         event.preventDefault();
-        if (controls.classList.contains("mouse-active") || controls.classList.contains("active")) {
-          forceHideAll();
+        if (isForceHidden) {
+          unhideAll();
         } else {
-          handleUserMovement();
+          forceHideAll();
+        }
+        break;
+      case "Escape":
+        if (isForceHidden) {
+          event.preventDefault();
+          unhideAll();
         }
         break;
       case "ArrowLeft":
@@ -7654,6 +7679,51 @@ try {
       slider.onmouseenter = stopSliderTimer;
       slider.ontouchstart = stopSliderTimer;
       slider.onpointerdown = stopSliderTimer;
+
+      // 1-Finger touch swipe gesture for mobile UI
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchEndX = 0;
+      let touchEndY = 0;
+
+      const onTouchStart = (e) => {
+        stopSliderTimer();
+        if (e.touches && e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          touchEndX = touchStartX;
+          touchEndY = touchStartY;
+        }
+      };
+
+      const onTouchMove = (e) => {
+        if (e.touches && e.touches.length === 1) {
+          touchEndX = e.touches[0].clientX;
+          touchEndY = e.touches[0].clientY;
+        }
+      };
+
+      const onTouchEnd = () => {
+        const dx = touchEndX - touchStartX;
+        const dy = touchEndY - touchStartY;
+        if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+          if (dx < 0) {
+            nextSlide();
+          } else {
+            prevSlide();
+          }
+        }
+      };
+
+      slider.addEventListener("touchstart", onTouchStart, { passive: true });
+      slider.addEventListener("touchmove", onTouchMove, { passive: true });
+      slider.addEventListener("touchend", onTouchEnd, { passive: true });
+
+      if (welcome) {
+        welcome.addEventListener("touchstart", onTouchStart, { passive: true });
+        welcome.addEventListener("touchmove", onTouchMove, { passive: true });
+        welcome.addEventListener("touchend", onTouchEnd, { passive: true });
+      }
     }
 
     showSlide(0);

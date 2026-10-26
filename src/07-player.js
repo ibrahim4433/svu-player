@@ -558,12 +558,14 @@
   let mouseIdleTimer = null;
   let isHoveringControls = false;
   let isForceHidden = false;
+  let forceHideTime = 0;
   const stageWrap = stage.closest(".stage-wrap") || stage;
   const stageBackBtn = byId("stageBackToHubBtn");
   const hideControlsBtn = byId("hideControlsBtn");
 
   function forceHideAll() {
     isForceHidden = true;
+    forceHideTime = Date.now();
     if (mouseIdleTimer) {
       clearTimeout(mouseIdleTimer);
       mouseIdleTimer = null;
@@ -572,15 +574,27 @@
       clearTimeout(cinemaTimer);
       cinemaTimer = null;
     }
+    document.body.classList.add("controls-forced-hidden");
+    controls.classList.add("force-hidden");
     controls.classList.remove("mouse-active", "active");
     if (stageBackBtn) stageBackBtn.classList.remove("visible");
     stageWrap.classList.add("cursor-none");
   }
 
-  function handleUserMovement() {
+  function unhideAll() {
+    if (!isForceHidden) return;
+    isForceHidden = false;
+    document.body.classList.remove("controls-forced-hidden");
+    controls.classList.remove("force-hidden");
+    stageWrap.classList.remove("cursor-none");
+    showControlsOnMouseActivity();
+  }
+
+  function handleUserMovement(e) {
     if (isForceHidden) {
-      isForceHidden = false;
-      stageWrap.classList.remove("cursor-none");
+      if (Date.now() - forceHideTime < 450) return;
+      unhideAll();
+      return;
     }
     showControlsOnMouseActivity();
   }
@@ -600,6 +614,11 @@
     }, 3000);
   }
 
+    stage.addEventListener("pointerdown", () => {
+    if (isForceHidden && Date.now() - forceHideTime > 200) {
+      unhideAll();
+    }
+  });
   stageWrap.addEventListener("mousemove", handleUserMovement, { passive: true });
   stageWrap.addEventListener("pointermove", handleUserMovement, { passive: true });
   stageWrap.addEventListener("mouseleave", () => {
@@ -796,10 +815,16 @@
       case "h":
       case "H":
         event.preventDefault();
-        if (controls.classList.contains("mouse-active") || controls.classList.contains("active")) {
-          forceHideAll();
+        if (isForceHidden) {
+          unhideAll();
         } else {
-          handleUserMovement();
+          forceHideAll();
+        }
+        break;
+      case "Escape":
+        if (isForceHidden) {
+          event.preventDefault();
+          unhideAll();
         }
         break;
       case "ArrowLeft":
