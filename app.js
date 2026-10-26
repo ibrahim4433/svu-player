@@ -324,6 +324,9 @@ try {
       pwaInstalled: "Offline player installed ✓",
       themeMenuTitle: "Choose theme",
       modeToggleTitle: "Toggle Dark / Light Mode",
+    modeDark: "Dark Mode",
+    modeLight: "Light Mode",
+    themeSubtitle: "Color Palettes",
       themeDefault: "Default",
       themeWhatsapp: "WhatsApp",
       themeTelegram: "Telegram",
@@ -777,6 +780,9 @@ remoteTabTitle: "SVU Session Catalog & Direct Replay",
       pwaInstalled: "المشغّل مثبّت دون اتصال ✓",
       themeMenuTitle: "اختر الثيم",
       modeToggleTitle: "تبديل الوضع الداكن / الفاتح",
+    modeDark: "الوضع الداكن",
+    modeLight: "الوضع الفاتح",
+    themeSubtitle: "السمات اللونية",
       themeDefault: "الافتراضي",
       themeWhatsapp: "واتساب",
       themeTelegram: "تيليغرام",
@@ -2788,6 +2794,14 @@ try {
     });
     const modeBtn = byId("mobileModeToggle");
     if (modeBtn) {
+      const darkSeg = modeBtn.querySelector("[data-mode='dark']");
+      const lightSeg = modeBtn.querySelector("[data-mode='light']");
+      if (darkSeg && lightSeg) {
+        darkSeg.classList.toggle("active", curMode === "dark");
+        darkSeg.setAttribute("aria-checked", String(curMode === "dark"));
+        lightSeg.classList.toggle("active", curMode === "light");
+        lightSeg.setAttribute("aria-checked", String(curMode === "light"));
+      }
       const darkTag = modeBtn.querySelector(".mode-tag.dark");
       const lightTag = modeBtn.querySelector(".mode-tag.light");
       if (darkTag && lightTag) {
@@ -3039,14 +3053,15 @@ try {
     });
   }
 
-  const mobileModeRow = document.querySelector(".sheet-row.mode-row");
-  if (mobileModeRow) {
-    mobileModeRow.addEventListener("click", () => {
-      applyTheme(curTheme, curMode === "light" ? "dark" : "light");
-    });
-  } else if (byId("mobileModeToggle")) {
-    byId("mobileModeToggle").addEventListener("click", () => {
-      applyTheme(curTheme, curMode === "light" ? "dark" : "light");
+  const mobileModeToggle = byId("mobileModeToggle");
+  if (mobileModeToggle) {
+    mobileModeToggle.addEventListener("click", (e) => {
+      const seg = e.target.closest("[data-mode]");
+      if (seg && seg.dataset.mode) {
+        applyTheme(curTheme, seg.dataset.mode);
+      } else {
+        applyTheme(curTheme, curMode === "light" ? "dark" : "light");
+      }
     });
   }
   document.querySelectorAll(".m-theme-opt[data-theme-opt]").forEach(btn => {

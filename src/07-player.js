@@ -953,6 +953,14 @@
     });
     const modeBtn = byId("mobileModeToggle");
     if (modeBtn) {
+      const darkSeg = modeBtn.querySelector("[data-mode='dark']");
+      const lightSeg = modeBtn.querySelector("[data-mode='light']");
+      if (darkSeg && lightSeg) {
+        darkSeg.classList.toggle("active", curMode === "dark");
+        darkSeg.setAttribute("aria-checked", String(curMode === "dark"));
+        lightSeg.classList.toggle("active", curMode === "light");
+        lightSeg.setAttribute("aria-checked", String(curMode === "light"));
+      }
       const darkTag = modeBtn.querySelector(".mode-tag.dark");
       const lightTag = modeBtn.querySelector(".mode-tag.light");
       if (darkTag && lightTag) {
@@ -1204,14 +1212,15 @@
     });
   }
 
-  const mobileModeRow = document.querySelector(".sheet-row.mode-row");
-  if (mobileModeRow) {
-    mobileModeRow.addEventListener("click", () => {
-      applyTheme(curTheme, curMode === "light" ? "dark" : "light");
-    });
-  } else if (byId("mobileModeToggle")) {
-    byId("mobileModeToggle").addEventListener("click", () => {
-      applyTheme(curTheme, curMode === "light" ? "dark" : "light");
+  const mobileModeToggle = byId("mobileModeToggle");
+  if (mobileModeToggle) {
+    mobileModeToggle.addEventListener("click", (e) => {
+      const seg = e.target.closest("[data-mode]");
+      if (seg && seg.dataset.mode) {
+        applyTheme(curTheme, seg.dataset.mode);
+      } else {
+        applyTheme(curTheme, curMode === "light" ? "dark" : "light");
+      }
     });
   }
   document.querySelectorAll(".m-theme-opt[data-theme-opt]").forEach(btn => {
