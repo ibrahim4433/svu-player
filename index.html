@@ -3,7 +3,7 @@
 <head>
   <script src="src/config.js"></script>
 <meta charset="utf-8">
-<meta name="build" content="v2.7.0">
+<meta name="build" content="v2.8.1">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SVU Player | Offline Session Player for Syrian Virtual University</title>
 <meta name="description" content="Watch recorded Syrian Virtual University sessions with screen, audio and chat in sync. Play online or save sessions to watch offline, with captions and audio enhancement.">
@@ -17,6 +17,8 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="apple-touch-icon" href="/favicon.svg" />
 <link rel="manifest" href="/site.webmanifest" />
+  <link rel="preload" href="/fonts/IBMPlexSansArabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/IBMPlexSansArabic-600-arabic.woff2" as="font" type="font/woff2" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SVU Player">
 <meta property="og:title" content="SVU Player | Offline Session Player for Syrian Virtual University">
@@ -336,6 +338,8 @@
     transition: background 0.18s ease, color 0.18s ease;
   }
   html[lang=ar] body { font-family: 'IBM Plex Sans Arabic', var(--font-ui); }
+  h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
+  p, .intro-desc, .slide-caption p, .about-sub { text-wrap: pretty; }
   img, canvas { -webkit-user-drag: none; user-drag: none; }
   [hidden] { display: none !important; }
 
@@ -466,7 +470,7 @@
     background: linear-gradient(135deg, rgba(56,189,248,0.18), rgba(245,158,11,0.15));
     border: 1px solid var(--line-strong);
     display: inline-flex; align-items: center; justify-content: center; flex: none;
-    box-shadow: 0 4px 14px var(--accent-glow);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   }
   .brand-title { color: var(--text); white-space: nowrap; }
   header .meta {
@@ -510,7 +514,7 @@
   button.primary {
     background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
     border-color: transparent; color: var(--ink); font-weight: 600;
-    box-shadow: 0 4px 14px var(--accent-glow);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   }
   button.primary:hover { filter: brightness(1.08); }
   button.on {
@@ -590,7 +594,7 @@
   .hero-emblem {
     width: 84px; height: 84px; border-radius: 22px;
     background: rgba(15, 23, 42, 0.85); border: 1px solid var(--line-strong);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 28px var(--accent-glow);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.65);
     display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
     transition: transform 0.18s ease;
   }
@@ -626,6 +630,52 @@
     position: absolute; left: 50%; bottom: 92px; transform: translateX(-50%); max-width: 86%; text-align: center;
     background: rgba(0,0,0,.78); color: #fff; padding: 6px 14px; border-radius: var(--r); font-size: clamp(14px, 2.1vw, 24px);
     line-height: 1.4; pointer-events: none; unicode-bidi: plaintext; white-space: pre-wrap; z-index: 6;
+  }
+
+  
+  /* Desktop Chunked Pods for Player Controls */
+  @media (min-width: 769px) {
+    .controls-pod {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 3px 6px;
+    }
+    .controls .row {
+      gap: 10px;
+    }
+  }
+  @media (max-width: 768px) {
+    .controls-pod {
+      display: contents !important;
+    }
+  }
+
+  /* Native Mobile Bottom Sheet for #about */
+  @media (max-width: 640px) {
+    dialog#about.about-pro {
+      position: fixed !important;
+      bottom: 0 !important;
+      top: auto !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      max-height: 90dvh !important;
+      margin: auto 0 0 0 !important;
+      border-radius: 20px 20px 0 0 !important;
+      border-bottom: none !important;
+      padding-bottom: max(16px, env(safe-area-inset-bottom, 16px)) !important;
+    }
+    #about .dlg-head button {
+      min-height: 38px !important;
+      height: auto !important;
+      padding: 6px 12px !important;
+      font-size: 12px !important;
+    }
   }
 
   /* Floating Glass Player Control Bar (#controls) — Auto-Hide with Hover & Pin Toggle */
@@ -681,7 +731,7 @@
   .iconbtn { width: 36px; height: 36px; padding: 0; flex: none; display: inline-flex; align-items: center; justify-content: center; }
   #play.iconbtn {
     background: var(--blue); color: var(--ink); border-color: transparent;
-    width: 38px; height: 36px; box-shadow: 0 4px 12px var(--accent-glow);
+    width: 38px; height: 36px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
   .iconbtn svg { width: 18px; height: 18px; fill: currentColor; }
   .tbtn { height: 34px; padding: 0 11px; font-size: 12.5px; }
@@ -738,10 +788,10 @@
   }
   .msg:hover { border-color: var(--line-strong); background: var(--hover); }
   .msg.future { opacity: .45; }
-  .msg.latest { border-color: var(--blue); box-shadow: inset 3px 0 0 var(--blue); }
+  .msg.latest { border-color: var(--blue); background: rgba(56, 189, 248, 0.08); }
   .msg[hidden] { display: none; }
   .av {
-    flex: none; width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center;
+    flex: none; width: 28px; height: 28px; border-radius: 7px; background: #6cb6ff; display: flex; align-items: center; justify-content: center;
     font-weight: 700; font-size: 12px; color: #0b1620; text-transform: uppercase;
   }
   .bd { min-width: 0; flex: 1; }
@@ -798,7 +848,7 @@
     border: 1.5px solid var(--blue);
     color: var(--text);
     font-weight: 600;
-    box-shadow: 0 3px 12px var(--accent-glow);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
   }
   .cascade select.has-val:not(:disabled) {
     background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), var(--panel2));
@@ -906,7 +956,7 @@
   .b-filter-toggle.on {
     background: linear-gradient(135deg, var(--blue), #0284C7);
     color: #fff; border-color: transparent;
-    box-shadow: 0 3px 12px var(--accent-glow);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
   }
   .b-lessons-grid {
     display: flex; flex-wrap: wrap; gap: 6px;
@@ -919,7 +969,7 @@
   .l-pill:hover { border-color: var(--line-strong); color: var(--text); }
   .l-pill.on {
     background: var(--accent-glow); border-color: var(--blue); color: var(--text);
-    box-shadow: 0 2px 8px var(--accent-glow);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
   .l-pill.is-saved {
     border-color: rgba(34, 197, 94, 0.45); background: rgba(34, 197, 94, 0.10); color: #4ADE80;
@@ -1317,7 +1367,7 @@
     display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px; border-radius: 99px;
     background: var(--blue); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
   }
-  .about-sub { margin: 0 0 8px; font-size: 12.5px; color: var(--dim); line-height: 1.45; }
+  .about-sub { margin: 0 0 8px; font-size: 13px; color: #cbd5e1; line-height: 1.5; }
   .about-badges { display: flex; flex-wrap: wrap; gap: 6px; }
   .abadge {
     display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 99px;
@@ -1677,7 +1727,7 @@
     font-weight: 700;
     cursor: pointer;
     flex: none;
-    box-shadow: 0 2px 8px var(--accent-glow);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
   .sheet-section {
     display: flex;
@@ -4007,7 +4057,7 @@
   .real-btn-chip.chat {
     background: rgba(16, 185, 129, 0.15);
     border-color: rgba(16, 185, 129, 0.35);
-    color: #10b981;
+    color: #34d399;
   }
   .real-btn-desc {
     font-size: 11px;
@@ -4331,10 +4381,10 @@
   .batch-stat-pill.saved {
     background: rgba(16, 185, 129, 0.12);
     border-color: rgba(16, 185, 129, 0.35);
-    color: #10b981;
+    color: #34d399;
   }
   .batch-stat-pill.saved b {
-    color: #10b981;
+    color: #34d399;
   }
   .batch-stat-pill.ready {
     background: rgba(245, 158, 11, 0.12);
@@ -4991,42 +5041,52 @@
           <span class="ttot" id="tTot">0:00</span>
         </div>
         <div class="row">
-          <!-- Left Group: Play/Pause + Seek Back + Seek Next + Time + Enhance -->
-          <button class="iconbtn" id="play" data-i18n-aria="playPause" data-i18n-title="playPause" aria-label="Play/Pause" title="Play/Pause (Space)">
-            <svg id="icoPlay" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg id="icoPause" viewBox="0 0 24 24" style="display:none"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
-          </button>
-          <button class="iconbtn" id="back" data-i18n-title="back10" data-i18n-aria="back10" title="Back 10 s (←)"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6.5 12 11V8a5 5 0 1 1-5 5H5a7 7 0 1 0 7-8z"/></svg></button>
-          <button class="iconbtn" id="fwd" data-i18n-title="fwd10" data-i18n-aria="fwd10" title="Forward 10 s (→)"><svg viewBox="0 0 24 24"><path d="M12 5V2l5 4.5L12 11V8a5 5 0 1 0 5 5h2a7 7 0 1 1-7-8z"/></svg></button>
-          <span class="time" id="time">0:00 / 0:00</span>
-          <button class="tbtn" id="enhBtn" data-i18n-title="enhanceTitle" title="Enhance audio (noise reduction)" aria-pressed="false"><svg class="i"><use href="#i-wand"/></svg><span data-i18n="enhance">Enhance</span></button>
-          <button class="tbtn" id="ccBtn" data-i18n-title="ccTitle" title="Captions (auto-generated)" aria-pressed="false" hidden><svg class="i"><use href="#i-cc"/></svg><span data-i18n="cc">CC</span></button>
-          <span class="ccstatus" id="ccStatus"></span>
-          <span class="grow"></span>
-          <!-- Right Group: Volume (Mute/Unmute + Slider) + Speed + Stretch + Chat + Fullscreen + Pin Toggle -->
-          <div class="vol-group">
-            <button class="iconbtn" id="mute" data-i18n-title="mute" data-i18n-aria="mute" title="Mute (M)">
-              <svg id="icoVol" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
-              <svg id="icoMute" viewBox="0 0 24 24" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13 .6L14.6 11l1.4 1.4-1.4 1.4L16 15.2l1.4-1.4 1.4 1.4 1.4-1.4-1.4-1.4 1.4-1.4-1.4-1.4-1.4 1.4z"/></svg>
+          <!-- Pod 1: Playback Navigation -->
+          <div class="controls-pod playback-pod">
+            <button class="iconbtn" id="play" data-i18n-aria="playPause" data-i18n-title="playPause" aria-label="Play/Pause" title="Play/Pause (Space)">
+              <svg id="icoPlay" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <svg id="icoPause" viewBox="0 0 24 24" style="display:none"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
             </button>
-            <input type="range" id="vol" min="0" max="1" step="0.01" value="1" data-i18n-aria="volume" aria-label="Volume">
+            <button class="iconbtn" id="back" data-i18n-title="back10" data-i18n-aria="back10" title="Back 10 s (←)"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6.5 12 11V8a5 5 0 1 1-5 5H5a7 7 0 1 0 7-8z"/></svg></button>
+            <button class="iconbtn" id="fwd" data-i18n-title="fwd10" data-i18n-aria="fwd10" title="Forward 10 s (→)"><svg viewBox="0 0 24 24"><path d="M12 5V2l5 4.5L12 11V8a5 5 0 1 0 5 5h2a7 7 0 1 1-7-8z"/></svg></button>
+            <span class="time" id="time">0:00 / 0:00</span>
           </div>
-          <select id="speed" data-i18n-aria="speed" data-i18n-title="speed" aria-label="Playback speed" title="Playback speed">
-            <option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option>
-            <option value="1.5">1.5×</option><option value="2">2×</option>
-          </select>
-          <button class="tbtn on" id="stretchBtn" aria-pressed="true" data-i18n-title="stretchTitle" title="Enlarge the view to fill the available space (S)"><svg class="i"><use href="#i-stretch"/></svg><span data-i18n="stretch">Stretch</span></button>
-          <button class="tbtn on" id="chatToggle" aria-pressed="true" data-i18n-title="chatTitle" title="Show/hide chat (C)"><svg class="i"><use href="#i-chat"/></svg><span data-i18n="chat">Chat</span></button>
-          <button class="iconbtn" id="fsBtn" data-i18n-title="fullscreen" data-i18n-aria="fullscreen" title="Fullscreen (F)"><svg viewBox="0 0 24 24"><path d="M5 5h5v2H7v3H5zm9 0h5v5h-2V7h-3zM5 14h2v3h3v2H5zm12 0h2v5h-5v-2h3z"/></svg></button>
-          <button class="iconbtn" id="hideControlsBtn" data-i18n-title="hideControlsTitle" data-i18n-aria="hideControlsTitle" title="Hide controls & cursor (H)" aria-label="Hide controls & cursor">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-              <line x1="1" y1="1" x2="23" y2="23"/>
-            </svg>
-          </button>
-          <button class="iconbtn" id="pinBtn" aria-pressed="false" data-i18n-title="pinControls" data-i18n-aria="pinControls" title="Pin / auto-hide controls">
-            <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
-          </button>
+
+          <!-- Pod 2: Audio Enhancement & Volume -->
+          <div class="controls-pod audio-pod">
+            <div class="vol-group">
+              <button class="iconbtn" id="mute" data-i18n-title="mute" data-i18n-aria="mute" title="Mute (M)">
+                <svg id="icoVol" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+                <svg id="icoMute" viewBox="0 0 24 24" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13 .6L14.6 11l1.4 1.4-1.4 1.4L16 15.2l1.4-1.4 1.4 1.4 1.4-1.4-1.4-1.4 1.4-1.4-1.4-1.4-1.4 1.4z"/></svg>
+              </button>
+              <input type="range" id="vol" min="0" max="1" step="0.01" value="1" data-i18n-aria="volume" aria-label="Volume">
+            </div>
+            <button class="tbtn" id="enhBtn" data-i18n-title="enhanceTitle" title="Enhance audio (noise reduction)" aria-pressed="false"><svg class="i"><use href="#i-wand"/></svg><span data-i18n="enhance">Enhance</span></button>
+            <button class="tbtn" id="ccBtn" data-i18n-title="ccTitle" title="Captions (auto-generated)" aria-pressed="false" hidden><svg class="i"><use href="#i-cc"/></svg><span data-i18n="cc">CC</span></button>
+            <span class="ccstatus" id="ccStatus"></span>
+          </div>
+
+          <span class="grow"></span>
+
+          <!-- Pod 3: View & Utilities -->
+          <div class="controls-pod tools-pod">
+            <select id="speed" data-i18n-aria="speed" data-i18n-title="speed" aria-label="Playback speed" title="Playback speed">
+              <option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option><option value="2">2×</option>
+            </select>
+            <button class="tbtn on" id="stretchBtn" aria-pressed="true" data-i18n-title="stretchTitle" title="Enlarge the view to fill the available space (S)"><svg class="i"><use href="#i-stretch"/></svg><span data-i18n="stretch">Stretch</span></button>
+            <button class="tbtn on" id="chatToggle" aria-pressed="true" data-i18n-title="chatTitle" title="Show/hide chat (C)"><svg class="i"><use href="#i-chat"/></svg><span data-i18n="chat">Chat</span></button>
+            <button class="iconbtn" id="fsBtn" data-i18n-title="fullscreen" data-i18n-aria="fullscreen" title="Fullscreen (F)"><svg viewBox="0 0 24 24"><path d="M5 5h5v2H7v3H5zm9 0h5v5h-2V7h-3zM5 14h2v3h3v2H5zm12 0h2v5h-5v-2h3z"/></svg></button>
+            <button class="iconbtn" id="hideControlsBtn" data-i18n-title="hideControlsTitle" data-i18n-aria="hideControlsTitle" title="Hide controls & cursor (H)" aria-label="Hide controls & cursor">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+            </button>
+            <button class="iconbtn" id="pinBtn" aria-pressed="false" data-i18n-title="pinControls" data-i18n-aria="pinControls" title="Pin / auto-hide controls">
+              <svg viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -5241,9 +5301,9 @@
   </div>
 </dialog>
 
-<dialog id="about" class="about-pro">
+<dialog id="about" class="about-pro" aria-labelledby="aboutProTitle" aria-modal="true">
   <div class="dlg-head">
-    <span class="dlg-title"><svg class="i"><use href="#i-info"/></svg><span data-i18n="aboutTitle">About SVU Player</span></span>
+    <span class="dlg-title" id="aboutProTitle"><svg class="i"><use href="#i-info"/></svg><span data-i18n="aboutTitle">About SVU Player</span></span>
     <span style="flex:1"></span>
     <button id="tourBtn" style="height:32px;padding:0 11px;font-size:12px;"><svg class="i"><use href="#i-info"/></svg><span data-i18n="tour">Help Guide</span></button>
     <button id="reloadLatestBtn" style="height:32px;padding:0 11px;font-size:12px;" data-i18n-title="reloadLatestTitle" title="Reload the latest version"><svg class="i"><use href="#i-refresh"/></svg><span data-i18n="reloadLatest">Update</span></button>
@@ -5258,7 +5318,7 @@
       <div class="about-hero-txt">
         <div class="about-title-row">
           <h3 class="about-dev" data-i18n="aboutDev">SVU Player — Studio Edition</h3>
-          <span class="ver-pill"><span data-i18n="version">Version</span> <b id="buildId" dir="ltr">v2.7.0</b></span>
+          <span class="ver-pill"><span data-i18n="version">Version</span> <b id="buildId" dir="ltr">v2.8.1</b></span>
         </div>
         <p class="about-sub" data-i18n="aboutSub">High-performance local &amp; offline session player engineered for Syrian Virtual University (.lrec) recordings.</p>
         <div class="about-badges">
@@ -5298,11 +5358,16 @@
       <p class="deploy-hint" id="pwaHint" data-i18n="aboutPwaHint">If the browser prompt does not appear automatically, click the Install App icon (⊕) in your browser's address bar.</p>
     </div>
 
-    <!-- Local Server Deployment Instructions Card -->
-    <div class="deploy-card">
-      <div class="deploy-head">
-        <b><svg class="i"><use href="#i-globe"/></svg><span data-i18n="aboutServerTitle">Local Server Deployment (Online SVU Catalog &amp; Downloads)</span></b>
-      </div>
+    <!-- Local Server Deployment Instructions Card (Collapsed for Clean Student UX) -->
+    <details class="deploy-card dev-accordion" style="margin-top:12px;overflow:hidden">
+      <summary class="deploy-head dev-accordion-summary" style="cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;padding:12px 14px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <svg class="i" style="width:16px;height:16px;color:var(--dim)"><use href="#i-globe"/></svg>
+          <b style="font-size:13px" data-i18n="aboutServerTitle">Local Server Deployment (Online SVU Catalog &amp; Downloads)</b>
+        </div>
+        <span class="dev-summary-hint" style="font-size:11.5px;color:var(--blue);font-weight:600" data-i18n="advancedDevOnly">Local Server &amp; Developer Setup ▾</span>
+      </summary>
+      <div style="padding:0 14px 14px">
       <p class="deploy-sub" data-i18n="aboutServerSub">To browse the live SVU session catalog and download .lrec files directly from sessions.svuonline.org, run the local server in your project directory:</p>
       
       <div class="server-steps" style="display:flex;flex-direction:column;gap:10px;margin:12px 0 6px">
@@ -5339,6 +5404,8 @@
         </div>
       </div>
     </div>
+  </div>
+    </details>
   </div>
 </dialog>
 
@@ -5676,9 +5743,9 @@
   <button id="updateLater" data-i18n="later">Later</button>
 </div>
 
-<dialog id="welcome" class="guide-dlg">
+<dialog id="welcome" class="guide-dlg" aria-labelledby="welcomeGuideTitle" aria-modal="true">
   <div class="dlg-head">
-    <div class="dlg-title">
+    <div class="dlg-title" id="welcomeGuideTitle">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="10"/>
         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
@@ -5899,76 +5966,7 @@
     </div>
   </div>
 
-  <div class="guide-body">
-    <div class="guide-grid">
-      <!-- Card 1: Player Controls Bar -->
-      <div class="guide-card">
-        <div class="guide-card-icon touch">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="6" width="20" height="12" rx="2"/>
-            <polygon points="10 9 15 12 10 15 10 9" fill="currentColor"/>
-          </svg>
-        </div>
-        <div class="guide-card-content">
-          <h3 data-i18n="slide1Tag">🕹️ شريط تحكم المشغّل</h3>
-          <p data-i18n="guideBtnDescAll">زر <b>Hub</b> للعودة للرئيسية وإغلاق الجلسة · زر <b>Play</b> للتشغيل والإيقاف · زرا <b>±10s</b> للقفز السريع · زر <b>Speed</b> للتحكم بالسرعة حتى 2× · وزر <b>Fullscreen</b> لملء الشاشة.</p>
-        </div>
-      </div>
 
-      <!-- Card 2: 4-Stage DSP Voice Clarity -->
-      <div class="guide-card">
-        <div class="guide-card-icon dsp">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2v20M17 5v14M7 9v6M22 10v4M2 10v4"/>
-          </svg>
-        </div>
-        <div class="guide-card-content">
-          <h3 data-i18n="guideDspTitle">🎙️ فلتر ٤ مراحل لتوضيح صوت المدرس</h3>
-          <p data-i18n="guideDspDesc">زر Enhance في شريط التحكم يشغّل معالج صوت WebAssembly: عزل الضجيج والصفير، قص هواء القاعة، وتضخيم ترددات الصوت البشري لتسمع الشرح بنقاء فائق.</p>
-        </div>
-      </div>
-
-      <!-- Card 3: Synchronized Chat & Seek -->
-      <div class="guide-card">
-        <div class="guide-card-icon chat">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-          </svg>
-        </div>
-        <div class="guide-card-content">
-          <h3 data-i18n="guideChatTitle">💬 الدردشة المتزامنة والقفز للأسئلة</h3>
-          <p data-i18n="guideChatDesc">أسئلة الطلاب تظهر في نفس لحظة طرحها أثناء المحاضرة. اضغط على أي رسالة أو توقيت زمني للقفز بالفيديو مباشرة لتلك اللحظة في الشرح.</p>
-        </div>
-      </div>
-
-      <!-- Card 4: Safe Batch Downloader & Offline Storage -->
-      <div class="guide-card">
-        <div class="guide-card-icon download">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-        </div>
-        <div class="guide-card-content">
-          <h3 data-i18n="guideBatchTitle">⚡ التنزيل المجمّع ومكتبة الطالب</h3>
-          <p data-i18n="guideBatchDesc">اختر كليتك وفصلك ونزل كامل محاضرات المقرر دفعة واحدة بمعدل آمن يمنع حظر الحساب. تُحفظ المحاضرات محلياً (IndexedDB) وتشاهدها ١٠٠٪ دون إنترنت.</p>
-        </div>
-      </div>
-
-      <!-- Card 5: Keyboard Shortcuts & Mobile Gestures -->
-      <div class="guide-card shortcuts">
-        <div class="guide-card-icon kbd">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6" y2="8"/><line x1="10" y1="8" x2="10" y2="8"/><line x1="14" y1="8" x2="14" y2="8"/><line x1="18" y1="8" x2="18" y2="8"/><line x1="8" y1="16" x2="16" y2="16"/>
-          </svg>
-        </div>
-        <div class="guide-card-content">
-          <h3 data-i18n="guideKbdTitle">⌨️ اختصارات لوحة المفاتيح واللمس</h3>
-          <p data-i18n="guideKbdDesc"><kbd>Space</kbd> تشغيل/إيقاف · <kbd>←</kbd> <kbd>→</kbd> تقديم/ترجيع ٥ ث · <kbd>M</kbd> كتم الصوت · <kbd>F</kbd> ملء الشاشة · <kbd>C</kbd> إظهار الدردشة · <kbd>S</kbd> تمديد الشاشة</p>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="guide-foot">
     <button class="primary guide-start-btn" id="welcomeStart">
@@ -6062,9 +6060,13 @@
         <svg class="i"><use href="#i-download"/></svg>
         <span data-i18n="installAppPwa">Install App (PWA)</span>
       </button>
-      <button class="sheet-nav-item" id="mobileAboutBtn">
+      <button class="sheet-nav-item" id="mobileGuideBtn">
         <svg class="i"><use href="#i-info"/></svg>
-        <span data-i18n="aboutTitle">Help &amp; Guide</span>
+        <span data-i18n="tour">Help Guide</span>
+      </button>
+      <button class="sheet-nav-item" id="mobileAboutBtn">
+        <svg class="i"><use href="#i-globe"/></svg>
+        <span data-i18n="aboutTitle">About SVU Player</span>
       </button>
       <a href="https://github.com/ibrahim4433/svu-player" target="_blank" rel="noopener noreferrer" class="sheet-nav-item">
         <svg class="i" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -6077,6 +6079,6 @@
 
 <audio id="audio" preload="auto"></audio>
 
-<script src="app.js?v=2.7.6"></script>
+<script src="app.js?v=2.8.1"></script>
 </body>
 </html>

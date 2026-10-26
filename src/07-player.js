@@ -1149,6 +1149,16 @@
       if (byId("installPwaBtn")) byId("installPwaBtn").click();
     });
   }
+  if (byId("mobileGuideBtn")) {
+    byId("mobileGuideBtn").addEventListener("click", () => {
+      closeMobileSheet();
+      if (window.__lrec && window.__lrec.showTour) {
+        window.__lrec.showTour();
+      } else if (byId("welcome")) {
+        byId("welcome").showModal();
+      }
+    });
+  }
   if (byId("mobileAboutBtn")) {
     byId("mobileAboutBtn").addEventListener("click", () => {
       closeMobileSheet();

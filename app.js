@@ -435,6 +435,7 @@ try {
       aboutPwaSub: "Install SVU Player on your desktop or phone so it launches instantly without a browser bar and works 100% offline with local .lrec files and saved sessions.",
       aboutPwaHint: "If the browser prompt does not appear automatically, click the Install App icon (⊕) in your browser's address bar.",
       aboutServerTitle: "Local Server Deployment (Online SVU Catalog & Downloads)",
+      advancedDevOnly: "Local Server & Developer Setup ▾",
       aboutServerSub: "To browse the live SVU session catalog and download .lrec files directly from sessions.svuonline.org, run the local server in your project directory:",
       copyCmd: "Copy",
       copiedCmd: "Copied!",
@@ -2938,6 +2939,16 @@ try {
     byId("mobilePwaBtn").addEventListener("click", () => {
       closeMobileSheet();
       if (byId("installPwaBtn")) byId("installPwaBtn").click();
+    });
+  }
+  if (byId("mobileGuideBtn")) {
+    byId("mobileGuideBtn").addEventListener("click", () => {
+      closeMobileSheet();
+      if (window.__lrec && window.__lrec.showTour) {
+        window.__lrec.showTour();
+      } else if (byId("welcome")) {
+        byId("welcome").showModal();
+      }
     });
   }
   if (byId("mobileAboutBtn")) {
@@ -7252,7 +7263,11 @@ try {
     const headerHelpBtn = byId("headerHelpBtn");
     if (headerHelpBtn) {
       headerHelpBtn.addEventListener("click", () => {
-        byId("welcome").showModal();
+        if (window.__lrec && window.__lrec.showTour) {
+          window.__lrec.showTour();
+        } else if (byId("welcome")) {
+          byId("welcome").showModal();
+        }
       });
     }
     const headerBackToHubBtn = byId("headerBackToHubBtn");
@@ -7636,8 +7651,8 @@ try {
     const slider = byId("guideSlider");
     if (slider) {
       slider.onmouseenter = stopSliderTimer;
-      slider.onmouseleave = startSliderTimer;
       slider.ontouchstart = stopSliderTimer;
+      slider.onpointerdown = stopSliderTimer;
     }
 
     showSlide(0);
@@ -7710,9 +7725,13 @@ try {
     });
   }
 
-  // Requirement 7: Every time the app reloads to the main student hub, show the help guide window pop-up
+  // Show the help guide automatically only on genuine first visit (or when invoked manually via tour button)
   if (!document.body.classList.contains("has-session")) {
-    setTimeout(showTour, 450);
+    try {
+      if (!localStorage.getItem(TOUR_KEY)) {
+        setTimeout(showTour, 450);
+      }
+    } catch (_) {}
   }
 
   if (!window.__lrec) window.__lrec = {};

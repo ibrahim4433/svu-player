@@ -168,6 +168,7 @@
       aboutPwaSub: "Install SVU Player on your desktop or phone so it launches instantly without a browser bar and works 100% offline with local .lrec files and saved sessions.",
       aboutPwaHint: "If the browser prompt does not appear automatically, click the Install App icon (⊕) in your browser's address bar.",
       aboutServerTitle: "Local Server Deployment (Online SVU Catalog & Downloads)",
+      advancedDevOnly: "Local Server & Developer Setup ▾",
       aboutServerSub: "To browse the live SVU session catalog and download .lrec files directly from sessions.svuonline.org, run the local server in your project directory:",
       copyCmd: "Copy",
       copiedCmd: "Copied!",

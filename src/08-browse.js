@@ -4218,7 +4218,11 @@
     const headerHelpBtn = byId("headerHelpBtn");
     if (headerHelpBtn) {
       headerHelpBtn.addEventListener("click", () => {
-        byId("welcome").showModal();
+        if (window.__lrec && window.__lrec.showTour) {
+          window.__lrec.showTour();
+        } else if (byId("welcome")) {
+          byId("welcome").showModal();
+        }
       });
     }
     const headerBackToHubBtn = byId("headerBackToHubBtn");

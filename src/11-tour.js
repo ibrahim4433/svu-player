@@ -67,8 +67,8 @@
     const slider = byId("guideSlider");
     if (slider) {
       slider.onmouseenter = stopSliderTimer;
-      slider.onmouseleave = startSliderTimer;
       slider.ontouchstart = stopSliderTimer;
+      slider.onpointerdown = stopSliderTimer;
     }
 
     showSlide(0);
@@ -141,9 +141,13 @@
     });
   }
 
-  // Requirement 7: Every time the app reloads to the main student hub, show the help guide window pop-up
+  // Show the help guide automatically only on genuine first visit (or when invoked manually via tour button)
   if (!document.body.classList.contains("has-session")) {
-    setTimeout(showTour, 450);
+    try {
+      if (!localStorage.getItem(TOUR_KEY)) {
+        setTimeout(showTour, 450);
+      }
+    } catch (_) {}
   }
 
   if (!window.__lrec) window.__lrec = {};
