@@ -5083,6 +5083,182 @@
     color: var(--dim);
   }
 
+  /* ==================== GUIDE 4-WAYS & FAQ STYLES ==================== */
+  .guide-ways-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: 100%;
+  }
+  @media (max-width: 640px) {
+    .guide-ways-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .guide-way-card {
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: start;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .guide-way-card:hover {
+    border-color: rgba(56, 189, 248, 0.4);
+    background: var(--hover);
+  }
+  .guide-way-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .guide-way-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue);
+    flex: none;
+  }
+  .guide-way-head b {
+    font-size: 12.5px;
+    color: var(--text);
+    flex: 1;
+    min-width: 0;
+  }
+  .guide-way-badge {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--dim);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .guide-way-desc {
+    margin: 0;
+    font-size: 11.5px;
+    color: var(--dim);
+    line-height: 1.4;
+  }
+  .guide-way-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 4px;
+    flex-wrap: wrap;
+  }
+  .guide-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: var(--r);
+    background: var(--bg);
+    border: 1px solid var(--line-strong);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    line-height: 1.2;
+    touch-action: manipulation;
+  }
+  .guide-action-btn:hover {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+  .guide-action-btn.primary {
+    background: var(--blue);
+    color: var(--ink);
+    border-color: var(--blue);
+    font-weight: 700;
+  }
+  .guide-action-btn.primary:hover {
+    background: var(--blue-hi, #38bdf8);
+    opacity: 0.92;
+  }
+
+  /* Chat highlighted tip banner */
+  .guide-tip-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+    border-radius: var(--r);
+    font-size: 11.5px;
+    color: var(--text);
+    line-height: 1.45;
+  }
+  .guide-tip-banner svg {
+    color: var(--blue);
+    flex: none;
+    margin-top: 2px;
+  }
+
+  /* DSP Under the Hood */
+  .dsp-under-hood-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--dim);
+    margin-top: 6px;
+    margin-bottom: 2px;
+  }
+
+  /* Chapter 6 FAQ List */
+  .guide-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  .guide-faq-card {
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: start;
+  }
+  .guide-faq-q {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .guide-faq-q svg {
+    color: var(--blue);
+    flex: none;
+  }
+  .guide-faq-a {
+    margin: 0;
+    font-size: 11.5px;
+    color: var(--dim);
+    line-height: 1.45;
+    padding-inline-start: 24px;
+  }
+  .guide-faq-action {
+    padding-inline-start: 24px;
+    padding-top: 4px;
+  }
+
 
   /* ==================== SUB-WINDOW TAB INTROS & BUTTON ENHANCEMENTS ==================== */
   .tab-pane-intro {
@@ -6617,21 +6793,21 @@
       <div class="guide-nav-list" role="tablist">
         <button class="guide-nav-item active" role="tab" data-nav="0" id="guideTab0" aria-selected="true" aria-controls="guideSlide0">
           <span class="guide-nav-icon">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><polygon points="10 8 15 11 10 14 10 8" fill="currentColor"/></svg>
           </span>
           <div class="guide-nav-text">
-            <span class="nav-title" data-i18n="slide1Nav">شريط التحكم والمشغّل</span>
-            <span class="nav-sub" data-i18n="slide1NavSub">التشغيل، السرعة، والتنقل</span>
+            <span class="nav-title" data-i18n="slide1Nav">طرق تشغيل وتنزيل المحاضرات</span>
+            <span class="nav-sub" data-i18n="slide1NavSub">٤ طرق لبدء المشاهدة</span>
           </div>
           <span class="nav-arrow">›</span>
         </button>
         <button class="guide-nav-item" role="tab" data-nav="1" id="guideTab1" aria-selected="false" aria-controls="guideSlide1">
           <span class="guide-nav-icon">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           </span>
           <div class="guide-nav-text">
-            <span class="nav-title" data-i18n="slide2Nav">لوحة الطالب والأوفلاين</span>
-            <span class="nav-sub" data-i18n="slide2NavSub">التنزيل المجمّع والمكتبة</span>
+            <span class="nav-title" data-i18n="slide2Nav">شريط التحكم والمشغّل</span>
+            <span class="nav-sub" data-i18n="slide2NavSub">التشغيل، السرعة، والتحكم</span>
           </div>
           <span class="nav-arrow">›</span>
         </button>
@@ -6650,8 +6826,8 @@
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5v14M7 9v6"/></svg>
           </span>
           <div class="guide-nav-text">
-            <span class="nav-title" data-i18n="slide4Nav">معالج الصوت الرقمي (DSP)</span>
-            <span class="nav-sub" data-i18n="slide4NavSub">تنقية الصوت وعزل الضجيج</span>
+            <span class="nav-title" data-i18n="slide4Nav">معالج تنقية الصوت (DSP)</span>
+            <span class="nav-sub" data-i18n="slide4NavSub">وضوح الصوت وعزل الضجيج</span>
           </div>
           <span class="nav-arrow">›</span>
         </button>
@@ -6662,6 +6838,16 @@
           <div class="guide-nav-text">
             <span class="nav-title" data-i18n="slide5Nav">الاختصارات والإيماءات</span>
             <span class="nav-sub" data-i18n="slide5NavSub">جدول التحكم بالكيبورد واللمس</span>
+          </div>
+          <span class="nav-arrow">›</span>
+        </button>
+        <button class="guide-nav-item" role="tab" data-nav="5" id="guideTab5" aria-selected="false" aria-controls="guideSlide5">
+          <span class="guide-nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </span>
+          <div class="guide-nav-text">
+            <span class="nav-title" data-i18n="slide6Nav">الأسئلة الشائعة والحلول</span>
+            <span class="nav-sub" data-i18n="slide6NavSub">التنزيل، الذاكرة، والنسخ</span>
           </div>
           <span class="nav-arrow">›</span>
         </button>
@@ -6680,11 +6866,79 @@
     <div class="guide-content-stage">
       <div class="guide-slider" id="guideSlider">
         <div class="guide-slides" id="guideSlides">
-          <!-- Slide 1: Player Controls Bar Breakdown -->
+          <!-- Slide 0: 4 Ways to Play & Save SVU Lectures -->
           <div class="guide-slide active" id="guideSlide0" data-slide="0" role="tabpanel" aria-labelledby="guideTab0">
             <div class="slide-caption">
-              <h3 class="slide-headline" data-i18n="slide1Title">كل أدوات التحكم بالصوت، الفيديو، والتنقل السريع</h3>
-              <p class="slide-summary" data-i18n="slide1Desc">شريط تحكم سفلي مدمج يمنحك سرعة الوصول لجميع الوظائف: زر Hub للعودة لشاشة الطالب، تسريع الصوت، تنقية الشرح، والتنقل الدقيق بالثواني.</p>
+              <h3 class="slide-headline" data-i18n="slide1Title">٤ طرق لتشغيل وحفظ محاضرات الجامعة الافتراضية</h3>
+              <p class="slide-summary" data-i18n="slide1Desc">سواء أردت تشغيل محاضرة واحدة مباشرة، تنزيل مقرر كامل بأمان، المشاهدة دون إنترنت، أو فتح ملف جاهز على جهازك:</p>
+            </div>
+            <div class="slide-visual">
+              <div class="guide-ways-grid">
+                <!-- Way 1: SVU Sessions -->
+                <div class="guide-way-card">
+                  <div class="guide-way-head">
+                    <span class="guide-way-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+                    <b data-i18n="guideWayBrowseTitle">جلسات الجامعة (SVU sessions)</b>
+                    <span class="guide-way-badge" data-i18n="guideWayBrowseSub">تشغيل أو حفظ أونلاين</span>
+                  </div>
+                  <p class="guide-way-desc" data-i18n="guideWayBrowseDesc">اختر الفصل (TERM) ← البرنامج (PROGRAM) ← المادة (COURSE) ← المدرس (TUTOR) ← الشعبة (CLASS) ← الجلسة (SESSION).</p>
+                  <div class="guide-way-actions">
+                    <button class="guide-action-btn" data-guide-action="remote" data-i18n="guideWayBrowseBtn">فتح جلسات الجامعة ←</button>
+                  </div>
+                </div>
+
+                <!-- Way 2: Batch Download -->
+                <div class="guide-way-card">
+                  <div class="guide-way-head">
+                    <span class="guide-way-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                    <b data-i18n="guideWayBatchTitle">تنزيل المواد (Batch download)</b>
+                    <span class="guide-way-badge" data-i18n="guideWayBatchSub">تنزيل مقرر كامل</span>
+                  </div>
+                  <p class="guide-way-desc" data-i18n="guideWayBatchDesc">اختر TERM و PROGRAM، اضغط على المادة لعرض المدرس والشعبة، حدد المحاضرات المطلوبة، ثم اضغط تنزيل بأمان.</p>
+                  <div class="guide-way-actions">
+                    <button class="guide-action-btn" data-guide-action="batch" data-i18n="guideWayBatchBtn">فتح التنزيل المجمّع ←</button>
+                  </div>
+                </div>
+
+                <!-- Way 3: Student Library -->
+                <div class="guide-way-card">
+                  <div class="guide-way-head">
+                    <span class="guide-way-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></span>
+                    <b data-i18n="guideWayLibTitle">مكتبة الطالب (Student library)</b>
+                    <span class="guide-way-badge" data-i18n="guideWayLibSub">١٠٠٪ أوفلاين</span>
+                  </div>
+                  <p class="guide-way-desc" data-i18n="guideWayLibDesc">استعرض جميع تسجيلاتك المحفوظة دون استهلاك إنترنت، صفِّ حسب المحاضرات المشاهدة ✓، أو تحقق من توفر محاضرات جديدة.</p>
+                  <div class="guide-way-actions">
+                    <button class="guide-action-btn" data-guide-action="saved" data-i18n="guideWayLibBtn">فتح مكتبة الطالب ←</button>
+                  </div>
+                </div>
+
+                <!-- Way 4: Open File / Try Demo -->
+                <div class="guide-way-card">
+                  <div class="guide-way-head">
+                    <span class="guide-way-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span>
+                    <b data-i18n="guideWayFileTitle">فتح ملف / التجربة الفورية</b>
+                    <span class="guide-way-badge" data-i18n="guideWayFileSub">ملف .lrec أو تجريبي</span>
+                  </div>
+                  <p class="guide-way-desc" data-i18n="guideWayFileDesc">لديك ملف محاضرة .lrec من التيليجرام أو LMS؟ افتحه فوراً، أو جرّب المحاضرة النموذجية لاختبار مزايا المشغل الآن.</p>
+                  <div class="guide-way-actions">
+                    <button class="guide-action-btn" data-guide-action="file" data-i18n="guideWayFileBtn">فتح ملف ←</button>
+                    <button class="guide-action-btn primary" data-guide-action="demo" data-i18n="guideWayDemoBtn">تجربة نموذجية ←</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="guide-callout-card">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span data-i18n="guideSyriaNote">مصمم لظروف الشبكة في سوريا: جميع الملفات المحفوظة تخزن بأمان محلياً (IndexedDB) وتعمل بكفاءة كاملة دون استهلاك أي رصيد بيانات.</span>
+            </div>
+          </div>
+
+          <!-- Slide 1: Player Controls Bar Breakdown -->
+          <div class="guide-slide" id="guideSlide1" data-slide="1" role="tabpanel" aria-labelledby="guideTab1">
+            <div class="slide-caption">
+              <h3 class="slide-headline" data-i18n="slide2Title">كل أدوات التحكم بالصوت، الفيديو، والتنقل وضبط العرض</h3>
+              <p class="slide-summary" data-i18n="slide2Desc">شريط تحكم سفلي مدمج يمنحك سرعة الوصول لجميع الوظائف: زر Hub للعودة لشاشة الطالب، تسريع الصوت، تنقية الشرح، والتنقل الدقيق بالثواني.</p>
             </div>
             <div class="slide-visual">
               <div class="real-ui-panel">
@@ -6711,8 +6965,19 @@
                   </div>
                   <div class="real-btn-item">
                     <span class="real-btn-chip chat"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> <b>Chat</b></span>
-                    <span class="real-btn-desc" data-i18n="guideBtnChat">إظهار أو إخفاء محادثات الطلاب المتزامنة</span>
+                    <span class="real-btn-desc" data-i18n="guideBtnChat">إظهار أو إخفاء محادثات الطلاب المتزامنة (C)</span>
                   </div>
+                  <div class="real-btn-item">
+                    <span class="real-btn-chip"><svg class="i" style="width:14px;height:14px"><use href="#i-stretch"/></svg> <b>Stretch</b></span>
+                    <span class="real-btn-desc" data-i18n="guideBtnStretch">تمديد وتوسيع الشريحة لملء الشاشة (S)</span>
+                  </div>
+                  <div class="real-btn-item">
+                    <span class="real-btn-chip"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg> <b>Pin</b></span>
+                    <span class="real-btn-desc" data-i18n="guideBtnPin">تثبيت شريط التحكم مفتوحاً دوماً دون إخفاء</span>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:center;margin-top:6px;">
+                  <button class="guide-action-btn primary" data-guide-action="demo" data-i18n="guideTryDemoAction">▶ تجربة أدوات التحكم في محاضرة نموذجية ←</button>
                 </div>
               </div>
             </div>
@@ -6722,46 +6987,7 @@
             </div>
           </div>
 
-          <!-- Slide 2: Student Hub Services -->
-          <div class="guide-slide" id="guideSlide1" data-slide="1" role="tabpanel" aria-labelledby="guideTab1">
-            <div class="slide-caption">
-              <h3 class="slide-headline" data-i18n="slide2Title">تنزيل المحاضرات وإدارتها للدراسة ١٠٠٪ دون إنترنت</h3>
-              <p class="slide-summary" data-i18n="slide2Desc">من شاشة الطالب يمكنك تنزيل مقرراتك دفعة واحدة بمعدل آمن، متابعة تقدمك الدراسي، واستئناف مشاهدة آخر محاضرة توقفت عندها بضغطة واحدة.</p>
-            </div>
-            <div class="slide-visual">
-              <div class="real-ui-panel">
-                <div class="real-hub-services-list">
-                  <div class="real-hub-item">
-                    <div class="real-hub-item-icon dl"><svg class="i" style="width:18px;height:18px"><use href="#i-download"/></svg></div>
-                    <div class="real-hub-item-text">
-                      <b data-i18n="tabBatch">التنزيل المجمّع (Batch Download)</b>
-                      <p data-i18n="guideHubBatchHint">اختر كليتك وفصلك ونزل كامل محاضرات المادة بضغطة واحدة وبمعدل آمن يمنع حظر حسابك.</p>
-                    </div>
-                  </div>
-                  <div class="real-hub-item">
-                    <div class="real-hub-item-icon lib"><svg class="i" style="width:18px;height:18px"><use href="#i-save"/></svg></div>
-                    <div class="real-hub-item-text">
-                      <b data-i18n="tabSaved">مكتبة الطالب المحفوظة</b>
-                      <p data-i18n="guideHubLibHint">استعرض جميع المحاضرات المحفوظة محلياً، مع إمكانية تعليم المحاضرات المشاهدة (✓) أو حذفها لتفريغ الذاكرة.</p>
-                    </div>
-                  </div>
-                  <div class="real-hub-item">
-                    <div class="real-hub-item-icon dir"><svg class="i" style="width:18px;height:18px"><use href="#i-book"/></svg></div>
-                    <div class="real-hub-item-text">
-                      <b data-i18n="courseDirTitle">دليل المقررات الشامل</b>
-                      <p data-i18n="guideHubDirHint">تصفح البرامج الدراسية وسلاسل الـ LMS والبحث السريع في أكثر من 1,160 مادة جامعية معتمدة.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="guide-callout-card">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <span data-i18n="guideSyriaNote">مصمم لظروف الشبكة في سوريا: جميع الملفات المحفوظة تخزن بأمان محلياً (IndexedDB) وتعمل بكفاءة كاملة دون استهلاك أي رصيد بيانات.</span>
-            </div>
-          </div>
-
-          <!-- Slide 3: Synchronized Live Chat & Seek -->
+          <!-- Slide 2: Synchronized Live Chat & Seek -->
           <div class="guide-slide" id="guideSlide2" data-slide="2" role="tabpanel" aria-labelledby="guideTab2">
             <div class="slide-caption">
               <h3 class="slide-headline" data-i18n="slide3Title">تزامن حي لأسئلة الطلاب مع قفز فوري بالفيديو</h3>
@@ -6787,6 +7013,10 @@
                     <span class="chat-body" data-i18n="chatDemoMsg3">نعم سنشرح هذا المثال بالتفصيل الآن.</span>
                   </div>
                 </div>
+                <div class="guide-tip-banner">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                  <span data-i18n="guideChatShowAllTip">نصيحة: تظهر رسائل الدردشة تدريجياً تزامناً مع تقدم وقت المحاضرة. لتصفح جميع أسئلة الطلاب من أول دقيقة، فعّل خيار إظهار الكل (Show all) في أعلى لوحة الدردشة.</span>
+                </div>
               </div>
             </div>
             <div class="guide-callout-card">
@@ -6795,14 +7025,15 @@
             </div>
           </div>
 
-          <!-- Slide 4: 4-Stage DSP Audio Processor -->
+          <!-- Slide 3: 4-Stage DSP Audio Processor -->
           <div class="guide-slide" id="guideSlide3" data-slide="3" role="tabpanel" aria-labelledby="guideTab3">
             <div class="slide-caption">
               <h3 class="slide-headline" data-i18n="slide4Title">توضيح صوت الدكتور بأعلى نقاء بضغطة زر</h3>
-              <p class="slide-summary" data-i18n="slide4Desc">زر Enhance في شريط التحكم يفعّل معالج صوت رقمي احترافي يحول التسجيلات الصوتية المشوشة إلى صوت واضح ونقي ومريح للأذن أثناء المذاكرة.</p>
+              <p class="slide-summary" data-i18n="slide4Desc">هل تعاني من انخفاض صوت الدكتور، صدى القاعة، أو أزيز المايك؟ اضغط زر Enhance في شريط التحكم لتصفية نبرة الصوت فوراً وسماع الشرح بنقاء مريح للمذاكرة.</p>
             </div>
             <div class="slide-visual">
               <div class="real-ui-panel">
+                <div class="dsp-under-hood-title" data-i18n="dspUnderHoodTitle">كيف يعمل المعالج تقنياً (٤ مراحل معالجة DSP):</div>
                 <div class="real-dsp-stages">
                   <div class="dsp-stage-card">
                     <div class="stage-num">1</div>
@@ -6841,7 +7072,7 @@
             </div>
           </div>
 
-          <!-- Slide 5: Mobile Gestures & Desktop Shortcuts -->
+          <!-- Slide 4: Mobile Gestures & Desktop Shortcuts -->
           <div class="guide-slide" id="guideSlide4" data-slide="4" role="tabpanel" aria-labelledby="guideTab4">
             <div class="slide-caption">
               <h3 class="slide-headline" data-i18n="slide5Title">تحكم مرن وسريع عبر اللمس أو لوحة المفاتيح</h3>
@@ -6875,6 +7106,10 @@
                     <span class="sc-keys"><kbd>C</kbd></span>
                     <span class="sc-desc" data-i18n="guideBtnChat">إظهار أو إخفاء الدردشة</span>
                   </div>
+                  <div class="shortcut-row">
+                    <span class="sc-keys"><kbd>S</kbd></span>
+                    <span class="sc-desc" data-i18n="shortcutStretch">تمديد وتوسيع الشريحة</span>
+                  </div>
                 </div>
                 <!-- Mobile Gestures Grid -->
                 <div class="real-gestures-grid">
@@ -6898,6 +7133,50 @@
               </div>
             </div>
           </div>
+
+          <!-- Slide 5: Troubleshooting & Storage FAQ -->
+          <div class="guide-slide" id="guideSlide5" data-slide="5" role="tabpanel" aria-labelledby="guideTab5">
+            <div class="slide-caption">
+              <h3 class="slide-headline" data-i18n="slide6Title">أهم الأسئلة الشائعة والحلول السريعة للطلاب</h3>
+              <p class="slide-summary" data-i18n="slide6Desc">إجابات مباشرة على أكثر استفسارات الطلاب تكراراً حول التنزيل، ذاكرة المتصفح، والنسخ الاحتياطي:</p>
+            </div>
+            <div class="slide-visual">
+              <div class="guide-faq-list">
+                <!-- FAQ 1: Batch Download Button Disabled -->
+                <div class="guide-faq-card">
+                  <div class="guide-faq-q">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span data-i18n="guideFaq1Q">لماذا زر «تنزيل المحاضرات المحددة بأمان» غير مفعّل (رمادي)؟</span>
+                  </div>
+                  <p class="guide-faq-a" data-i18n="guideFaq1A">في التنزيل المجمّع، يجب أولاً اختيار الفصل (TERM) والبرنامج (PROGRAM)، ثم الضغط على سطر المادة لعرض مدرسيها وشعبها، وتحديد مربع اختيار محاضرة واحدة على الأقل. يتفعّل الزر تلقائياً فور تحديد المحاضرات.</p>
+                  <div class="guide-faq-action">
+                    <button class="guide-action-btn" data-guide-action="batch" data-i18n="guideWayBatchBtn">فتح التنزيل المجمّع ←</button>
+                  </div>
+                </div>
+
+                <!-- FAQ 2: Browser Data Loss & Backup -->
+                <div class="guide-faq-card">
+                  <div class="guide-faq-q">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    <span data-i18n="guideFaq2Q">هل يؤدي مسح بيانات المتصفح لحذف المحاضرات المحفوظة؟</span>
+                  </div>
+                  <p class="guide-faq-a" data-i18n="guideFaq2A">نعم. المحاضرات أوفلاين تُحفظ داخل ذاكرة المتصفح (IndexedDB). إذا مسحت بيانات المواقع أو غيّرت جهازك فستُحذف. قبل مسح البيانات، افتح القائمة السريعة (☰) واضغط تصدير نسخة (Export Backup) لحفظ مقرراتك في ملف آمن على جهازك.</p>
+                </div>
+
+                <!-- FAQ 3: Direct Link Replay -->
+                <div class="guide-faq-card">
+                  <div class="guide-faq-q">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    <span data-i18n="guideFaq3Q">كيف أشغّل محاضرة باستخدام رابط مباشر من الجامعة؟</span>
+                  </div>
+                  <p class="guide-faq-a" data-i18n="guideFaq3A">لديك رابط محاضرة مباشر من الـ LMS أو البريد؟ اضغط جلسات الجامعة من الشاشة الرئيسية، ثم اختر تبويب الرابط المباشر (Direct link) في أعلى النافذة، والصق الرابط للتشغيل أو الحفظ فوراً.</p>
+                  <div class="guide-faq-action">
+                    <button class="guide-action-btn" data-guide-action="remote" data-i18n="guideWayBrowseBtn">فتح جلسات الجامعة ←</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Mobile Slider Controls (hidden on desktop) -->
@@ -6909,6 +7188,7 @@
             <span class="dot" data-slide="2"></span>
             <span class="dot" data-slide="3"></span>
             <span class="dot" data-slide="4"></span>
+            <span class="dot" data-slide="5"></span>
           </div>
           <button class="slider-btn next" id="sliderNextBtn" aria-label="Next slide">›</button>
         </div>
@@ -6917,8 +7197,8 @@
       <!-- Desktop Section Footer Navigation (visible on desktop) -->
       <div class="guide-stage-footer">
         <div class="stage-step-counter">
-          <span class="step-num" id="guideCurrentStep">1</span> / <span>5</span>
-          <span class="step-label" id="guideCurrentTitle" data-i18n="slide1Nav">شريط التحكم والمشغّل</span>
+          <span class="step-num" id="guideCurrentStep">1</span> / <span>6</span>
+          <span class="step-label" id="guideCurrentTitle" data-i18n="slide1Nav">طرق تشغيل وتنزيل المحاضرات</span>
         </div>
         <div class="stage-nav-actions">
           <button class="stage-nav-btn prev" id="guideDesktopPrev" data-i18n="guidePrevSection">السابق</button>

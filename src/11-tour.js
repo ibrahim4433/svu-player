@@ -11,7 +11,7 @@
      VISUAL TOP SLIDER / CAROUSEL CONTROLLER
      ========================================================================== */
   let currentSlide = 0;
-  const totalSlides = 5;
+  const totalSlides = 6;
   let sliderTimer = null;
 
   function showSlide(index) {
@@ -113,7 +113,7 @@
         prevSlide();
         stopSliderTimer();
         e.preventDefault();
-      } else if (e.key >= "1" && e.key <= "5") {
+      } else if (e.key >= "1" && e.key <= "6") {
         showSlide(parseInt(e.key, 10) - 1);
         stopSliderTimer();
         e.preventDefault();
@@ -222,6 +222,31 @@
   welcome.addEventListener("click", event => {
     if (event.target === welcome) {
       closeTour();
+      return;
+    }
+    const actionBtn = event.target.closest("[data-guide-action]");
+    if (actionBtn) {
+      const act = actionBtn.dataset.guideAction;
+      closeTour();
+      if (act === "remote") {
+        const tile = byId("hubBrowseTile");
+        if (tile) tile.click();
+        else if (window.openBrowseDialog) window.openBrowseDialog("remote");
+      } else if (act === "batch") {
+        const tile = byId("hubBatchTile");
+        if (tile) tile.click();
+        else if (window.openBrowseDialog) window.openBrowseDialog("batch");
+      } else if (act === "saved") {
+        const tile = byId("hubLibTile");
+        if (tile) tile.click();
+        else if (window.openBrowseDialog) window.openBrowseDialog("saved");
+      } else if (act === "file") {
+        const fileEl = byId("file");
+        if (fileEl) fileEl.click();
+      } else if (act === "demo") {
+        const demoBtn = byId("introDemoBtn") || byId("hubDemoBtn");
+        if (demoBtn) demoBtn.click();
+      }
     }
   });
 
@@ -272,4 +297,5 @@
 
   if (!window.__lrec) window.__lrec = {};
   window.__lrec.showTour = showTour;
+  window.__lrec.showSlide = showSlide;
 })();

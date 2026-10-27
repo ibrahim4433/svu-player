@@ -520,17 +520,20 @@ guideModalTitle: "SVU Player Guide",
     guideKbdTitle: "⌨️ Keyboard Shortcuts (Tablet & Laptop)",
     guideKbdDesc: "Space: Play/Pause · ← →: Skip 5s · M: Mute · F: Fullscreen · C: Chat toggle · S: Stretch",
     welcomeStartBtn: "Understood, Let's Begin",
-guideBtnHub: "Return to Student Hub & close session",
+    guideBtnHub: "Return to Student Hub & close session",
     guideBtnPlay: "Play or pause lecture (Spacebar)",
     guideBtnSeek: "Skip backward or forward 10s (Arrow keys)",
     guideBtnEnh: "4-Stage DSP vocal clarifier & noise gate",
     guideBtnSpeed: "Speed up or slow down voice (0.75× - 2×)",
-    guideBtnChat: "Toggle synchronized student chat",
+    guideBtnChat: "Toggle synchronized student chat (C)",
+    guideBtnStretch: "Fit or stretch slide aspect ratio (S)",
+    guideBtnPin: "Keep bottom control bar pinned open",
+    guideTryDemoAction: "▶ Try Controls in Demo Lecture →",
     guideHubBatchHint: "Select your college and semester to download all lectures with safe rate-limiting.",
     guideHubLibHint: "Access saved lectures offline, toggle watched status (✓), or delete to free memory.",
     guideHubDirHint: "Browse academic degree programs, LMS chains, and search over 1,160 accredited courses.",
     courseDirBadge: "Browse Directory",
-remoteTabTitle: "SVU Session Catalog & Direct Replay",
+    remoteTabTitle: "SVU Session Catalog & Direct Replay",
     remoteTabSub: "Browse the official university directory by Term, Program, Course, Tutor, Class, and Session to play or save any recording.",
     savedTabTitle: "Student Offline Replay Library",
     savedTabSub: "Manage all recordings saved locally in your browser (IndexedDB). Watch 100% offline, track watched status, or free storage.",
@@ -541,34 +544,39 @@ remoteTabTitle: "SVU Session Catalog & Direct Replay",
     statSaved: "saved",
     statToDl: "to download",
     guideBtnDescAll: "Hub button to exit to dashboard · Play/Pause for playback · ±10s for quick seeking · Speed up to 2× · and Fullscreen mode.",
-    slide1Tag: "Player Controls Bar",
-    slide1Title: "All playback, audio enhancement, and quick seeking tools",
-    slide1Desc: "Compact bottom bar gives you instant access to everything: Hub button to return to dashboard, speed boost, vocal DSP, and ±10s precision seeking.",
-    slide2Tag: "Smart Student Hub & Offline",
-    slide2Title: "Batch download and offline lecture management",
-    slide2Desc: "Download entire semester courses with safe rate-limiting, track your study progress, and resume watching your last lecture in one tap.",
+    slide1Tag: "Starting Your Study Session",
+    slide1Title: "4 Ways to Play & Save Your SVU Lectures",
+    slide1Desc: "Whether streaming a single session, batch-downloading a course, or playing an existing file on your device:",
+    slide2Tag: "Player Controls Bar",
+    slide2Title: "All playback, audio enhancement, and view tools",
+    slide2Desc: "Compact bottom bar gives you instant access to everything: Hub button to return to dashboard, speed boost, vocal DSP, and ±10s precision seeking.",
     slide3Tag: "Widescreen & Synced Live Chat",
     slide3Title: "Real-time question sync with instant video jump",
     slide3Desc: "Student questions stream second-by-second synchronized with teacher voice. Tap any question or timestamp to jump straight to that moment in the video!",
-    slide4Tag: "4-Stage DSP Voice Clarity",
-    slide4Title: "WebAssembly vocal filters for crystal-clear sound",
-    slide4Desc: "The Enhance button activates a 4-stage DSP processor (noise gate, high-pass filter, vocal presence boost, and limiter) to make muffled teacher voices crystal clear.",
-    slide5Tag: "Touch Gestures & Mobile Cinema",
-    slide5Title: "Effortless gestures built for mobile screens",
+    slide4Tag: "Speech Intelligibility",
+    slide4Title: "Crystal-Clear Teacher Voice with One Tap",
+    slide4Desc: "Struggling to hear a quiet, echoing, or static-heavy lecturer? Click Enhance in the player bar to automatically clean up the voice and make spoken words crisp and clear.",
+    slide5Tag: "Touch Gestures & Shortcuts",
+    slide5Title: "Effortless control via keyboard, mouse, or touch",
     slide5Desc: "Single tap for controls, double tap for ±10s seek, and rotating phone activates widescreen cinema split with side-by-side chat.",
+    slide6Tag: "Troubleshooting & Storage FAQ",
+    slide6Title: "Frequently Asked Questions & Quick Solutions",
+    slide6Desc: "Answers to common student questions about downloading, browser memory, offline backups, and direct links:",
     guideStudioBadge: "Studio Guide",
     guideNavTitle: "Guide Chapters",
     guideNavSubtitle: "Select a topic to explore",
-    slide1Nav: "Player Bar & Tools",
-    slide1NavSub: "Playback, speed & seek",
-    slide2Nav: "Student Hub & Offline",
-    slide2NavSub: "Batch download & library",
+    slide1Nav: "Open & Download Lectures",
+    slide1NavSub: "4 ways to start playing",
+    slide2Nav: "Player Bar & Tools",
+    slide2NavSub: "Playback, speed & controls",
     slide3Nav: "Live Synced Chat",
     slide3NavSub: "Smart timestamp jumping",
-    slide4Nav: "Vocal DSP Engine",
+    slide4Nav: "Vocal DSP Voice Clarity",
     slide4NavSub: "Speech clarity & noise gate",
     slide5Nav: "Shortcuts & Gestures",
     slide5NavSub: "Master keyboard & touch",
+    slide6Nav: "Troubleshooting & FAQ",
+    slide6NavSub: "Downloads, storage & backup",
     guideProTipTitle: "Study Pro Tip",
     guideProTipDesc: "Saved lectures in IndexedDB work 100% offline without internet. Your watch progress and timestamp are preserved automatically.",
     guidePrevSection: "Previous",
@@ -577,6 +585,32 @@ remoteTabTitle: "SVU Session Catalog & Direct Replay",
     guideFootCloseHint: "to close",
     guideSyriaNote: "Engineered for Syrian networks: Stored lectures run 100% locally from IndexedDB with zero telemetry and zero bandwidth.",
     guideDspWhen: "When to use: Turn ON Enhance for distant, echoing, or muffled lecturer microphones to restore crystal-clear speech formants.",
+    guideWayBrowseTitle: "SVU sessions",
+    guideWayBrowseSub: "Stream or save 1 lecture online",
+    guideWayBrowseDesc: "Choose TERM → PROGRAM → COURSE → TUTOR → CLASS → SESSION to stream immediately or save a local copy.",
+    guideWayBrowseBtn: "Open SVU sessions →",
+    guideWayBatchTitle: "Batch download",
+    guideWayBatchSub: "Save a full course with safe rate-limiting",
+    guideWayBatchDesc: "Select TERM & PROGRAM, click a course row to load its tutor & class, check your lessons, and download safely.",
+    guideWayBatchBtn: "Open Batch download →",
+    guideWayLibTitle: "Student library",
+    guideWayLibSub: "Watch saved lectures 100% offline",
+    guideWayLibDesc: "Access all saved recordings without internet, filter by Watched ✓ or Unwatched, or check for new lectures.",
+    guideWayLibBtn: "Open Student library →",
+    guideWayFileTitle: "Open file / Try Demo",
+    guideWayFileSub: "Play local .lrec or sample lecture",
+    guideWayFileDesc: "Have a .lrec recording from LMS or Telegram? Open it directly, or launch the demo lecture to test features now.",
+    guideWayFileBtn: "Open File →",
+    guideWayDemoBtn: "Try Demo Lecture →",
+    guideChatShowAllTip: "Tip: Questions appear in real-time as the lecture progresses. Want to read all student questions from the whole session right away? Check Show all at the top of the Chat drawer.",
+    dspUnderHoodTitle: "How it works under the hood (4-Stage DSP Engine):",
+    shortcutStretch: "Fit / Stretch slide aspect ratio",
+    guideFaq1Q: "Why is 'Download Selected Lectures Safely' disabled?",
+    guideFaq1A: "In Batch Download, you must first select TERM and PROGRAM, then click a course row (e.g. ITA320) to expand it and load its tutor and class. Once you check at least one lesson checkbox, the download button unlocks automatically.",
+    guideFaq2Q: "Will clearing browser data delete my saved lectures?",
+    guideFaq2A: "Yes. Offline lectures are stored inside your browser (IndexedDB). Before clearing browser website data or switching devices, open the top-right Quick Menu (☰) and click Export Backup to save your files safely.",
+    guideFaq3Q: "How do I stream or download with a direct SVU recording link?",
+    guideFaq3A: "Have a direct recording URL from LMS or email? Click SVU sessions on the home screen, switch to the Direct link tab at the top of the popup, paste the URL, and click Play or Download.",
     introCollapse: "Hide details ▴",
     hubCourseLectures: "{n} lectures",
     hubCourseWatched: "({w} watched)",
@@ -1012,17 +1046,20 @@ guideModalTitle: "دليل استخدام مشغّل SVU",
     guideKbdTitle: "⌨️ اختصارات لوحة المفاتيح (للأجهزة اللوحية والحاسوب)",
     guideKbdDesc: "المسافة: تشغيل/إيقاف مؤقت · ← →: تقديم/ترجيع ٥ ثوانٍ · M: كتم الصوت · F: ملء الشاشة · C: إظهار الدردشة · S: تمديد الشاشة",
     welcomeStartBtn: "فهمت، لنبدأ الاستخدام",
-guideBtnHub: "العودة للرئيسية وإغلاق الجلسة",
+    guideBtnHub: "العودة للرئيسية وإغلاق الجلسة",
     guideBtnPlay: "تشغيل أو إيقاف المحاضرة (مسطرة Space)",
     guideBtnSeek: "تقديم أو ترجيع 10 ثوانٍ (الأسهم ← →)",
     guideBtnEnh: "فلتر تنقية الصوت وعزل الصفير وهواء القاعة",
     guideBtnSpeed: "تسريع أو إبطاء صوت المحاضرة (0.75× - 2×)",
-    guideBtnChat: "إظهار أو إخفاء محادثات الطلاب المتزامنة",
+    guideBtnChat: "إظهار أو إخفاء محادثات الطلاب المتزامنة (C)",
+    guideBtnStretch: "تمديد وتوسيع الشريحة لملء الشاشة (S)",
+    guideBtnPin: "تثبيت شريط التحكم مفتوحاً دوماً دون إخفاء",
+    guideTryDemoAction: "▶ تجربة أدوات التحكم في محاضرة نموذجية ←",
     guideHubBatchHint: "اختر كليتك وفصلك ونزل كامل محاضرات المادة بضغطة واحدة وبمعدل آمن يمنع حظر حسابك.",
     guideHubLibHint: "استعرض جميع المحاضرات المحفوظة محلياً، مع إمكانية تعليم المحاضرات المشاهدة (✓) أو حذفها لتفريغ الذاكرة.",
     guideHubDirHint: "تصفح البرامج الدراسية وسلاسل الـ LMS والبحث السريع في أكثر من 1,160 مادة جامعية معتمدة.",
     courseDirBadge: "تصفح شامل",
-remoteTabTitle: "جلسات ومحاضرات الجامعة (SVU)",
+    remoteTabTitle: "جلسات ومحاضرات الجامعة (SVU)",
     remoteTabSub: "استعراض الدليل المباشر للجامعة الافتراضية السورية وتصفّح المحاضرات حسب الفصل، البرنامج، المادة، والمدرس للتشغيل الفوري أو الحفظ أوفلاين.",
     savedTabTitle: "مكتبة الطالب للمحاضرات المحفوظة أوفلاين",
     savedTabSub: "استعراض وإدارة جميع محاضراتك المحفوظة محلياً على هذا الجهاز للتشغيل ١٠٠٪ دون إنترنت، مع إمكانية تمييز المحاضرات المنتهية أو تفريغ المساحة.",
@@ -1033,34 +1070,39 @@ remoteTabTitle: "جلسات ومحاضرات الجامعة (SVU)",
     statSaved: "محفوظة",
     statToDl: "جاهزة للتنزيل",
     guideBtnDescAll: "زر Hub للعودة للرئيسية وإغلاق الجلسة · زر Play للتشغيل والإيقاف · زرا ±10s للقفز السريع · زر Speed للتحكم بالسرعة حتى 2× · وزر Fullscreen لملء الشاشة.",
-    slide1Tag: "شريط تحكم المشغّل",
-    slide1Title: "كل أدوات التحكم بالصوت، الفيديو، والتنقل السريع",
-    slide1Desc: "شريط تحكم سفلي مدمج يمنحك سرعة الوصول لجميع الوظائف: زر Hub للعودة لشاشة الطالب، تسريع الصوت، تنقية الشرح، والتنقل الدقيق بالثواني.",
-    slide2Tag: "خدمات الطالب والأوفلاين",
-    slide2Title: "تنزيل المحاضرات وإدارتها للدراسة ١٠٠٪ دون إنترنت",
-    slide2Desc: "من شاشة الطالب يمكنك تنزيل مقرراتك دفعة واحدة بمعدل آمن، متابعة تقدمك الدراسي، واستئناف مشاهدة آخر محاضرة توقفت عندها بضغطة واحدة.",
+    slide1Tag: "بدء جلسة المذاكرة",
+    slide1Title: "٤ طرق لتشغيل وحفظ محاضرات الجامعة الافتراضية",
+    slide1Desc: "سواء أردت تشغيل محاضرة واحدة مباشرة، تنزيل مقرر كامل بأمان، المشاهدة دون إنترنت، أو فتح ملف جاهز على جهازك:",
+    slide2Tag: "شريط تحكم المشغّل",
+    slide2Title: "كل أدوات التحكم بالصوت، الفيديو، والتنقل وضبط العرض",
+    slide2Desc: "شريط تحكم سفلي مدمج يمنحك سرعة الوصول لجميع الوظائف: زر Hub للعودة لشاشة الطالب، تسريع الصوت، تنقية الشرح، والتنقل الدقيق بالثواني.",
     slide3Tag: "الدردشة والقفز الذكي",
     slide3Title: "تزامن حي لأسئلة الطلاب مع قفز فوري بالفيديو",
     slide3Desc: "تتدفق رسائل الطلاب بالثانية تزامناً مع كلام المدرس. اضغط على أي رسالة أو توقيتها الزمني للانتقال بالفيديو فوراً لتلك اللحظة في الشرح!",
-    slide4Tag: "تنقية الصوت (DSP)",
+    slide4Tag: "وضوح ونقاء الشرح",
     slide4Title: "توضيح صوت الدكتور بأعلى نقاء بضغطة زر",
-    slide4Desc: "زر Enhance في شريط التحكم يفعّل معالج صوت رقمي احترافي يحول التسجيلات الصوتية المشوشة إلى صوت واضح ونقي ومريح للأذن أثناء المذاكرة.",
-    slide5Tag: "إيماءات الموبايل والاختصارات",
+    slide4Desc: "هل تعاني من انخفاض صوت الدكتور، صدى القاعة، أو أزيز المايك؟ اضغط زر Enhance في شريط التحكم لتصفية نبرة الصوت فوراً وسماع الشرح بنقاء مريح للمذاكرة.",
+    slide5Tag: "التحكم بالاختصارات والإيماءات",
     slide5Title: "تحكم مرن وسريع عبر اللمس أو لوحة المفاتيح",
     slide5Desc: "إيماءات نقر سريعة على جانبي الشاشة للتنقل، وتدوير الهاتف يفصل الشاشة بين الشريحة والدردشة جنباً إلى جنب دون أن تحجب الدردشة محتوى المحاضرة.",
+    slide6Tag: "الأسئلة الشائعة والحلول",
+    slide6Title: "أهم الأسئلة الشائعة والحلول السريعة للطلاب",
+    slide6Desc: "إجابات مباشرة على أكثر استفسارات الطلاب تكراراً حول التنزيل، ذاكرة المتصفح، والنسخ الاحتياطي:",
     guideStudioBadge: "دليل الاستوديو المكتبي",
     guideNavTitle: "أبواب الدليل",
     guideNavSubtitle: "اختر قسماً للاطلاع على تفاصيله",
-    slide1Nav: "شريط التحكم والمشغّل",
-    slide1NavSub: "التشغيل، السرعة، والتنقل",
-    slide2Nav: "لوحة الطالب والأوفلاين",
-    slide2NavSub: "التنزيل المجمّع والمكتبة",
+    slide1Nav: "طرق تشغيل وتنزيل المحاضرات",
+    slide1NavSub: "٤ طرق لبدء المشاهدة",
+    slide2Nav: "شريط التحكم والمشغّل",
+    slide2NavSub: "التشغيل، السرعة، والتحكم",
     slide3Nav: "الدردشة والقفز الذكي",
     slide3NavSub: "التزامن الفوري مع الفيديو",
-    slide4Nav: "معالج الصوت الرقمي (DSP)",
-    slide4NavSub: "تنقية الصوت وعزل الضجيج",
+    slide4Nav: "معالج تنقية الصوت (DSP)",
+    slide4NavSub: "وضوح الصوت وعزل الضجيج",
     slide5Nav: "الاختصارات والإيماءات",
     slide5NavSub: "جدول التحكم بالكيبورد واللمس",
+    slide6Nav: "الأسئلة الشائعة والحلول",
+    slide6NavSub: "التنزيل، الذاكرة، والنسخ",
     guideProTipTitle: "نصيحة للمذاكرة الأكاديمية",
     guideProTipDesc: "المحاضرات المحفوظة في مكتبتك تعمل أوفلاين ١٠٠٪ دون أي اتصال بالإنترنت مع حفظ توقيت آخر دقيقة شاهدتها تلقائياً.",
     guidePrevSection: "السابق",
@@ -1069,6 +1111,32 @@ remoteTabTitle: "جلسات ومحاضرات الجامعة (SVU)",
     guideFootCloseHint: "للإغلاق",
     guideSyriaNote: "مصمم لظروف الشبكة في سوريا: جميع الملفات المحفوظة تخزن بأمان محلياً (IndexedDB) وتعمل بكفاءة كاملة دون استهلاك أي رصيد بيانات.",
     guideDspWhen: "متى تستخدم فلتر الصوت؟ فعّله في المحاضرات ذات التسجيل الضعيف أو صدى القاعة لرفع وضوح مخارج الحروف فوراً.",
+    guideWayBrowseTitle: "جلسات الجامعة (SVU sessions)",
+    guideWayBrowseSub: "تشغيل مباشر أو حفظ محاضرة واحدة أونلاين",
+    guideWayBrowseDesc: "اختر الفصل (TERM) ← البرنامج (PROGRAM) ← المادة (COURSE) ← المدرس (TUTOR) ← الشعبة (CLASS) ← الجلسة (SESSION).",
+    guideWayBrowseBtn: "فتح جلسات الجامعة ←",
+    guideWayBatchTitle: "تنزيل المواد (Batch download)",
+    guideWayBatchSub: "تنزيل مقرر كامل دفعة واحدة بمعدل آمن",
+    guideWayBatchDesc: "اختر TERM و PROGRAM، اضغط على المادة لعرض المدرس والشعبة، حدد المحاضرات المطلوبة، ثم اضغط تنزيل بأمان.",
+    guideWayBatchBtn: "فتح التنزيل المجمّع ←",
+    guideWayLibTitle: "مكتبة الطالب (Student library)",
+    guideWayLibSub: "مشاهدة المحاضرات المحفوظة ١٠٠٪ دون إنترنت",
+    guideWayLibDesc: "استعرض جميع تسجيلاتك المحفوظة دون استهلاك إنترنت، صفِّ حسب المحاضرات المشاهدة ✓، أو تحقق من توفر محاضرات جديدة.",
+    guideWayLibBtn: "فتح مكتبة الطالب ←",
+    guideWayFileTitle: "فتح ملف / التجربة الفورية",
+    guideWayFileSub: "تشغيل ملف .lrec محلي أو تجربة المشغل",
+    guideWayFileDesc: "لديك ملف محاضرة .lrec من التيليجرام أو LMS؟ افتحه فوراً، أو جرّب المحاضرة النموذجية لاختبار مزايا المشغل الآن.",
+    guideWayFileBtn: "فتح ملف ←",
+    guideWayDemoBtn: "تجربة محاضرة نموذجية ←",
+    guideChatShowAllTip: "نصيحة: تظهر رسائل الدردشة تدريجياً تزامناً مع تقدم وقت المحاضرة. لتصفح جميع أسئلة الطلاب من أول دقيقة، فعّل خيار إظهار الكل (Show all) في أعلى لوحة الدردشة.",
+    dspUnderHoodTitle: "كيف يعمل المعالج تقنياً (٤ مراحل معالجة DSP):",
+    shortcutStretch: "تمديد وتوسيع الشريحة (S)",
+    guideFaq1Q: "لماذا زر «تنزيل المحاضرات المحددة بأمان» غير مفعّل (رمادي)؟",
+    guideFaq1A: "في التنزيل المجمّع، يجب أولاً اختيار الفصل (TERM) والبرنامج (PROGRAM)، ثم الضغط على سطر المادة (مثل ITA320) لعرض مدرسيها وشعبها، وتحديد مربع اختيار محاضرة واحدة على الأقل. يتفعّل الزر تلقائياً فور تحديد المحاضرات.",
+    guideFaq2Q: "هل يؤدي مسح بيانات المتصفح لحذف المحاضرات المحفوظة؟",
+    guideFaq2A: "نعم. المحاضرات أوفلاين تُحفظ داخل ذاكرة المتصفح (IndexedDB). إذا مسحت بيانات المواقع أو غيّرت جهازك فستُحذف. قبل مسح البيانات، افتح القائمة السريعة (☰) واضغط تصدير نسخة (Export Backup) لحفظ مقرراتك في ملف آمن على جهازك.",
+    guideFaq3Q: "كيف أشغّل محاضرة باستخدام رابط مباشر من الجامعة؟",
+    guideFaq3A: "لديك رابط محاضرة مباشر من الـ LMS أو البريد؟ اضغط جلسات الجامعة من الشاشة الرئيسية، ثم اختر تبويب الرابط المباشر (Direct link) في أعلى النافذة، والصق الرابط للتشغيل أو الحفظ فوراً.",
     introCollapse: "إخفاء التفاصيل ▴",
     hubCourseLectures: "{n} محاضرات",
     hubCourseWatched: "({w} تمت مشاهدتها)",
@@ -8272,7 +8340,7 @@ try {
      VISUAL TOP SLIDER / CAROUSEL CONTROLLER
      ========================================================================== */
   let currentSlide = 0;
-  const totalSlides = 5;
+  const totalSlides = 6;
   let sliderTimer = null;
 
   function showSlide(index) {
@@ -8374,7 +8442,7 @@ try {
         prevSlide();
         stopSliderTimer();
         e.preventDefault();
-      } else if (e.key >= "1" && e.key <= "5") {
+      } else if (e.key >= "1" && e.key <= "6") {
         showSlide(parseInt(e.key, 10) - 1);
         stopSliderTimer();
         e.preventDefault();
@@ -8483,6 +8551,31 @@ try {
   welcome.addEventListener("click", event => {
     if (event.target === welcome) {
       closeTour();
+      return;
+    }
+    const actionBtn = event.target.closest("[data-guide-action]");
+    if (actionBtn) {
+      const act = actionBtn.dataset.guideAction;
+      closeTour();
+      if (act === "remote") {
+        const tile = byId("hubBrowseTile");
+        if (tile) tile.click();
+        else if (window.openBrowseDialog) window.openBrowseDialog("remote");
+      } else if (act === "batch") {
+        const tile = byId("hubBatchTile");
+        if (tile) tile.click();
+        else if (window.openBrowseDialog) window.openBrowseDialog("batch");
+      } else if (act === "saved") {
+        const tile = byId("hubLibTile");
+        if (tile) tile.click();
+        else if (window.openBrowseDialog) window.openBrowseDialog("saved");
+      } else if (act === "file") {
+        const fileEl = byId("file");
+        if (fileEl) fileEl.click();
+      } else if (act === "demo") {
+        const demoBtn = byId("introDemoBtn") || byId("hubDemoBtn");
+        if (demoBtn) demoBtn.click();
+      }
     }
   });
 
@@ -8533,6 +8626,7 @@ try {
 
   if (!window.__lrec) window.__lrec = {};
   window.__lrec.showTour = showTour;
+  window.__lrec.showSlide = showSlide;
 })();
 } catch (err) {
   console.error("[SVU] module 11-tour.js failed to initialise:", err);
