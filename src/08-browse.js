@@ -43,6 +43,25 @@
   let cachedTerms = [];
   let controller = null;
   let selected = {};
+  const DEFAULTS_KEY = "svu_student_defaults";
+  function getStudentDefaults() {
+    try {
+      const raw = localStorage.getItem(DEFAULTS_KEY);
+      return raw ? JSON.parse(raw) : { term: "", program: "" };
+    } catch (_) {
+      return { term: "", program: "" };
+    }
+  }
+  function setStudentDefaults(term, program) {
+    try {
+      const cur = getStudentDefaults();
+      const updated = {
+        term: (term != null && term !== "") ? String(term).trim() : cur.term,
+        program: (program != null && program !== "") ? String(program).trim() : cur.program
+      };
+      localStorage.setItem(DEFAULTS_KEY, JSON.stringify(updated));
+    } catch (_) {}
+  }
   let savedIds = new Set();
   let savedSignatures = new Set();
   let savedRecordsCache = [];
@@ -599,6 +618,11 @@
       return;
     }
     selected[stage.key] = value;
+    if (index === 0) {
+      setStudentDefaults(value, null);
+    } else if (index === 1) {
+      setStudentDefaults(null, value);
+    }
     setBusy(true);
     setStatus(t("stLoading"));
     try {
@@ -1134,6 +1158,14 @@
     await refreshSaved();
     updateBatchShowSelectedBtn();
 
+    const defaults = getStudentDefaults();
+    if (!batchState.term && defaults.term) {
+      batchState.term = defaults.term;
+    }
+    if (!batchState.program && defaults.program) {
+      batchState.program = defaults.program;
+    }
+
     // 1. Restore from local cache immediately if available so UI never blanks out on restart
     if (!forceRefresh && !cachedTerms.length && Array.isArray(batchCache.terms) && batchCache.terms.length) {
       cachedTerms = batchCache.terms;
@@ -1179,6 +1211,9 @@
     const termVal = byId("batchTerm").value;
     const prevTerm = batchState.term;
     batchState.term = termVal;
+    if (termVal) {
+      setStudentDefaults(termVal, null);
+    }
     if (!restoreProgram && termVal !== prevTerm) {
       batchState.program = "";
     }
@@ -1239,6 +1274,9 @@
     const termVal = byId("batchTerm").value;
     const progVal = byId("batchProgram").value;
     batchState.program = progVal;
+    if (progVal) {
+      setStudentDefaults(null, progVal);
+    }
     saveBatchState();
     batchCourseCatalog = [];
     if (!termVal || !progVal) {
@@ -2241,10 +2279,17 @@
 
     const usage = await LibraryDB.usage();
     if (byId("usage")) {
-      byId("usage").textContent = usage ? t("usage", {
-        used: formatSize(usage.used),
-        quota: formatSize(usage.quota)
-      }) : "";
+      if (usage && usage.quota > 0) {
+        const freeBytes = Math.max(0, usage.quota - usage.used);
+        const estLectures = Math.floor(freeBytes / (35 * 1048576));
+        byId("usage").textContent = t("usage", {
+          used: formatSize(usage.used),
+          free: formatSize(freeBytes),
+          count: estLectures
+        });
+      } else {
+        byId("usage").textContent = "";
+      }
     }
     refreshHub();
     return savedRecordsCache;
@@ -4078,11 +4123,16 @@
     try {
       const json = await fetchBrowse({});
       cachedTerms = json.terms || [];
-      fillSelect(byId("selTerm"), cachedTerms, "selTerm");
+      const defaults = getStudentDefaults();
+      const targetTerm = (defaults.term && cachedTerms.some(t => t.value === defaults.term)) ? defaults.term : "";
+      fillSelect(byId("selTerm"), cachedTerms, "selTerm", targetTerm);
       termsLoaded = true;
       byId("noserver").hidden = true;
       byId("cascade").hidden = false;
       setStatus("");
+      if (targetTerm) {
+        onCascadeChange(0);
+      }
     } catch (err) {
       byId("noserver").hidden = false;
       setStatus("");
@@ -4173,24 +4223,30 @@
         names.appendChild(altBox);
       }
 
+      const savedCount = savedRecordsCache.filter(r => r.parsedMeta && r.parsedMeta.material && r.parsedMeta.material.toUpperCase() === it.code.toUpperCase()).length;
+
       const actions = document.createElement("div");
       actions.className = "dir-card-actions";
 
-      const libBtn = document.createElement("button");
-      libBtn.className = "dir-btn";
-      libBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-save\"/></svg><span>" + escapeHtml(t("courseDirFindInLib")) + "</span>";
-      libBtn.addEventListener("click", async () => {
-        if (courseDirModal) courseDirModal.close();
-        await openDialog("saved");
-        if (byId("libSearch")) {
-          byId("libSearch").value = it.code;
-          renderLibraryView();
-        }
-      });
+      if (savedCount > 0) {
+        const libBtn = document.createElement("button");
+        libBtn.className = "dir-btn is-saved";
+        libBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-save\"/></svg><span>" + escapeHtml(t("courseDirSavedCount", { n: savedCount })) + "</span>";
+        libBtn.title = t("courseDirFindInLib");
+        libBtn.addEventListener("click", async () => {
+          if (courseDirModal) courseDirModal.close();
+          await openDialog("saved");
+          if (byId("libSearch")) {
+            byId("libSearch").value = it.code;
+            renderLibraryView();
+          }
+        });
+        actions.appendChild(libBtn);
+      }
 
       const batchBtn = document.createElement("button");
-      batchBtn.className = "dir-btn";
-      batchBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-download\"/></svg><span>" + escapeHtml(t("courseDirBatchSelect")) + "</span>";
+      batchBtn.className = "dir-btn is-primary-action";
+      batchBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-download\"/></svg><span>" + escapeHtml(t("courseDirBrowseDownload")) + "</span>";
       batchBtn.addEventListener("click", async () => {
         if (courseDirModal) courseDirModal.close();
         await openDialog("batch");
@@ -4198,9 +4254,13 @@
           byId("batchCourseFilter").value = it.code;
           renderBatchCoursesList(false);
         }
+        const cState = getOrCreateCourseState(it.code, it.code + " — " + (isEn ? (it.en || it.ar) : (it.ar || it.en)));
+        cState.checked = true;
+        saveBatchState();
+        renderBatchCoursesList(false);
+        loadCheckedCoursesSequentially(false);
       });
-
-      actions.append(libBtn, batchBtn);
+      actions.appendChild(batchBtn);
       card.append(top, names, actions);
       frag.appendChild(card);
     }

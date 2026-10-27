@@ -285,11 +285,21 @@
     msgs.innerHTML = "";
     const chat = session.chat;
     byId("chatCount").textContent = "(" + chat.length + ")";
+    const allLbl = byId("chatAllMsgsLbl");
+    if (allLbl) {
+      allLbl.textContent = t("chatAllMessages", { n: chat.length });
+    }
     if (!chat.length) {
       msgs.innerHTML = "<div class=\"empty\" data-i18n=\"chatNone\"></div>";
       I18N.apply(msgs);
       return;
     }
+    const introEl = document.createElement("div");
+    introEl.className = "chat-empty-intro";
+    introEl.id = "chatEmptyIntro";
+    introEl.textContent = t("chatEmptyAtStart");
+    msgs.appendChild(introEl);
+
     for (const msg of chat) {
       const row = document.createElement("div");
       row.className = "msg";
@@ -332,6 +342,10 @@
     while (count < chat.length && chat[count].t <= now) {
       count++;
     }
+    const introEl = byId("chatEmptyIntro");
+    if (introEl) {
+      introEl.hidden = showAll || count > 0;
+    }
     if (count === cursor && !force) {
       return;
     }
@@ -372,14 +386,31 @@
       }
     });
   }
-  byId("showAll").addEventListener("change", () => {
-    const lbl = byId("showAll").closest("label");
-    if (lbl) {
-      lbl.classList.toggle("on", byId("showAll").checked);
+  const syncBtn = byId("chatLiveSyncBtn");
+  const allBtn = byId("chatAllMsgsBtn");
+  const showAllCb = byId("showAll");
+
+  function setChatMode(mode) {
+    const isAll = mode === "all";
+    if (showAllCb) showAllCb.checked = isAll;
+    if (syncBtn) {
+      syncBtn.classList.toggle("active", !isAll);
+      syncBtn.setAttribute("aria-checked", String(!isAll));
+    }
+    if (allBtn) {
+      allBtn.classList.toggle("active", isAll);
+      allBtn.setAttribute("aria-checked", String(isAll));
     }
     if (session) {
       updateChat(audio.currentTime * 1000, true);
     }
+  }
+
+  if (syncBtn) syncBtn.addEventListener("click", () => setChatMode("sync"));
+  if (allBtn) allBtn.addEventListener("click", () => setChatMode("all"));
+
+  byId("showAll").addEventListener("change", () => {
+    setChatMode(byId("showAll").checked ? "all" : "sync");
   });
   function renderTicks() {
     ticks.innerHTML = "";
@@ -997,6 +1028,14 @@
     applyTheme(curTheme, curMode);
     if (session && session.key) {
       renderSessionMeta(session.key);
+    }
+    const allLbl = byId("chatAllMsgsLbl");
+    if (allLbl && session && session.chat) {
+      allLbl.textContent = t("chatAllMessages", { n: session.chat.length });
+    }
+    const introEl = byId("chatEmptyIntro");
+    if (introEl) {
+      introEl.textContent = t("chatEmptyAtStart");
     }
   });
 

@@ -820,6 +820,62 @@
   .showall-pill.on { background: var(--blue); color: var(--ink); border-color: transparent; }
   .showall-pill input { accent-color: var(--gold); margin: 0; width: 13px; height: 13px; cursor: pointer; }
 
+  /* Synchronized Chat Segmented Pill Toggle */
+  .chat-seg-wrap {
+    display: inline-flex;
+    align-items: center;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 2px;
+    gap: 2px;
+  }
+  .chat-seg-btn {
+    height: 24px;
+    padding: 0 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--dim);
+    background: transparent;
+    border: none;
+    border-radius: calc(var(--r) - 2px);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .chat-seg-btn:hover {
+    color: var(--text);
+  }
+  .chat-seg-btn.active {
+    background: var(--blue);
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .chat-live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10B981;
+    display: inline-block;
+  }
+  .chat-seg-btn.active .chat-live-dot {
+    background: var(--ink);
+  }
+  .chat-empty-intro {
+    padding: 16px 12px;
+    margin: 10px 8px;
+    background: var(--panel2);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--r);
+    color: var(--dim);
+    font-size: 12px;
+    line-height: 1.55;
+    text-align: center;
+  }
+
   /* Chat Messages List with Explicit Vertical Scrollbar on Right */
   .msgs {
     flex: 1; overflow-y: scroll; padding: 10px 10px 14px 12px; scroll-behavior: smooth;
@@ -1618,6 +1674,24 @@
   .dir-card-alts { font-size: 10.5px; color: #EAB308; background: rgba(234, 179, 8, 0.1); padding: 3px 6px; border-radius: 4px; line-height: 1.25; }
   .dir-card-actions { display: flex; align-items: center; gap: 6px; margin-top: 4px; border-top: 1px solid var(--line); padding-top: 8px; }
   .dir-btn { height: 26px; padding: 0 8px; font-size: 11px; border-radius: var(--r); font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+  .dir-btn.is-saved {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid #10B981;
+    color: #10B981;
+  }
+  .dir-btn.is-saved:hover {
+    background: rgba(16, 185, 129, 0.22);
+  }
+  .dir-btn.is-primary-action {
+    background: var(--blue);
+    border: 1px solid var(--blue);
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .dir-btn.is-primary-action:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
 
   /* ---------- Pro Studio About & Deployment Modal ---------- */
   dialog.about-pro { width: min(680px, 95vw); }
@@ -1671,6 +1745,41 @@
   .deploy-hint { font-size: 11.5px; color: var(--gold-hi); margin: 0; }
   html[data-mode="light"] .deploy-hint { color: #B45309; }
   .deploy-hint.ok { color: #4ADE80; font-weight: 600; }
+
+  /* Collapsible Developer/Local Server Accordion */
+  .dev-accordion {
+    flex: none;
+    display: block;
+    margin-top: 12px;
+    background: var(--panel2);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .dev-accordion summary.dev-accordion-summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    user-select: none;
+    transition: background 0.15s ease;
+  }
+  .dev-accordion summary.dev-accordion-summary::-webkit-details-marker,
+  .dev-accordion summary.dev-accordion-summary::marker {
+    display: none;
+  }
+  .dev-accordion summary.dev-accordion-summary:hover {
+    background: rgba(255, 255, 255, 0.035);
+  }
+  .dev-accordion[open] > summary.dev-accordion-summary {
+    border-bottom: 1px solid var(--line);
+  }
+  .dev-accordion-content {
+    padding: 14px;
+  }
 
   .cmd-box {
     direction: ltr; display: flex; align-items: center; justify-content: space-between; gap: 10px;
@@ -5546,14 +5655,14 @@
         </div>
         <h2 class="intro-title" data-i18n="introTitle">مشغّل ومكتبة محاضرات الجامعة الافتراضية السورية</h2>
         <p class="intro-desc" data-i18n="introDesc">
-          تطبيق ويب مستقل ومجاني، يعمل بالكامل محلياً ودون إنترنت (١٠٠٪ Offline). يتيح لطلاب الجامعة الافتراضية تشغيل ملفات Linktivity (.lrec) المتزامنة (الشاشة، الصوت، والدردشة المباشرة)، مع معالجة ذكية لصوت المدرس وتنزيل جميع المواد بأمان وبضغطة واحدة.
+          مشاهدة وتنزيل محاضرات الجامعة الافتراضية السورية للدراسة دون إنترنت — مع معزز نقاء الصوت التلقائي، ومزامنة الشرائح، والتنقل الفوري عبر أسئلة الطلاب.
         </p>
         <div class="intro-feature-list">
           <div class="intro-feat-row">
             <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"/>
             </svg>
-            <span class="feat-text" data-i18n="introFeat1">فلتر ٤ مراحل لتوضيح الصوت وعزل الضجيج (DSP)</span>
+            <span class="feat-text" data-i18n="introFeat1">معزز نقاء الصوت التلقائي وعزل الضجيج</span>
           </div>
           <div class="intro-feat-row">
             <svg class="feat-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -5820,7 +5929,16 @@
   <aside class="chat" id="chat">
     <div class="chat-head">
       <h2><svg class="i"><use href="#i-chat"/></svg><span data-i18n="chat">Chat</span> <span id="chatCount"></span></h2>
-      <label class="showall-pill"><input type="checkbox" id="showAll"> <span data-i18n="showAll">Show all</span></label>
+      <div class="chat-seg-wrap" role="radiogroup" aria-label="Chat display mode">
+        <button type="button" class="chat-seg-btn active" id="chatLiveSyncBtn" data-mode="sync" role="radio" aria-checked="true">
+          <span class="chat-live-dot"></span>
+          <span data-i18n="chatLiveSync">Live Sync</span>
+        </button>
+        <button type="button" class="chat-seg-btn" id="chatAllMsgsBtn" data-mode="all" role="radio" aria-checked="false">
+          <span id="chatAllMsgsLbl" data-i18n="showAll">All Messages</span>
+        </button>
+      </div>
+      <input type="checkbox" id="showAll" style="display:none;" aria-hidden="true">
       <button class="iconbtn" id="chatClose" style="width:28px;height:28px" data-i18n-title="hideChat" data-i18n-aria="hideChat" title="Hide chat" aria-label="Hide chat">
         <svg class="i" style="width:15px;height:15px"><use href="#i-close"/></svg>
       </button>
@@ -6084,52 +6202,51 @@
     </div>
 
     <!-- Local Server Deployment Instructions Card (Collapsed for Clean Student UX) -->
-    <details class="deploy-card dev-accordion" style="margin-top:12px;overflow:hidden">
-      <summary class="deploy-head dev-accordion-summary" style="cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;padding:12px 14px">
+    <details class="dev-accordion">
+      <summary class="dev-accordion-summary">
         <div style="display:flex;align-items:center;gap:8px">
           <svg class="i" style="width:16px;height:16px;color:var(--dim)"><use href="#i-globe"/></svg>
           <b style="font-size:13px" data-i18n="aboutServerTitle">Local Server Deployment (Online SVU Catalog &amp; Downloads)</b>
         </div>
         <span class="dev-summary-hint" style="font-size:11.5px;color:var(--blue);font-weight:600" data-i18n="advancedDevOnly">Local Server &amp; Developer Setup ▾</span>
       </summary>
-      <div style="padding:0 14px 14px">
-      <p class="deploy-sub" data-i18n="aboutServerSub">To browse the live SVU session catalog and download .lrec files directly from sessions.svuonline.org, run the local server in your project directory:</p>
-      
-      <div class="server-steps" style="display:flex;flex-direction:column;gap:10px;margin:12px 0 6px">
-        <!-- Step 1: Python Check -->
-        <div class="sstep" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px">
-          <b style="color:var(--blue);display:block;margin-bottom:3px;font-size:13px" data-i18n="serverStep1Title">1. Install Python (if needed)</b>
-          <span style="font-size:12px;color:var(--dim);line-height:1.4" data-i18n="serverStep1Text">Download Python 3 from python.org. On Windows, make sure to check 'Add python.exe to PATH' during installation.</span>
-        </div>
-
-        <!-- Step 2: Clone -->
-        <div class="sstep" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px">
-          <b style="color:var(--blue);display:block;margin-bottom:3px;font-size:13px" data-i18n="serverStep2Title">2. Clone or Download Repository</b>
-          <span style="font-size:12px;color:var(--dim);line-height:1.4" data-i18n="serverStep2Text">Clone via Git or download &amp; extract the ZIP file from GitHub:</span>
-          <div class="cmd-box" style="margin-top:6px">
-            <code>git clone https://github.com/ibrahim4433/svu-player.git</code>
-            <button onclick="navigator.clipboard.writeText('git clone https://github.com/ibrahim4433/svu-player.git');this.textContent='✓'" data-i18n="copyCmd">Copy</button>
+      <div class="dev-accordion-content">
+        <p class="deploy-sub" data-i18n="aboutServerSub">To browse the live SVU session catalog and download .lrec files directly from sessions.svuonline.org, run the local server in your project directory:</p>
+        
+        <div class="server-steps" style="display:flex;flex-direction:column;gap:10px;margin:12px 0 6px">
+          <!-- Step 1: Python Check -->
+          <div class="sstep" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px">
+            <b style="color:var(--blue);display:block;margin-bottom:3px;font-size:13px" data-i18n="serverStep1Title">1. Install Python (if needed)</b>
+            <span style="font-size:12px;color:var(--dim);line-height:1.4" data-i18n="serverStep1Text">Download Python 3 from python.org. On Windows, make sure to check 'Add python.exe to PATH' during installation.</span>
           </div>
-        </div>
 
-        <!-- Step 3: Run -->
-        <div class="sstep" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px">
-          <b style="color:var(--blue);display:block;margin-bottom:3px;font-size:13px" data-i18n="serverStep3Title">3. Open Folder &amp; Run Server</b>
-          <span style="font-size:12px;color:var(--dim);line-height:1.4" data-i18n="serverStep3Text">Open your terminal in the svu-player folder and start the local server:</span>
-          <div class="cmd-box" style="margin-top:6px">
-            <code>python serve.py &nbsp;&nbsp;# Windows &nbsp;|&nbsp; python3 serve.py &nbsp;(Mac/Linux)</code>
-            <button id="copyServerCmdBtn" data-i18n="copyCmd">Copy</button>
+          <!-- Step 2: Clone -->
+          <div class="sstep" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px">
+            <b style="color:var(--blue);display:block;margin-bottom:3px;font-size:13px" data-i18n="serverStep2Title">2. Clone or Download Repository</b>
+            <span style="font-size:12px;color:var(--dim);line-height:1.4" data-i18n="serverStep2Text">Clone via Git or download &amp; extract the ZIP file from GitHub:</span>
+            <div class="cmd-box" style="margin-top:6px">
+              <code>git clone https://github.com/ibrahim4433/svu-player.git</code>
+              <button onclick="navigator.clipboard.writeText('git clone https://github.com/ibrahim4433/svu-player.git');this.textContent='✓'" data-i18n="copyCmd">Copy</button>
+            </div>
           </div>
-        </div>
 
-        <!-- Step 4: Open Browser -->
-        <div class="sstep" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px">
-          <b style="color:var(--blue);display:block;margin-bottom:3px;font-size:13px" data-i18n="serverStep4Title">4. Open Browser</b>
-          <span style="font-size:12px;color:var(--dim);line-height:1.4" data-i18n="serverStep4Text">Visit http://localhost:8080/ to explore and download university sessions without limits.</span>
+          <!-- Step 3: Run -->
+          <div class="sstep" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px">
+            <b style="color:var(--blue);display:block;margin-bottom:3px;font-size:13px" data-i18n="serverStep3Title">3. Open Folder &amp; Run Server</b>
+            <span style="font-size:12px;color:var(--dim);line-height:1.4" data-i18n="serverStep3Text">Open your terminal in the svu-player folder and start the local server:</span>
+            <div class="cmd-box" style="margin-top:6px">
+              <code>python serve.py &nbsp;&nbsp;# Windows &nbsp;|&nbsp; python3 serve.py &nbsp;(Mac/Linux)</code>
+              <button id="copyServerCmdBtn" data-i18n="copyCmd">Copy</button>
+            </div>
+          </div>
+
+          <!-- Step 4: Open Browser -->
+          <div class="sstep" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px">
+            <b style="color:var(--blue);display:block;margin-bottom:3px;font-size:13px" data-i18n="serverStep4Title">4. Open Browser</b>
+            <span style="font-size:12px;color:var(--dim);line-height:1.4" data-i18n="serverStep4Text">Visit http://localhost:8080/ to explore and download university sessions without limits.</span>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
     </details>
   </div>
 </dialog>

@@ -243,6 +243,24 @@
     });
   }
 
+  const headerHelpBtn = byId("headerHelpBtn");
+  if (headerHelpBtn) {
+    headerHelpBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showTour();
+    });
+  }
+
+  const mobileGuideBtn = byId("mobileGuideBtn");
+  if (mobileGuideBtn) {
+    mobileGuideBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const sheet = byId("mobileMenuSheet");
+      if (sheet) sheet.classList.remove("open");
+      showTour();
+    });
+  }
+
   // Show the help guide automatically only on genuine first visit (or when invoked manually via tour button)
   if (!document.body.classList.contains("has-session")) {
     try {

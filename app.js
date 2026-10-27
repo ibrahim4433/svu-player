@@ -307,6 +307,9 @@ try {
       chatTitle: "Show/hide chat (C)",
       fullscreen: "Fullscreen (F)",
       showAll: "Show all",
+      chatLiveSync: "Live Sync",
+      chatAllMessages: "All Messages ({n})",
+      chatEmptyAtStart: "Messages will appear as the lecture plays, or click 'All Messages' to browse questions and jump to any timestamp.",
       chatEmpty: "Open a recording to see its chat.",
       chatNone: "This recording has no chat messages.",
       tabFile: "Open file",
@@ -379,7 +382,7 @@ try {
       savedUnavailable: "Offline storage is not available in this browser.",
       savedReadFail: "Could not read the library: {e}",
       confirmDelete: "Remove “{name}” from this device?",
-      usage: "Using {used} of {quota} available to this site.",
+      usage: "Offline Storage: {used} used ({free} free — room for ~{count} more lectures)",
       ccWorking: "Transcribing {p}%…",
       ccNone: "No speech found.",
       ccNotSet: "Captions are disabled in local offline mode.",
@@ -499,8 +502,8 @@ try {
       profileImportedDefaultName: "Imported Profile",
       introBadge: "SVU Player Studio",
       introTitle: "Syrian Virtual University Session Studio & Offline Library",
-      introDesc: "A standalone web app working 100% locally and offline. Replay synchronized Linktivity (.lrec) lectures with video, crystal-clear 4-stage DSP voice enhancement, and interactive live chat, with safe batch downloads.",
-      introFeat1: "4-Stage DSP Voice Clarity & Noise Removal",
+      introDesc: "Watch and download SVU lectures for 100% offline study—with automatic voice clarity booster, slide sync, and clickable student Q&A.",
+      introFeat1: "Automatic Voice Clarity Booster & Noise Removal",
       introFeat2: "Synchronized Live Chat & Timestamp Seek",
       introFeat3: "Safe Sequential Batch Downloader & Offline Storage",
 guideModalTitle: "SVU Player Guide",
@@ -721,7 +724,10 @@ remoteTabTitle: "SVU Session Catalog & Direct Replay",
       courseDirCopyCode: "Copy Code",
       courseDirCopied: "Copied!",
       courseDirFindInLib: "Find in Library",
+      courseDirSavedCount: "Saved ({n})",
+      courseDirBrowseDownload: "Browse & Download",
       courseDirBatchSelect: "Batch Downloader",
+      rememberProgram: "Remember my program",
       courseDirCountSummary: "Showing {n} of {total} courses",
       courseDirNoMatch: "No courses found matching your search.",
       exportLrec: "Save .lrec to Disk",
@@ -794,6 +800,9 @@ remoteTabTitle: "SVU Session Catalog & Direct Replay",
       chatTitle: "إظهار/إخفاء الدردشة (C)",
       fullscreen: "ملء الشاشة (F)",
       showAll: "عرض الكل",
+      chatLiveSync: "مزامنة حية",
+      chatAllMessages: "جميع الرسائل ({n})",
+      chatEmptyAtStart: "ستظهر رسائل الطلاب تباعاً مع تقدم المحاضرة، أو انقر 'جميع الرسائل' للاطلاع على أسئلة الطلاب والقفز لتوقيتها فوراً.",
       chatEmpty: "افتح جلسة لعرض الدردشة.",
       chatNone: "لا توجد رسائل دردشة في هذه الجلسة.",
       tabFile: "فتح ملف",
@@ -866,7 +875,7 @@ remoteTabTitle: "SVU Session Catalog & Direct Replay",
       savedUnavailable: "التخزين دون اتصال غير متاح في هذا المتصفح.",
       savedReadFail: "تعذّرت قراءة المكتبة: {e}",
       confirmDelete: "حذف «{name}» من هذا الجهاز؟",
-      usage: "المستخدم {used} من أصل {quota} متاحة لهذا الموقع.",
+      usage: "التخزين المحلي: تم استخدام {used} ({free} مساحة شاغرة — تتسع لنحو {count} محاضرة إضافية)",
       ccWorking: "جارٍ التفريغ {p}٪…",
       ccNone: "لم يُعثر على كلام.",
       ccNotSet: "الترجمة النصية معطّلة في الوضع المحلي.",
@@ -985,8 +994,8 @@ remoteTabTitle: "SVU Session Catalog & Direct Replay",
       profileImportedDefaultName: "بروفايل مستورد",
       introBadge: "استوديو مشغّل SVU",
       introTitle: "مشغّل ومكتبة محاضرات الجامعة الافتراضية السورية",
-      introDesc: "تطبيق ويب مستقل ومجاني، يعمل بالكامل محلياً ودون إنترنت (١٠٠٪ Offline). يتيح لطلاب الجامعة الافتراضية تشغيل ملفات Linktivity (.lrec) المتزامنة (الشاشة، الصوت، والدردشة المباشرة)، مع معالجة ذكية لصوت المدرس وتنزيل جميع المواد بأمان وبضغطة واحدة.",
-      introFeat1: "فلتر ٤ مراحل لتوضيح الصوت وعزل الضجيج (DSP)",
+      introDesc: "مشاهدة وتنزيل محاضرات الجامعة الافتراضية السورية للدراسة دون إنترنت — مع معزز نقاء الصوت التلقائي، ومزامنة الشرائح، والتنقل الفوري عبر أسئلة الطلاب.",
+      introFeat1: "معزز نقاء الصوت التلقائي وعزل الضجيج",
       introFeat2: "دردشة متزامنة بالثواني مع إمكانية القفز للأسئلة",
       introFeat3: "تنزيل تسلسلي آمن للمقررات وحفظها محلياً دون إنترنت",
 guideModalTitle: "دليل استخدام مشغّل SVU",
@@ -1206,7 +1215,10 @@ remoteTabTitle: "جلسات ومحاضرات الجامعة (SVU)",
       courseDirCopyCode: "نسخ الرمز",
       courseDirCopied: "تم النسخ!",
       courseDirFindInLib: "البحث في المكتبة",
+      courseDirSavedCount: "محفوظة ({n})",
+      courseDirBrowseDownload: "تصفح وتنزيل المحاضرات",
       courseDirBatchSelect: "التحميل المتعدد",
+      rememberProgram: "تذكر كليتي وموادي",
       courseDirCountSummary: "عرض {n} من أصل {total} مادة",
       courseDirNoMatch: "لم يتم العثور على أية مواد تطابق بحثك.",
       exportLrec: "تصدير ملف \u2066.lrec\u2069 إلى القرص",
@@ -2188,11 +2200,21 @@ try {
     msgs.innerHTML = "";
     const chat = session.chat;
     byId("chatCount").textContent = "(" + chat.length + ")";
+    const allLbl = byId("chatAllMsgsLbl");
+    if (allLbl) {
+      allLbl.textContent = t("chatAllMessages", { n: chat.length });
+    }
     if (!chat.length) {
       msgs.innerHTML = "<div class=\"empty\" data-i18n=\"chatNone\"></div>";
       I18N.apply(msgs);
       return;
     }
+    const introEl = document.createElement("div");
+    introEl.className = "chat-empty-intro";
+    introEl.id = "chatEmptyIntro";
+    introEl.textContent = t("chatEmptyAtStart");
+    msgs.appendChild(introEl);
+
     for (const msg of chat) {
       const row = document.createElement("div");
       row.className = "msg";
@@ -2235,6 +2257,10 @@ try {
     while (count < chat.length && chat[count].t <= now) {
       count++;
     }
+    const introEl = byId("chatEmptyIntro");
+    if (introEl) {
+      introEl.hidden = showAll || count > 0;
+    }
     if (count === cursor && !force) {
       return;
     }
@@ -2275,14 +2301,31 @@ try {
       }
     });
   }
-  byId("showAll").addEventListener("change", () => {
-    const lbl = byId("showAll").closest("label");
-    if (lbl) {
-      lbl.classList.toggle("on", byId("showAll").checked);
+  const syncBtn = byId("chatLiveSyncBtn");
+  const allBtn = byId("chatAllMsgsBtn");
+  const showAllCb = byId("showAll");
+
+  function setChatMode(mode) {
+    const isAll = mode === "all";
+    if (showAllCb) showAllCb.checked = isAll;
+    if (syncBtn) {
+      syncBtn.classList.toggle("active", !isAll);
+      syncBtn.setAttribute("aria-checked", String(!isAll));
+    }
+    if (allBtn) {
+      allBtn.classList.toggle("active", isAll);
+      allBtn.setAttribute("aria-checked", String(isAll));
     }
     if (session) {
       updateChat(audio.currentTime * 1000, true);
     }
+  }
+
+  if (syncBtn) syncBtn.addEventListener("click", () => setChatMode("sync"));
+  if (allBtn) allBtn.addEventListener("click", () => setChatMode("all"));
+
+  byId("showAll").addEventListener("change", () => {
+    setChatMode(byId("showAll").checked ? "all" : "sync");
   });
   function renderTicks() {
     ticks.innerHTML = "";
@@ -2901,6 +2944,14 @@ try {
     if (session && session.key) {
       renderSessionMeta(session.key);
     }
+    const allLbl = byId("chatAllMsgsLbl");
+    if (allLbl && session && session.chat) {
+      allLbl.textContent = t("chatAllMessages", { n: session.chat.length });
+    }
+    const introEl = byId("chatEmptyIntro");
+    if (introEl) {
+      introEl.textContent = t("chatEmptyAtStart");
+    }
   });
 
   // PWA Offline Install & Local Server Deployment Manager
@@ -3246,6 +3297,25 @@ try {
   let cachedTerms = [];
   let controller = null;
   let selected = {};
+  const DEFAULTS_KEY = "svu_student_defaults";
+  function getStudentDefaults() {
+    try {
+      const raw = localStorage.getItem(DEFAULTS_KEY);
+      return raw ? JSON.parse(raw) : { term: "", program: "" };
+    } catch (_) {
+      return { term: "", program: "" };
+    }
+  }
+  function setStudentDefaults(term, program) {
+    try {
+      const cur = getStudentDefaults();
+      const updated = {
+        term: (term != null && term !== "") ? String(term).trim() : cur.term,
+        program: (program != null && program !== "") ? String(program).trim() : cur.program
+      };
+      localStorage.setItem(DEFAULTS_KEY, JSON.stringify(updated));
+    } catch (_) {}
+  }
   let savedIds = new Set();
   let savedSignatures = new Set();
   let savedRecordsCache = [];
@@ -3802,6 +3872,11 @@ try {
       return;
     }
     selected[stage.key] = value;
+    if (index === 0) {
+      setStudentDefaults(value, null);
+    } else if (index === 1) {
+      setStudentDefaults(null, value);
+    }
     setBusy(true);
     setStatus(t("stLoading"));
     try {
@@ -4337,6 +4412,14 @@ try {
     await refreshSaved();
     updateBatchShowSelectedBtn();
 
+    const defaults = getStudentDefaults();
+    if (!batchState.term && defaults.term) {
+      batchState.term = defaults.term;
+    }
+    if (!batchState.program && defaults.program) {
+      batchState.program = defaults.program;
+    }
+
     // 1. Restore from local cache immediately if available so UI never blanks out on restart
     if (!forceRefresh && !cachedTerms.length && Array.isArray(batchCache.terms) && batchCache.terms.length) {
       cachedTerms = batchCache.terms;
@@ -4382,6 +4465,9 @@ try {
     const termVal = byId("batchTerm").value;
     const prevTerm = batchState.term;
     batchState.term = termVal;
+    if (termVal) {
+      setStudentDefaults(termVal, null);
+    }
     if (!restoreProgram && termVal !== prevTerm) {
       batchState.program = "";
     }
@@ -4442,6 +4528,9 @@ try {
     const termVal = byId("batchTerm").value;
     const progVal = byId("batchProgram").value;
     batchState.program = progVal;
+    if (progVal) {
+      setStudentDefaults(null, progVal);
+    }
     saveBatchState();
     batchCourseCatalog = [];
     if (!termVal || !progVal) {
@@ -5444,10 +5533,17 @@ try {
 
     const usage = await LibraryDB.usage();
     if (byId("usage")) {
-      byId("usage").textContent = usage ? t("usage", {
-        used: formatSize(usage.used),
-        quota: formatSize(usage.quota)
-      }) : "";
+      if (usage && usage.quota > 0) {
+        const freeBytes = Math.max(0, usage.quota - usage.used);
+        const estLectures = Math.floor(freeBytes / (35 * 1048576));
+        byId("usage").textContent = t("usage", {
+          used: formatSize(usage.used),
+          free: formatSize(freeBytes),
+          count: estLectures
+        });
+      } else {
+        byId("usage").textContent = "";
+      }
     }
     refreshHub();
     return savedRecordsCache;
@@ -7281,11 +7377,16 @@ try {
     try {
       const json = await fetchBrowse({});
       cachedTerms = json.terms || [];
-      fillSelect(byId("selTerm"), cachedTerms, "selTerm");
+      const defaults = getStudentDefaults();
+      const targetTerm = (defaults.term && cachedTerms.some(t => t.value === defaults.term)) ? defaults.term : "";
+      fillSelect(byId("selTerm"), cachedTerms, "selTerm", targetTerm);
       termsLoaded = true;
       byId("noserver").hidden = true;
       byId("cascade").hidden = false;
       setStatus("");
+      if (targetTerm) {
+        onCascadeChange(0);
+      }
     } catch (err) {
       byId("noserver").hidden = false;
       setStatus("");
@@ -7376,24 +7477,30 @@ try {
         names.appendChild(altBox);
       }
 
+      const savedCount = savedRecordsCache.filter(r => r.parsedMeta && r.parsedMeta.material && r.parsedMeta.material.toUpperCase() === it.code.toUpperCase()).length;
+
       const actions = document.createElement("div");
       actions.className = "dir-card-actions";
 
-      const libBtn = document.createElement("button");
-      libBtn.className = "dir-btn";
-      libBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-save\"/></svg><span>" + escapeHtml(t("courseDirFindInLib")) + "</span>";
-      libBtn.addEventListener("click", async () => {
-        if (courseDirModal) courseDirModal.close();
-        await openDialog("saved");
-        if (byId("libSearch")) {
-          byId("libSearch").value = it.code;
-          renderLibraryView();
-        }
-      });
+      if (savedCount > 0) {
+        const libBtn = document.createElement("button");
+        libBtn.className = "dir-btn is-saved";
+        libBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-save\"/></svg><span>" + escapeHtml(t("courseDirSavedCount", { n: savedCount })) + "</span>";
+        libBtn.title = t("courseDirFindInLib");
+        libBtn.addEventListener("click", async () => {
+          if (courseDirModal) courseDirModal.close();
+          await openDialog("saved");
+          if (byId("libSearch")) {
+            byId("libSearch").value = it.code;
+            renderLibraryView();
+          }
+        });
+        actions.appendChild(libBtn);
+      }
 
       const batchBtn = document.createElement("button");
-      batchBtn.className = "dir-btn";
-      batchBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-download\"/></svg><span>" + escapeHtml(t("courseDirBatchSelect")) + "</span>";
+      batchBtn.className = "dir-btn is-primary-action";
+      batchBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-download\"/></svg><span>" + escapeHtml(t("courseDirBrowseDownload")) + "</span>";
       batchBtn.addEventListener("click", async () => {
         if (courseDirModal) courseDirModal.close();
         await openDialog("batch");
@@ -7401,9 +7508,13 @@ try {
           byId("batchCourseFilter").value = it.code;
           renderBatchCoursesList(false);
         }
+        const cState = getOrCreateCourseState(it.code, it.code + " — " + (isEn ? (it.en || it.ar) : (it.ar || it.en)));
+        cState.checked = true;
+        saveBatchState();
+        renderBatchCoursesList(false);
+        loadCheckedCoursesSequentially(false);
       });
-
-      actions.append(libBtn, batchBtn);
+      actions.appendChild(batchBtn);
       card.append(top, names, actions);
       frag.appendChild(card);
     }
@@ -8389,6 +8500,24 @@ try {
       if (about && about.open) {
         about.close();
       }
+      showTour();
+    });
+  }
+
+  const headerHelpBtn = byId("headerHelpBtn");
+  if (headerHelpBtn) {
+    headerHelpBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showTour();
+    });
+  }
+
+  const mobileGuideBtn = byId("mobileGuideBtn");
+  if (mobileGuideBtn) {
+    mobileGuideBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const sheet = byId("mobileMenuSheet");
+      if (sheet) sheet.classList.remove("open");
       showTour();
     });
   }
