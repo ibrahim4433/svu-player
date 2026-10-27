@@ -913,6 +913,233 @@
     color: var(--text);
     font-weight: 500;
   }
+
+  /* ==================== STUDIO CUSTOM DROPDOWNS (.svu-dd) ==================== */
+  .svu-dd {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+  }
+  .svu-dd > select {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  .svu-dd-trigger {
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    color: var(--text);
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: 500;
+    text-align: start;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    user-select: none;
+    outline: none;
+  }
+  .svu-dd-val {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .svu-dd-chevron {
+    flex: none;
+    color: var(--dim);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.18s ease;
+  }
+  .svu-dd.is-open-menu .svu-dd-chevron {
+    transform: rotate(180deg);
+    color: var(--blue);
+  }
+  .svu-dd-trigger:disabled {
+    opacity: 0.24;
+    filter: grayscale(1);
+    cursor: not-allowed;
+    background: rgba(128, 128, 128, 0.04);
+    border: 1px dashed var(--line);
+    color: var(--dim);
+    box-shadow: none;
+    pointer-events: none;
+  }
+  .svu-dd-trigger.is-open:not(:disabled) {
+    opacity: 1;
+    background: linear-gradient(135deg, var(--accent-glow), var(--panel2));
+    border: 1.5px solid var(--blue);
+    color: var(--text);
+    font-weight: 600;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+  }
+  .svu-dd-trigger.has-val:not(:disabled) {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), var(--panel2));
+    border-color: var(--gold);
+    color: var(--gold-hi);
+    box-shadow: 0 3px 14px rgba(245, 158, 11, 0.20);
+  }
+  html[data-mode="light"] .svu-dd-trigger.has-val:not(:disabled) {
+    color: #92400E;
+    border-color: #D97706;
+  }
+  .svu-dd-trigger:focus-visible {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 2px var(--accent-glow);
+  }
+
+  /* Floating Menu */
+  .svu-dd-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    inset-inline-start: 0;
+    width: 100%;
+    min-width: 220px;
+    background: var(--panel);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
+    gap: 4px;
+    animation: svuDdFadeIn 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .svu-dd.is-dropup .svu-dd-menu {
+    top: auto;
+    bottom: calc(100% + 4px);
+  }
+  @keyframes svuDdFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Search Input in Dropdown */
+  .svu-dd-search-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: calc(var(--r) - 2px);
+    margin-bottom: 2px;
+  }
+  .svu-dd-search-box svg {
+    color: var(--dim);
+    flex: none;
+  }
+  .svu-dd-search {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 12px;
+    font-family: inherit;
+    width: 100%;
+    padding: 0;
+  }
+  .svu-dd-search::placeholder {
+    color: var(--dim);
+    opacity: 0.7;
+  }
+
+  /* Options List */
+  .svu-dd-list {
+    max-height: 220px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .svu-dd-list::-webkit-scrollbar {
+    width: 6px;
+  }
+  .svu-dd-list::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .svu-dd-list::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border-radius: 3px;
+  }
+  .svu-dd-list::-webkit-scrollbar-thumb:hover {
+    background: var(--dim);
+  }
+  .svu-dd-item {
+    padding: 8px 12px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text);
+    border-radius: calc(var(--r) - 2px);
+    cursor: pointer;
+    transition: background 0.12s ease, color 0.12s ease;
+    text-align: start;
+    user-select: none;
+  }
+  .svu-dd-item:hover,
+  .svu-dd-item.is-focused {
+    background: var(--hover);
+    color: var(--blue);
+  }
+  .svu-dd-item.is-selected {
+    background: var(--accent-glow);
+    color: var(--blue);
+    font-weight: 700;
+  }
+  .svu-dd-no-match {
+    padding: 12px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  /* ==================== STUDIO TOAST NOTIFICATION ==================== */
+  .studio-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--blue);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    border-radius: 9999px;
+    padding: 8px 18px;
+    font-size: 12.5px;
+    font-weight: 600;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 99999;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .studio-toast.is-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .studio-toast.is-error {
+    border-color: #EF4444;
+    color: #F87171;
+  }
+
   h3 { font-size: 13px; margin: 16px 0 8px; color: var(--blue); font-weight: 600; }
   .list { display: flex; flex-direction: column; gap: 6px; }
   .row-item {
@@ -2063,7 +2290,8 @@
     .cascade label:first-child {
       margin-top: 0;
     }
-    .cascade select {
+    .cascade select,
+    .svu-dd-trigger {
       width: 100%;
       height: 44px;
       font-size: 14px;
@@ -2196,6 +2424,18 @@
       height: 38px;
       padding: 0 14px;
       font-size: 12px;
+    }
+    .lec-actions button.lec-del-btn,
+    .lec-actions button.lec-export-btn,
+    .hub-lec-actions button.hub-lec-del-btn,
+    .hub-lec-actions button.hub-lec-export-btn {
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* Course Directory (#courseDirModal) Mobile Layout */
@@ -3244,6 +3484,12 @@
     border-color: var(--blue);
     color: var(--blue);
     transform: translateY(-1px);
+  }
+  .hub-lec-export-btn.is-success,
+  .lec-export-btn.is-success {
+    background: rgba(16, 185, 129, 0.15) !important;
+    border-color: #10B981 !important;
+    color: #10B981 !important;
   }
   .sheet-profile-scope-hint {
     font-size: 12px;

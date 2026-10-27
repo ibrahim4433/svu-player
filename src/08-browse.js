@@ -119,6 +119,25 @@
     }
   };
 
+  function showToast(message, isError) {
+    if (!message) return;
+    let toast = byId("studioToast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "studioToast";
+      toast.className = "studio-toast";
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.classList.toggle("is-error", !!isError);
+    toast.classList.add("is-visible");
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+      toast.classList.remove("is-visible");
+    }, 2800);
+  }
+  window.showToast = showToast;
+
   function normCode(str) {
     return String(str || "").trim().toUpperCase();
   }
@@ -216,6 +235,251 @@
     };
   }
 
+  function initCustomCascadeDropdown(sel) {
+    if (!sel || sel._svuDd) return sel ? sel._svuDd : null;
+
+    const wrap = document.createElement("div");
+    wrap.className = "svu-dd";
+    sel.parentNode.insertBefore(wrap, sel);
+    wrap.appendChild(sel);
+
+    const trigger = document.createElement("button");
+    trigger.type = "button";
+    trigger.className = "svu-dd-trigger";
+    trigger.setAttribute("aria-haspopup", "listbox");
+    trigger.setAttribute("aria-expanded", "false");
+    if (sel.id) trigger.id = sel.id + "_trigger";
+
+    const valSpan = document.createElement("span");
+    valSpan.className = "svu-dd-val";
+
+    const chevron = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    chevron.setAttribute("class", "svu-dd-chevron");
+    chevron.setAttribute("viewBox", "0 0 24 24");
+    chevron.setAttribute("width", "14");
+    chevron.setAttribute("height", "14");
+    chevron.setAttribute("fill", "none");
+    chevron.setAttribute("stroke", "currentColor");
+    chevron.setAttribute("stroke-width", "2");
+    chevron.innerHTML = "<polyline points='6 9 12 15 18 9'/>";
+
+    trigger.append(valSpan, chevron);
+    wrap.appendChild(trigger);
+
+    const menu = document.createElement("div");
+    menu.className = "svu-dd-menu";
+    menu.setAttribute("role", "listbox");
+    menu.tabIndex = -1;
+    menu.hidden = true;
+
+    const searchBox = document.createElement("div");
+    searchBox.className = "svu-dd-search-box";
+    searchBox.innerHTML = "<svg viewBox='0 0 24 24' width='13' height='13' fill='none' stroke='currentColor' stroke-width='2'><circle cx='11' cy='11' r='8'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>";
+    const searchInput = document.createElement("input");
+    searchInput.type = "text";
+    searchInput.className = "svu-dd-search";
+    searchInput.autocomplete = "off";
+    searchInput.spellcheck = false;
+    searchBox.appendChild(searchInput);
+    menu.appendChild(searchBox);
+
+    const listEl = document.createElement("div");
+    listEl.className = "svu-dd-list";
+    menu.appendChild(listEl);
+    wrap.appendChild(menu);
+
+    function selectVal(val) {
+      if (sel.value !== val) {
+        sel.value = val;
+        sel.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+      closeMenu();
+      trigger.focus();
+    }
+
+    function filterItems(query) {
+      const q = (query || "").trim().toLowerCase();
+      let matches = 0;
+      listEl.querySelectorAll(".svu-dd-item").forEach(item => {
+        const match = !q || item.textContent.toLowerCase().includes(q);
+        item.hidden = !match;
+        if (match) matches++;
+      });
+      let noMatch = listEl.querySelector(".svu-dd-no-match");
+      if (!matches) {
+        if (!noMatch) {
+          noMatch = document.createElement("div");
+          noMatch.className = "svu-dd-no-match";
+          noMatch.textContent = t("dropdownNoMatch") || "No matching options found";
+          listEl.appendChild(noMatch);
+        }
+        noMatch.hidden = false;
+      } else if (noMatch) {
+        noMatch.hidden = true;
+      }
+    }
+
+    function openMenu() {
+      if (trigger.disabled) return;
+      document.querySelectorAll(".svu-dd.is-open-menu").forEach(el => {
+        if (el !== wrap && el._svuDdClose) el._svuDdClose();
+      });
+
+      wrap.classList.add("is-open-menu");
+      menu.hidden = false;
+      trigger.setAttribute("aria-expanded", "true");
+
+      const rect = trigger.getBoundingClientRect();
+      const scrollParent = dialog.querySelector(".dlg-body") || document.body;
+      const pRect = scrollParent.getBoundingClientRect();
+      const spaceBelow = pRect.bottom - rect.bottom;
+      const spaceAbove = rect.top - pRect.top;
+      wrap.classList.toggle("is-dropup", spaceBelow < 220 && spaceAbove > spaceBelow);
+
+      if (!searchBox.hidden) {
+        searchInput.value = "";
+        filterItems("");
+        setTimeout(() => searchInput.focus(), 25);
+      } else {
+        const selected = listEl.querySelector(".svu-dd-item.is-selected");
+        if (selected) {
+          selected.classList.add("is-focused");
+          selected.scrollIntoView({ block: "nearest" });
+        }
+      }
+    }
+
+    function closeMenu() {
+      wrap.classList.remove("is-open-menu");
+      menu.hidden = true;
+      trigger.setAttribute("aria-expanded", "false");
+      listEl.querySelectorAll(".svu-dd-item.is-focused").forEach(it => it.classList.remove("is-focused"));
+    }
+
+    function refresh() {
+      trigger.disabled = sel.disabled;
+      const isEnabled = !sel.disabled && sel.options.length > 1;
+      const hasVal = isEnabled && !!sel.value;
+      trigger.classList.toggle("is-open", isEnabled);
+      trigger.classList.toggle("has-val", hasVal);
+
+      const selectedOpt = sel.selectedIndex >= 0 ? sel.options[sel.selectedIndex] : null;
+      valSpan.textContent = selectedOpt ? selectedOpt.textContent : (sel.options[0] ? sel.options[0].textContent : "");
+
+      listEl.innerHTML = "";
+      const opts = Array.from(sel.options);
+      const showSearch = opts.length > 6;
+      searchBox.hidden = !showSearch;
+      if (showSearch) {
+        searchInput.placeholder = t("dropdownSearchPh") || "Search or filter options…";
+        searchInput.value = "";
+      }
+
+      opts.forEach(opt => {
+        const item = document.createElement("div");
+        item.className = "svu-dd-item";
+        item.setAttribute("role", "option");
+        item.dataset.val = opt.value;
+        item.textContent = opt.textContent;
+        const isSelected = opt.value === sel.value || (opt.selected && !sel.value);
+        if (isSelected) {
+          item.classList.add("is-selected");
+          item.setAttribute("aria-selected", "true");
+        }
+        item.addEventListener("click", (e) => {
+          e.stopPropagation();
+          selectVal(opt.value);
+        });
+        listEl.appendChild(item);
+      });
+    }
+
+    trigger.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (wrap.classList.contains("is-open-menu")) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    trigger.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        openMenu();
+      }
+    });
+
+    searchInput.addEventListener("input", () => filterItems(searchInput.value));
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeMenu();
+        trigger.focus();
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        const firstVisible = Array.from(listEl.querySelectorAll(".svu-dd-item")).find(it => !it.hidden);
+        if (firstVisible) {
+          firstVisible.classList.add("is-focused");
+          firstVisible.focus();
+        }
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        const firstVisible = Array.from(listEl.querySelectorAll(".svu-dd-item")).find(it => !it.hidden);
+        if (firstVisible) {
+          selectVal(firstVisible.dataset.val);
+        }
+      }
+    });
+
+    listEl.addEventListener("keydown", (e) => {
+      const items = Array.from(listEl.querySelectorAll(".svu-dd-item")).filter(it => !it.hidden);
+      const curr = listEl.querySelector(".svu-dd-item.is-focused");
+      let idx = items.indexOf(curr);
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (idx < items.length - 1) idx++;
+        else idx = 0;
+        items.forEach(it => it.classList.remove("is-focused"));
+        if (items[idx]) {
+          items[idx].classList.add("is-focused");
+          items[idx].scrollIntoView({ block: "nearest" });
+        }
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (idx > 0) idx--;
+        else idx = items.length - 1;
+        items.forEach(it => it.classList.remove("is-focused"));
+        if (items[idx]) {
+          items[idx].classList.add("is-focused");
+          items[idx].scrollIntoView({ block: "nearest" });
+        }
+      } else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        if (curr) selectVal(curr.dataset.val);
+      } else if (e.key === "Escape") {
+        closeMenu();
+        trigger.focus();
+      }
+    });
+
+    if (sel.id) {
+      const lbl = sel.form ? sel.form.querySelector("label[for='" + sel.id + "']") : document.querySelector("label[for='" + sel.id + "']");
+      if (lbl) {
+        lbl.addEventListener("click", (e) => {
+          e.preventDefault();
+          trigger.focus();
+          openMenu();
+        });
+      }
+    }
+
+    wrap._svuDdClose = closeMenu;
+    const instance = { wrap, trigger, valSpan, menu, refresh, open: openMenu, close: closeMenu };
+    sel._svuDd = instance;
+    refresh();
+    return instance;
+  }
+
   function syncCascadeStyles(root = dialog) {
     root.querySelectorAll(".cascade select, .b-course-selects select").forEach(sel => {
       const isEnabled = !sel.disabled && sel.options.length > 1;
@@ -230,6 +494,28 @@
           lbl.classList.toggle("lbl-chosen", hasVal);
         }
       }
+      if (sel.closest && sel.closest(".cascade") && !sel.closest(".b-course-selects")) {
+        if (!sel._svuDd) {
+          initCustomCascadeDropdown(sel);
+        } else {
+          sel._svuDd.refresh();
+        }
+      }
+    });
+  }
+
+  document.addEventListener("click", (e) => {
+    document.querySelectorAll(".svu-dd.is-open-menu").forEach(wrap => {
+      if (!wrap.contains(e.target)) {
+        if (wrap._svuDdClose) wrap._svuDdClose();
+      }
+    });
+  });
+  if (dialog) {
+    dialog.addEventListener("close", () => {
+      document.querySelectorAll(".svu-dd.is-open-menu").forEach(wrap => {
+        if (wrap._svuDdClose) wrap._svuDdClose();
+      });
     });
   }
 
@@ -481,11 +767,11 @@
     return t("etaMinutes", { m: m, s: remS });
   }
 
-  async function exportLrecFile(rec) {
+  async function exportLrecFile(rec, triggerBtn) {
     try {
       const full = await LibraryDB.get(rec.id);
       if (!full || !full.blob) {
-        alert(t("savedUnavailable") || "Recording file not found in storage.");
+        showToast(t("savedUnavailable") || "Recording file not found in storage.", true);
         return;
       }
       const a = document.createElement("a");
@@ -499,8 +785,20 @@
         document.body.removeChild(a);
         URL.revokeObjectURL(blobUrl);
       }, 1000);
+
+      if (triggerBtn) {
+        triggerBtn.classList.add("is-success");
+        const origHtml = triggerBtn.innerHTML;
+        triggerBtn.innerHTML = "<svg viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>";
+        setTimeout(() => {
+          triggerBtn.innerHTML = origHtml;
+          triggerBtn.classList.remove("is-success");
+        }, 1800);
+      }
+      showToast(t("exportLrecSuccess") || "Recording saved to disk");
     } catch (err) {
       console.error("Export .lrec failed:", err);
+      showToast(t("savedUnavailable") || "Export failed", true);
     }
   }
 
@@ -2199,7 +2497,7 @@
     exportBtn.innerHTML = "<svg viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='currentColor' stroke-width='2'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' y1='15' x2='12' y2='3'/></svg>";
     exportBtn.addEventListener("click", async (e) => {
       e.stopPropagation();
-      await exportLrecFile(rec);
+      await exportLrecFile(rec, exportBtn);
     });
 
     const actions = document.createElement("div");
@@ -3986,6 +4284,7 @@
     renderProfilesList();
     updateBatchShowSelectedBtn();
     renderLibraryView();
+    syncCascadeStyles();
     if (typeof refreshHub === "function") {
       refreshHub();
     }
@@ -4211,7 +4510,7 @@
             exportBtn.innerHTML = "<svg viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='currentColor' stroke-width='2'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' y1='15' x2='12' y2='3'/></svg>";
             exportBtn.onclick = async (e) => {
               e.stopPropagation();
-              await exportLrecFile(rec);
+              await exportLrecFile(rec, exportBtn);
             };
 
             actions.append(playBtn, exportBtn, delBtn);
