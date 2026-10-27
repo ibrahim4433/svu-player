@@ -1199,16 +1199,29 @@
     });
   }
   // Item 5: Quick Menu - clicking the big boxes also triggers profile and theme toggle
+  function openMobileProfileManager() {
+    closeMobileSheet();
+    const profileBtn = byId("profileBtn");
+    if (profileBtn) {
+      profileBtn.click();
+    } else {
+      const profileDlg = byId("profileDlg");
+      if (profileDlg) {
+        if (byId("profEditor")) byId("profEditor").hidden = true;
+        profileDlg.showModal();
+      }
+    }
+  }
+
   const mobileProfileCard = byId("mobileProfileCard");
   if (mobileProfileCard) {
-    mobileProfileCard.addEventListener("click", () => {
-      closeMobileSheet();
-      if (byId("profileBtn")) byId("profileBtn").click();
-    });
-  } else if (byId("mobileProfileManageBtn")) {
-    byId("mobileProfileManageBtn").addEventListener("click", () => {
-      closeMobileSheet();
-      if (byId("profileBtn")) byId("profileBtn").click();
+    mobileProfileCard.addEventListener("click", openMobileProfileManager);
+  }
+  const mobileProfileManageBtn = byId("mobileProfileManageBtn");
+  if (mobileProfileManageBtn) {
+    mobileProfileManageBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openMobileProfileManager();
     });
   }
 

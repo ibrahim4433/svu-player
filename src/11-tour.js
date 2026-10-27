@@ -37,6 +37,7 @@
 
     const titleEl = byId("guideCurrentTitle");
     if (titleEl) {
+      titleEl.dataset.i18n = "slide" + (currentSlide + 1) + "Nav";
       const activeNav = navItems[currentSlide];
       const titleSpan = activeNav ? activeNav.querySelector(".nav-title") : null;
       if (titleSpan) {
@@ -227,6 +228,7 @@
   document.addEventListener("langchange", () => {
     if (welcome.open) {
       I18N.apply(welcome);
+      showSlide(currentSlide);
     }
   });
 

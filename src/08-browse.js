@@ -470,6 +470,67 @@
     };
   }
 
+  function formatEta(seconds) {
+    if (!isFinite(seconds) || seconds <= 0) return "";
+    const s = Math.round(seconds);
+    if (s < 60) {
+      return t("etaSeconds", { s: s });
+    }
+    const m = Math.floor(s / 60);
+    const remS = s % 60;
+    return t("etaMinutes", { m: m, s: remS });
+  }
+
+  async function exportLrecFile(rec) {
+    try {
+      const full = await LibraryDB.get(rec.id);
+      if (!full || !full.blob) {
+        alert(t("savedUnavailable") || "Recording file not found in storage.");
+        return;
+      }
+      const a = document.createElement("a");
+      const blobUrl = URL.createObjectURL(full.blob);
+      a.href = blobUrl;
+      const fname = rec.name.endsWith(".lrec") ? rec.name : (rec.name + ".lrec");
+      a.download = fname;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(blobUrl);
+      }, 1000);
+    } catch (err) {
+      console.error("Export .lrec failed:", err);
+    }
+  }
+
+  async function loadDemoLecture() {
+    const btn = byId("introDemoBtn") || byId("hubDemoBtn");
+    try {
+      if (btn) btn.disabled = true;
+      const res = await fetch("assets/sample.lrec");
+      if (!res.ok) throw new Error("Could not load sample.lrec");
+      const blob = await res.blob();
+      const file = new File([blob], "sample.lrec", { type: "application/octet-stream" });
+      if (window.__lrec && window.__lrec.openFile) {
+        window.__lrec.openFile(file);
+      } else {
+        const fileInp = byId("file");
+        if (fileInp) {
+          const dt = new DataTransfer();
+          dt.items.add(file);
+          fileInp.files = dt.files;
+          fileInp.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+      }
+    } catch (err) {
+      console.error("Demo load error:", err);
+      alert((t("openFail") || "Failed to open") + ": " + err.message);
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  }
+
   async function download(file, label, ui, meta) {
     if (downloading) {
       return;
@@ -515,7 +576,10 @@
         const speed = received / 1048576 / Math.max(0.1, (performance.now() - t0) / 1000);
         if (total > 0) {
           ui.bar.style.width = Math.min(100, received * 100 / total).toFixed(1) + "%";
-          ui.txt.textContent = formatSize(received) + " / " + formatSize(total) + " · " + speed.toFixed(1) + " MB/s";
+          const remBytes = Math.max(0, total - received);
+          const eta = (speed > 0) ? formatEta(remBytes / (speed * 1048576)) : "";
+          const etaText = eta ? (" · " + t("etaLabel", { t: eta })) : "";
+          ui.txt.textContent = formatSize(received) + " / " + formatSize(total) + " · " + speed.toFixed(1) + " MB/s" + etaText;
         } else {
           ui.bar.style.width = "100%";
           ui.txt.textContent = formatSize(received) + " · " + speed.toFixed(1) + " MB/s";
@@ -1696,7 +1760,10 @@
             const speed = received / 1048576 / Math.max(0.1, (performance.now() - t0) / 1000);
             if (total > 0) {
               byId("batchFileBar").style.width = Math.min(100, received * 100 / total).toFixed(1) + "%";
-              byId("batchFileTxt").textContent = formatSize(received) + " / " + formatSize(total) + " · " + speed.toFixed(1) + " MB/s";
+              const remBytes = Math.max(0, total - received);
+              const eta = (speed > 0) ? formatEta(remBytes / (speed * 1048576)) : "";
+              const etaText = eta ? (" · " + t("etaLabel", { t: eta })) : "";
+              byId("batchFileTxt").textContent = formatSize(received) + " / " + formatSize(total) + " · " + speed.toFixed(1) + " MB/s" + etaText;
             } else {
               byId("batchFileBar").style.width = "100%";
               byId("batchFileTxt").textContent = formatSize(received) + " · " + speed.toFixed(1) + " MB/s";
@@ -2125,9 +2192,19 @@
       }
     });
 
+    const exportBtn = document.createElement("button");
+    exportBtn.className = "lec-export-btn";
+    exportBtn.title = t("exportLrec");
+    exportBtn.setAttribute("aria-label", t("exportLrec"));
+    exportBtn.innerHTML = "<svg viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='currentColor' stroke-width='2'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' y1='15' x2='12' y2='3'/></svg>";
+    exportBtn.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      await exportLrecFile(rec);
+    });
+
     const actions = document.createElement("div");
     actions.className = "lec-actions";
-    actions.append(playBtn, delBtn);
+    actions.append(playBtn, exportBtn, delBtn);
     row.append(watchBtn, info, actions);
     return row;
   }
@@ -2307,10 +2384,10 @@
 
   async function openDialog(tab) {
     window.openBrowseDialog = openDialog;
-    dialog.showModal();
-    await refreshSaved();
     showTab(tab);
     syncCascadeStyles();
+    dialog.showModal();
+    await refreshSaved();
     if (tab === "remote") {
       await loadTerms();
       if (!termsLoaded && savedIds.size) {
@@ -3804,9 +3881,9 @@
       const libBtn = document.createElement("button");
       libBtn.className = "dir-btn";
       libBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-save\"/></svg><span>" + escapeHtml(t("courseDirFindInLib")) + "</span>";
-      libBtn.addEventListener("click", () => {
+      libBtn.addEventListener("click", async () => {
         if (courseDirModal) courseDirModal.close();
-        if (byId("tabSaved")) byId("tabSaved").click();
+        await openDialog("saved");
         if (byId("libSearch")) {
           byId("libSearch").value = it.code;
           renderLibraryView();
@@ -3816,9 +3893,9 @@
       const batchBtn = document.createElement("button");
       batchBtn.className = "dir-btn";
       batchBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-download\"/></svg><span>" + escapeHtml(t("courseDirBatchSelect")) + "</span>";
-      batchBtn.addEventListener("click", () => {
+      batchBtn.addEventListener("click", async () => {
         if (courseDirModal) courseDirModal.close();
-        if (byId("tabBatch")) byId("tabBatch").click();
+        await openDialog("batch");
         if (byId("batchCourseFilter")) {
           byId("batchCourseFilter").value = it.code;
           renderBatchCoursesList(false);
@@ -3865,6 +3942,11 @@
   if (byId("courseDirClose") && courseDirModal) {
     byId("courseDirClose").addEventListener("click", () => courseDirModal.close());
   }
+  if (courseDirModal) {
+    courseDirModal.addEventListener("click", (e) => {
+      if (e.target === courseDirModal) courseDirModal.close();
+    });
+  }
   if (courseDirSearch) {
     courseDirSearch.addEventListener("input", () => {
       clearTimeout(dirSearchDebounce);
@@ -3904,6 +3986,9 @@
     renderProfilesList();
     updateBatchShowSelectedBtn();
     renderLibraryView();
+    if (typeof refreshHub === "function") {
+      refreshHub();
+    }
     if (courseDirModal && courseDirModal.open) {
       renderCourseDirectory();
     }
@@ -4023,7 +4108,7 @@
     if (recentList) {
       recentList.innerHTML = "";
       if (!savedRecordsCache.length) {
-        recentList.innerHTML = "<div class=\"hub-empty-msg\">" + escapeHtml(t("hubNoSavedHint")) + "</div>";
+        recentList.innerHTML = "<div class=\"hub-empty-msg\" data-i18n=\"hubNoSavedHint\">" + escapeHtml(t("hubNoSavedHint")) + "</div>";
       } else {
         const groupsMap = new Map();
         for (const rec of savedRecordsCache) {
@@ -4119,7 +4204,17 @@
               }
             };
 
-            actions.append(playBtn, delBtn);
+            const exportBtn = document.createElement("button");
+            exportBtn.className = "hub-lec-export-btn";
+            exportBtn.title = t("exportLrec");
+            exportBtn.setAttribute("aria-label", t("exportLrec"));
+            exportBtn.innerHTML = "<svg viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='currentColor' stroke-width='2'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' y1='15' x2='12' y2='3'/></svg>";
+            exportBtn.onclick = async (e) => {
+              e.stopPropagation();
+              await exportLrecFile(rec);
+            };
+
+            actions.append(playBtn, exportBtn, delBtn);
             row.append(watchBtn, info, actions);
             listEl.appendChild(row);
           }
@@ -4169,6 +4264,15 @@
     const viewAllBtn = byId("hubViewAllSavedBtn");
     if (viewAllBtn) {
       viewAllBtn.addEventListener("click", () => openDialog("saved"));
+    }
+
+    const demoBtn = byId("introDemoBtn");
+    if (demoBtn) {
+      demoBtn.addEventListener("click", loadDemoLecture);
+    }
+    const heroDemoBtn = byId("hubDemoBtn");
+    if (heroDemoBtn) {
+      heroDemoBtn.addEventListener("click", loadDemoLecture);
     }
 
     // Bug 7: Intro Card Expand / Collapse with LocalStorage persistence

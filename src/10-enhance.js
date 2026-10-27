@@ -34,6 +34,11 @@
     const key = active ? "enhanceOn" : "enhance";
     span.dataset.i18n = key;
     span.textContent = t(key);
+    if (enhBtn) {
+      const titleKey = active ? "enhanceTitleActive" : "enhanceTitle";
+      enhBtn.dataset.i18nTitle = titleKey;
+      enhBtn.title = t(titleKey);
+    }
   }
   function swapSource(url) {
     const time = audioEl.currentTime;
