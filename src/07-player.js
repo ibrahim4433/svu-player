@@ -565,7 +565,7 @@
     byId("icoMute").style.display = muted ? "" : "none";
   }
   const isTouchDevice = () => (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches);
-  const isMobileViewport = () => (window.innerWidth <= 950 || window.innerHeight <= 640);
+  const isMobileViewport = () => (window.innerWidth <= 768 || (isTouchDevice() && (window.innerWidth <= 950 || window.innerHeight <= 640)));
   const isMobileUI = () => isTouchDevice() || isMobileViewport();
   const isLandscapeMobile = () => {
     if (!isMobileUI()) return false;

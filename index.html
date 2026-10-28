@@ -353,74 +353,162 @@
     --r-lg: 0px;
   }
 
-  /* Cyber Grid Background for Hacker */
+  /* ==================== HACKER: CYBERDECK & TACTICAL WAR ROOM SYSTEM ==================== */
+  /* 1. Cyber Matrix Grid Background & Hex Stream */
   html[data-theme="hacker"]:not([data-crt="off"]) {
     background-color: var(--bg);
     background-image:
-      radial-gradient(ellipse at 50% 0%, var(--accent-glow) 0%, transparent 65%),
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 100% 100%, 28px 28px, 28px 28px;
+      radial-gradient(ellipse at 50% 0%, var(--accent-glow) 0%, transparent 75%),
+      linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+    background-size: 100% 100%, 24px 24px, 24px 24px;
     background-attachment: fixed;
   }
   html[data-theme="hacker"][data-mode="light"]:not([data-crt="off"]) {
     background-image:
-      linear-gradient(rgba(0, 153, 38, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 153, 38, 0.05) 1px, transparent 1px);
-    background-size: 24px 24px, 24px 24px;
+      linear-gradient(rgba(5, 150, 59, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(5, 150, 59, 0.06) 1px, transparent 1px);
+    background-size: 20px 20px, 20px 20px;
   }
 
-  /* Angular Tech Chamfered Cuts for Hacker Buttons & Badges */
+  /* 2. Tactical 45° Chamfered Geometry */
   html[data-theme="hacker"] header button:not(.theme-menu-btn):not(#mobileMoreBtn):not(#langBtn),
-  html[data-theme="hacker"] .controls button,
   html[data-theme="hacker"] .mtag,
   html[data-theme="hacker"] .dir-card,
+  html[data-theme="hacker"] .hub-intro-card,
+  html[data-theme="hacker"] .lib-item,
   html[data-theme="hacker"] .shortcut-kpd,
-  html[data-theme="hacker"] .btn-action {
+  html[data-theme="hacker"] .btn-action,
+  html[data-theme="hacker"] dialog {
     border-radius: 0 !important;
-    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%);
+    clip-path: polygon(0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px)) !important;
   }
   html[data-theme="hacker"] button.primary {
     clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px)) !important;
-    box-shadow: 0 0 12px var(--accent-glow);
+    box-shadow: 0 0 14px var(--accent-glow) !important;
     letter-spacing: 0.5px;
   }
 
-  /* Tactical HUD Reticles on Stage for Hacker */
+  /* 3. Tactical Cyberdeck Player Controls & Scrubber */
+  html[data-theme="hacker"] .controls-zone {
+    padding-bottom: 8px;
+  }
+  html[data-theme="hacker"] .controls {
+    background: rgba(2, 6, 4, 0.94);
+    border: 1px solid var(--line-strong);
+    clip-path: polygon(0 8px, 8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px));
+    box-shadow: 0 0 20px var(--accent-glow), inset 0 0 15px rgba(0,0,0,0.85);
+  }
+  html[data-theme="hacker"][data-mode="light"] .controls {
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+  }
+  html[data-theme="hacker"] .controls-pod {
+    background: rgba(0, 20, 8, 0.65) !important;
+    border: 1px solid var(--line) !important;
+    clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px)) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.1) !important;
+  }
+  html[data-theme="hacker"][data-mode="light"] .controls-pod {
+    background: var(--panel2) !important;
+    box-shadow: none !important;
+  }
+  html[data-theme="hacker"] .controls button,
+  html[data-theme="hacker"] .controls select,
+  html[data-theme="hacker"] .vol-group {
+    clip-path: polygon(0 3px, 3px 0, calc(100% - 3px) 0, 100% 3px, 100% calc(100% - 3px), calc(100% - 3px) 100%, 3px 100%, 0 calc(100% - 3px)) !important;
+    border-radius: 0 !important;
+    border: 1px solid var(--line) !important;
+    background: rgba(0, 255, 65, 0.05) !important;
+    color: var(--blue) !important;
+    font-family: var(--font-ui) !important;
+  }
+  html[data-theme="hacker"] .controls button:hover,
+  html[data-theme="hacker"] .controls button.on,
+  html[data-theme="hacker"] .controls button[aria-pressed="true"],
+  html[data-theme="hacker"] #play.iconbtn {
+    background: var(--blue) !important;
+    color: var(--ink) !important;
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 14px var(--accent-glow-solid) !important;
+  }
+  html[data-theme="hacker"] #play.iconbtn:hover {
+    background: var(--gold) !important;
+    color: var(--ink) !important;
+  }
+  html[data-theme="hacker"] .seek .track {
+    height: 8px;
+    background: rgba(0, 20, 10, 0.85);
+    border: 1px solid var(--line-strong);
+    border-radius: 0;
+    box-shadow: inset 0 0 8px #000;
+  }
+  html[data-theme="hacker"][data-mode="light"] .seek .track {
+    background: #E2E8F0;
+    box-shadow: none;
+  }
+  html[data-theme="hacker"] .seek .fill {
+    background: linear-gradient(90deg, var(--blue-dark), var(--blue), var(--gold));
+    border-radius: 0;
+    box-shadow: 0 0 12px var(--accent-glow-solid);
+  }
+  html[data-theme="hacker"] .seek .knob {
+    width: 14px;
+    height: 14px;
+    border-radius: 0;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    background: var(--gold);
+    border: none;
+    box-shadow: 0 0 12px var(--gold);
+  }
+  html[data-theme="hacker"] .seek .tip {
+    border-radius: 0;
+    clip-path: polygon(0 3px, 3px 0, calc(100% - 3px) 0, 100% 3px, 100% 100%, 0 100%);
+    background: #000;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    font-family: var(--font-ui);
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
+
+  /* 4. Tactical HUD Reticles on Stage */
   html[data-theme="hacker"]:not([data-crt="off"]) .stage::before {
-    content: "┌ ── [TARGET: SVU_STREAM] ────────────────────────── ┐";
+    content: "⌜ ── [TARGET: SVU_STREAM // 0x7F-NET] ────────── [COORDS: 33°N 36°E] ── ⌝";
     position: absolute;
     top: 8px;
     left: 12px;
     right: 12px;
     font-family: var(--font-ui);
-    font-size: 10.5px;
+    font-size: 11px;
     color: var(--blue);
-    opacity: 0.70;
-    display: flex;
-    justify-content: space-between;
+    opacity: 0.85;
+    letter-spacing: 1.5px;
     pointer-events: none;
     z-index: 10;
-    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    text-shadow: 0 0 8px var(--accent-glow-solid);
   }
   html[data-theme="hacker"]:not([data-crt="off"]) .stage::after {
-    content: "└ ── [WASM_CORE: DECRYPTED] ────────── [FPS: 30] ── ┘";
+    content: "⌞ ── [WASM_CORE: DECRYPTED] ────────── [FPS: 30] ── [SIG: 99.8%] ── ⌟";
     position: absolute;
     bottom: 8px;
     left: 12px;
     right: 12px;
     font-family: var(--font-ui);
-    font-size: 10px;
+    font-size: 11px;
     color: var(--blue);
-    opacity: 0.65;
-    display: flex;
-    justify-content: space-between;
+    opacity: 0.85;
+    letter-spacing: 1.5px;
     pointer-events: none;
     z-index: 10;
-    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    text-shadow: 0 0 8px var(--accent-glow-solid);
   }
 
-  /* Cyber Chromatic Glitch on Brand Hover */
+  /* 5. Cyber Chromatic Glitch on Brand Hover */
   html[data-theme="hacker"] header .brand-title:hover {
     text-shadow: 2px 0 #FF003C, -2px 0 #00F0FF;
     animation: cyberGlitch 0.25s infinite alternate;
@@ -433,30 +521,71 @@
     100% { transform: translate(0); }
   }
 
-  /* Intercepted Encrypted Transmission Styling for Chat in Hacker */
+  /* 6. Intercepted Encrypted Transmission Styling for Chat in Hacker */
   html[data-theme="hacker"] aside.chat .chat-head {
-    border-bottom: 2px solid var(--blue);
+    border-bottom: 2px solid var(--line-strong);
+    background: rgba(3, 10, 5, 0.95);
   }
-  html[data-theme="hacker"] aside.chat .chat-head .chat-title::before {
-    content: "[SIGINT // PKT_INTERCEPT] ";
+  html[data-theme="hacker"] aside.chat .chat-head h2::before {
+    content: "/// SIGINT_PACKET_INTERCEPT [PORT 443] ";
     color: var(--blue);
+    font-size: 11px;
     font-weight: 700;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 2px;
+  }
+  html[data-theme="hacker"] aside.chat .chat-seg-wrap {
+    border: 1px solid var(--line-strong);
+    border-radius: 0;
+    clip-path: polygon(0 3px, 3px 0, calc(100% - 3px) 0, 100% 3px, 100% 100%, 0 100%);
+  }
+  html[data-theme="hacker"] aside.chat .chat-seg-btn.active {
+    background: var(--blue) !important;
+    color: var(--ink) !important;
+    font-weight: bold;
+    box-shadow: 0 0 8px var(--accent-glow-solid);
   }
   html[data-theme="hacker"] aside.chat .msg {
-    border: 1px solid var(--line);
-    border-inline-start: 3px solid var(--blue);
-    border-radius: 0;
-    font-family: var(--font-ui);
-    background: rgba(4, 12, 6, 0.88);
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--line) !important;
+    border-inline-start: 4px solid var(--blue) !important;
+    border-radius: 0 !important;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%) !important;
+    font-family: var(--font-ui) !important;
+    background: rgba(4, 12, 6, 0.90) !important;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6) !important;
+    margin-bottom: 8px !important;
+    padding: 8px 10px !important;
+  }
+  html[data-theme="hacker"] aside.chat .msg .av {
+    border-radius: 0 !important;
+    clip-path: polygon(0 3px, 3px 0, calc(100% - 3px) 0, 100% 3px, 100% calc(100% - 3px), calc(100% - 3px) 100%, 3px 100%, 0 calc(100% - 3px)) !important;
+    border: 1px solid var(--blue) !important;
+    box-shadow: 0 0 6px var(--accent-glow) !important;
+  }
+  html[data-theme="hacker"] aside.chat .msg .who b::before {
+    content: "[SRC: ";
+    color: var(--dim);
+  }
+  html[data-theme="hacker"] aside.chat .msg .who b::after {
+    content: "] ";
+    color: var(--dim);
+  }
+  html[data-theme="hacker"] aside.chat .msg .who span::before {
+    content: "PKT_";
   }
   html[data-theme="hacker"] aside.chat .msg.latest {
-    border-color: var(--line-strong);
-    border-inline-start: 4px solid var(--gold);
-    box-shadow: 0 0 12px var(--accent-glow), inset 0 0 10px rgba(0, 0, 0, 0.5);
+    border-color: var(--line-strong) !important;
+    border-inline-start: 4px solid var(--gold) !important;
+    box-shadow: 0 0 14px var(--accent-glow), inset 0 0 10px rgba(0, 0, 0, 0.5) !important;
+    animation: cyberPulse 2s infinite alternate;
+  }
+  @keyframes cyberPulse {
+    0% { box-shadow: 0 0 8px var(--accent-glow); }
+    100% { box-shadow: 0 0 18px var(--accent-glow), 0 0 4px var(--gold); }
   }
 
-  /* Blinking Prompt Cursor for Hacker */
+  /* 7. Blinking Prompt Cursor for Hacker */
   html[data-theme="hacker"] header .brand-title::before {
     content: "root@svu-net:~# ";
     color: var(--dim);
@@ -559,7 +688,13 @@
     --header-bg: #F3EBDD;
   }
 
-  /* Terminal Distinct Shell Prompt & Teletype Header */
+  /* ==================== TERMINAL: DEC VT100 / NCURSES TUI CONSOLE ==================== */
+  /* 1. Terminal Shell Prompt & Header Bar */
+  html[data-theme="terminal"] header {
+    border-bottom: 2px solid var(--line-strong);
+    border-radius: 0;
+    background: var(--header-bg);
+  }
   html[data-theme="terminal"] header .brand-title::before {
     content: "sysadmin@svu:~$ ";
     color: var(--dim);
@@ -575,48 +710,267 @@
     font-weight: 700;
     animation: termCursorBlink 1s step-start infinite;
   }
+  html[data-theme="terminal"] header button,
+  html[data-theme="terminal"] header a.iconbtn {
+    border-radius: 0 !important;
+    border: 1px solid var(--line) !important;
+    font-family: var(--font-ui) !important;
+    font-size: 11px !important;
+    box-shadow: none !important;
+  }
+  html[data-theme="terminal"] header button:hover {
+    background: var(--text) !important;
+    color: var(--bg) !important;
+  }
 
-  /* Terminal Teletype & IRC-style Chat Formatting */
-  html[data-theme="terminal"] aside.chat .chat-head {
-    border-bottom: 1px dashed var(--line-strong);
+  /* 2. Terminal Stage ASCII Box Frame & Cathode Screen */
+  html[data-theme="terminal"] .stage-wrap {
+    border: 2px solid var(--line-strong);
+    border-radius: 0;
+    box-shadow: none;
   }
-  html[data-theme="terminal"] aside.chat .chat-head .chat-title::before {
-    content: "[TTY1 // /dev/pts/0] > ";
-    color: var(--blue);
-    opacity: 0.85;
-    font-size: 11px;
+  html[data-theme="terminal"] .stage {
+    border: 1px solid var(--line-strong);
+    border-radius: 0;
+    background: #000;
+  }
+  html[data-theme="terminal"]:not([data-crt="off"]) .stage::before {
+    content: "┌──[ /dev/video0: SVU_RECORDING_SESSION ]──────────────────────────────┐";
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    right: 10px;
     font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--text);
+    pointer-events: none;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    opacity: 0.9;
   }
-  html[data-theme="terminal"] aside.chat .msg {
+  html[data-theme="terminal"]:not([data-crt="off"]) .stage::after {
+    content: "└──[ TTY1 // 38400 BAUD // CHAR-CELL: 80x24 ]───────────────────────────┘";
+    position: absolute;
+    bottom: 6px;
+    left: 10px;
+    right: 10px;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--text);
+    pointer-events: none;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    opacity: 0.9;
+  }
+
+  /* 3. Terminal Player Controls (NCURSES TUI Control Strip) */
+  html[data-theme="terminal"] .controls-zone {
+    padding: 0 10px 10px;
+  }
+  html[data-theme="terminal"] .controls {
+    background: var(--panel);
+    border: 2px solid var(--line-strong);
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  html[data-theme="terminal"] .controls-pod {
+    background: transparent !important;
+    border: 1px dashed var(--line) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 2px 6px;
+  }
+  html[data-theme="terminal"] .controls button.iconbtn,
+  html[data-theme="terminal"] .controls button.tbtn,
+  html[data-theme="terminal"] .controls select,
+  html[data-theme="terminal"] .vol-group {
+    border-radius: 0 !important;
+    border: 1px solid var(--line) !important;
+    background: var(--bg) !important;
+    color: var(--text) !important;
+    font-family: var(--font-ui) !important;
+    box-shadow: none !important;
+  }
+  /* Inverted Video / Reverse Video for Terminal Buttons */
+  html[data-theme="terminal"] .controls button:hover,
+  html[data-theme="terminal"] .controls button.on,
+  html[data-theme="terminal"] .controls button[aria-pressed="true"],
+  html[data-theme="terminal"] #play.iconbtn {
+    background: var(--text) !important;
+    color: var(--bg) !important;
+    border-color: var(--text) !important;
+  }
+  html[data-theme="terminal"] .controls button:hover svg,
+  html[data-theme="terminal"] .controls button.on svg,
+  html[data-theme="terminal"] .controls button[aria-pressed="true"] svg,
+  html[data-theme="terminal"] #play.iconbtn svg {
+    fill: var(--bg) !important;
+    stroke: var(--bg) !important;
+  }
+  /* Terminal ASCII Progress Scrubber */
+  html[data-theme="terminal"] .seek .track {
+    height: 10px;
+    background: var(--bg);
+    border: 1px solid var(--line-strong);
+    border-radius: 0;
+  }
+  html[data-theme="terminal"] .seek .fill {
+    background: repeating-linear-gradient(90deg, var(--text) 0px, var(--text) 6px, var(--bg) 6px, var(--bg) 8px);
+    border-radius: 0;
+  }
+  html[data-theme="terminal"] .seek .knob {
+    width: 8px;
+    height: 18px;
+    border-radius: 0;
+    background: var(--text);
+    border: 1px solid var(--bg);
+    box-shadow: none;
+  }
+  html[data-theme="terminal"] .seek .tip {
+    border-radius: 0;
+    font-family: var(--font-ui);
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--line-strong);
+  }
+  html[data-theme="terminal"] .time,
+  html[data-theme="terminal"] .tcur,
+  html[data-theme="terminal"] .ttot {
+    font-family: var(--font-ui);
+    color: var(--text);
+    font-size: 11px;
+    letter-spacing: 0;
+  }
+
+  /* 4. Terminal Chat: Raw UNIX Syslog / IRC Stdout Buffer */
+  html[data-theme="terminal"] aside.chat {
+    border: 2px solid var(--line-strong);
+    border-radius: 0;
+    background: var(--bg);
+    box-shadow: none;
+  }
+  html[data-theme="terminal"] aside.chat .chat-head {
+    border-bottom: 2px solid var(--line-strong);
+    background: var(--panel);
+    border-radius: 0;
+  }
+  html[data-theme="terminal"] aside.chat .chat-head h2::before {
+    content: "[ /var/log/svu_chat.log ] ";
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--text);
+  }
+  html[data-theme="terminal"] aside.chat .chat-seg-wrap {
     border: 1px solid var(--line);
     border-radius: 0;
-    background: rgba(0, 0, 0, 0.38);
+    background: var(--bg);
+  }
+  html[data-theme="terminal"] aside.chat .chat-seg-btn {
+    border-radius: 0;
     font-family: var(--font-ui);
+    font-size: 11px;
   }
-  html[data-theme="terminal"][data-mode="light"] aside.chat .msg {
-    background: rgba(243, 235, 221, 0.65);
+  html[data-theme="terminal"] aside.chat .chat-seg-btn.active {
+    background: var(--text) !important;
+    color: var(--bg) !important;
+    font-weight: bold;
   }
-  html[data-theme="terminal"] aside.chat .msg .author::before {
+  /* Continuous Terminal stdout log formatting (No Cards, No Bubbles) */
+  html[data-theme="terminal"] aside.chat .msg {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 3px 6px !important;
+    margin-bottom: 3px !important;
+    border-bottom: 1px dotted rgba(255, 176, 0, 0.15) !important;
+    font-family: var(--font-ui) !important;
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+    display: block !important;
+  }
+  html[data-theme="terminal"] aside.chat .msg .av {
+    display: none !important;
+  }
+  html[data-theme="terminal"] aside.chat .msg .bd {
+    display: inline !important;
+    width: 100% !important;
+  }
+  html[data-theme="terminal"] aside.chat .msg .who {
+    display: inline !important;
+    margin-inline-end: 6px !important;
+  }
+  html[data-theme="terminal"] aside.chat .msg .who b {
+    color: var(--text) !important;
+    font-weight: 700 !important;
+  }
+  html[data-theme="terminal"] aside.chat .msg .who b::before {
     content: "<";
     color: var(--dim);
   }
-  html[data-theme="terminal"] aside.chat .msg .author::after {
-    content: ">";
+  html[data-theme="terminal"] aside.chat .msg .who b::after {
+    content: "> ";
     color: var(--dim);
+  }
+  html[data-theme="terminal"] aside.chat .msg .who span {
+    color: var(--dim) !important;
+    font-size: 10.5px !important;
+    margin-inline-end: 4px !important;
+  }
+  html[data-theme="terminal"] aside.chat .msg .who span::before {
+    content: "[";
+  }
+  html[data-theme="terminal"] aside.chat .msg .who span::after {
+    content: "]";
+  }
+  html[data-theme="terminal"] aside.chat .msg .tx {
+    display: inline !important;
+    color: var(--text) !important;
+  }
+  html[data-theme="terminal"] aside.chat .msg:hover {
+    background: rgba(255, 176, 0, 0.08) !important;
   }
   html[data-theme="terminal"] aside.chat .msg.latest {
-    border: 1px solid var(--line-strong);
-    box-shadow: 0 0 10px var(--accent-glow);
+    background: rgba(255, 176, 0, 0.14) !important;
+    border-inline-start: 4px solid var(--text) !important;
+    padding-inline-start: 6px !important;
   }
-  html[data-theme="terminal"] aside.chat .msg-time {
-    color: var(--dim);
+  html[data-theme="terminal"] aside.chat .msgs::after {
+    content: "sysadmin@svu:~$ ▋";
+    display: block;
     font-family: var(--font-ui);
-    font-size: 10.5px;
+    font-size: 12px;
+    color: var(--dim);
+    padding: 8px 6px;
+    animation: termCursorBlink 1s step-start infinite;
   }
 
-  /* Terminal ASCII Box Stage Frame */
-  html[data-theme="terminal"] .stage {
-    border: 1px solid var(--line-strong);
+  /* 5. Terminal Cards, Dialogs, Primary Buttons */
+  html[data-theme="terminal"] .hub-intro-card,
+  html[data-theme="terminal"] .dir-card,
+  html[data-theme="terminal"] .lib-item,
+  html[data-theme="terminal"] .shortcut-kpd {
+    border-radius: 0 !important;
+    border: 1px solid var(--line) !important;
+    background: var(--panel) !important;
+    box-shadow: none !important;
+  }
+  html[data-theme="terminal"] dialog {
+    border: 2px solid var(--line-strong) !important;
+    border-radius: 0 !important;
+    background: var(--panel) !important;
+    box-shadow: none !important;
+  }
+  html[data-theme="terminal"] button.primary {
+    border-radius: 0 !important;
+    background: var(--text) !important;
+    color: var(--bg) !important;
+    font-weight: bold;
+    border: 1px solid var(--text) !important;
   }
 
   /* ==================== 10. DISTINCT HACKER PROTOCOLS & TERMINAL PHOSPHORS ==================== */
@@ -1411,10 +1765,14 @@
   /* Icons */
   .i { width: 16px; height: 16px; fill: currentColor; flex: none; }
 
-  /* Top Header Bar */
+  /* Top Header Bar (Sticky at Top) */
   header {
+    position: sticky;
+    top: 0;
     direction: ltr; display: flex; align-items: center; gap: 10px; padding: 10px 18px;
-    background: var(--header-bg); border-bottom: 1px solid var(--line); flex: none; z-index: 25;
+    background: var(--header-bg); border-bottom: 1px solid var(--line); flex: none; z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   }
   header h1 { margin: 0; display: flex; align-items: center; gap: 11px; font-size: 16px; font-weight: 700; letter-spacing: -0.02em; }
   .brand-logo-img {
@@ -2486,8 +2844,23 @@
   }
   html[data-mode="light"] .prof-active-pill { color: #15803D; }
   .prof-meta-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 11.5px; color: var(--dim); }
+  #profileDlg .dlg-head .prof-head-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
   .prof-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-  .prof-actions button { height: 32px; padding: 0 11px; font-size: 12px; }
+  .prof-actions button {
+    min-height: 32px;
+    height: auto;
+    padding: 6px 12px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    line-height: 1.3;
+  }
 
   .prof-editor {
     padding: 15px 16px; border-radius: var(--r-lg); background: var(--bg);
@@ -2604,14 +2977,6 @@
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.15); transition: border-color 0.15s ease;
   }
   .course-dir-search-wrap input:focus { border-color: var(--blue); outline: none; }
-  .course-dir-faculties { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
-  .dir-chip {
-    flex-shrink: 0; white-space: nowrap; padding: 5px 12px; font-size: 11.5px; font-weight: 600; border-radius: 99px;
-    background: var(--panel2); color: var(--dim); border: 1px solid var(--line); cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .dir-chip:hover { border-color: var(--blue); color: var(--text); }
-  .dir-chip.on { background: var(--blue); color: var(--ink); border-color: var(--blue); }
   .course-dir-status { font-size: 12px; color: var(--dim); font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
   .course-dir-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 10px;
@@ -3567,13 +3932,41 @@
       gap: 10px;
     }
     .prof-actions {
-      display: flex;
-      gap: 6px;
-      width: 100%;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      width: 100% !important;
     }
-    .prof-actions button {
-      flex: 1;
-      height: 36px;
+    .prof-actions .prof-load-batch-btn,
+    .prof-actions .prof-switch-btn {
+      width: 100% !important;
+      flex: 1 1 100% !important;
+      min-height: 40px !important;
+      height: auto !important;
+      padding: 9px 14px !important;
+      font-size: 12.5px !important;
+      font-weight: 700 !important;
+      justify-content: center !important;
+      text-align: center !important;
+      line-height: 1.35 !important;
+      white-space: normal !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 7px !important;
+    }
+    .prof-actions button:not(.prof-load-batch-btn):not(.prof-switch-btn) {
+      flex: 1 1 0 !important;
+      min-width: 60px !important;
+      min-height: 36px !important;
+      height: auto !important;
+      padding: 7px 10px !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      justify-content: center !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 5px !important;
+      white-space: nowrap !important;
     }
     .about-hero {
       flex-direction: column;
@@ -3604,17 +3997,25 @@
       height: 100dvh;
       overflow: hidden;
     }
-    html:not(.has-session), body:not(.has-session) {
+    html:not(.has-session) {
       height: auto !important;
       min-height: 100dvh !important;
       overflow-y: auto !important;
       -webkit-overflow-scrolling: touch !important;
       touch-action: pan-y !important;
     }
+    body:not(.has-session) {
+      height: auto !important;
+      min-height: 100dvh !important;
+      overflow-y: visible !important;
+    }
     select, input[type=text] {
       font-size: 16px; /* Prevents auto-zoom on iOS Safari */
     }
     header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -3625,6 +4026,7 @@
       padding-right: max(10px, env(safe-area-inset-right));
       height: 48px;
       flex: none;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
     .header-actions {
       display: inline-flex !important;
@@ -3894,21 +4296,60 @@
   }
 
   /* --------------------------------------------------------------------------
-     2. MOBILE LANDSCAPE & MOBILE FULLSCREEN CINEMA MODE
+     2. MOBILE LANDSCAPE & MOBILE FULLSCREEN CINEMA MODE (SESSION PLAYBACK ONLY)
      -------------------------------------------------------------------------- */
   @media (orientation: landscape) and (max-height: 640px),
          (max-width: 950px) and (orientation: landscape),
          (hover: none) and (pointer: coarse) and (orientation: landscape) {
-    html, body {
+    /* Student Hub (Idle / No Session): Always normal scrollable flow with header */
+    html:not(.has-session),
+    body:not(.has-session) {
+      height: auto !important;
+      min-height: 100dvh !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+    body:not(.has-session) header {
+      display: flex !important;
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 100 !important;
+    }
+    body:not(.has-session) main {
+      height: auto !important;
+      min-height: calc(100dvh - 48px) !important;
+      overflow: visible !important;
+      display: flex !important;
+      flex-direction: column !important;
+      padding: 12px !important;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      max-height: none !important;
+      background: transparent !important;
+    }
+    body:not(.has-session) .student-hub {
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+      max-width: 960px !important;
+      margin: 0 auto !important;
+      padding: 4px 4px 28px !important;
+      height: auto !important;
+      min-height: 0 !important;
+      overflow: visible !important;
+    }
+
+    /* Active Session Playback: Full-bleed cinema viewport */
+    html.has-session, body.has-session {
       height: 100dvh;
       overflow: hidden;
     }
-    /* Completely hide top header for maximum presentation view */
-    header {
+    /* Completely hide top header for maximum presentation view in cinema mode */
+    body.has-session header {
       display: none !important;
     }
-    /* Full-bleed cinema viewport */
-    main {
+    body.has-session main {
       padding: 0 !important;
       margin: 0 !important;
       width: 100dvw !important;
@@ -4224,15 +4665,52 @@
     }
   }
 
+  /* Student Hub safety when is-mobile-landscape class is toggled */
+  body:not(.has-session).is-mobile-landscape {
+    height: auto !important;
+    min-height: 100dvh !important;
+    overflow-y: auto !important;
+  }
+  body:not(.has-session).is-mobile-landscape header {
+    display: flex !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+  }
+  body:not(.has-session).is-mobile-landscape main {
+    height: auto !important;
+    min-height: calc(100dvh - 48px) !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 12px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    background: transparent !important;
+  }
+  body:not(.has-session).is-mobile-landscape .student-hub {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 960px !important;
+    margin: 0 auto !important;
+    padding: 4px 4px 28px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
   /* Also support mobile class trigger if height is slightly larger on mobile fullscreen */
-  body.is-mobile-landscape:not(.is-mobile-portrait) {
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait) {
     height: 100dvh;
     overflow: hidden;
   }
-  body.is-mobile-landscape:not(.is-mobile-portrait) header {
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait) header {
     display: none !important;
   }
-  body.is-mobile-landscape:not(.is-mobile-portrait) main {
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait) main {
     padding: 0 !important;
     margin: 0 !important;
     width: 100dvw !important;
@@ -4246,17 +4724,17 @@
     flex-direction: row !important;
     gap: 0 !important;
   }
-  body.is-mobile-landscape:not(.is-mobile-portrait):not(.chat-drawer-open) .stage-wrap {
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait):not(.chat-drawer-open) .stage-wrap {
     width: 100% !important;
     width: 100dvw !important;
     max-width: 100% !important;
     flex: 1 1 100% !important;
     margin: 0 !important;
   }
-  body.is-mobile-landscape:not(.is-mobile-portrait):not(.chat-drawer-open) aside.chat {
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait):not(.chat-drawer-open) aside.chat {
     display: none !important;
   }
-  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .stage-wrap {
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .stage-wrap {
     width: 50% !important;
     width: 50dvw !important;
     max-width: 50% !important;
@@ -4264,7 +4742,7 @@
     flex: 0 0 50% !important;
     margin: 0 !important;
   }
-  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open aside.chat {
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open aside.chat {
     width: 50% !important;
     width: 50dvw !important;
     max-width: 50% !important;
@@ -4291,51 +4769,51 @@
     box-shadow: none !important;
     overflow: hidden !important;
   }
-  html[dir="ltr"] body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open aside.chat,
-  html:not([dir="rtl"]) body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open aside.chat {
+  html[dir="ltr"] body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open aside.chat,
+  html:not([dir="rtl"]) body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open aside.chat {
     order: -1 !important;
     border-right: 1px solid var(--line-strong) !important;
     border-left: none !important;
     padding-left: max(8px, env(safe-area-inset-left)) !important;
     padding-right: 0 !important;
   }
-  html[dir="ltr"] body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .stage-wrap,
-  html:not([dir="rtl"]) body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .stage-wrap {
+  html[dir="ltr"] body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .stage-wrap,
+  html:not([dir="rtl"]) body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .stage-wrap {
     order: 1 !important;
     padding-right: max(8px, env(safe-area-inset-right)) !important;
     padding-left: 0 !important;
   }
-  html[dir="rtl"] body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open aside.chat {
+  html[dir="rtl"] body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open aside.chat {
     order: -1 !important;
     border-left: 1px solid var(--line-strong) !important;
     border-right: none !important;
     padding-right: max(8px, env(safe-area-inset-right)) !important;
     padding-left: 0 !important;
   }
-  html[dir="rtl"] body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .stage-wrap {
+  html[dir="rtl"] body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .stage-wrap {
     order: 1 !important;
     padding-left: max(8px, env(safe-area-inset-left)) !important;
     padding-right: 0 !important;
   }
-  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls {
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls {
     padding: 8px 10px !important;
     padding-bottom: max(8px, env(safe-area-inset-bottom)) !important;
   }
-  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls .row {
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls .row {
     gap: 2px !important;
   }
-  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls .row .iconbtn,
-  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls .row .tbtn {
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls .row .iconbtn,
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls .row .tbtn {
     min-width: 26px !important;
     max-width: 38px !important;
     height: 32px !important;
   }
-  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls #play {
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls #play {
     min-width: 32px !important;
     max-width: 42px !important;
     height: 32px !important;
   }
-  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls #speed {
+  body.has-session.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls #speed {
     max-width: 44px !important;
     height: 32px !important;
     font-size: 11px !important;
@@ -4982,9 +5460,34 @@
   .intro-actions {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
-    padding-top: 2px;
+    padding-top: 4px;
+  }
+  @media (max-width: 640px) {
+    .intro-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+      max-width: 440px;
+      margin: 4px auto 0;
+    }
+    .intro-btn {
+      width: 100%;
+      min-width: 0;
+      padding: 0 8px;
+      font-size: 11.5px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+  @media (max-width: 340px) {
+    .intro-actions {
+      grid-template-columns: 1fr;
+    }
   }
   .intro-btn {
     min-height: 36px;
@@ -5592,8 +6095,12 @@
 
 
   /* ==================== HUB SCROLLING & SIZING FIX ==================== */
-  body:not(.has-session) {
+  html:not(.has-session) {
     overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  body:not(.has-session) {
+    overflow-y: visible !important;
     height: auto !important;
     min-height: 100dvh !important;
   }
@@ -5660,6 +6167,7 @@
     padding: 10px 14px;
     border-bottom: 1px solid var(--line);
     transition: background 0.15s ease;
+    cursor: pointer;
   }
   .hub-lec-row:last-child {
     border-bottom: none;
@@ -5684,6 +6192,10 @@
     height: 28px;
     border-radius: 50%;
     transition: all 0.15s ease;
+  }
+  .hub-watch-btn:hover {
+    color: #10B981;
+    background: rgba(16, 185, 129, 0.12);
   }
   .hub-watch-btn.on {
     color: #10B981;
@@ -6104,6 +6616,85 @@
       height: 38px !important;
       justify-content: center !important;
       font-weight: 700 !important;
+    }
+
+    /* Standalone Check for New Lectures Mobile Responsive Layout */
+    .lib-standalone-action {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 8px !important;
+      margin-bottom: 14px !important;
+    }
+    .lib-check-new-btn {
+      width: 100% !important;
+      min-height: 42px !important;
+      height: auto !important;
+      padding: 10px 16px !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      justify-content: center !important;
+      text-align: center !important;
+      white-space: normal !important;
+      line-height: 1.35 !important;
+    }
+    #paneSaved #usage {
+      margin-inline-start: 0 !important;
+      width: 100% !important;
+      text-align: center !important;
+      display: block !important;
+    }
+
+    /* Multi-Profile Dialog Mobile Header: Full Uncut Title + Distinct Action Row */
+    #profileDlg .dlg-head {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 10px 8px !important;
+      padding: 12px 14px !important;
+    }
+    #profileDlg .dlg-head .dlg-title {
+      order: 1 !important;
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+      max-width: calc(100% - 44px) !important;
+      font-size: 14.5px !important;
+      font-weight: 700 !important;
+      white-space: normal !important;
+      text-overflow: unset !important;
+      overflow: visible !important;
+      line-height: 1.35 !important;
+      padding: 0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+    }
+    #profileDlg .dlg-head .prof-head-spacer {
+      display: none !important;
+    }
+    #profileDlg .dlg-head #profileClose {
+      order: 2 !important;
+      flex: 0 0 34px !important;
+      width: 34px !important;
+      height: 34px !important;
+      margin-inline-start: auto !important;
+    }
+    #profileDlg .dlg-head .prof-head-actions {
+      order: 3 !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      width: 100% !important;
+    }
+    #profileDlg .dlg-head .prof-head-actions button {
+      flex: 1 1 0 !important;
+      min-height: 36px !important;
+      height: auto !important;
+      padding: 7px 10px !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      justify-content: center !important;
+      white-space: nowrap !important;
     }
   }
 
@@ -6567,8 +7158,9 @@
     margin-bottom: 12px;
   }
   .lib-check-new-btn {
-    height: 38px;
-    padding: 0 14px;
+    min-height: 38px;
+    height: auto;
+    padding: 8px 14px;
     font-size: 12.5px;
     font-weight: 600;
     display: inline-flex;
@@ -6580,6 +7172,8 @@
     color: var(--text);
     cursor: pointer;
     transition: all 0.16s ease;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
   .lib-check-new-btn:hover {
     border-color: var(--blue);
@@ -7920,9 +8514,11 @@
 <dialog id="profileDlg" class="profile-dlg">
   <div class="dlg-head">
     <span class="dlg-title"><svg class="i"><use href="#i-user"/></svg><span data-i18n="profileModalTitle">Student Profiles &amp; Isolated Storage</span></span>
-    <span style="flex:1"></span>
-    <button id="profImportBtn" style="height:32px;padding:0 12px;font-size:12px;display:inline-flex;align-items:center;gap:6px;"><svg class="i" style="width:13px;height:13px"><use href="#i-upload"/></svg><span data-i18n="profImportBtnShort">استيراد نسخة</span></button>
-    <button class="primary" id="profNewBtn" style="height:32px;padding:0 12px;font-size:12px;" data-i18n="profileNewBtn">+ New Profile</button>
+    <span class="prof-head-spacer" style="flex:1"></span>
+    <div class="prof-head-actions">
+      <button id="profImportBtn" style="height:32px;padding:0 12px;font-size:12px;display:inline-flex;align-items:center;gap:6px;"><svg class="i" style="width:13px;height:13px"><use href="#i-upload"/></svg><span data-i18n="profImportBtnShort">استيراد نسخة</span></button>
+      <button class="primary" id="profNewBtn" style="height:32px;padding:0 12px;font-size:12px;" data-i18n="profileNewBtn">+ New Profile</button>
+    </div>
     <button class="iconbtn" id="profileClose" data-i18n-aria="close" aria-label="Close"><svg class="i" style="width:18px;height:18px"><use href="#i-close"/></svg></button>
   </div>
   <div class="prof-body">
@@ -8198,14 +8794,6 @@
         <input type="text" id="courseDirSearch" data-i18n-ph="courseDirSearchPh" placeholder="ابحث برمز المادة، اسمها بالعربية، أو بالإنجليزية (مثال: BPG401 أو البرمجة أو Programming)…">
         <button id="courseDirClearSearch" class="iconbtn" style="position:absolute;inset-inline-end:8px;top:50%;transform:translateY(-50%);width:26px;height:26px;" hidden><svg class="i" style="width:14px;height:14px;"><use href="#i-close"/></svg></button>
       </div>
-      <div class="course-dir-faculties" id="courseDirFaculties">
-        <button class="dir-chip on" data-prefix="ALL" data-i18n="courseDirAllFaculties">الكل (1,163)</button>
-        <button class="dir-chip" data-prefix="B">B — بكالوريوس تقانة وهندسة (ITE / BAIT / TIC)</button>
-        <button class="dir-chip" data-prefix="G">G — المقررات العامة (General)</button>
-        <button class="dir-chip" data-prefix="M">M — ماجستير (Master Programs)</button>
-        <button class="dir-chip" data-prefix="T">T — السياحة والإدارة الفندقية</button>
-        <button class="dir-chip" data-prefix="I">I — المعاهد والمشاريع المعلوماتية</button>
-      </div>
     </div>
 
     <!-- Summary status -->
@@ -8405,35 +8993,35 @@
               <div class="real-ui-panel">
                 <div class="real-ui-buttons-grid">
                   <div class="real-btn-item">
-                    <span class="real-btn-chip hub"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> <b>Hub</b></span>
+                    <span class="real-btn-chip hub"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> <b data-i18n="guideChipHub">الرئيسية (Hub)</b></span>
                     <span class="real-btn-desc" data-i18n="guideBtnHub">العودة للرئيسية وإغلاق الجلسة</span>
                   </div>
                   <div class="real-btn-item">
-                    <span class="real-btn-chip play"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> <b>Play / Pause</b></span>
+                    <span class="real-btn-chip play"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> <b data-i18n="guideChipPlay">تشغيل / إيقاف</b></span>
                     <span class="real-btn-desc" data-i18n="guideBtnPlay">تشغيل أو إيقاف المحاضرة (مسطرة Space)</span>
                   </div>
                   <div class="real-btn-item">
-                    <span class="real-btn-chip"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 5V2L7 6.5 12 11V8a5 5 0 1 1-5 5H5a7 7 0 1 0 7-8z"/></svg> <b>±10s Seek</b></span>
+                    <span class="real-btn-chip"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 5V2L7 6.5 12 11V8a5 5 0 1 1-5 5H5a7 7 0 1 0 7-8z"/></svg> <b data-i18n="guideChipSeek">تقديم / ترجيع ±10ث</b></span>
                     <span class="real-btn-desc" data-i18n="guideBtnSeek">تقديم أو ترجيع 10 ثوانٍ (الأسهم ← →)</span>
                   </div>
                   <div class="real-btn-item">
-                    <span class="real-btn-chip enh"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5v14M7 9v6"/></svg> <b>Enhance</b></span>
+                    <span class="real-btn-chip enh"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5v14M7 9v6"/></svg> <b data-i18n="guideChipEnh">تنقية الصوت</b></span>
                     <span class="real-btn-desc" data-i18n="guideBtnEnh">فلتر تنقية الصوت وعزل الصفير وهواء القاعة</span>
                   </div>
                   <div class="real-btn-item">
-                    <span class="real-btn-chip"><b>1.25× Speed</b></span>
+                    <span class="real-btn-chip"><b data-i18n="guideChipSpeed">السرعة 1.25×</b></span>
                     <span class="real-btn-desc" data-i18n="guideBtnSpeed">تسريع أو إبطاء صوت المحاضرة (0.75× - 2×)</span>
                   </div>
                   <div class="real-btn-item">
-                    <span class="real-btn-chip chat"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> <b>Chat</b></span>
+                    <span class="real-btn-chip chat"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> <b data-i18n="guideChipChat">الدردشة</b></span>
                     <span class="real-btn-desc" data-i18n="guideBtnChat">إظهار أو إخفاء محادثات الطلاب المتزامنة (C)</span>
                   </div>
                   <div class="real-btn-item">
-                    <span class="real-btn-chip"><svg class="i" style="width:14px;height:14px"><use href="#i-stretch"/></svg> <b>Stretch</b></span>
+                    <span class="real-btn-chip"><svg class="i" style="width:14px;height:14px"><use href="#i-stretch"/></svg> <b data-i18n="guideChipStretch">تمديد الشريحة</b></span>
                     <span class="real-btn-desc" data-i18n="guideBtnStretch">تمديد وتوسيع الشريحة لملء الشاشة (S)</span>
                   </div>
                   <div class="real-btn-item">
-                    <span class="real-btn-chip"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg> <b>Pin</b></span>
+                    <span class="real-btn-chip"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg> <b data-i18n="guideChipPin">تثبيت الشريط</b></span>
                     <span class="real-btn-desc" data-i18n="guideBtnPin">تثبيت شريط التحكم مفتوحاً دوماً دون إخفاء</span>
                   </div>
                 </div>
@@ -8499,28 +9087,28 @@
                   <div class="dsp-stage-card">
                     <div class="stage-num">1</div>
                     <div class="stage-info">
-                      <b data-i18n="dspStage1Title">Noise Gate</b>
+                      <b data-i18n="dspStage1Title">بوابة كتم الضجيج (Noise Gate)</b>
                       <span data-i18n="dspStage1Desc">عزل الصفير والهمس أثناء فترات الصمت</span>
                     </div>
                   </div>
                   <div class="dsp-stage-card">
                     <div class="stage-num">2</div>
                     <div class="stage-info">
-                      <b data-i18n="dspStage2Title">High-Pass Filter</b>
+                      <b data-i18n="dspStage2Title">فلتر قص الترددات (High-Pass)</b>
                       <span data-i18n="dspStage2Desc">قص ترددات هواء القاعة وأزيز التكييف</span>
                     </div>
                   </div>
                   <div class="dsp-stage-card">
                     <div class="stage-num">3</div>
                     <div class="stage-info">
-                      <b data-i18n="dspStage3Title">Vocal Formant EQ</b>
+                      <b data-i18n="dspStage3Title">موازن نبرة الصوت (Vocal EQ)</b>
                       <span data-i18n="dspStage3Desc">تضخيم نبرة صوت المدرس (1-4 kHz) ليصبح واضحاً</span>
                     </div>
                   </div>
                   <div class="dsp-stage-card">
                     <div class="stage-num">4</div>
                     <div class="stage-info">
-                      <b data-i18n="dspStage4Title">Fast Peak Limiter</b>
+                      <b data-i18n="dspStage4Title">محدد الذروة السريع (Peak Limiter)</b>
                       <span data-i18n="dspStage4Desc">حماية من التشويه والفرقعات الصوتية المفاجئة</span>
                     </div>
                   </div>
@@ -8545,15 +9133,15 @@
                 <div class="guide-shortcuts-table">
                   <div class="shortcut-row">
                     <span class="sc-keys"><kbd>Space</kbd> / <kbd>K</kbd></span>
-                    <span class="sc-desc" data-i18n="guideBtnPlay">تشغيل أو إيقاف المحاضرة</span>
+                    <span class="sc-desc" data-i18n="shortcutPlay">تشغيل أو إيقاف المحاضرة</span>
                   </div>
                   <div class="shortcut-row">
                     <span class="sc-keys"><kbd>←</kbd> <kbd>→</kbd></span>
-                    <span class="sc-desc" data-i18n="guideBtnSeek">تقديم أو ترجيع 10 ثوانٍ</span>
+                    <span class="sc-desc" data-i18n="shortcutSeek">تقديم أو ترجيع 10 ثوانٍ</span>
                   </div>
                   <div class="shortcut-row">
                     <span class="sc-keys"><kbd>F</kbd></span>
-                    <span class="sc-desc" data-i18n="shortcutFullscreen">ملء الشاشة Fullscreen</span>
+                    <span class="sc-desc" data-i18n="shortcutFullscreen">ملء الشاشة بالكامل</span>
                   </div>
                   <div class="shortcut-row">
                     <span class="sc-keys"><kbd>H</kbd></span>
@@ -8565,7 +9153,7 @@
                   </div>
                   <div class="shortcut-row">
                     <span class="sc-keys"><kbd>C</kbd></span>
-                    <span class="sc-desc" data-i18n="guideBtnChat">إظهار أو إخفاء الدردشة</span>
+                    <span class="sc-desc" data-i18n="shortcutChat">إظهار أو إخفاء الدردشة</span>
                   </div>
                   <div class="shortcut-row">
                     <span class="sc-keys"><kbd>S</kbd></span>
@@ -8576,19 +9164,19 @@
                 <div class="real-gestures-grid">
                   <div class="gesture-item">
                     <span class="g-icon">👆</span>
-                    <div class="g-text"><b>نقرة واحدة</b><small>إظهار/إخفاء شريط التحكم</small></div>
+                    <div class="g-text"><b data-i18n="gestureTapTitle">نقرة واحدة</b><small data-i18n="gestureTapDesc">إظهار/إخفاء شريط التحكم</small></div>
                   </div>
                   <div class="gesture-item">
                     <span class="g-icon">✌️</span>
-                    <div class="g-text"><b>نقرتان يمين / يسار</b><small>تقديم / ترجيع ±١٠ ثوانٍ</small></div>
+                    <div class="g-text"><b data-i18n="gestureDoubleTapTitle">نقرتان يمين / يسار</b><small data-i18n="gestureDoubleTapDesc">تقديم / ترجيع ±١٠ ثوانٍ</small></div>
                   </div>
                   <div class="gesture-item">
                     <span class="g-icon">📱</span>
-                    <div class="g-text"><b>تدوير الموبايل</b><small>وضع السينما العريض مع تقسيم الدردشة</small></div>
+                    <div class="g-text"><b data-i18n="gestureRotateTitle">تدوير الموبايل</b><small data-i18n="gestureRotateDesc">وضع السينما العريض مع تقسيم الدردشة</small></div>
                   </div>
                   <div class="gesture-item">
                     <span class="g-icon">⌨️</span>
-                    <div class="g-text"><b>لوحة المفاتيح</b><small>تحكم كامل دون لمس الماوس</small></div>
+                    <div class="g-text"><b data-i18n="gestureKbdTitle">لوحة المفاتيح</b><small data-i18n="gestureKbdDesc">تحكم كامل دون لمس الماوس</small></div>
                   </div>
                 </div>
               </div>
@@ -8823,6 +9411,6 @@
 
 <audio id="audio" preload="auto"></audio>
 
-<script src="app.js?v=2.8.4"></script>
+<script src="app.js?v=2.8.5"></script>
 </body>
 </html>

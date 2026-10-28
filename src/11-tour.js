@@ -235,6 +235,9 @@
       const isAr = I18N.lang === "ar";
       welcomeLangBtn.classList.toggle("is-ar", isAr);
       welcomeLangBtn.setAttribute("aria-checked", String(isAr));
+      if (welcome && welcome.open) {
+        showSlide(currentSlide);
+      }
     };
     syncWLang();
     document.addEventListener("langchange", syncWLang);

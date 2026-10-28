@@ -811,9 +811,29 @@ guideModalTitle: "SVU Player Guide",
       dspStage3Desc: "Boosts vocal clarity (1–4 kHz) for crisp teacher speech formants",
       dspStage4Title: "Fast Peak Limiter",
       dspStage4Desc: "Prevents sudden audio clipping and loud pops",
-      shortcutFullscreen: "Toggle Fullscreen",
+      shortcutPlay: "Play or pause lecture",
+      shortcutSeek: "Skip backward / forward 10s",
+      shortcutFullscreen: "Toggle Fullscreen mode",
       shortcutHide: "Hide controls & cursor",
-      shortcutMute: "Mute / Unmute audio"
+      shortcutMute: "Mute / Unmute audio",
+      shortcutChat: "Show or hide chat drawer",
+      shortcutStretch: "Fit or stretch slide aspect ratio",
+      gestureTapTitle: "Single Tap",
+      gestureTapDesc: "Show / hide playback controls",
+      gestureDoubleTapTitle: "Double Tap Left / Right",
+      gestureDoubleTapDesc: "Skip backward / forward ±10s",
+      gestureRotateTitle: "Rotate Phone",
+      gestureRotateDesc: "Cinema widescreen with side-by-side chat",
+      gestureKbdTitle: "Keyboard Controls",
+      gestureKbdDesc: "Full playback control without touching mouse",
+      guideChipHub: "Hub",
+      guideChipPlay: "Play / Pause",
+      guideChipSeek: "±10s Seek",
+      guideChipEnh: "Enhance",
+      guideChipSpeed: "1.25× Speed",
+      guideChipChat: "Chat",
+      guideChipStretch: "Stretch",
+      guideChipPin: "Pin"
     },
     ar: {
       openSession: "فتح جلسة",
@@ -1339,17 +1359,37 @@ guideModalTitle: "دليل استخدام مشغّل SVU",
       chatDemoJumpHint: "اضغط للقفز بالفيديو للدقيقة 11:05",
       chatDemoAuthor3: "المدرس",
       chatDemoMsg3: "نعم سنشرح هذا المثال بالتفصيل الآن.",
-      dspStage1Title: "Noise Gate",
+      dspStage1Title: "بوابة كتم الضجيج (Noise Gate)",
       dspStage1Desc: "عزل الصفير والهمس أثناء فترات الصمت",
-      dspStage2Title: "High-Pass Filter",
+      dspStage2Title: "فلتر قص الترددات (High-Pass)",
       dspStage2Desc: "قص ترددات هواء القاعة وأزيز التكييف",
-      dspStage3Title: "Vocal Formant EQ",
+      dspStage3Title: "موازن نبرة الصوت (Vocal EQ)",
       dspStage3Desc: "تضخيم نبرة صوت المدرس (1-4 kHz) ليصبح واضحاً",
-      dspStage4Title: "Fast Peak Limiter",
+      dspStage4Title: "محدد الذروة السريع (Peak Limiter)",
       dspStage4Desc: "حماية من التشويه والفرقعات الصوتية المفاجئة",
-      shortcutFullscreen: "ملء الشاشة Fullscreen",
+      shortcutPlay: "تشغيل أو إيقاف المحاضرة",
+      shortcutSeek: "تقديم أو ترجيع 10 ثوانٍ",
+      shortcutFullscreen: "ملء الشاشة بالكامل",
       shortcutHide: "إخفاء عناصر التحكم والمؤشر",
-      shortcutMute: "كتم أو تشغيل الصوت"
+      shortcutMute: "كتم أو تشغيل الصوت",
+      shortcutChat: "إظهار أو إخفاء الدردشة",
+      shortcutStretch: "تمديد وتوسيع الشريحة",
+      gestureTapTitle: "نقرة واحدة",
+      gestureTapDesc: "إظهار/إخفاء شريط التحكم",
+      gestureDoubleTapTitle: "نقرتان يمين / يسار",
+      gestureDoubleTapDesc: "تقديم / ترجيع ±١٠ ثوانٍ",
+      gestureRotateTitle: "تدوير الموبايل",
+      gestureRotateDesc: "وضع السينما العريض مع تقسيم الدردشة",
+      gestureKbdTitle: "لوحة المفاتيح",
+      gestureKbdDesc: "تحكم كامل دون لمس الماوس",
+      guideChipHub: "الرئيسية (Hub)",
+      guideChipPlay: "تشغيل / إيقاف",
+      guideChipSeek: "تقديم / ترجيع ±10ث",
+      guideChipEnh: "تنقية الصوت",
+      guideChipSpeed: "السرعة 1.25×",
+      guideChipChat: "الدردشة",
+      guideChipStretch: "تمديد الشريحة",
+      guideChipPin: "تثبيت الشريط"
     }
   };
   const LANG_KEY = "svu.lang.v2";
@@ -2578,7 +2618,7 @@ try {
     byId("icoMute").style.display = muted ? "" : "none";
   }
   const isTouchDevice = () => (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches);
-  const isMobileViewport = () => (window.innerWidth <= 950 || window.innerHeight <= 640);
+  const isMobileViewport = () => (window.innerWidth <= 768 || (isTouchDevice() && (window.innerWidth <= 950 || window.innerHeight <= 640)));
   const isMobileUI = () => isTouchDevice() || isMobileViewport();
   const isLandscapeMobile = () => {
     if (!isMobileUI()) return false;
@@ -3594,20 +3634,29 @@ try {
   }
   function isLectureWatched(rec) {
     if (!rec) return false;
-    if (watchedMap[rec.id] !== undefined) return !!watchedMap[rec.id];
+    if (rec.id !== undefined && watchedMap[rec.id] !== undefined) return !!watchedMap[rec.id];
+    if (rec.id !== undefined && watchedMap[String(rec.id)] !== undefined) return !!watchedMap[String(rec.id)];
     return !!rec.watched;
   }
   async function setLectureWatched(id, val) {
-    watchedMap[id] = !!val;
+    const boolVal = !!val;
+    watchedMap[id] = boolVal;
+    watchedMap[String(id)] = boolVal;
     saveWatchedMap();
     if (LibraryDB.available && LibraryDB.updateMeta) {
       try {
-        await LibraryDB.updateMeta(id, { watched: !!val });
+        await LibraryDB.updateMeta(id, { watched: boolVal });
       } catch (err) {}
     }
-    const item = savedRecordsCache.find(r => r.id === id);
-    if (item) item.watched = !!val;
+    for (const r of savedRecordsCache) {
+      if (r.id === id || String(r.id) === String(id)) {
+        r.watched = boolVal;
+      }
+    }
     renderLibraryView();
+    if (typeof refreshHub === "function") {
+      refreshHub();
+    }
   }
 
   // Auto-mark lecture as watched when playback finishes
@@ -5988,19 +6037,28 @@ try {
 
   function createLectureRowEl(rec, insideMaterialWindow) {
     const m = rec.parsedMeta;
+    const watched = isLectureWatched(rec);
     const row = document.createElement("div");
-    row.className = "lec-row" + (rec.watched ? " is-watched" : "");
+    row.className = "lec-row" + (watched ? " is-watched" : "");
+    row.style.cursor = "pointer";
+    row.addEventListener("click", () => {
+      const sel = window.getSelection();
+      if (sel && sel.toString().length > 0) return;
+      playSaved(rec.id);
+    });
 
     // 1-Click Watched Toggle (clean circular checkmark button)
     const watchBtn = document.createElement("button");
-    watchBtn.className = "watch-btn" + (rec.watched ? " on" : "");
-    watchBtn.setAttribute("aria-label", rec.watched ? t("libWatched") : t("libUnwatched"));
-    watchBtn.title = rec.watched ? t("libWatched") : t("libUnwatched");
-    watchBtn.innerHTML = rec.watched
+    watchBtn.type = "button";
+    watchBtn.className = "watch-btn" + (watched ? " on" : "");
+    watchBtn.setAttribute("aria-label", watched ? t("libWatched") : t("libUnwatched"));
+    watchBtn.title = watched ? t("libWatched") : t("libUnwatched");
+    watchBtn.innerHTML = watched
       ? "<svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>"
       : "<svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='9'/></svg>";
-    watchBtn.addEventListener("click", () => {
-      setLectureWatched(rec.id, !rec.watched);
+    watchBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setLectureWatched(rec.id, !watched);
     });
 
     const info = document.createElement("div");
@@ -6028,16 +6086,22 @@ try {
     info.append(titleRow, sub);
 
     const playBtn = document.createElement("button");
+    playBtn.type = "button";
     playBtn.className = "primary lec-play-btn";
     playBtn.innerHTML = "<svg viewBox='0 0 24 24' width='14' height='14' fill='currentColor'><polygon points='6 3 20 12 6 21 6 3'/></svg><span>" + escapeHtml(t("play")) + "</span>";
-    playBtn.addEventListener("click", () => playSaved(rec.id));
+    playBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      playSaved(rec.id);
+    });
 
     const delBtn = document.createElement("button");
+    delBtn.type = "button";
     delBtn.className = "lec-del-btn";
     delBtn.title = t("del");
     delBtn.setAttribute("aria-label", t("del"));
     delBtn.innerHTML = "<svg viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='currentColor' stroke-width='2'><polyline points='3 6 5 6 21 6'/><path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/></svg>";
-    delBtn.addEventListener("click", async () => {
+    delBtn.addEventListener("click", async (e) => {
+      e.stopPropagation();
       if (confirm(t("confirmDelete", { name: rec.name }))) {
         await LibraryDB.remove(rec.id);
         refreshSaved();
@@ -6045,6 +6109,7 @@ try {
     });
 
     const exportBtn = document.createElement("button");
+    exportBtn.type = "button";
     exportBtn.className = "lec-export-btn";
     exportBtn.title = t("exportLrec");
     exportBtn.setAttribute("aria-label", t("exportLrec"));
@@ -6171,7 +6236,9 @@ try {
       refreshSaved();
       return;
     }
-    dialog.close();
+    if (dialog && dialog.open) {
+      dialog.close();
+    }
     window.__lrec.openFile(new File([rec.blob], rec.name), {
       autoplay: true
     });
@@ -6845,19 +6912,20 @@ try {
 
       if (!isAct) {
         const swBtn = document.createElement("button");
-        swBtn.className = "primary";
+        swBtn.className = "primary prof-switch-btn";
         swBtn.textContent = t("profileSwitchBtn");
         swBtn.addEventListener("click", () => activateProfile(prof.id, false));
         actions.appendChild(swBtn);
       }
 
       const loadBatchBtn = document.createElement("button");
-      if (isAct) loadBatchBtn.className = "primary";
+      loadBatchBtn.className = "prof-load-batch-btn" + (isAct ? " primary" : "");
       loadBatchBtn.innerHTML = "<svg class=\"i\"><use href=\"#i-download\"/></svg><span>" + escapeHtml(t("profileLoadBatchBtn")) + "</span>";
       loadBatchBtn.addEventListener("click", () => activateProfile(prof.id, true));
       actions.appendChild(loadBatchBtn);
 
       const editBtn = document.createElement("button");
+      editBtn.className = "prof-edit-btn";
       editBtn.textContent = t("profileEditBtn");
       editBtn.addEventListener("click", () => openProfileEditor(prof));
       actions.appendChild(editBtn);
@@ -6871,6 +6939,7 @@ try {
 
       if (prof.id !== "default") {
         const delBtn = document.createElement("button");
+        delBtn.className = "prof-del-btn";
         delBtn.innerHTML = "<svg class=\"i\"><use href=\"#i-trash\"/></svg><span>" + escapeHtml(t("profileDeleteBtn")) + "</span>";
         delBtn.addEventListener("click", () => {
           if (confirm(t("profileConfirmDel", { name: getProfileDisplayName(prof) }))) {
@@ -7655,7 +7724,6 @@ try {
   const courseDirClearSearch = byId("courseDirClearSearch");
   const courseDirGrid = byId("courseDirGrid");
   const courseDirStatus = byId("courseDirStatus");
-  const courseDirFaculties = byId("courseDirFaculties");
   let activeDirPrefix = "ALL";
   let dirSearchDebounce = null;
 
@@ -7780,11 +7848,6 @@ try {
     if (!courseDirModal) return;
     if (courseDirSearch) courseDirSearch.value = "";
     activeDirPrefix = "ALL";
-    if (courseDirFaculties) {
-      courseDirFaculties.querySelectorAll(".dir-chip").forEach(c => {
-        c.classList.toggle("on", c.dataset.prefix === "ALL");
-      });
-    }
     renderCourseDirectory();
     courseDirModal.showModal();
     if (courseDirSearch) setTimeout(() => courseDirSearch.focus(), 100);
@@ -7826,16 +7889,6 @@ try {
         courseDirSearch.value = "";
         courseDirSearch.focus();
       }
-      renderCourseDirectory();
-    });
-  }
-  if (courseDirFaculties) {
-    courseDirFaculties.addEventListener("click", e => {
-      const chip = e.target.closest(".dir-chip");
-      if (!chip) return;
-      courseDirFaculties.querySelectorAll(".dir-chip").forEach(c => c.classList.remove("on"));
-      chip.classList.add("on");
-      activeDirPrefix = chip.dataset.prefix || "ALL";
       renderCourseDirectory();
     });
   }
@@ -8003,7 +8056,7 @@ try {
           const isEn = window.I18N && window.I18N.lang === "en";
           const matName = mat ? (isEn ? (mat.en || mat.ar) : (mat.ar || mat.en)) : "";
           const courseHeading = isLocal ? t("localFilesGroup") : ((gKey !== "OTHER" ? (gKey + " — ") : "") + (matName || gKey));
-          const watchedCount = items.filter(r => r.watched).length;
+          const watchedCount = items.filter(r => isLectureWatched(r)).length;
 
           const groupEl = document.createElement("div");
           groupEl.className = "hub-course-group";
@@ -8021,19 +8074,28 @@ try {
 
           for (const rec of items) {
             const m = rec.parsedMeta;
+            const watched = isLectureWatched(rec);
             const row = document.createElement("div");
-            row.className = "hub-lec-row" + (rec.watched ? " is-watched" : "");
+            row.className = "hub-lec-row" + (watched ? " is-watched" : "");
+
+            // Clicking on the lecture card itself plays the lecture
+            row.onclick = () => {
+              const sel = window.getSelection();
+              if (sel && sel.toString().length > 0) return;
+              playSaved(rec.id);
+            };
 
             const watchBtn = document.createElement("button");
-            watchBtn.className = "watch-btn hub-watch-btn" + (rec.watched ? " on" : "");
-            watchBtn.setAttribute("aria-label", rec.watched ? t("libWatched") : t("libUnwatched"));
-            watchBtn.title = rec.watched ? t("libWatched") : t("libUnwatched");
-            watchBtn.innerHTML = rec.watched
+            watchBtn.type = "button";
+            watchBtn.className = "watch-btn hub-watch-btn" + (watched ? " on" : "");
+            watchBtn.setAttribute("aria-label", watched ? t("libWatched") : t("libUnwatched"));
+            watchBtn.title = watched ? t("libWatched") : t("libUnwatched");
+            watchBtn.innerHTML = watched
               ? "<svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>"
               : "<svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='9'/></svg>";
             watchBtn.onclick = (e) => {
               e.stopPropagation();
-              setLectureWatched(rec.id, !rec.watched);
+              setLectureWatched(rec.id, !watched);
             };
 
             const info = document.createElement("div");
@@ -8042,7 +8104,7 @@ try {
             const metaParts = [];
             if (m.date) metaParts.push(m.date);
             metaParts.push(formatSize(rec.size || 0));
-            if (rec.watched) metaParts.push("✓ " + t("libWatched"));
+            if (watched) metaParts.push("✓ " + t("libWatched"));
 
             info.innerHTML =
               "<div class=\"hub-lec-title\">" + escapeHtml(lessonTitle) + "</div>" +
@@ -8751,6 +8813,9 @@ try {
       const isAr = I18N.lang === "ar";
       welcomeLangBtn.classList.toggle("is-ar", isAr);
       welcomeLangBtn.setAttribute("aria-checked", String(isAr));
+      if (welcome && welcome.open) {
+        showSlide(currentSlide);
+      }
     };
     syncWLang();
     document.addEventListener("langchange", syncWLang);

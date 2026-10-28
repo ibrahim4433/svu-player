@@ -95,20 +95,29 @@
   }
   function isLectureWatched(rec) {
     if (!rec) return false;
-    if (watchedMap[rec.id] !== undefined) return !!watchedMap[rec.id];
+    if (rec.id !== undefined && watchedMap[rec.id] !== undefined) return !!watchedMap[rec.id];
+    if (rec.id !== undefined && watchedMap[String(rec.id)] !== undefined) return !!watchedMap[String(rec.id)];
     return !!rec.watched;
   }
   async function setLectureWatched(id, val) {
-    watchedMap[id] = !!val;
+    const boolVal = !!val;
+    watchedMap[id] = boolVal;
+    watchedMap[String(id)] = boolVal;
     saveWatchedMap();
     if (LibraryDB.available && LibraryDB.updateMeta) {
       try {
-        await LibraryDB.updateMeta(id, { watched: !!val });
+        await LibraryDB.updateMeta(id, { watched: boolVal });
       } catch (err) {}
     }
-    const item = savedRecordsCache.find(r => r.id === id);
-    if (item) item.watched = !!val;
+    for (const r of savedRecordsCache) {
+      if (r.id === id || String(r.id) === String(id)) {
+        r.watched = boolVal;
+      }
+    }
     renderLibraryView();
+    if (typeof refreshHub === "function") {
+      refreshHub();
+    }
   }
 
   // Auto-mark lecture as watched when playback finishes
@@ -2489,19 +2498,28 @@
 
   function createLectureRowEl(rec, insideMaterialWindow) {
     const m = rec.parsedMeta;
+    const watched = isLectureWatched(rec);
     const row = document.createElement("div");
-    row.className = "lec-row" + (rec.watched ? " is-watched" : "");
+    row.className = "lec-row" + (watched ? " is-watched" : "");
+    row.style.cursor = "pointer";
+    row.addEventListener("click", () => {
+      const sel = window.getSelection();
+      if (sel && sel.toString().length > 0) return;
+      playSaved(rec.id);
+    });
 
     // 1-Click Watched Toggle (clean circular checkmark button)
     const watchBtn = document.createElement("button");
-    watchBtn.className = "watch-btn" + (rec.watched ? " on" : "");
-    watchBtn.setAttribute("aria-label", rec.watched ? t("libWatched") : t("libUnwatched"));
-    watchBtn.title = rec.watched ? t("libWatched") : t("libUnwatched");
-    watchBtn.innerHTML = rec.watched
+    watchBtn.type = "button";
+    watchBtn.className = "watch-btn" + (watched ? " on" : "");
+    watchBtn.setAttribute("aria-label", watched ? t("libWatched") : t("libUnwatched"));
+    watchBtn.title = watched ? t("libWatched") : t("libUnwatched");
+    watchBtn.innerHTML = watched
       ? "<svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>"
       : "<svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='9'/></svg>";
-    watchBtn.addEventListener("click", () => {
-      setLectureWatched(rec.id, !rec.watched);
+    watchBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setLectureWatched(rec.id, !watched);
     });
 
     const info = document.createElement("div");
@@ -2529,16 +2547,22 @@
     info.append(titleRow, sub);
 
     const playBtn = document.createElement("button");
+    playBtn.type = "button";
     playBtn.className = "primary lec-play-btn";
     playBtn.innerHTML = "<svg viewBox='0 0 24 24' width='14' height='14' fill='currentColor'><polygon points='6 3 20 12 6 21 6 3'/></svg><span>" + escapeHtml(t("play")) + "</span>";
-    playBtn.addEventListener("click", () => playSaved(rec.id));
+    playBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      playSaved(rec.id);
+    });
 
     const delBtn = document.createElement("button");
+    delBtn.type = "button";
     delBtn.className = "lec-del-btn";
     delBtn.title = t("del");
     delBtn.setAttribute("aria-label", t("del"));
     delBtn.innerHTML = "<svg viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='currentColor' stroke-width='2'><polyline points='3 6 5 6 21 6'/><path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/></svg>";
-    delBtn.addEventListener("click", async () => {
+    delBtn.addEventListener("click", async (e) => {
+      e.stopPropagation();
       if (confirm(t("confirmDelete", { name: rec.name }))) {
         await LibraryDB.remove(rec.id);
         refreshSaved();
@@ -2546,6 +2570,7 @@
     });
 
     const exportBtn = document.createElement("button");
+    exportBtn.type = "button";
     exportBtn.className = "lec-export-btn";
     exportBtn.title = t("exportLrec");
     exportBtn.setAttribute("aria-label", t("exportLrec"));
@@ -2672,7 +2697,9 @@
       refreshSaved();
       return;
     }
-    dialog.close();
+    if (dialog && dialog.open) {
+      dialog.close();
+    }
     window.__lrec.openFile(new File([rec.blob], rec.name), {
       autoplay: true
     });
@@ -3346,19 +3373,20 @@
 
       if (!isAct) {
         const swBtn = document.createElement("button");
-        swBtn.className = "primary";
+        swBtn.className = "primary prof-switch-btn";
         swBtn.textContent = t("profileSwitchBtn");
         swBtn.addEventListener("click", () => activateProfile(prof.id, false));
         actions.appendChild(swBtn);
       }
 
       const loadBatchBtn = document.createElement("button");
-      if (isAct) loadBatchBtn.className = "primary";
+      loadBatchBtn.className = "prof-load-batch-btn" + (isAct ? " primary" : "");
       loadBatchBtn.innerHTML = "<svg class=\"i\"><use href=\"#i-download\"/></svg><span>" + escapeHtml(t("profileLoadBatchBtn")) + "</span>";
       loadBatchBtn.addEventListener("click", () => activateProfile(prof.id, true));
       actions.appendChild(loadBatchBtn);
 
       const editBtn = document.createElement("button");
+      editBtn.className = "prof-edit-btn";
       editBtn.textContent = t("profileEditBtn");
       editBtn.addEventListener("click", () => openProfileEditor(prof));
       actions.appendChild(editBtn);
@@ -3372,6 +3400,7 @@
 
       if (prof.id !== "default") {
         const delBtn = document.createElement("button");
+        delBtn.className = "prof-del-btn";
         delBtn.innerHTML = "<svg class=\"i\"><use href=\"#i-trash\"/></svg><span>" + escapeHtml(t("profileDeleteBtn")) + "</span>";
         delBtn.addEventListener("click", () => {
           if (confirm(t("profileConfirmDel", { name: getProfileDisplayName(prof) }))) {
@@ -4156,7 +4185,6 @@
   const courseDirClearSearch = byId("courseDirClearSearch");
   const courseDirGrid = byId("courseDirGrid");
   const courseDirStatus = byId("courseDirStatus");
-  const courseDirFaculties = byId("courseDirFaculties");
   let activeDirPrefix = "ALL";
   let dirSearchDebounce = null;
 
@@ -4281,11 +4309,6 @@
     if (!courseDirModal) return;
     if (courseDirSearch) courseDirSearch.value = "";
     activeDirPrefix = "ALL";
-    if (courseDirFaculties) {
-      courseDirFaculties.querySelectorAll(".dir-chip").forEach(c => {
-        c.classList.toggle("on", c.dataset.prefix === "ALL");
-      });
-    }
     renderCourseDirectory();
     courseDirModal.showModal();
     if (courseDirSearch) setTimeout(() => courseDirSearch.focus(), 100);
@@ -4327,16 +4350,6 @@
         courseDirSearch.value = "";
         courseDirSearch.focus();
       }
-      renderCourseDirectory();
-    });
-  }
-  if (courseDirFaculties) {
-    courseDirFaculties.addEventListener("click", e => {
-      const chip = e.target.closest(".dir-chip");
-      if (!chip) return;
-      courseDirFaculties.querySelectorAll(".dir-chip").forEach(c => c.classList.remove("on"));
-      chip.classList.add("on");
-      activeDirPrefix = chip.dataset.prefix || "ALL";
       renderCourseDirectory();
     });
   }
@@ -4504,7 +4517,7 @@
           const isEn = window.I18N && window.I18N.lang === "en";
           const matName = mat ? (isEn ? (mat.en || mat.ar) : (mat.ar || mat.en)) : "";
           const courseHeading = isLocal ? t("localFilesGroup") : ((gKey !== "OTHER" ? (gKey + " — ") : "") + (matName || gKey));
-          const watchedCount = items.filter(r => r.watched).length;
+          const watchedCount = items.filter(r => isLectureWatched(r)).length;
 
           const groupEl = document.createElement("div");
           groupEl.className = "hub-course-group";
@@ -4522,19 +4535,28 @@
 
           for (const rec of items) {
             const m = rec.parsedMeta;
+            const watched = isLectureWatched(rec);
             const row = document.createElement("div");
-            row.className = "hub-lec-row" + (rec.watched ? " is-watched" : "");
+            row.className = "hub-lec-row" + (watched ? " is-watched" : "");
+
+            // Clicking on the lecture card itself plays the lecture
+            row.onclick = () => {
+              const sel = window.getSelection();
+              if (sel && sel.toString().length > 0) return;
+              playSaved(rec.id);
+            };
 
             const watchBtn = document.createElement("button");
-            watchBtn.className = "watch-btn hub-watch-btn" + (rec.watched ? " on" : "");
-            watchBtn.setAttribute("aria-label", rec.watched ? t("libWatched") : t("libUnwatched"));
-            watchBtn.title = rec.watched ? t("libWatched") : t("libUnwatched");
-            watchBtn.innerHTML = rec.watched
+            watchBtn.type = "button";
+            watchBtn.className = "watch-btn hub-watch-btn" + (watched ? " on" : "");
+            watchBtn.setAttribute("aria-label", watched ? t("libWatched") : t("libUnwatched"));
+            watchBtn.title = watched ? t("libWatched") : t("libUnwatched");
+            watchBtn.innerHTML = watched
               ? "<svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>"
               : "<svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='9'/></svg>";
             watchBtn.onclick = (e) => {
               e.stopPropagation();
-              setLectureWatched(rec.id, !rec.watched);
+              setLectureWatched(rec.id, !watched);
             };
 
             const info = document.createElement("div");
@@ -4543,7 +4565,7 @@
             const metaParts = [];
             if (m.date) metaParts.push(m.date);
             metaParts.push(formatSize(rec.size || 0));
-            if (rec.watched) metaParts.push("✓ " + t("libWatched"));
+            if (watched) metaParts.push("✓ " + t("libWatched"));
 
             info.innerHTML =
               "<div class=\"hub-lec-title\">" + escapeHtml(lessonTitle) + "</div>" +
