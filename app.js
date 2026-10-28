@@ -3296,6 +3296,7 @@ try {
     }
     document.body.style.overflow = "";
   }
+  window.closeMobileSheet = closeMobileSheet;
 
   if (moreBtn) moreBtn.addEventListener("click", openMobileSheet);
   if (sheetClose) sheetClose.addEventListener("click", closeMobileSheet);
@@ -8604,12 +8605,10 @@ try {
       let touchStartY = 0;
       let touchEndX = 0;
       let touchEndY = 0;
-      let isSwiping = false;
 
       const onTouchStart = (e) => {
         stopSliderTimer();
         if (e.touches && e.touches.length === 1) {
-          isSwiping = true;
           touchStartX = e.touches[0].clientX;
           touchStartY = e.touches[0].clientY;
           touchEndX = touchStartX;
@@ -8618,15 +8617,13 @@ try {
       };
 
       const onTouchMove = (e) => {
-        if (isSwiping && e.touches && e.touches.length === 1) {
+        if (e.touches && e.touches.length === 1) {
           touchEndX = e.touches[0].clientX;
           touchEndY = e.touches[0].clientY;
         }
       };
 
       const onTouchEnd = () => {
-        if (!isSwiping) return;
-        isSwiping = false;
         const dx = touchEndX - touchStartX;
         const dy = touchEndY - touchStartY;
         touchStartX = 0;
@@ -8634,7 +8631,7 @@ try {
         touchEndX = 0;
         touchEndY = 0;
 
-        if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+        if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) {
           if (dx < 0) {
             nextSlide();
           } else {
@@ -8646,7 +8643,6 @@ try {
       slider.addEventListener("touchstart", onTouchStart, { passive: true });
       slider.addEventListener("touchmove", onTouchMove, { passive: true });
       slider.addEventListener("touchend", onTouchEnd, { passive: true });
-      slider.addEventListener("touchcancel", () => { isSwiping = false; }, { passive: true });
     }
 
     showSlide(0);
@@ -8656,6 +8652,25 @@ try {
      GUIDE MODAL OPEN / CLOSE CONTROLLER
      ========================================================================== */
   function showTour() {
+    if (typeof window.closeMobileSheet === "function") {
+      window.closeMobileSheet();
+    }
+    const sheet = byId("mobileMenuSheet");
+    if (sheet) {
+      sheet.classList.remove("open");
+      sheet.setAttribute("aria-hidden", "true");
+      sheet.style.visibility = "hidden";
+      sheet.style.pointerEvents = "none";
+    }
+    const sheetBackdrop = byId("mobileSheetBackdrop");
+    if (sheetBackdrop) {
+      sheetBackdrop.classList.remove("open");
+      sheetBackdrop.setAttribute("aria-hidden", "true");
+      sheetBackdrop.style.visibility = "hidden";
+      sheetBackdrop.style.pointerEvents = "none";
+    }
+    document.body.style.overflow = "";
+
     if (welcome.open) return;
     I18N.apply(welcome);
     welcome.showModal();
@@ -8758,8 +8773,9 @@ try {
   if (mobileGuideBtn) {
     mobileGuideBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      const sheet = byId("mobileMenuSheet");
-      if (sheet) sheet.classList.remove("open");
+      if (typeof window.closeMobileSheet === "function") {
+        window.closeMobileSheet();
+      }
       showTour();
     });
   }

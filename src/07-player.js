@@ -1289,6 +1289,7 @@
     }
     document.body.style.overflow = "";
   }
+  window.closeMobileSheet = closeMobileSheet;
 
   if (moreBtn) moreBtn.addEventListener("click", openMobileSheet);
   if (sheetClose) sheetClose.addEventListener("click", closeMobileSheet);

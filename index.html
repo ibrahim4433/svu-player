@@ -4592,6 +4592,10 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    z-index: 10005 !important;
+  }
+  dialog.guide-dlg::backdrop {
+    z-index: 10004 !important;
   }
   dialog.guide-dlg:not([open]) {
     display: none;
@@ -5023,6 +5027,7 @@
       min-height: 0 !important;
       overflow-y: auto !important;
       -webkit-overflow-scrolling: touch !important;
+      touch-action: pan-y !important;
       padding: 0 0 10px 0 !important;
     }
     .guide-slider-controls {
@@ -5458,9 +5463,6 @@
     background: var(--hover);
     color: var(--blue);
     border-color: var(--line-strong);
-  }
-  [dir="rtl"] .slider-btn {
-    transform: rotate(180deg);
   }
   .slider-dots {
     display: flex;
@@ -8289,6 +8291,6 @@
 
 <audio id="audio" preload="auto"></audio>
 
-<script src="app.js?v=2.8.2"></script>
+<script src="app.js?v=2.8.3"></script>
 </body>
 </html>
