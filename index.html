@@ -4263,6 +4263,45 @@
     transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
   }
+  .hub-intro-card::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    inset-inline-end: 14px;
+    width: min(340px, 45%);
+    height: 84%;
+    background: url("/favicon.svg") no-repeat center center / contain;
+    opacity: 0.11;
+    filter: blur(1.2px) drop-shadow(0 0 24px rgba(56, 189, 248, 0.35));
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.92) 20%, rgba(0, 0, 0, 0) 80%);
+    mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.92) 20%, rgba(0, 0, 0, 0) 80%);
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+  }
+  .hub-intro-card:hover::before {
+    opacity: 0.15;
+    filter: blur(0.8px) drop-shadow(0 0 28px rgba(56, 189, 248, 0.45));
+  }
+  html[data-mode="light"] .hub-intro-card::before {
+    opacity: 0.08;
+    filter: blur(1.5px);
+  }
+  html[data-mode="light"] .hub-intro-card:hover::before {
+    opacity: 0.11;
+  }
+  .hub-intro-card.is-compact:not(.is-expanded)::before {
+    opacity: 0;
+  }
+  @media (max-width: 640px) {
+    .hub-intro-card::before {
+      width: 220px;
+      inset-inline-end: -10px;
+      opacity: 0.06;
+      filter: blur(2px);
+    }
+  }
   .hub-divider {
     height: 1px;
     width: 100%;
@@ -4393,6 +4432,8 @@
     border-color: var(--blue);
   }
   .intro-full {
+    position: relative;
+    z-index: 1;
     padding: 16px 18px;
     display: flex;
     flex-direction: column;
@@ -4499,6 +4540,8 @@
 
   /* Compact Mode for Intro Card */
   .hub-intro-card.is-compact .intro-mini {
+    position: relative;
+    z-index: 1;
     display: flex !important;
     align-items: center;
     justify-content: space-between;
