@@ -175,7 +175,7 @@
     --tg-wallpaper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%233b5a42' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round' opacity='0.11'%3E%3Cpath d='M16 32l26-10-9 26-5-9-12-7z'/%3E%3Crect x='74' y='16' width='22' height='16' rx='4'/%3E%3Cpath d='M81 24h8'/%3E%3Ccircle cx='120' cy='34' r='9'/%3E%3Cpath d='M117 31l7 3-7 3v-6z'/%3E%3Cpath d='M28 88a10 10 0 1 1 14-14 8 8 0 1 0-14 14z'/%3E%3Cpath d='M76 78l4-8 4 8 8 1-6 6 2 8-8-4-8 4 2-8-6-6 8-1z'/%3E%3Cpath d='M114 82h16a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-10l-6 5v-19a4 4 0 0 1 4-4z'/%3E%3Ccircle cx='34' cy='124' r='8'/%3E%3Cpath d='M80 120c4-5 10-5 14 0 4-5 10-5 14 0 0 8-14 15-14 15s-14-7-14-15z'/%3E%3C/g%3E%3C/svg%3E") repeat, linear-gradient(135deg, #B9D3E9 0%, #D5E8C6 52%, #B6D8BE 100%);
   }
 
-  /* ==================== 4. WINDOWS 98 THEME ==================== */
+  /* ==================== 4. WINDOWS 98 THEME (CLASSIC & MIDNIGHT) ==================== */
   html[data-theme="win98"] {
     --bg: #008080;
     --panel: #C0C0C0;
@@ -186,7 +186,7 @@
     --line: #808080;
     --line-strong: #000080;
     --text: #000000;
-    --dim: #333333;
+    --dim: #404040;
     --blue: #000080;
     --blue-dark: #1084D0;
     --gold: #000080;
@@ -198,8 +198,27 @@
     --r: 0px;
     --r-lg: 0px;
   }
+  html[data-theme="win98"][data-mode="dark"] {
+    --bg: #081418;
+    --panel: #1A1F26;
+    --panel2: #242A34;
+    --hover: #2F3744;
+    --glass: #1A1F26;
+    --stage-bg: #000000;
+    --line: #374151;
+    --line-strong: #00D2D2;
+    --text: #E6EDF3;
+    --dim: #94A3B8;
+    --blue: #00D2D2;
+    --blue-dark: #009999;
+    --gold: #00E5FF;
+    --gold-hi: #67E8F9;
+    --ink: #000000;
+    --accent-glow: rgba(0, 210, 210, 0.25);
+    --header-bg: linear-gradient(90deg, #00385C 0%, #0077AA 100%);
+  }
 
-  /* ==================== 5. WINDOWS XP (LUNA) THEME ==================== */
+  /* ==================== 5. WINDOWS XP THEME (LUNA BLUE & ROYALE NOIR) ==================== */
   html[data-theme="winxp"] {
     --bg: #3A6EA5;
     --panel: #ECE9D8;
@@ -209,7 +228,7 @@
     --stage-bg: #000E29;
     --line: #ACA899;
     --line-strong: #0054E3;
-    --text: #000000;
+    --text: #111827;
     --dim: #4A5568;
     --blue: #3C9A2E;
     --blue-dark: #2B7A1E;
@@ -222,37 +241,75 @@
     --r: 4px;
     --r-lg: 8px;
   }
+  html[data-theme="winxp"][data-mode="dark"] {
+    --bg: #111317;
+    --panel: #1A1D23;
+    --panel2: #242831;
+    --hover: #2E333E;
+    --glass: rgba(26, 29, 35, 0.94);
+    --stage-bg: #07080A;
+    --line: #383F4D;
+    --line-strong: #FF7700;
+    --text: #F1F5F9;
+    --dim: #94A3B8;
+    --blue: #FF7700;
+    --blue-dark: #E06000;
+    --gold: #3B82F6;
+    --gold-hi: #60A5FA;
+    --ink: #07080A;
+    --accent-glow: rgba(255, 119, 0, 0.32);
+    --header-bg: linear-gradient(180deg, #3C4047 0%, #202327 15%, #16181B 85%, #0D0E10 100%);
+  }
 
-  /* ==================== 6. WINDOWS 7 (AERO GLASS) THEME ==================== */
+  /* ==================== 6. WINDOWS 7 THEME (AERO MIDNIGHT & AERO FROST) ==================== */
   html[data-theme="win7"] {
-    --bg: #0E2338;
-    --panel: rgba(24, 52, 82, 0.76);
-    --panel2: rgba(40, 80, 120, 0.68);
-    --hover: rgba(62, 118, 172, 0.78);
-    --glass: rgba(20, 45, 72, 0.74);
-    --stage-bg: #06101B;
-    --line: rgba(168, 216, 255, 0.28);
-    --line-strong: rgba(112, 200, 255, 0.65);
+    --bg: #071320;
+    --panel: rgba(16, 34, 56, 0.78);
+    --panel2: rgba(24, 48, 76, 0.72);
+    --hover: rgba(42, 80, 122, 0.82);
+    --glass: rgba(14, 30, 50, 0.80);
+    --stage-bg: #040A12;
+    --line: rgba(112, 200, 255, 0.25);
+    --line-strong: rgba(56, 189, 248, 0.70);
     --text: #F0F8FF;
-    --dim: #A7CBE8;
-    --blue: #36A9E1;
-    --blue-dark: #1B75BC;
-    --gold: #7CE0FF;
-    --gold-hi: #A8ECFF;
-    --ink: #041527;
-    --accent-glow: rgba(112, 200, 255, 0.35);
-    --header-bg: linear-gradient(180deg, rgba(65,115,165,0.84) 0%, rgba(22,50,80,0.88) 50%, rgba(12,32,54,0.92) 100%);
+    --dim: #94BCD8;
+    --blue: #38BDF8;
+    --blue-dark: #0284C7;
+    --gold: #7DD3FC;
+    --gold-hi: #BAE6FD;
+    --ink: #041220;
+    --accent-glow: rgba(56, 189, 248, 0.35);
+    --header-bg: linear-gradient(180deg, rgba(45,85,130,0.88) 0%, rgba(18,42,70,0.92) 50%, rgba(10,24,42,0.95) 100%);
     --r: 6px;
     --r-lg: 10px;
   }
+  html[data-theme="win7"][data-mode="light"] {
+    --bg: #DCE8F5;
+    --panel: rgba(255, 255, 255, 0.88);
+    --panel2: rgba(240, 246, 252, 0.82);
+    --hover: rgba(210, 230, 250, 0.90);
+    --glass: rgba(255, 255, 255, 0.85);
+    --stage-bg: #0E2036;
+    --line: rgba(27, 117, 188, 0.22);
+    --line-strong: rgba(27, 117, 188, 0.65);
+    --text: #0C233C;
+    --dim: #4B6E92;
+    --blue: #1B75BC;
+    --blue-dark: #0F548A;
+    --gold: #0284C7;
+    --gold-hi: #36A9E1;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(27, 117, 188, 0.22);
+    --header-bg: linear-gradient(180deg, rgba(215,235,255,0.95) 0%, rgba(180,215,245,0.92) 50%, rgba(150,195,235,0.95) 100%);
+  }
 
-  /* ==================== 7. HACKER THEME ==================== */
+  /* ==================== 7. HACKER THEME (CYBER MATRIX & BIO-LAB LIGHT) ==================== */
   html[data-theme="hacker"] {
     --bg: #020502;
     --panel: #050D06;
     --panel2: #0A190C;
     --hover: #112A15;
-    --glass: rgba(5, 13, 6, 0.88);
+    --glass: rgba(5, 13, 6, 0.90);
     --stage-bg: #010401;
     --line: rgba(0, 255, 65, 0.24);
     --line-strong: rgba(0, 255, 65, 0.70);
@@ -263,44 +320,84 @@
     --gold: #39FF14;
     --gold-hi: #76FF5B;
     --ink: #020802;
-    --accent-glow: rgba(0, 255, 65, 0.30);
+    --accent-glow: rgba(0, 255, 65, 0.32);
+    --accent-glow-solid: #00FF41;
     --header-bg: #050D06;
-    --font-ui: 'JetBrains Mono', 'Fira Code', 'Consolas', 'IBM Plex Sans Arabic', 'Noto Sans Arabic', monospace, sans-serif;
-    --r: 4px;
-    --r-lg: 8px;
+    --font-ui: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', 'IBM Plex Sans Arabic', monospace;
+    --r: 3px;
+    --r-lg: 5px;
+  }
+  html[data-theme="hacker"][data-mode="light"] {
+    --bg: #F0F7F1;
+    --panel: #FFFFFF;
+    --panel2: #E5F0E7;
+    --hover: #D6E8D9;
+    --glass: rgba(255, 255, 255, 0.92);
+    --stage-bg: #0D1C0F;
+    --line: rgba(0, 168, 43, 0.22);
+    --line-strong: rgba(0, 153, 38, 0.75);
+    --text: #07260E;
+    --dim: #2A6635;
+    --blue: #008A24;
+    --blue-dark: #00661A;
+    --gold: #00A82B;
+    --gold-hi: #00C832;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(0, 168, 43, 0.18);
+    --accent-glow-solid: #008A24;
+    --header-bg: #E5F0E7;
   }
 
-  /* ==================== 8. VS CODE THEME ==================== */
+  /* ==================== 8. VS CODE THEME (DARK+ & LIGHT+) ==================== */
   html[data-theme="vscode"] {
     --bg: #181818;
-    --panel: #252526;
-    --panel2: #333337;
-    --hover: #3E3E42;
-    --glass: rgba(37, 37, 38, 0.88);
-    --stage-bg: #1E1E1E;
-    --line: #3C3C3C;
+    --panel: #1F1F1F;
+    --panel2: #252526;
+    --hover: #2A2D2E;
+    --glass: rgba(31, 31, 31, 0.92);
+    --stage-bg: #141414;
+    --line: #383838;
     --line-strong: #007ACC;
     --text: #CCCCCC;
     --dim: #858585;
     --blue: #007ACC;
-    --blue-dark: #0062A3;
+    --blue-dark: #005A9E;
     --gold: #CCA700;
     --gold-hi: #E5BD00;
     --ink: #FFFFFF;
     --accent-glow: rgba(0, 122, 204, 0.28);
-    --header-bg: #323233;
+    --header-bg: #2C2C2C;
     --font-ui: 'Segoe WPC', 'Segoe UI', 'Consolas', 'IBM Plex Sans Arabic', 'Noto Sans Arabic', sans-serif;
     --r: 4px;
     --r-lg: 6px;
   }
+  html[data-theme="vscode"][data-mode="light"] {
+    --bg: #F3F3F3;
+    --panel: #FFFFFF;
+    --panel2: #F8F8F8;
+    --hover: #E8E8E8;
+    --glass: rgba(255, 255, 255, 0.94);
+    --stage-bg: #1E1E1E;
+    --line: #E5E5E5;
+    --line-strong: #007ACC;
+    --text: #24292E;
+    --dim: #616161;
+    --blue: #007ACC;
+    --blue-dark: #005FB8;
+    --gold: #B5740D;
+    --gold-hi: #D48806;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(0, 122, 204, 0.18);
+    --header-bg: #2C2C2C;
+  }
 
-  /* ==================== 9. TERMINAL THEME ==================== */
+  /* ==================== 9. TERMINAL THEME (MAINFRAME CRT & TELETYPE LIGHT) ==================== */
   html[data-theme="terminal"] {
     --bg: #0A0804;
     --panel: #120E07;
     --panel2: #1F180B;
     --hover: #2E2310;
-    --glass: rgba(18, 14, 7, 0.90);
+    --glass: rgba(18, 14, 7, 0.92);
     --stage-bg: #060402;
     --line: rgba(255, 176, 0, 0.24);
     --line-strong: rgba(255, 176, 0, 0.70);
@@ -311,11 +408,319 @@
     --gold: #FFD066;
     --gold-hi: #FFE099;
     --ink: #0A0804;
-    --accent-glow: rgba(255, 176, 0, 0.28);
+    --accent-glow: rgba(255, 176, 0, 0.32);
+    --accent-glow-solid: #FFB000;
     --header-bg: #120E07;
-    --font-ui: 'Courier New', 'Consolas', 'IBM Plex Sans Arabic', 'Noto Sans Arabic', monospace, sans-serif;
+    --font-ui: 'Courier New', 'Consolas', 'Cascadia Code', 'JetBrains Mono', 'IBM Plex Sans Arabic', monospace;
     --r: 2px;
     --r-lg: 4px;
+  }
+  html[data-theme="terminal"][data-mode="light"] {
+    --bg: #FAF5EC;
+    --panel: #FFFFFF;
+    --panel2: #F3EBDD;
+    --hover: #E8DCC8;
+    --glass: rgba(255, 255, 255, 0.92);
+    --stage-bg: #1C1306;
+    --line: rgba(184, 125, 0, 0.22);
+    --line-strong: rgba(184, 125, 0, 0.75);
+    --text: #2E1B05;
+    --dim: #6E491A;
+    --blue: #B86500;
+    --blue-dark: #8F4E00;
+    --gold: #D97706;
+    --gold-hi: #F59E0B;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(184, 101, 0, 0.18);
+    --accent-glow-solid: #B86500;
+    --header-bg: #F3EBDD;
+  }
+
+  /* ==================== HACKER & TERMINAL DYNAMIC PHOSPHOR COLORS ==================== */
+  /* Green Phosphor (Matrix P1) */
+  html[data-theme="hacker"][data-term-color="green"],
+  html[data-theme="terminal"][data-term-color="green"] {
+    --bg: #020502;
+    --panel: #050D06;
+    --panel2: #0A190C;
+    --hover: #112A15;
+    --glass: rgba(5, 13, 6, 0.90);
+    --stage-bg: #010401;
+    --line: rgba(0, 255, 65, 0.24);
+    --line-strong: rgba(0, 255, 65, 0.70);
+    --text: #00FF41;
+    --dim: #00A82B;
+    --blue: #00FF41;
+    --blue-dark: #00C832;
+    --gold: #39FF14;
+    --gold-hi: #76FF5B;
+    --ink: #020802;
+    --accent-glow: rgba(0, 255, 65, 0.32);
+    --accent-glow-solid: #00FF41;
+    --header-bg: #050D06;
+  }
+  html[data-theme="hacker"][data-mode="light"][data-term-color="green"],
+  html[data-theme="terminal"][data-mode="light"][data-term-color="green"] {
+    --bg: #F0F7F1;
+    --panel: #FFFFFF;
+    --panel2: #E5F0E7;
+    --hover: #D6E8D9;
+    --glass: rgba(255, 255, 255, 0.92);
+    --stage-bg: #0D1C0F;
+    --line: rgba(0, 168, 43, 0.22);
+    --line-strong: rgba(0, 153, 38, 0.75);
+    --text: #07260E;
+    --dim: #2A6635;
+    --blue: #008A24;
+    --blue-dark: #00661A;
+    --gold: #00A82B;
+    --gold-hi: #00C832;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(0, 168, 43, 0.18);
+    --accent-glow-solid: #008A24;
+    --header-bg: #E5F0E7;
+  }
+
+  /* Amber Phosphor (VT100 P3) */
+  html[data-theme="terminal"][data-term-color="amber"],
+  html[data-theme="hacker"][data-term-color="amber"] {
+    --bg: #0A0804;
+    --panel: #120E07;
+    --panel2: #1F180B;
+    --hover: #2E2310;
+    --glass: rgba(18, 14, 7, 0.92);
+    --stage-bg: #060402;
+    --line: rgba(255, 176, 0, 0.24);
+    --line-strong: rgba(255, 176, 0, 0.70);
+    --text: #FFB000;
+    --dim: #B87D00;
+    --blue: #FFB000;
+    --blue-dark: #E09600;
+    --gold: #FFD066;
+    --gold-hi: #FFE099;
+    --ink: #0A0804;
+    --accent-glow: rgba(255, 176, 0, 0.32);
+    --accent-glow-solid: #FFB000;
+    --header-bg: #120E07;
+  }
+  html[data-theme="terminal"][data-mode="light"][data-term-color="amber"],
+  html[data-theme="hacker"][data-mode="light"][data-term-color="amber"] {
+    --bg: #FAF5EC;
+    --panel: #FFFFFF;
+    --panel2: #F3EBDD;
+    --hover: #E8DCC8;
+    --glass: rgba(255, 255, 255, 0.92);
+    --stage-bg: #1C1306;
+    --line: rgba(184, 125, 0, 0.22);
+    --line-strong: rgba(184, 125, 0, 0.75);
+    --text: #2E1B05;
+    --dim: #6E491A;
+    --blue: #B86500;
+    --blue-dark: #8F4E00;
+    --gold: #D97706;
+    --gold-hi: #F59E0B;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(184, 101, 0, 0.18);
+    --accent-glow-solid: #B86500;
+    --header-bg: #F3EBDD;
+  }
+
+  /* Cyan Phosphor (Cyber Ice P4) */
+  html[data-theme="hacker"][data-term-color="cyan"],
+  html[data-theme="terminal"][data-term-color="cyan"] {
+    --bg: #02080A;
+    --panel: #061116;
+    --panel2: #0C1E26;
+    --hover: #14303D;
+    --glass: rgba(6, 17, 22, 0.92);
+    --stage-bg: #010406;
+    --line: rgba(0, 240, 255, 0.24);
+    --line-strong: rgba(0, 240, 255, 0.75);
+    --text: #00F0FF;
+    --dim: #009BA6;
+    --blue: #00F0FF;
+    --blue-dark: #00C832;
+    --gold: #5CF5FF;
+    --gold-hi: #A6FBFF;
+    --ink: #02080A;
+    --accent-glow: rgba(0, 240, 255, 0.32);
+    --accent-glow-solid: #00F0FF;
+    --header-bg: #061116;
+  }
+  html[data-theme="hacker"][data-mode="light"][data-term-color="cyan"],
+  html[data-theme="terminal"][data-mode="light"][data-term-color="cyan"] {
+    --bg: #F0F9FB;
+    --panel: #FFFFFF;
+    --panel2: #E1F2F6;
+    --hover: #CEE7EE;
+    --glass: rgba(255, 255, 255, 0.92);
+    --stage-bg: #08171E;
+    --line: rgba(0, 155, 166, 0.22);
+    --line-strong: rgba(0, 140, 150, 0.75);
+    --text: #05262E;
+    --dim: #1D5E6E;
+    --blue: #008894;
+    --blue-dark: #006670;
+    --gold: #00A5B5;
+    --gold-hi: #00C8D6;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(0, 136, 148, 0.18);
+    --accent-glow-solid: #008894;
+    --header-bg: #E1F2F6;
+  }
+
+  /* Crimson Phosphor (Red Alert) */
+  html[data-theme="hacker"][data-term-color="crimson"],
+  html[data-theme="terminal"][data-term-color="crimson"] {
+    --bg: #0A0304;
+    --panel: #140608;
+    --panel2: #220B0F;
+    --hover: #351218;
+    --glass: rgba(20, 6, 8, 0.92);
+    --stage-bg: #060102;
+    --line: rgba(255, 51, 68, 0.26);
+    --line-strong: rgba(255, 51, 68, 0.78);
+    --text: #FF3344;
+    --dim: #BA202E;
+    --blue: #FF3344;
+    --blue-dark: #D91D2E;
+    --gold: #FF6675;
+    --gold-hi: #FFA3AC;
+    --ink: #0A0304;
+    --accent-glow: rgba(255, 51, 68, 0.35);
+    --accent-glow-solid: #FF3344;
+    --header-bg: #140608;
+  }
+  html[data-theme="hacker"][data-mode="light"][data-term-color="crimson"],
+  html[data-theme="terminal"][data-mode="light"][data-term-color="crimson"] {
+    --bg: #FAF0F1;
+    --panel: #FFFFFF;
+    --panel2: #F5E1E3;
+    --hover: #ECD0D3;
+    --glass: rgba(255, 255, 255, 0.92);
+    --stage-bg: #21080A;
+    --line: rgba(186, 32, 46, 0.22);
+    --line-strong: rgba(186, 32, 46, 0.75);
+    --text: #3B0A0E;
+    --dim: #782028;
+    --blue: #C21828;
+    --blue-dark: #9E0F1E;
+    --gold: #D92334;
+    --gold-hi: #F03A4C;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(194, 24, 40, 0.18);
+    --accent-glow-solid: #C21828;
+    --header-bg: #F5E1E3;
+  }
+
+  /* Monochrome White Phosphor (VT220 Paper White) */
+  html[data-theme="hacker"][data-term-color="mono"],
+  html[data-theme="terminal"][data-term-color="mono"] {
+    --bg: #0A0B0E;
+    --panel: #13151A;
+    --panel2: #1E2129;
+    --hover: #2C303B;
+    --glass: rgba(19, 21, 26, 0.92);
+    --stage-bg: #060709;
+    --line: rgba(226, 232, 240, 0.22);
+    --line-strong: rgba(248, 250, 252, 0.70);
+    --text: #F1F5F9;
+    --dim: #94A3B8;
+    --blue: #E2E8F0;
+    --blue-dark: #CBD5E1;
+    --gold: #FFFFFF;
+    --gold-hi: #FFFFFF;
+    --ink: #0A0B0E;
+    --accent-glow: rgba(226, 232, 240, 0.30);
+    --accent-glow-solid: #E2E8F0;
+    --header-bg: #13151A;
+  }
+  html[data-theme="hacker"][data-mode="light"][data-term-color="mono"],
+  html[data-theme="terminal"][data-mode="light"][data-term-color="mono"] {
+    --bg: #F4F5F7;
+    --panel: #FFFFFF;
+    --panel2: #E9ECEF;
+    --hover: #DEE2E6;
+    --glass: rgba(255, 255, 255, 0.92);
+    --stage-bg: #111317;
+    --line: rgba(30, 41, 59, 0.18);
+    --line-strong: rgba(30, 41, 59, 0.65);
+    --text: #0F172A;
+    --dim: #475569;
+    --blue: #1E293B;
+    --blue-dark: #0F172A;
+    --gold: #334155;
+    --gold-hi: #475569;
+    --ink: #FFFFFF;
+    --accent-glow: rgba(30, 41, 59, 0.14);
+    --accent-glow-solid: #1E293B;
+    --header-bg: #E9ECEF;
+  }
+
+  /* ==================== REALISTIC CRT & PHOSPHOR EFFECTS ==================== */
+  /* CRT Scanlines Overlay with subtle screen curvature vignette */
+  html[data-theme="hacker"]:not([data-crt="off"]) body::after,
+  html[data-theme="terminal"]:not([data-crt="off"]) body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99999;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.32) 0px,
+        rgba(0, 0, 0, 0.32) 1px,
+        transparent 1px,
+        transparent 2px
+      ),
+      radial-gradient(
+        ellipse at center,
+        transparent 65%,
+        rgba(0, 0, 0, 0.55) 100%
+      );
+    opacity: 0.22;
+    transition: opacity 0.25s ease;
+  }
+  html[data-theme="hacker"][data-mode="light"]:not([data-crt="off"]) body::after,
+  html[data-theme="terminal"][data-mode="light"]:not([data-crt="off"]) body::after {
+    opacity: 0.06;
+  }
+
+  /* Phosphor Text & Element Bloom */
+  html[data-theme="hacker"][data-mode="dark"] header h1,
+  html[data-theme="hacker"][data-mode="dark"] .brand-title,
+  html[data-theme="hacker"][data-mode="dark"] .time-now,
+  html[data-theme="hacker"][data-mode="dark"] .mtag,
+  html[data-theme="terminal"][data-mode="dark"] header h1,
+  html[data-theme="terminal"][data-mode="dark"] .brand-title,
+  html[data-theme="terminal"][data-mode="dark"] .time-now,
+  html[data-theme="terminal"][data-mode="dark"] .mtag {
+    text-shadow: 0 0 6px var(--accent-glow-solid, var(--blue));
+  }
+
+  /* Blinking Terminal Prompt Cursor */
+  html[data-theme="hacker"] header .brand-title::after,
+  html[data-theme="terminal"] header .brand-title::after {
+    content: " _";
+    display: inline-block;
+    color: var(--blue);
+    font-weight: 700;
+    animation: termCursorBlink 1s step-start infinite;
+  }
+  @keyframes termCursorBlink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  /* Terminal Log Style for Chat Header */
+  html[data-theme="hacker"] aside.chat .chat-head .chat-title::before {
+    content: "[SEC_LOG] ";
+    opacity: 0.75;
+  }
+  html[data-theme="terminal"] aside.chat .chat-head .chat-title::before {
+    content: "> TTY: ";
+    opacity: 0.75;
   }
 
   html { color-scheme: dark; }
@@ -346,22 +751,51 @@
   img, canvas { -webkit-user-drag: none; user-drag: none; }
   [hidden] { display: none !important; }
 
-  /* Win98 3D Bevel Styling */
-  html[data-theme="win98"] header,
-  html[data-theme="win98"] aside.chat,
-  html[data-theme="win98"] .controls,
-  html[data-theme="win98"] dialog,
-  html[data-theme="win98"] button,
-  html[data-theme="win98"] select,
-  html[data-theme="win98"] .vol-group {
+  /* Win98 3D Bevel Styling (Light & Dark Variants) */
+  html[data-theme="win98"]:not([data-mode="dark"]) header,
+  html[data-theme="win98"]:not([data-mode="dark"]) aside.chat,
+  html[data-theme="win98"]:not([data-mode="dark"]) .controls,
+  html[data-theme="win98"]:not([data-mode="dark"]) dialog,
+  html[data-theme="win98"]:not([data-mode="dark"]) button,
+  html[data-theme="win98"]:not([data-mode="dark"]) select,
+  html[data-theme="win98"]:not([data-mode="dark"]) .vol-group {
     box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf !important;
     border: none !important;
   }
+  html[data-theme="win98"]:not([data-mode="dark"]) button:active {
+    box-shadow: inset 1px 1px #0a0a0a, inset -1px -1px #ffffff, inset 2px 2px #808080, inset -2px -2px #dfdfdf !important;
+  }
+  html[data-theme="win98"][data-mode="dark"] header,
+  html[data-theme="win98"][data-mode="dark"] aside.chat,
+  html[data-theme="win98"][data-mode="dark"] .controls,
+  html[data-theme="win98"][data-mode="dark"] dialog,
+  html[data-theme="win98"][data-mode="dark"] button,
+  html[data-theme="win98"][data-mode="dark"] select,
+  html[data-theme="win98"][data-mode="dark"] .vol-group {
+    box-shadow: inset -1px -1px #000000, inset 1px 1px #3a424e, inset -2px -2px #12151a, inset 2px 2px #2d3540 !important;
+    border: none !important;
+  }
+  html[data-theme="win98"][data-mode="dark"] button:active {
+    box-shadow: inset 1px 1px #000000, inset -1px -1px #3a424e, inset 2px 2px #12151a, inset -2px -2px #2d3540 !important;
+  }
+
+  /* Header Brand Title Colors */
   html[data-theme="win98"] header .brand-title,
   html[data-theme="winxp"] header .brand-title,
+  html[data-theme="win7"][data-mode="dark"] header .brand-title,
+  html[data-theme="vscode"] header .brand-title,
   html[data-theme="whatsapp"][data-mode="light"] header .brand-title,
   html[data-theme="telegram"][data-mode="light"] header .brand-title {
     color: #FFFFFF;
+  }
+  html[data-theme="win7"][data-mode="light"] header .brand-title {
+    color: #0C233C;
+  }
+  html[data-theme="hacker"][data-mode="light"] header .brand-title {
+    color: #07260E;
+  }
+  html[data-theme="terminal"][data-mode="light"] header .brand-title {
+    color: #2E1B05;
   }
 
   /* Authentic WhatsApp Classic Wallpaper, Chat Bubbles & Header Styling */
@@ -453,10 +887,60 @@
     color: #FFFFFF;
     font-weight: 700;
   }
-  html[data-theme="winxp"] header button:not(.primary) {
+  html[data-theme="winxp"][data-mode="light"] header button:not(.primary),
+  html[data-theme="winxp"]:not([data-mode="dark"]) header button:not(.primary) {
     background: rgba(255, 255, 255, 0.18);
     color: #FFFFFF;
     border-color: rgba(255, 255, 255, 0.35);
+  }
+  html[data-theme="winxp"][data-mode="dark"] header button:not(.primary) {
+    background: rgba(255, 255, 255, 0.08);
+    color: #F1F5F9;
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+  html[data-theme="winxp"][data-mode="dark"] header button.primary {
+    background: #FF7700;
+    color: #07080A;
+    font-weight: 700;
+  }
+  html[data-theme="win7"][data-mode="light"] header button:not(.primary),
+  html[data-theme="win7"][data-mode="light"] header a.iconbtn {
+    background: rgba(255, 255, 255, 0.65);
+    color: #0C233C;
+    border-color: rgba(27, 117, 188, 0.35);
+  }
+  html[data-theme="win7"][data-mode="light"] header button:not(.primary):hover,
+  html[data-theme="win7"][data-mode="light"] header a.iconbtn:hover {
+    background: rgba(255, 255, 255, 0.90);
+    box-shadow: 0 0 8px rgba(54, 169, 225, 0.40);
+  }
+  html[data-theme="win7"][data-mode="light"] header button.primary {
+    background: #1B75BC;
+    color: #FFFFFF;
+    font-weight: 700;
+  }
+  html[data-theme="vscode"][data-mode="light"] header button:not(.primary),
+  html[data-theme="vscode"][data-mode="light"] header a.iconbtn {
+    background: rgba(255, 255, 255, 0.12);
+    color: #D4D4D4;
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  html[data-theme="vscode"][data-mode="light"] header button:not(.primary):hover,
+  html[data-theme="vscode"][data-mode="light"] header a.iconbtn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    color: #FFFFFF;
+  }
+  html[data-theme="hacker"][data-mode="light"] header button:not(.primary),
+  html[data-theme="hacker"][data-mode="light"] header a.iconbtn {
+    background: #E5F0E7;
+    color: #07260E;
+    border-color: rgba(0, 168, 43, 0.35);
+  }
+  html[data-theme="terminal"][data-mode="light"] header button:not(.primary),
+  html[data-theme="terminal"][data-mode="light"] header a.iconbtn {
+    background: #F3EBDD;
+    color: #2E1B05;
+    border-color: rgba(184, 125, 0, 0.35);
   }
 
   /* Icons */
@@ -2838,8 +3322,7 @@
     .seek .knob {
       width: 14px;
       height: 14px;
-      margin-top: -7px;
-      margin-left: -7px;
+      margin: 0;
       opacity: 1 !important;
     }
     .row {
@@ -2927,9 +3410,11 @@
   }
 
   /* --------------------------------------------------------------------------
-     2. MOBILE LANDSCAPE CINEMA MODE (HEIGHT <= 520px, LANDSCAPE)
+     2. MOBILE LANDSCAPE & MOBILE FULLSCREEN CINEMA MODE
      -------------------------------------------------------------------------- */
-  @media (max-height: 520px) and (orientation: landscape), (max-width: 950px) and (orientation: landscape) and (max-height: 560px) {
+  @media (orientation: landscape) and (max-height: 640px),
+         (max-width: 950px) and (orientation: landscape),
+         (hover: none) and (pointer: coarse) and (orientation: landscape) {
     html, body {
       height: 100dvh;
       overflow: hidden;
@@ -2949,14 +3434,18 @@
       overflow: hidden;
       position: relative;
       background: #000;
-      flex-direction: row;
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 0 !important;
     }
     .stage-wrap {
-      width: 100% !important;
       height: 100% !important;
-      flex: 1 !important;
+      height: 100dvh !important;
       border-radius: 0 !important;
-      position: relative;
+      border: none !important;
+      position: relative !important;
+      overflow: hidden !important;
+      background: #000 !important;
     }
     .stage {
       width: 100% !important;
@@ -3036,14 +3525,14 @@
     .row {
       display: flex !important;
       align-items: center !important;
-      gap: 4px !important;
+      gap: 3px !important;
       justify-content: space-between !important;
       flex-wrap: nowrap !important;
       width: 100% !important;
     }
     .row .iconbtn, .row .tbtn {
       height: 36px !important;
-      min-width: 32px !important;
+      min-width: 30px !important;
       max-width: 44px !important;
       flex: 1 1 0 !important;
       padding: 0 !important;
@@ -3088,61 +3577,160 @@
       display: none !important;
     }
 
-    /* Slide-Over Glass Chat Drawer in Landscape (Takes LEFT section, screen moves to RIGHT in both EN & AR) */
-    aside.chat {
-      position: fixed !important;
-      top: 0 !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: auto !important;
-      inset-inline-start: 0 !important;
-      inset-inline-end: auto !important;
-      width: min(340px, 42vw) !important;
-      height: 100dvh !important;
-      z-index: 60 !important;
-      border-radius: 0 !important;
-      border: none !important;
-      border-right: 1px solid var(--line-strong) !important;
-      border-inline-end: 1px solid var(--line-strong) !important;
-      background: rgba(15, 23, 42, 0.94) !important;
-      backdrop-filter: blur(24px) !important;
-      -webkit-backdrop-filter: blur(24px) !important;
-      box-shadow: 0 0 35px rgba(0,0,0,0.85) !important;
-      display: flex !important;
-      padding-top: env(safe-area-inset-top);
-      padding-bottom: env(safe-area-inset-bottom);
-      padding-left: max(8px, env(safe-area-inset-left));
-      transform: translateX(-105%) !important;
-      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    }
-    html[dir="rtl"] aside.chat,
-    html[dir="ltr"] aside.chat,
-    html:not([dir="rtl"]) aside.chat {
-      left: 0 !important;
-      right: auto !important;
-      transform: translateX(-105%) !important;
-    }
-    body.chat-drawer-open aside.chat {
-      transform: translateX(0) !important;
-    }
-    body.chat-drawer-open .stage-wrap {
-      width: calc(100% - min(340px, 42vw)) !important;
-      margin-left: auto !important;
-      margin-right: 0 !important;
-      transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1), margin 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    }
+    /* --------------------------------------------------------------------------
+       MOBILE UI HALF-AND-HALF SIDE-BY-SIDE SPLIT
+       When Chat is CLOSED: Stage Wrap takes FULL 100% width
+       When Chat is OPEN: Screen Player takes 50%, Chat Interface takes 50%
+       Accurately mirrored for English (LTR) and Arabic (RTL)
+       -------------------------------------------------------------------------- */
     body:not(.chat-drawer-open) .stage-wrap {
       width: 100% !important;
+      width: 100dvw !important;
+      max-width: 100% !important;
+      flex: 1 1 100% !important;
       margin: 0 !important;
+      transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1), flex-basis 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
+    body:not(.chat-drawer-open) aside.chat {
+      display: none !important;
+    }
+
+    body.chat-drawer-open .stage-wrap {
+      width: 50% !important;
+      width: 50dvw !important;
+      max-width: 50% !important;
+      min-width: 0 !important;
+      flex: 0 0 50% !important;
+      margin: 0 !important;
+      transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1), flex-basis 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    body.chat-drawer-open aside.chat {
+      width: 50% !important;
+      width: 50dvw !important;
+      max-width: 50% !important;
+      min-width: 0 !important;
+      flex: 0 0 50% !important;
+      height: 100% !important;
+      height: 100dvh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      position: relative !important;
+      top: auto !important;
+      bottom: auto !important;
+      left: auto !important;
+      right: auto !important;
+      transform: none !important;
+      z-index: 30 !important;
+      border-radius: 0 !important;
+      border: none !important;
+      background: rgba(15, 23, 42, 0.96) !important;
+      backdrop-filter: blur(24px) !important;
+      -webkit-backdrop-filter: blur(24px) !important;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      box-shadow: none !important;
+      overflow: hidden !important;
+    }
+
+    /* English / LTR: Chat takes LEFT half (50%), Screen Player moves to RIGHT half (50%) */
+    html[dir="ltr"] body.chat-drawer-open aside.chat,
+    html:not([dir="rtl"]) body.chat-drawer-open aside.chat {
+      order: -1 !important;
+      border-right: 1px solid var(--line-strong) !important;
+      border-left: none !important;
+      padding-left: max(8px, env(safe-area-inset-left)) !important;
+      padding-right: 0 !important;
+    }
+    html[dir="ltr"] body.chat-drawer-open .stage-wrap,
+    html:not([dir="rtl"]) body.chat-drawer-open .stage-wrap {
+      order: 1 !important;
+      padding-right: max(8px, env(safe-area-inset-right)) !important;
+      padding-left: 0 !important;
+    }
+
+    /* Arabic / RTL: Chat takes RIGHT half (50%), Screen Player moves to LEFT half (50%) */
+    html[dir="rtl"] body.chat-drawer-open aside.chat {
+      order: -1 !important;
+      border-left: 1px solid var(--line-strong) !important;
+      border-right: none !important;
+      padding-right: max(8px, env(safe-area-inset-right)) !important;
+      padding-left: 0 !important;
+    }
+    html[dir="rtl"] body.chat-drawer-open .stage-wrap {
+      order: 1 !important;
+      padding-left: max(8px, env(safe-area-inset-left)) !important;
+      padding-right: 0 !important;
+    }
+
+    /* Compact controls styling in 50% screen player view */
+    body.chat-drawer-open .controls {
+      padding: 8px 10px !important;
+      padding-bottom: max(8px, env(safe-area-inset-bottom)) !important;
+    }
+    body.chat-drawer-open .controls .row {
+      gap: 2px !important;
+    }
+    body.chat-drawer-open .controls .row .iconbtn,
+    body.chat-drawer-open .controls .row .tbtn {
+      min-width: 26px !important;
+      max-width: 38px !important;
+      height: 32px !important;
+    }
+    body.chat-drawer-open .controls #play {
+      min-width: 32px !important;
+      max-width: 42px !important;
+      height: 32px !important;
+    }
+    body.chat-drawer-open .controls #speed {
+      max-width: 44px !important;
+      height: 32px !important;
+      font-size: 11px !important;
+    }
+
+    /* Chat Header & Close button */
+    aside.chat .chat-head {
+      padding: 6px 10px !important;
+      height: 42px !important;
+      flex: none !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 6px !important;
+      background: var(--panel) !important;
+      border-bottom: 1px solid var(--line) !important;
+    }
+    aside.chat .chat-head h2 {
+      font-size: 12.5px !important;
+      margin: 0 !important;
+      gap: 5px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    aside.chat #chatClose {
+      display: inline-flex !important;
+      width: 30px !important;
+      height: 30px !important;
+      flex: none !important;
+    }
+
+    /* Back To Hub button placed in outer corner of screen player */
     .stage-back-to-hub-btn {
-      top: 14px !important;
+      top: 12px !important;
+      inset-inline-end: 14px !important;
+      inset-inline-start: auto !important;
+    }
+    html[dir="ltr"] .stage-back-to-hub-btn,
+    html:not([dir="rtl"]) .stage-back-to-hub-btn {
       right: 14px !important;
       left: auto !important;
     }
-    #chatClose {
-      display: inline-flex !important;
+    html[dir="rtl"] .stage-back-to-hub-btn {
+      left: 14px !important;
+      right: auto !important;
     }
+
     .seek .tick {
       width: 1px !important;
       height: 6px !important;
@@ -3150,6 +3738,123 @@
       background: rgba(255, 255, 255, 0.35) !important;
       opacity: 0.6 !important;
     }
+  }
+
+  /* Also support mobile class trigger if height is slightly larger on mobile fullscreen */
+  body.is-mobile-landscape:not(.is-mobile-portrait) {
+    height: 100dvh;
+    overflow: hidden;
+  }
+  body.is-mobile-landscape:not(.is-mobile-portrait) header {
+    display: none !important;
+  }
+  body.is-mobile-landscape:not(.is-mobile-portrait) main {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100dvw !important;
+    height: 100dvh !important;
+    max-width: 100dvw !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background: #000 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 0 !important;
+  }
+  body.is-mobile-landscape:not(.is-mobile-portrait):not(.chat-drawer-open) .stage-wrap {
+    width: 100% !important;
+    width: 100dvw !important;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+    margin: 0 !important;
+  }
+  body.is-mobile-landscape:not(.is-mobile-portrait):not(.chat-drawer-open) aside.chat {
+    display: none !important;
+  }
+  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .stage-wrap {
+    width: 50% !important;
+    width: 50dvw !important;
+    max-width: 50% !important;
+    min-width: 0 !important;
+    flex: 0 0 50% !important;
+    margin: 0 !important;
+  }
+  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open aside.chat {
+    width: 50% !important;
+    width: 50dvw !important;
+    max-width: 50% !important;
+    min-width: 0 !important;
+    flex: 0 0 50% !important;
+    height: 100% !important;
+    height: 100dvh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    z-index: 30 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    background: rgba(15, 23, 42, 0.96) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+  html[dir="ltr"] body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open aside.chat,
+  html:not([dir="rtl"]) body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open aside.chat {
+    order: -1 !important;
+    border-right: 1px solid var(--line-strong) !important;
+    border-left: none !important;
+    padding-left: max(8px, env(safe-area-inset-left)) !important;
+    padding-right: 0 !important;
+  }
+  html[dir="ltr"] body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .stage-wrap,
+  html:not([dir="rtl"]) body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .stage-wrap {
+    order: 1 !important;
+    padding-right: max(8px, env(safe-area-inset-right)) !important;
+    padding-left: 0 !important;
+  }
+  html[dir="rtl"] body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open aside.chat {
+    order: -1 !important;
+    border-left: 1px solid var(--line-strong) !important;
+    border-right: none !important;
+    padding-right: max(8px, env(safe-area-inset-right)) !important;
+    padding-left: 0 !important;
+  }
+  html[dir="rtl"] body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .stage-wrap {
+    order: 1 !important;
+    padding-left: max(8px, env(safe-area-inset-left)) !important;
+    padding-right: 0 !important;
+  }
+  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls {
+    padding: 8px 10px !important;
+    padding-bottom: max(8px, env(safe-area-inset-bottom)) !important;
+  }
+  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls .row {
+    gap: 2px !important;
+  }
+  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls .row .iconbtn,
+  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls .row .tbtn {
+    min-width: 26px !important;
+    max-width: 38px !important;
+    height: 32px !important;
+  }
+  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls #play {
+    min-width: 32px !important;
+    max-width: 42px !important;
+    height: 32px !important;
+  }
+  body.is-mobile-landscape:not(.is-mobile-portrait).chat-drawer-open .controls #speed {
+    max-width: 44px !important;
+    height: 32px !important;
+    font-size: 11px !important;
   }
 
   /* ==================== SMART STUDENT HUB STYLING ==================== */
@@ -4274,10 +4979,13 @@
     dialog.guide-dlg {
       width: 100vw !important;
       max-width: 100vw !important;
-      height: auto !important;
+      height: 90dvh !important;
       max-height: 90dvh !important;
       margin: auto 0 0 0 !important;
       border-radius: 20px 20px 0 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
     }
     .guide-desktop-badge,
     .guide-sidebar,
@@ -4287,30 +4995,54 @@
       display: none !important;
     }
     .guide-container {
-      flex-direction: column;
+      display: flex !important;
+      flex-direction: column !important;
+      flex: 1 !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
+    }
+    .guide-content-stage {
+      display: flex !important;
+      flex-direction: column !important;
+      flex: 1 !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
     }
     .guide-content-stage .guide-slider {
-      padding: 14px 16px 12px;
-      background: var(--panel2);
-      border-bottom: 1px solid var(--line);
-      overflow: visible;
+      display: flex !important;
+      flex-direction: column !important;
+      flex: 1 !important;
+      min-height: 0 !important;
+      padding: 14px 16px 8px !important;
+      background: var(--panel2) !important;
+      border-bottom: 1px solid var(--line) !important;
+      overflow: hidden !important;
     }
     .guide-content-stage .guide-slides {
-      padding: 0;
-      min-height: 200px;
-      overflow: visible;
+      flex: 1 !important;
+      min-height: 0 !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      padding: 0 0 10px 0 !important;
     }
     .guide-slider-controls {
       display: flex !important;
+      flex: none !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 8px 4px 4px !important;
+      margin-top: 6px !important;
+      border-top: 1px solid var(--line) !important;
     }
     .guide-foot {
-      padding: 16px 20px 24px !important;
-      padding-bottom: max(24px, env(safe-area-inset-bottom, 24px)) !important;
+      flex: none !important;
+      padding: 12px 20px 20px !important;
+      padding-bottom: max(20px, env(safe-area-inset-bottom, 20px)) !important;
       box-sizing: border-box !important;
     }
     .guide-start-btn {
-      width: 100%;
-      justify-content: center;
+      width: 100% !important;
+      justify-content: center !important;
     }
   }
 
@@ -4705,8 +5437,8 @@
     padding-top: 4px;
   }
   .slider-btn {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: var(--bg);
     border: 1px solid var(--line);
@@ -4718,18 +5450,25 @@
     justify-content: center;
     cursor: pointer;
     transition: all 0.15s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
   }
   .slider-btn:hover {
     background: var(--hover);
     color: var(--blue);
     border-color: var(--line-strong);
   }
+  [dir="rtl"] .slider-btn {
+    transform: rotate(180deg);
+  }
   .slider-dots {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
   }
   .slider-dots .dot {
+    position: relative;
     width: 8px;
     height: 8px;
     border-radius: 50%;
@@ -4737,6 +5476,16 @@
     opacity: 0.35;
     cursor: pointer;
     transition: all 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .slider-dots .dot::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: -6px;
+    right: -6px;
   }
   .slider-dots .dot.active {
     background: var(--blue);
@@ -5606,6 +6355,170 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
+  /* Terminal / Hacker Phosphor & CRT Controls */
+  .theme-term-extras {
+    margin-top: 4px;
+    padding: 4px 2px 2px;
+    animation: fadeInTerm 0.18s ease;
+  }
+  @keyframes fadeInTerm {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .theme-term-divider {
+    height: 1px;
+    background: var(--line);
+    margin: 4px 0 6px;
+  }
+  .theme-term-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px 4px;
+  }
+  .term-head-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .term-palette-pills {
+    display: flex;
+    gap: 4px;
+    padding: 2px 0 6px;
+    justify-content: space-between;
+  }
+  .term-pill {
+    flex: 1;
+    height: 28px;
+    padding: 0;
+    border-radius: var(--r);
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.14s ease;
+  }
+  .term-pill:hover {
+    background: var(--hover);
+    border-color: var(--line-strong);
+    transform: scale(1.05);
+  }
+  .term-pill.active {
+    border-color: var(--blue);
+    background: var(--accent-glow);
+    box-shadow: 0 0 6px var(--accent-glow);
+  }
+  .dot-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .term-crt-toggle {
+    width: 100%;
+    height: 32px;
+    padding: 0 8px;
+    margin-top: 4px;
+    border-radius: var(--r);
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font-size: 11.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background 0.14s ease, border-color 0.14s ease;
+  }
+  .term-crt-toggle:hover {
+    background: var(--hover);
+    border-color: var(--line-strong);
+  }
+  .crt-toggle-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .crt-toggle-switch {
+    width: 28px;
+    height: 16px;
+    border-radius: 999px;
+    background: var(--hover);
+    border: 1px solid var(--line);
+    position: relative;
+    transition: background 0.18s ease, border-color 0.18s ease;
+  }
+  .crt-toggle-switch::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    inset-inline-start: 2px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--dim);
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), background 0.18s ease;
+  }
+  .crt-toggle-switch.active {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+  .crt-toggle-switch.active::after {
+    background: var(--ink);
+    transform: translateX(12px);
+  }
+  html[dir="rtl"] .crt-toggle-switch.active::after {
+    transform: translateX(-12px);
+  }
+
+  /* Mobile phosphor palette */
+  .m-term-extras {
+    animation: fadeInTerm 0.18s ease;
+  }
+  .m-term-palette {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .m-term-dot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 2px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.14s ease;
+    touch-action: manipulation;
+  }
+  .m-term-dot:hover {
+    border-color: var(--line-strong);
+    background: var(--hover);
+  }
+  .m-term-dot.active {
+    border-color: var(--blue);
+    background: var(--accent-glow);
+    color: var(--blue);
+    font-weight: 700;
+  }
+  .m-term-dot .dot-swatch {
+    width: 14px;
+    height: 14px;
+  }
+
   /* PC vs Mobile Appearance & Themes Rules */
   @media (min-width: 769px) {
     .theme-menu-wrap {
@@ -5714,13 +6627,8 @@
 <noscript><p style="margin:0;padding:12px 16px;background:#111827;color:#f8fafc;text-align:center">SVU Player replays recorded Syrian Virtual University sessions (screen, audio and chat) in your browser. Please turn on JavaScript to use it.</p></noscript>
 <header>
   <h1 class="brand">
-    <span class="logo">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <path d="M2 6.5C2 5.4 2.9 4.5 4 4.5H8.5C10.4 4.5 12 5.8 12 7.5V19.5C12 18.4 10.6 17.5 8.5 17.5H4C2.9 17.5 2 16.6 2 15.5V6.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="rgba(56,189,248,0.12)"/>
-        <path d="M22 6.5C22 5.4 21.1 4.5 20 4.5H15.5C13.6 4.5 12 5.8 12 7.5V19.5C12 18.4 13.4 17.5 15.5 17.5H20C21.1 17.5 22 16.6 22 15.5V6.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="rgba(56,189,248,0.12)"/>
-        <circle cx="12" cy="11.5" r="4.6" fill="#090D16" stroke="#F59E0B" stroke-width="1.6"/>
-        <polygon points="10.8 9.4 14.5 11.5 10.8 13.6" fill="#F59E0B"/>
-      </svg>
+    <span class="logo" style="display:inline-flex;align-items:center;justify-content:center;">
+      <img src="/favicon.svg" width="24" height="24" alt="SVU Logo" onerror="this.onerror=null;this.src='favicon.svg'" style="display:block;width:24px;height:24px;object-fit:contain;">
     </span>
     <span class="brand-title">SVU Player</span>
   </h1>
@@ -5773,6 +6681,26 @@
       <button class="theme-opt" data-theme-opt="hacker" role="menuitem"><span data-i18n="themeHacker">Hacker</span><span class="theme-dot" style="background:#00FF41"></span></button>
       <button class="theme-opt" data-theme-opt="vscode" role="menuitem"><span data-i18n="themeVscode">VS Code</span><span class="theme-dot" style="background:#007ACC"></span></button>
       <button class="theme-opt" data-theme-opt="terminal" role="menuitem"><span data-i18n="themeTerminal">Terminal</span><span class="theme-dot" style="background:#FFB000"></span></button>
+      <div class="theme-term-extras" id="themeTermExtras" style="display:none">
+        <div class="theme-term-divider"></div>
+        <div class="theme-term-head">
+          <span class="term-head-label" data-i18n="phosphorColor">Phosphor Tint</span>
+        </div>
+        <div class="term-palette-pills">
+          <button type="button" class="term-pill active" data-term-color="green" data-i18n-title="phosGreen" title="Matrix Green"><span class="dot-swatch" style="background:#00FF41"></span></button>
+          <button type="button" class="term-pill" data-term-color="amber" data-i18n-title="phosAmber" title="Vintage Amber"><span class="dot-swatch" style="background:#FFB000"></span></button>
+          <button type="button" class="term-pill" data-term-color="cyan" data-i18n-title="phosCyan" title="Cyber Ice"><span class="dot-swatch" style="background:#00F0FF"></span></button>
+          <button type="button" class="term-pill" data-term-color="crimson" data-i18n-title="phosCrimson" title="Red Alert"><span class="dot-swatch" style="background:#FF3344"></span></button>
+          <button type="button" class="term-pill" data-term-color="mono" data-i18n-title="phosMono" title="Paper White"><span class="dot-swatch" style="background:#E2E8F0"></span></button>
+        </div>
+        <button type="button" class="term-crt-toggle" id="themeCrtToggle" data-i18n-title="crtScanlines" title="CRT Scanlines & Glow">
+          <span class="crt-toggle-text">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <span data-i18n="crtScanlines">CRT Scanlines</span>
+          </span>
+          <span class="crt-toggle-switch active"></span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -7181,16 +8109,16 @@
 
         <!-- Mobile Slider Controls (hidden on desktop) -->
         <div class="guide-slider-controls">
-          <button class="slider-btn prev" id="sliderPrevBtn" aria-label="Previous slide">‹</button>
-          <div class="slider-dots" id="sliderDots">
-            <span class="dot active" data-slide="0"></span>
-            <span class="dot" data-slide="1"></span>
-            <span class="dot" data-slide="2"></span>
-            <span class="dot" data-slide="3"></span>
-            <span class="dot" data-slide="4"></span>
-            <span class="dot" data-slide="5"></span>
+          <button class="slider-btn prev" id="sliderPrevBtn" aria-label="Previous slide" data-i18n-aria="guidePrevSection">‹</button>
+          <div class="slider-dots" id="sliderDots" role="tablist" aria-label="Slides navigation">
+            <span class="dot active" data-slide="0" role="tab" aria-selected="true" aria-label="Slide 1"></span>
+            <span class="dot" data-slide="1" role="tab" aria-selected="false" aria-label="Slide 2"></span>
+            <span class="dot" data-slide="2" role="tab" aria-selected="false" aria-label="Slide 3"></span>
+            <span class="dot" data-slide="3" role="tab" aria-selected="false" aria-label="Slide 4"></span>
+            <span class="dot" data-slide="4" role="tab" aria-selected="false" aria-label="Slide 5"></span>
+            <span class="dot" data-slide="5" role="tab" aria-selected="false" aria-label="Slide 6"></span>
           </div>
-          <button class="slider-btn next" id="sliderNextBtn" aria-label="Next slide">›</button>
+          <button class="slider-btn next" id="sliderNextBtn" aria-label="Next slide" data-i18n-aria="guideNextSection">›</button>
         </div>
       </div>
 
@@ -7301,6 +8229,26 @@
         <button class="m-theme-opt" data-theme-opt="vscode"><span class="m-theme-dot" style="background:#007ACC"></span><span data-i18n="themeVscode">VS Code</span></button>
         <button class="m-theme-opt" data-theme-opt="terminal"><span class="m-theme-dot" style="background:#FFB000"></span><span data-i18n="themeTerminal">Terminal</span></button>
       </div>
+
+      <div class="m-term-extras" id="mobileTermExtras" style="display:none">
+        <div class="themes-header" style="margin-top:6px">
+          <span class="themes-label" data-i18n="phosphorColor">CRT Phosphor</span>
+        </div>
+        <div class="m-term-palette">
+          <button type="button" class="m-term-dot active" data-term-color="green" title="Matrix Green"><span class="dot-swatch" style="background:#00FF41"></span><span data-i18n="phosGreen">Green</span></button>
+          <button type="button" class="m-term-dot" data-term-color="amber" title="Vintage Amber"><span class="dot-swatch" style="background:#FFB000"></span><span data-i18n="phosAmber">Amber</span></button>
+          <button type="button" class="m-term-dot" data-term-color="cyan" title="Cyber Ice"><span class="dot-swatch" style="background:#00F0FF"></span><span data-i18n="phosCyan">Cyan</span></button>
+          <button type="button" class="m-term-dot" data-term-color="crimson" title="Red Alert"><span class="dot-swatch" style="background:#FF3344"></span><span data-i18n="phosCrimson">Crimson</span></button>
+          <button type="button" class="m-term-dot" data-term-color="mono" title="Paper White"><span class="dot-swatch" style="background:#E2E8F0"></span><span data-i18n="phosMono">White</span></button>
+        </div>
+        <button type="button" class="term-crt-toggle" id="mobileCrtToggle">
+          <span class="crt-toggle-text">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <span data-i18n="crtScanlines">CRT Scanlines & Glow</span>
+          </span>
+          <span class="crt-toggle-switch active"></span>
+        </button>
+      </div>
     </div>
 
     <!-- Navigation & Tools -->
@@ -7341,6 +8289,6 @@
 
 <audio id="audio" preload="auto"></audio>
 
-<script src="app.js?v=2.8.1"></script>
+<script src="app.js?v=2.8.2"></script>
 </body>
 </html>

@@ -13,6 +13,7 @@
   let currentSlide = 0;
   const totalSlides = 6;
   let sliderTimer = null;
+  let sliderInitialized = false;
 
   function showSlide(index) {
     currentSlide = (index + totalSlides) % totalSlides;
@@ -24,7 +25,9 @@
       slide.classList.toggle("active", i === currentSlide);
     });
     dots.forEach((dot, i) => {
-      dot.classList.toggle("active", i === currentSlide);
+      const isActive = (i === currentSlide);
+      dot.classList.toggle("active", isActive);
+      dot.setAttribute("aria-selected", String(isActive));
     });
     navItems.forEach((item, i) => {
       const isActive = (i === currentSlide);
@@ -69,14 +72,18 @@
   }
 
   function initSlider() {
+    if (sliderInitialized) return;
+    sliderInitialized = true;
+
     const prevBtn = byId("sliderPrevBtn");
     const nextBtn = byId("sliderNextBtn");
-    if (prevBtn) prevBtn.onclick = () => { prevSlide(); stopSliderTimer(); };
-    if (nextBtn) nextBtn.onclick = () => { nextSlide(); stopSliderTimer(); };
+    if (prevBtn) prevBtn.onclick = (e) => { e.stopPropagation(); prevSlide(); stopSliderTimer(); };
+    if (nextBtn) nextBtn.onclick = (e) => { e.stopPropagation(); nextSlide(); stopSliderTimer(); };
 
     const dots = document.querySelectorAll("#sliderDots .dot");
     dots.forEach(dot => {
-      dot.onclick = () => {
+      dot.onclick = (e) => {
+        e.stopPropagation();
         const s = parseInt(dot.dataset.slide, 10);
         if (!isNaN(s)) {
           showSlide(s);
@@ -131,10 +138,12 @@
       let touchStartY = 0;
       let touchEndX = 0;
       let touchEndY = 0;
+      let isSwiping = false;
 
       const onTouchStart = (e) => {
         stopSliderTimer();
         if (e.touches && e.touches.length === 1) {
+          isSwiping = true;
           touchStartX = e.touches[0].clientX;
           touchStartY = e.touches[0].clientY;
           touchEndX = touchStartX;
@@ -143,15 +152,22 @@
       };
 
       const onTouchMove = (e) => {
-        if (e.touches && e.touches.length === 1) {
+        if (isSwiping && e.touches && e.touches.length === 1) {
           touchEndX = e.touches[0].clientX;
           touchEndY = e.touches[0].clientY;
         }
       };
 
       const onTouchEnd = () => {
+        if (!isSwiping) return;
+        isSwiping = false;
         const dx = touchEndX - touchStartX;
         const dy = touchEndY - touchStartY;
+        touchStartX = 0;
+        touchStartY = 0;
+        touchEndX = 0;
+        touchEndY = 0;
+
         if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy) * 1.2) {
           if (dx < 0) {
             nextSlide();
@@ -164,12 +180,7 @@
       slider.addEventListener("touchstart", onTouchStart, { passive: true });
       slider.addEventListener("touchmove", onTouchMove, { passive: true });
       slider.addEventListener("touchend", onTouchEnd, { passive: true });
-
-      if (welcome) {
-        welcome.addEventListener("touchstart", onTouchStart, { passive: true });
-        welcome.addEventListener("touchmove", onTouchMove, { passive: true });
-        welcome.addEventListener("touchend", onTouchEnd, { passive: true });
-      }
+      slider.addEventListener("touchcancel", () => { isSwiping = false; }, { passive: true });
     }
 
     showSlide(0);
@@ -183,6 +194,7 @@
     I18N.apply(welcome);
     welcome.showModal();
     initSlider();
+    showSlide(0);
     startSliderTimer();
   }
 

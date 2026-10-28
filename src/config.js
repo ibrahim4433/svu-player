@@ -71,6 +71,8 @@ window.CONFIG = {
     language:   "svu.lang.v2",
     theme:      "svu.theme",
     mode:       "svu.mode",
+    termColor:  "svu.termColor",
+    crt:        "svu.crt",
     pin:        "svu.pinControls",
     stretch:    "lrec.stretch",
     enhance:    "lrec.enhance",
@@ -121,8 +123,14 @@ window.SVU_PREFS = {
     const savedTheme = window.SVU_PREFS.get("svu.theme", "default");
     const savedMode = window.SVU_PREFS.get("svu.mode", "dark");
     const savedLang = window.SVU_PREFS.get("svu.lang.v2", "ar");
+    const savedTermColor = window.SVU_PREFS.get("svu.termColor", savedTheme === "terminal" ? "amber" : "green");
+    const savedCrt = window.SVU_PREFS.get("svu.crt", "on");
     docEl.dataset.theme = savedTheme;
     docEl.dataset.mode = savedMode === "light" ? "light" : "dark";
+    if (savedTheme === "hacker" || savedTheme === "terminal") {
+      docEl.dataset.termColor = savedTermColor;
+      docEl.dataset.crt = savedCrt;
+    }
     docEl.lang = savedLang === "en" ? "en" : "ar";
     docEl.dir = savedLang === "en" ? "ltr" : "rtl";
   } catch (err) {}

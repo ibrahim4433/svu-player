@@ -269,6 +269,11 @@
     cursor = -1;
     syncPlayIcon();
     document.body.classList.remove("has-session");
+    document.body.classList.remove("chat-drawer-open");
+    if (byId("chatToggle")) {
+      byId("chatToggle").classList.remove("on");
+      byId("chatToggle").setAttribute("aria-pressed", "false");
+    }
     if (window.__refreshHub) {
       window.__refreshHub();
     }
@@ -559,10 +564,19 @@
     byId("icoVol").style.display = muted ? "none" : "";
     byId("icoMute").style.display = muted ? "" : "none";
   }
-  const isLandscapeMobile = () => (window.innerHeight <= 560 && window.innerWidth > window.innerHeight);
+  const isTouchDevice = () => (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches);
+  const isMobileViewport = () => (window.innerWidth <= 950 || window.innerHeight <= 640);
+  const isMobileUI = () => isTouchDevice() || isMobileViewport();
+  const isLandscapeMobile = () => {
+    if (!isMobileUI()) return false;
+    const isLandscape = window.innerWidth > window.innerHeight;
+    const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement || document.body.classList.contains("fs"));
+    return isLandscape || isFs;
+  };
 
   const toggleChat = () => {
     if (isLandscapeMobile()) {
+      document.body.classList.remove("nochat");
       const open = document.body.classList.toggle("chat-drawer-open");
       byId("chatToggle").classList.toggle("on", open);
       byId("chatToggle").setAttribute("aria-pressed", String(open));
@@ -770,14 +784,9 @@
     if (event.target.closest("button, a, input, select, .controls, .controls-zone, .loading-box, .mobile-touch-strip, .shortcut-strip")) {
       return;
     }
-    if (document.body.classList.contains("chat-drawer-open")) {
-      document.body.classList.remove("chat-drawer-open");
-      if (byId("chatToggle")) {
-        byId("chatToggle").classList.remove("on");
-        byId("chatToggle").setAttribute("aria-pressed", "false");
-      }
-      return;
-    }
+    // Note: When chat is open side-by-side (50%/50%), tapping stage does NOT close chat;
+    // it allows normal stage interaction (controls / double-tap seek).
+    // Close is handled cleanly by #chatClose and #chatToggle.
     const now = Date.now();
     const rect = stage.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -959,11 +968,78 @@
     vscode: "themeVscode",
     terminal: "themeTerminal"
   };
+  const VALID_TERM_COLORS = { green: true, amber: true, cyan: true, crimson: true, mono: true };
+  const PHOS_SWATCH_COLORS = {
+    green: "#00FF41",
+    amber: "#FFB000",
+    cyan: "#00F0FF",
+    crimson: "#FF3344",
+    mono: "#E2E8F0"
+  };
+
   let curTheme = getPref("svu.theme", "default");
   let curMode = getPref("svu.mode", "dark");
   if (!THEME_KEYS[curTheme]) {
     curTheme = "default";
   }
+  let curTermColor = getPref("svu.termColor", curTheme === "terminal" ? "amber" : "green");
+  if (!VALID_TERM_COLORS[curTermColor]) {
+    curTermColor = curTheme === "terminal" ? "amber" : "green";
+  }
+  let curCrt = getPref("svu.crt", "on");
+  if (curCrt !== "off") curCrt = "on";
+
+  function applyTermExtras() {
+    const isTerm = curTheme === "hacker" || curTheme === "terminal";
+    const docEl = document.documentElement;
+    if (isTerm) {
+      docEl.dataset.termColor = curTermColor;
+      docEl.dataset.crt = curCrt;
+      const pcExtras = byId("themeTermExtras");
+      if (pcExtras) pcExtras.style.display = "block";
+      const mExtras = byId("mobileTermExtras");
+      if (mExtras) mExtras.style.display = "block";
+    } else {
+      delete docEl.dataset.termColor;
+      delete docEl.dataset.crt;
+      const pcExtras = byId("themeTermExtras");
+      if (pcExtras) pcExtras.style.display = "none";
+      const mExtras = byId("mobileTermExtras");
+      if (mExtras) mExtras.style.display = "none";
+    }
+
+    document.querySelectorAll("[data-term-color]").forEach(el => {
+      el.classList.toggle("active", el.dataset.termColor === curTermColor);
+    });
+
+    document.querySelectorAll(".term-crt-toggle").forEach(btn => {
+      btn.classList.toggle("active", curCrt === "on");
+      const sw = btn.querySelector(".crt-toggle-switch");
+      if (sw) sw.classList.toggle("active", curCrt === "on");
+    });
+
+    const activeColor = PHOS_SWATCH_COLORS[curTermColor] || (curTheme === "terminal" ? "#FFB000" : "#00FF41");
+    if (isTerm) {
+      document.querySelectorAll(`.theme-opt[data-theme-opt="${curTheme}"] .theme-dot, .m-theme-opt[data-theme-opt="${curTheme}"] .m-theme-dot`).forEach(dot => {
+        dot.style.background = activeColor;
+      });
+    }
+  }
+
+  function setTermColor(color) {
+    if (VALID_TERM_COLORS[color]) {
+      curTermColor = color;
+      setPref("svu.termColor", color);
+      applyTermExtras();
+    }
+  }
+
+  function toggleCrt() {
+    curCrt = curCrt === "on" ? "off" : "on";
+    setPref("svu.crt", curCrt);
+    applyTermExtras();
+  }
+
   function applyTheme(theme, mode) {
     curTheme = THEME_KEYS[theme] ? theme : "default";
     curMode = mode === "light" ? "light" : "dark";
@@ -971,6 +1047,9 @@
     document.documentElement.dataset.mode = curMode;
     setPref("svu.theme", curTheme);
     setPref("svu.mode", curMode);
+
+    applyTermExtras();
+
     const lbl = byId("curThemeLbl");
     if (lbl) {
       lbl.dataset.i18n = "themesBtn";
@@ -1002,7 +1081,10 @@
   }
   applyTheme(curTheme, curMode);
   window.__svuApplyTheme = applyTheme;
-  window.__svuGetTheme = () => ({ theme: curTheme, mode: curMode });
+  window.__svuGetTheme = () => ({ theme: curTheme, mode: curMode, termColor: curTermColor, crt: curCrt });
+  window.__svuSetTermColor = setTermColor;
+  window.__svuToggleCrt = toggleCrt;
+
   if (byId("themeBtn")) {
     byId("themeBtn").addEventListener("click", () => {
       applyTheme(curTheme, curMode === "light" ? "dark" : "light");
@@ -1016,12 +1098,35 @@
     document.querySelectorAll(".theme-opt[data-theme-opt]").forEach(btn => {
       btn.addEventListener("click", event => {
         event.stopPropagation();
-        applyTheme(btn.dataset.themeOpt, curMode);
-        byId("themeDropdown").classList.remove("open");
+        const nextTheme = btn.dataset.themeOpt;
+        applyTheme(nextTheme, curMode);
+        if (nextTheme !== "hacker" && nextTheme !== "terminal") {
+          byId("themeDropdown").classList.remove("open");
+        }
       });
     });
     document.addEventListener("click", () => {
       byId("themeDropdown").classList.remove("open");
+    });
+  }
+
+  // Wire Terminal & Hacker Phosphor Colors & CRT Scanlines
+  document.querySelectorAll("[data-term-color]").forEach(btn => {
+    btn.addEventListener("click", event => {
+      event.stopPropagation();
+      setTermColor(btn.dataset.termColor);
+    });
+  });
+  document.querySelectorAll(".term-crt-toggle").forEach(btn => {
+    btn.addEventListener("click", event => {
+      event.stopPropagation();
+      toggleCrt();
+    });
+  });
+  const pcTermExtras = byId("themeTermExtras");
+  if (pcTermExtras) {
+    pcTermExtras.addEventListener("click", event => {
+      event.stopPropagation();
     });
   }
   document.addEventListener("langchange", () => {
@@ -1283,16 +1388,24 @@
 
   // Responsive Orientation & Viewport Handler
   function handleScreenResize() {
-    const isPortrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
+    const isMobile = isMobileUI();
     const isLandscape = isLandscapeMobile();
+    const isPortrait = isMobile && !isLandscape && (window.innerHeight > window.innerWidth);
+    document.body.classList.toggle("is-mobile", isMobile);
     document.body.classList.toggle("is-mobile-portrait", isPortrait);
     document.body.classList.toggle("is-mobile-landscape", isLandscape);
     if (!isLandscape && document.body.classList.contains("chat-drawer-open")) {
       document.body.classList.remove("chat-drawer-open");
+      if (byId("chatToggle")) {
+        byId("chatToggle").classList.remove("on");
+        byId("chatToggle").setAttribute("aria-pressed", "false");
+      }
     }
   }
   window.addEventListener("resize", handleScreenResize, PASSIVE);
   window.addEventListener("orientationchange", () => setTimeout(handleScreenResize, 150), PASSIVE);
+  document.addEventListener("fullscreenchange", handleScreenResize, PASSIVE);
+  document.addEventListener("webkitfullscreenchange", handleScreenResize, PASSIVE);
   handleScreenResize();
 
   window.__closeActiveSession = closeSession;
