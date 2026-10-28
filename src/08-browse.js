@@ -827,6 +827,15 @@
   }
 
   async function loadDemoLecture() {
+    if (typeof window.closeTour === "function") {
+      window.closeTour();
+    } else {
+      const welcome = byId("welcome");
+      if (welcome) {
+        if (welcome.open) welcome.close();
+        welcome.removeAttribute("open");
+      }
+    }
     const btn = byId("introDemoBtn") || byId("hubDemoBtn");
     try {
       if (btn) btn.disabled = true;
@@ -852,6 +861,7 @@
       if (btn) btn.disabled = false;
     }
   }
+  window.loadDemoLecture = loadDemoLecture;
 
   async function download(file, label, ui, meta) {
     if (downloading) {

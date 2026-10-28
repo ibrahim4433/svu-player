@@ -215,8 +215,11 @@
   function closeTour() {
     stopSliderTimer();
     try { localStorage.setItem(TOUR_KEY, "1"); } catch (_) {}
-    if (welcome.open) {
-      welcome.close();
+    if (welcome) {
+      if (welcome.open) {
+        welcome.close();
+      }
+      welcome.removeAttribute("open");
     }
   }
 
@@ -270,8 +273,13 @@
         const fileEl = byId("file");
         if (fileEl) fileEl.click();
       } else if (act === "demo") {
-        const demoBtn = byId("introDemoBtn") || byId("hubDemoBtn");
-        if (demoBtn) demoBtn.click();
+        closeTour();
+        if (typeof window.loadDemoLecture === "function") {
+          window.loadDemoLecture();
+        } else {
+          const demoBtn = byId("introDemoBtn") || byId("hubDemoBtn");
+          if (demoBtn) demoBtn.click();
+        }
       }
     }
   });
@@ -325,4 +333,5 @@
   if (!window.__lrec) window.__lrec = {};
   window.__lrec.showTour = showTour;
   window.__lrec.showSlide = showSlide;
+  window.closeTour = closeTour;
 })();

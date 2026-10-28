@@ -968,12 +968,13 @@
     vscode: "themeVscode",
     terminal: "themeTerminal"
   };
-  const VALID_TERM_COLORS = { green: true, amber: true, cyan: true, crimson: true, mono: true };
+  const VALID_TERM_COLORS = { green: true, amber: true, cyan: true, crimson: true, violet: true, mono: true };
   const PHOS_SWATCH_COLORS = {
     green: "#00FF41",
     amber: "#FFB000",
     cyan: "#00F0FF",
-    crimson: "#FF3344",
+    crimson: "#FF003C",
+    violet: "#BF00FF",
     mono: "#E2E8F0"
   };
 
@@ -990,15 +991,40 @@
   if (curCrt !== "off") curCrt = "on";
 
   function applyTermExtras() {
-    const isTerm = curTheme === "hacker" || curTheme === "terminal";
+    const isHacker = curTheme === "hacker";
+    const isTerm = curTheme === "terminal";
+    const isSpecial = isHacker || isTerm;
     const docEl = document.documentElement;
-    if (isTerm) {
+    if (isSpecial) {
       docEl.dataset.termColor = curTermColor;
       docEl.dataset.crt = curCrt;
       const pcExtras = byId("themeTermExtras");
       if (pcExtras) pcExtras.style.display = "block";
       const mExtras = byId("mobileTermExtras");
       if (mExtras) mExtras.style.display = "block";
+
+      const titleKey = isHacker ? "cyberProtocol" : "phosphorColor";
+      const crtKey = isHacker ? "cyberHudEffects" : "crtScanlines";
+      const pcHead = byId("termHeadLabel");
+      if (pcHead) {
+        pcHead.dataset.i18n = titleKey;
+        pcHead.textContent = t(titleKey);
+      }
+      const mHead = byId("mobileTermHeadLabel");
+      if (mHead) {
+        mHead.dataset.i18n = titleKey;
+        mHead.textContent = t(titleKey);
+      }
+      const pcCrtLbl = byId("crtToggleLabel");
+      if (pcCrtLbl) {
+        pcCrtLbl.dataset.i18n = crtKey;
+        pcCrtLbl.textContent = t(crtKey);
+      }
+      const mCrtLbl = byId("mobileCrtToggleLabel");
+      if (mCrtLbl) {
+        mCrtLbl.dataset.i18n = crtKey;
+        mCrtLbl.textContent = t(crtKey);
+      }
     } else {
       delete docEl.dataset.termColor;
       delete docEl.dataset.crt;
@@ -1019,7 +1045,7 @@
     });
 
     const activeColor = PHOS_SWATCH_COLORS[curTermColor] || (curTheme === "terminal" ? "#FFB000" : "#00FF41");
-    if (isTerm) {
+    if (isSpecial) {
       document.querySelectorAll(`.theme-opt[data-theme-opt="${curTheme}"] .theme-dot, .m-theme-opt[data-theme-opt="${curTheme}"] .m-theme-dot`).forEach(dot => {
         dot.style.background = activeColor;
       });
@@ -1041,6 +1067,13 @@
   }
 
   function applyTheme(theme, mode) {
+    if (theme === "hacker" && curTheme !== "hacker" && curTermColor === "amber") {
+      curTermColor = "green";
+      setPref("svu.termColor", "green");
+    } else if (theme === "terminal" && curTheme !== "terminal" && curTermColor === "violet") {
+      curTermColor = "amber";
+      setPref("svu.termColor", "amber");
+    }
     curTheme = THEME_KEYS[theme] ? theme : "default";
     curMode = mode === "light" ? "light" : "dark";
     document.documentElement.dataset.theme = curTheme;
