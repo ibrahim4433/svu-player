@@ -4,7 +4,7 @@
  * Caches the app shell so the player works 100% offline as an installable PWA.
  */
 
-const CACHE_NAME = "svu-player-local-v32";
+const CACHE_NAME = "svu-player-local-v33";
 
 const APP_SHELL = [
   "/",
@@ -19,10 +19,8 @@ const APP_SHELL = [
   "/assets/svu-material-codes.csv",
   "/favicon.svg",
   "/site.webmanifest",
-  "/fonts/IBMPlexSansArabic-400-arabic.woff2",
-  "/fonts/IBMPlexSansArabic-400-latin.woff2",
-  "/fonts/IBMPlexSansArabic-600-arabic.woff2",
-  "/fonts/IBMPlexSansArabic-600-latin.woff2"
+  "/fonts/ReadexPro-arabic.woff2",
+  "/fonts/ReadexPro-latin.woff2"
 ];
 
 function skipCache(request) {

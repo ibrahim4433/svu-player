@@ -127,7 +127,7 @@ When the page loads, verify key subsystems:
 | `Could not reach sessions.svuonline.org` | Network offline or university server down | Verify internet connection; check if `sessions.svuonline.org` is reachable in a browser tab. |
 | Edits to `src/*.js` do not appear | `bundle.py` was not run, or service worker served cache | Run `python bundle.py`, then open `http://localhost:8080/?nocache=1`. |
 | `core.wasm` fails with MIME error | Served via `file://` or web server without WASM MIME | Run `python serve.py` to serve over HTTP with `application/wasm`. |
-| Arabic fonts do not render | Missing `/fonts/` directory | Verify that `fonts/IBMPlexSansArabic-*.woff2` exists in the project root. |
+| Arabic fonts do not render | Missing `/fonts/` directory | Verify that `fonts/ReadexPro-*.woff2` exists in the project root. |
 | Greyed-out cascading dropdowns | Failed initial catalog scrape | Ensure `serve.py` is running and check server console for HTTP 502/timeout logs. |
 
 ---

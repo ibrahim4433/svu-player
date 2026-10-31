@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="build" content="v2.8.1">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>SVU Player | Offline Session Player for Syrian Virtual University</title>
+  <title>SVU Player Studio</title>
   <meta name="description"
     content="Watch recorded Syrian Virtual University sessions with screen, audio and chat in sync. Play online or save sessions to watch offline, with captions and audio enhancement.">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -19,11 +19,11 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="apple-touch-icon" href="/favicon.svg" />
   <link rel="manifest" href="/site.webmanifest" />
-  <link rel="preload" href="fonts/IBMPlexSansArabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/IBMPlexSansArabic-600-arabic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/ReadexPro-arabic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/ReadexPro-latin.woff2" as="font" type="font/woff2" crossorigin>
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="SVU Player">
-  <meta property="og:title" content="SVU Player | Offline Session Player for Syrian Virtual University">
+  <meta property="og:site_name" content="SVU Player Studio">
+  <meta property="og:title" content="SVU Player Studio - your local SVU University Smart player">
   <meta property="og:description"
     content="Replay recorded sessions with screen, audio and chat in sync. Save them to watch offline, turn on captions and enhance the audio.">
   <meta property="og:image" content="/og-image.png">
@@ -33,44 +33,26 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="ar_AR">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SVU Player | Offline Session Player for Syrian Virtual University">
+  <meta name="twitter:title" content="SVU PLAYER STUDIO">
   <meta name="twitter:description"
     content="Replay recorded sessions with screen, audio and chat in sync. Save them to watch offline, turn on captions and enhance the audio.">
   <meta name="twitter:image" content="/og-image.png">
   <style>
     @font-face {
-      font-family: 'IBM Plex Sans Arabic';
+      font-family: 'Readex Pro';
       font-style: normal;
-      font-weight: 400;
+      font-weight: 160 700;
       font-display: swap;
-      src: url('fonts/IBMPlexSansArabic-400-arabic.woff2') format('woff2');
+      src: url('fonts/ReadexPro-arabic.woff2') format('woff2');
       unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
     }
 
     @font-face {
-      font-family: 'IBM Plex Sans Arabic';
+      font-family: 'Readex Pro';
       font-style: normal;
-      font-weight: 400;
+      font-weight: 160 700;
       font-display: swap;
-      src: url('fonts/IBMPlexSansArabic-400-latin.woff2') format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-
-    @font-face {
-      font-family: 'IBM Plex Sans Arabic';
-      font-style: normal;
-      font-weight: 600;
-      font-display: swap;
-      src: url('fonts/IBMPlexSansArabic-600-arabic.woff2') format('woff2');
-      unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
-    }
-
-    @font-face {
-      font-family: 'IBM Plex Sans Arabic';
-      font-style: normal;
-      font-weight: 600;
-      font-display: swap;
-      src: url('fonts/IBMPlexSansArabic-600-latin.woff2') format('woff2');
+      src: url('fonts/ReadexPro-latin.woff2') format('woff2');
       unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
 
@@ -94,7 +76,7 @@
       --accent: var(--blue);
       --accent-glow: rgba(56, 189, 248, 0.22);
       --header-bg: #111827;
-      --font-ui: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Noto Sans Arabic', 'Cairo', sans-serif;
+      --font-ui: 'Readex Pro', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Noto Sans Arabic', 'Cairo', sans-serif;
       --r: 10px;
       --r-lg: 16px;
     }
@@ -233,7 +215,7 @@
       --ink: #FFFFFF;
       --accent-glow: transparent;
       --header-bg: linear-gradient(90deg, #000080 0%, #1084D0 100%);
-      --font-ui: 'Tahoma', 'MS Sans Serif', 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Segoe UI', sans-serif;
+      --font-ui: 'Tahoma', 'MS Sans Serif', 'Readex Pro', 'Noto Sans Arabic', 'Segoe UI', sans-serif;
       --r: 0px;
       --r-lg: 0px;
     }
@@ -278,7 +260,7 @@
       --ink: #FFFFFF;
       --accent-glow: rgba(60, 154, 46, 0.25);
       --header-bg: linear-gradient(180deg, #0997FF 0%, #0053EE 14%, #0050EE 88%, #0640B6 100%);
-      --font-ui: 'Tahoma', 'Trebuchet MS', 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Segoe UI', sans-serif;
+      --font-ui: 'Tahoma', 'Trebuchet MS', 'Readex Pro', 'Noto Sans Arabic', 'Segoe UI', sans-serif;
       --r: 4px;
       --r-lg: 8px;
     }
@@ -366,7 +348,7 @@
       --accent-glow: rgba(0, 255, 65, 0.35);
       --accent-glow-solid: #00FF41;
       --header-bg: #040D06;
-      --font-ui: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', 'IBM Plex Sans Arabic', monospace;
+      --font-ui: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', 'Readex Pro', monospace;
       --r: 0px;
       --r-lg: 0px;
     }
@@ -390,7 +372,7 @@
       --accent-glow: rgba(0, 153, 38, 0.20);
       --accent-glow-solid: #008A24;
       --header-bg: #E3EFE6;
-      --font-ui: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', 'IBM Plex Sans Arabic', monospace;
+      --font-ui: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', 'Readex Pro', monospace;
       --r: 0px;
       --r-lg: 0px;
     }
@@ -707,7 +689,7 @@
       --ink: #FFFFFF;
       --accent-glow: rgba(0, 122, 204, 0.28);
       --header-bg: #2C2C2C;
-      --font-ui: 'Segoe WPC', 'Segoe UI', 'Consolas', 'IBM Plex Sans Arabic', 'Noto Sans Arabic', sans-serif;
+      --font-ui: 'Segoe WPC', 'Segoe UI', 'Consolas', 'Readex Pro', 'Noto Sans Arabic', sans-serif;
       --r: 4px;
       --r-lg: 6px;
     }
@@ -752,7 +734,7 @@
       --accent-glow: rgba(255, 176, 0, 0.35);
       --accent-glow-solid: #FFB000;
       --header-bg: #140E05;
-      --font-ui: 'Courier New', 'Consolas', 'Cascadia Code', 'JetBrains Mono', 'IBM Plex Sans Arabic', monospace;
+      --font-ui: 'Courier New', 'Consolas', 'Cascadia Code', 'JetBrains Mono', 'Readex Pro', monospace;
       --r: 2px;
       --r-lg: 3px;
     }
@@ -1738,7 +1720,9 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font: 14px/1.5 var(--font-ui);
+      font: 0.875rem/1.5 var(--font-ui);
+      font-family: 'Readex Pro', var(--font-ui);
+      font-size-adjust: from-font;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -1748,22 +1732,25 @@
       transition: background 0.18s ease, color 0.18s ease;
     }
 
-    body {
-      font-family: 'IBM Plex Sans Arabic', var(--font-ui);
+    @supports not (font-size-adjust: from-font) {
+      body {
+        line-height: 1.55;
+      }
     }
 
     html[lang=ar] body {
-      font-family: 'IBM Plex Sans Arabic', var(--font-ui);
+      font-family: 'Readex Pro', var(--font-ui);
     }
 
     html[lang=en] body {
-      font-family: 'IBM Plex Sans Arabic', var(--font-ui);
+      font-family: 'Readex Pro', var(--font-ui);
     }
 
     .dir-name-ar,
     .mat-ar,
     [lang="ar"] {
-      font-family: 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Cairo', 'Segoe UI', sans-serif;
+      font-family: 'Readex Pro', 'Noto Sans Arabic', 'Cairo', 'Segoe UI', sans-serif;
+      font-size-adjust: from-font;
     }
 
     h1,
@@ -2542,7 +2529,7 @@
       font-size: 11px;
       color: var(--text);
       margin-inline-end: 2px;
-      line-height: 1.2;
+      line-height: 1.3;
     }
 
     .loading-box {
@@ -5082,12 +5069,12 @@
     }
 
     .dir-card-alts {
-      font-size: 10.5px;
+      font-size: 11px;
       color: #EAB308;
       background: rgba(234, 179, 8, 0.1);
       padding: 3px 6px;
       border-radius: 4px;
-      line-height: 1.25;
+      line-height: 1.3;
     }
 
     .dir-card-actions {
@@ -5211,7 +5198,7 @@
       gap: 4px;
       padding: 4px 10px;
       border-radius: 99px;
-      line-height: 1.2;
+      line-height: 1.3;
       background: var(--blue);
       color: var(--ink);
       font-size: 11px;
@@ -5328,7 +5315,7 @@
     }
 
     .deploy-hint {
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--gold-hi);
       margin: 0;
     }
@@ -7081,7 +7068,7 @@
       }
 
       .drop-sub {
-        font-size: 11px;
+        font-size: 12px;
         margin-bottom: 10px;
         max-width: 290px;
         line-height: 1.35;
@@ -8948,7 +8935,7 @@
 
     .pro-tip-desc {
       margin: 0;
-      font-size: 11px;
+      font-size: 12px;
       color: var(--dim);
       line-height: 1.45;
     }
@@ -9019,7 +9006,7 @@
       background: var(--panel2);
       border: 1px solid var(--line);
       border-radius: var(--r);
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--dim);
       line-height: 1.45;
     }
@@ -10093,9 +10080,9 @@
     }
 
     .real-btn-desc {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--dim);
-      line-height: 1.3;
+      line-height: 1.35;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -10158,7 +10145,7 @@
       border: 1px solid var(--line);
       border-radius: var(--r);
       padding: 6px 10px;
-      font-size: 11.5px;
+      font-size: 12px;
     }
 
     .real-chat-msg.active {
@@ -10244,14 +10231,14 @@
     }
 
     .stage-info b {
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--text);
     }
 
     .stage-info span {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--dim);
-      line-height: 1.3;
+      line-height: 1.35;
     }
 
     /* Gestures slide */
@@ -10289,12 +10276,12 @@
     }
 
     .g-text b {
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--text);
     }
 
     .g-text small {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--dim);
     }
 
@@ -10356,7 +10343,7 @@
     }
 
     .guide-way-badge {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--dim);
       background: var(--bg);
@@ -10368,9 +10355,9 @@
 
     .guide-way-desc {
       margin: 0;
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--dim);
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     .guide-way-actions {
@@ -10396,7 +10383,7 @@
       cursor: pointer;
       transition: all 0.15s ease;
       text-decoration: none;
-      line-height: 1.2;
+      line-height: 1.3;
       touch-action: manipulation;
     }
 
@@ -10427,7 +10414,7 @@
       background: rgba(56, 189, 248, 0.08);
       border: 1px solid rgba(56, 189, 248, 0.28);
       border-radius: var(--r);
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--text);
       line-height: 1.45;
     }
@@ -10482,7 +10469,7 @@
 
     .guide-faq-a {
       margin: 0;
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--dim);
       line-height: 1.45;
       padding-inline-start: 24px;
@@ -10909,7 +10896,7 @@
     }
 
     .term-head-label {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--dim);
       text-transform: uppercase;
@@ -11043,7 +11030,7 @@
       background: var(--bg);
       border: 1px solid var(--line);
       border-radius: var(--r);
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
@@ -12403,7 +12390,7 @@
               <button id="profSyncToTextBtn" data-i18n="profileMatSyncToText">Sync Rows to Text ↓</button>
             </div>
           </div>
-          <div class="muted" style="font-size:11px;" data-i18n="profileMatTextHint">Format per line: MATERIAL | CLASS |
+          <div class="muted" style="font-size:12px;" data-i18n="profileMatTextHint">Format per line: MATERIAL | CLASS |
             TUTOR | LESSONS (e.g. BMA401 | C23 | t_laldroubi | ALL or simply BPG401 C15)</div>
           <textarea id="profMatText" class="prof-textarea" dir="ltr"
             placeholder="BMA401 | C23 | t_laldroubi | ALL&#10;BMA402 | C5 | t_imashriki | ALL&#10;BPG401 | C15"></textarea>
