@@ -222,7 +222,14 @@
     renderTicks();
     seek.setAttribute("aria-valuemax", Math.floor(parsed.durationMs / 1000));
     controls.classList.remove("disabled");
-    document.body.classList.add("has-session");
+    const enterSession = () => {
+      document.body.classList.add("has-session");
+    };
+    if (window.safeStartViewTransition) {
+      window.safeStartViewTransition(enterSession, "play");
+    } else {
+      enterSession();
+    }
     try {
       const pm = parseLrecFilename(file.name) || {};
       const matTitle = (window.MaterialsDB && pm.material) ? window.MaterialsDB.getName(pm.material) : "";
@@ -268,8 +275,15 @@
     byId("chatCount").textContent = "";
     cursor = -1;
     syncPlayIcon();
-    document.body.classList.remove("has-session");
-    document.body.classList.remove("chat-drawer-open");
+    const exitSession = () => {
+      document.body.classList.remove("has-session");
+      document.body.classList.remove("chat-drawer-open");
+    };
+    if (window.safeStartViewTransition) {
+      window.safeStartViewTransition(exitSession, "studentHub");
+    } else {
+      exitSession();
+    }
     if (byId("chatToggle")) {
       byId("chatToggle").classList.remove("on");
       byId("chatToggle").setAttribute("aria-pressed", "false");

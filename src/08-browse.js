@@ -2706,29 +2706,37 @@
   }
 
   function showTab(name) {
-    byId("tabFile").classList.toggle("on", name === "file");
-    byId("paneFile").hidden = name !== "file";
-    byId("tabRemote").classList.toggle("on", name === "remote");
-    if (byId("tabBatch")) {
-      byId("tabBatch").classList.toggle("on", name === "batch");
-    }
-    if (byId("tabLink")) {
-      byId("tabLink").classList.toggle("on", name === "link");
-    }
-    byId("tabSaved").classList.toggle("on", name === "saved");
-    byId("paneRemote").hidden = name !== "remote";
-    if (byId("paneBatch")) {
-      byId("paneBatch").hidden = name !== "batch";
-    }
-    if (byId("paneLink")) {
-      byId("paneLink").hidden = name !== "link";
-    }
-    byId("paneSaved").hidden = name !== "saved";
-    if (byId("keepWrap")) {
-      byId("keepWrap").hidden = name !== "remote" && name !== "link";
-    }
-    if (name === "saved") {
-      refreshSaved();
+    const paneId = name === "file" ? "paneFile" : (name === "remote" ? "paneRemote" : (name === "batch" ? "paneBatch" : (name === "link" ? "paneLink" : "paneSaved")));
+    const update = () => {
+      byId("tabFile").classList.toggle("on", name === "file");
+      byId("paneFile").hidden = name !== "file";
+      byId("tabRemote").classList.toggle("on", name === "remote");
+      if (byId("tabBatch")) {
+        byId("tabBatch").classList.toggle("on", name === "batch");
+      }
+      if (byId("tabLink")) {
+        byId("tabLink").classList.toggle("on", name === "link");
+      }
+      byId("tabSaved").classList.toggle("on", name === "saved");
+      byId("paneRemote").hidden = name !== "remote";
+      if (byId("paneBatch")) {
+        byId("paneBatch").hidden = name !== "batch";
+      }
+      if (byId("paneLink")) {
+        byId("paneLink").hidden = name !== "link";
+      }
+      byId("paneSaved").hidden = name !== "saved";
+      if (byId("keepWrap")) {
+        byId("keepWrap").hidden = name !== "remote" && name !== "link";
+      }
+      if (name === "saved") {
+        refreshSaved();
+      }
+    };
+    if (window.safeStartViewTransition) {
+      window.safeStartViewTransition(update, paneId);
+    } else {
+      update();
     }
   }
 
@@ -4383,6 +4391,20 @@
   /* ====================================================================== *
    * SMART STUDENT HUB LOGIC (#studentHub) - INSIDE IIFE
    * ====================================================================== */
+  function markActiveCard(el) {
+    try {
+      document.querySelectorAll(".vt-active-card, [data-vt-temp]").forEach(node => {
+        node.classList.remove("vt-active-card");
+        node.removeAttribute("data-vt-temp");
+        node.style.viewTransitionName = "";
+      });
+      if (el) {
+        el.classList.add("vt-active-card");
+        el.setAttribute("data-vt-temp", "1");
+      }
+    } catch (_) {}
+  }
+
   function refreshHub() {
     const hub = byId("studentHub");
     if (!hub) return;
@@ -4466,6 +4488,9 @@
         const resumeBtn = byId("hubResumeBtn");
         if (resumeBtn) {
           resumeBtn.onclick = () => {
+            if (resumeCard) {
+              markActiveCard(resumeCard);
+            }
             const match = savedRecordsCache.find(r => r.name === lastPlayed.name || r.id === lastPlayed.name || (lastPlayed.id && r.id === lastPlayed.id));
             if (match) {
               playSaved(match.id);
@@ -4543,6 +4568,7 @@
             row.onclick = () => {
               const sel = window.getSelection();
               if (sel && sel.toString().length > 0) return;
+              markActiveCard(row);
               playSaved(rec.id);
             };
 
@@ -4579,6 +4605,7 @@
             playBtn.innerHTML = "<svg viewBox='0 0 24 24' width='13' height='13' fill='currentColor'><polygon points='6 3 20 12 6 21 6 3'/></svg><span>" + escapeHtml(t("play")) + "</span>";
             playBtn.onclick = (e) => {
               e.stopPropagation();
+              markActiveCard(row);
               playSaved(rec.id);
             };
 

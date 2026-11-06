@@ -116,6 +116,72 @@ window.SVU_PREFS = {
   }
 };
 
+/**
+ * Safe View Transitions helper with progressive enhancement fallback,
+ * prefers-reduced-motion check, view-transition-name cleanup, and accessibility focus routing.
+ */
+window.safeStartViewTransition = function (updateCallback, focusTarget) {
+  if (typeof updateCallback !== "function") return;
+
+  const routeFocus = function () {
+    if (!focusTarget) return;
+    const el = typeof focusTarget === "string" ? document.getElementById(focusTarget) : focusTarget;
+    if (el) {
+      if (!el.hasAttribute("tabindex") && !/^(a|button|input|select|textarea)$/i.test(el.tagName)) {
+        el.setAttribute("tabindex", "-1");
+      }
+      try {
+        el.focus({ preventScroll: true });
+      } catch (_) {
+        try { el.focus(); } catch (e) {}
+      }
+    }
+  };
+
+  const cleanupNames = function () {
+    try {
+      document.querySelectorAll(".vt-active-card, [data-vt-temp]").forEach(function (node) {
+        node.classList.remove("vt-active-card");
+        node.removeAttribute("data-vt-temp");
+        node.style.viewTransitionName = "";
+      });
+    } catch (_) {}
+  };
+
+  const prefersReduced = typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let updateRan = false;
+  const safeUpdate = function () {
+    if (updateRan) return;
+    updateRan = true;
+    return updateCallback();
+  };
+
+  if (typeof document.startViewTransition !== "function" || prefersReduced) {
+    safeUpdate();
+    routeFocus();
+    cleanupNames();
+    return;
+  }
+
+  try {
+    const transition = document.startViewTransition(function () {
+      return safeUpdate();
+    });
+    transition.finished
+      .catch(function () {})
+      .finally(function () {
+        routeFocus();
+        cleanupNames();
+      });
+  } catch (err) {
+    safeUpdate();
+    routeFocus();
+    cleanupNames();
+  }
+};
+
 // Apply saved theme, mode, and language immediately in <head> before first paint
 (function () {
   try {

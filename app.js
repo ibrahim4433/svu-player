@@ -117,6 +117,72 @@ window.SVU_PREFS = {
   }
 };
 
+/**
+ * Safe View Transitions helper with progressive enhancement fallback,
+ * prefers-reduced-motion check, view-transition-name cleanup, and accessibility focus routing.
+ */
+window.safeStartViewTransition = function (updateCallback, focusTarget) {
+  if (typeof updateCallback !== "function") return;
+
+  const routeFocus = function () {
+    if (!focusTarget) return;
+    const el = typeof focusTarget === "string" ? document.getElementById(focusTarget) : focusTarget;
+    if (el) {
+      if (!el.hasAttribute("tabindex") && !/^(a|button|input|select|textarea)$/i.test(el.tagName)) {
+        el.setAttribute("tabindex", "-1");
+      }
+      try {
+        el.focus({ preventScroll: true });
+      } catch (_) {
+        try { el.focus(); } catch (e) {}
+      }
+    }
+  };
+
+  const cleanupNames = function () {
+    try {
+      document.querySelectorAll(".vt-active-card, [data-vt-temp]").forEach(function (node) {
+        node.classList.remove("vt-active-card");
+        node.removeAttribute("data-vt-temp");
+        node.style.viewTransitionName = "";
+      });
+    } catch (_) {}
+  };
+
+  const prefersReduced = typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let updateRan = false;
+  const safeUpdate = function () {
+    if (updateRan) return;
+    updateRan = true;
+    return updateCallback();
+  };
+
+  if (typeof document.startViewTransition !== "function" || prefersReduced) {
+    safeUpdate();
+    routeFocus();
+    cleanupNames();
+    return;
+  }
+
+  try {
+    const transition = document.startViewTransition(function () {
+      return safeUpdate();
+    });
+    transition.finished
+      .catch(function () {})
+      .finally(function () {
+        routeFocus();
+        cleanupNames();
+      });
+  } catch (err) {
+    safeUpdate();
+    routeFocus();
+    cleanupNames();
+  }
+};
+
 // Apply saved theme, mode, and language immediately in <head> before first paint
 (function () {
   try {
@@ -2275,7 +2341,14 @@ try {
     renderTicks();
     seek.setAttribute("aria-valuemax", Math.floor(parsed.durationMs / 1000));
     controls.classList.remove("disabled");
-    document.body.classList.add("has-session");
+    const enterSession = () => {
+      document.body.classList.add("has-session");
+    };
+    if (window.safeStartViewTransition) {
+      window.safeStartViewTransition(enterSession, "play");
+    } else {
+      enterSession();
+    }
     try {
       const pm = parseLrecFilename(file.name) || {};
       const matTitle = (window.MaterialsDB && pm.material) ? window.MaterialsDB.getName(pm.material) : "";
@@ -2321,8 +2394,15 @@ try {
     byId("chatCount").textContent = "";
     cursor = -1;
     syncPlayIcon();
-    document.body.classList.remove("has-session");
-    document.body.classList.remove("chat-drawer-open");
+    const exitSession = () => {
+      document.body.classList.remove("has-session");
+      document.body.classList.remove("chat-drawer-open");
+    };
+    if (window.safeStartViewTransition) {
+      window.safeStartViewTransition(exitSession, "studentHub");
+    } else {
+      exitSession();
+    }
     if (byId("chatToggle")) {
       byId("chatToggle").classList.remove("on");
       byId("chatToggle").setAttribute("aria-pressed", "false");
@@ -6245,29 +6325,37 @@ try {
   }
 
   function showTab(name) {
-    byId("tabFile").classList.toggle("on", name === "file");
-    byId("paneFile").hidden = name !== "file";
-    byId("tabRemote").classList.toggle("on", name === "remote");
-    if (byId("tabBatch")) {
-      byId("tabBatch").classList.toggle("on", name === "batch");
-    }
-    if (byId("tabLink")) {
-      byId("tabLink").classList.toggle("on", name === "link");
-    }
-    byId("tabSaved").classList.toggle("on", name === "saved");
-    byId("paneRemote").hidden = name !== "remote";
-    if (byId("paneBatch")) {
-      byId("paneBatch").hidden = name !== "batch";
-    }
-    if (byId("paneLink")) {
-      byId("paneLink").hidden = name !== "link";
-    }
-    byId("paneSaved").hidden = name !== "saved";
-    if (byId("keepWrap")) {
-      byId("keepWrap").hidden = name !== "remote" && name !== "link";
-    }
-    if (name === "saved") {
-      refreshSaved();
+    const paneId = name === "file" ? "paneFile" : (name === "remote" ? "paneRemote" : (name === "batch" ? "paneBatch" : (name === "link" ? "paneLink" : "paneSaved")));
+    const update = () => {
+      byId("tabFile").classList.toggle("on", name === "file");
+      byId("paneFile").hidden = name !== "file";
+      byId("tabRemote").classList.toggle("on", name === "remote");
+      if (byId("tabBatch")) {
+        byId("tabBatch").classList.toggle("on", name === "batch");
+      }
+      if (byId("tabLink")) {
+        byId("tabLink").classList.toggle("on", name === "link");
+      }
+      byId("tabSaved").classList.toggle("on", name === "saved");
+      byId("paneRemote").hidden = name !== "remote";
+      if (byId("paneBatch")) {
+        byId("paneBatch").hidden = name !== "batch";
+      }
+      if (byId("paneLink")) {
+        byId("paneLink").hidden = name !== "link";
+      }
+      byId("paneSaved").hidden = name !== "saved";
+      if (byId("keepWrap")) {
+        byId("keepWrap").hidden = name !== "remote" && name !== "link";
+      }
+      if (name === "saved") {
+        refreshSaved();
+      }
+    };
+    if (window.safeStartViewTransition) {
+      window.safeStartViewTransition(update, paneId);
+    } else {
+      update();
     }
   }
 
@@ -7922,6 +8010,20 @@ try {
   /* ====================================================================== *
    * SMART STUDENT HUB LOGIC (#studentHub) - INSIDE IIFE
    * ====================================================================== */
+  function markActiveCard(el) {
+    try {
+      document.querySelectorAll(".vt-active-card, [data-vt-temp]").forEach(node => {
+        node.classList.remove("vt-active-card");
+        node.removeAttribute("data-vt-temp");
+        node.style.viewTransitionName = "";
+      });
+      if (el) {
+        el.classList.add("vt-active-card");
+        el.setAttribute("data-vt-temp", "1");
+      }
+    } catch (_) {}
+  }
+
   function refreshHub() {
     const hub = byId("studentHub");
     if (!hub) return;
@@ -8005,6 +8107,9 @@ try {
         const resumeBtn = byId("hubResumeBtn");
         if (resumeBtn) {
           resumeBtn.onclick = () => {
+            if (resumeCard) {
+              markActiveCard(resumeCard);
+            }
             const match = savedRecordsCache.find(r => r.name === lastPlayed.name || r.id === lastPlayed.name || (lastPlayed.id && r.id === lastPlayed.id));
             if (match) {
               playSaved(match.id);
@@ -8082,6 +8187,7 @@ try {
             row.onclick = () => {
               const sel = window.getSelection();
               if (sel && sel.toString().length > 0) return;
+              markActiveCard(row);
               playSaved(rec.id);
             };
 
@@ -8118,6 +8224,7 @@ try {
             playBtn.innerHTML = "<svg viewBox='0 0 24 24' width='13' height='13' fill='currentColor'><polygon points='6 3 20 12 6 21 6 3'/></svg><span>" + escapeHtml(t("play")) + "</span>";
             playBtn.onclick = (e) => {
               e.stopPropagation();
+              markActiveCard(row);
               playSaved(rec.id);
             };
 
