@@ -117,6 +117,29 @@ window.SVU_PREFS = {
   }
 };
 
+let currentTransition = null;
+
+window.skipActiveViewTransition = function () {
+  if (currentTransition) {
+    try {
+      currentTransition.skipTransition();
+    } catch (_) {}
+    currentTransition = null;
+    window.__activeViewTransition = null;
+  }
+};
+
+if (typeof HTMLDialogElement !== "undefined" && typeof HTMLDialogElement.prototype.showModal === "function") {
+  const origShowModal = HTMLDialogElement.prototype.showModal;
+  HTMLDialogElement.prototype.showModal = function () {
+    if (typeof window.skipActiveViewTransition === "function") {
+      window.skipActiveViewTransition();
+    }
+    if (this.open) return;
+    return origShowModal.apply(this, arguments);
+  };
+}
+
 /**
  * Safe View Transitions helper with progressive enhancement fallback,
  * prefers-reduced-motion check, view-transition-name cleanup, and accessibility focus routing.
@@ -152,6 +175,8 @@ window.safeStartViewTransition = function (updateCallback, focusTarget) {
   const prefersReduced = typeof window.matchMedia === "function" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  const hasOpenDialog = !!document.querySelector("dialog[open], .mobile-sheet.open");
+
   let updateRan = false;
   const safeUpdate = function () {
     if (updateRan) return;
@@ -159,24 +184,36 @@ window.safeStartViewTransition = function (updateCallback, focusTarget) {
     return updateCallback();
   };
 
-  if (typeof document.startViewTransition !== "function" || prefersReduced) {
+  if (typeof document.startViewTransition !== "function" || prefersReduced || hasOpenDialog) {
+    window.skipActiveViewTransition();
     safeUpdate();
     routeFocus();
     cleanupNames();
     return;
   }
 
+  window.skipActiveViewTransition();
+
   try {
     const transition = document.startViewTransition(function () {
       return safeUpdate();
     });
+    currentTransition = transition;
+    window.__activeViewTransition = transition;
+
     transition.finished
       .catch(function () {})
       .finally(function () {
+        if (currentTransition === transition) {
+          currentTransition = null;
+          window.__activeViewTransition = null;
+        }
         routeFocus();
         cleanupNames();
       });
   } catch (err) {
+    currentTransition = null;
+    window.__activeViewTransition = null;
     safeUpdate();
     routeFocus();
     cleanupNames();
@@ -6325,37 +6362,29 @@ try {
   }
 
   function showTab(name) {
-    const paneId = name === "file" ? "paneFile" : (name === "remote" ? "paneRemote" : (name === "batch" ? "paneBatch" : (name === "link" ? "paneLink" : "paneSaved")));
-    const update = () => {
-      byId("tabFile").classList.toggle("on", name === "file");
-      byId("paneFile").hidden = name !== "file";
-      byId("tabRemote").classList.toggle("on", name === "remote");
-      if (byId("tabBatch")) {
-        byId("tabBatch").classList.toggle("on", name === "batch");
-      }
-      if (byId("tabLink")) {
-        byId("tabLink").classList.toggle("on", name === "link");
-      }
-      byId("tabSaved").classList.toggle("on", name === "saved");
-      byId("paneRemote").hidden = name !== "remote";
-      if (byId("paneBatch")) {
-        byId("paneBatch").hidden = name !== "batch";
-      }
-      if (byId("paneLink")) {
-        byId("paneLink").hidden = name !== "link";
-      }
-      byId("paneSaved").hidden = name !== "saved";
-      if (byId("keepWrap")) {
-        byId("keepWrap").hidden = name !== "remote" && name !== "link";
-      }
-      if (name === "saved") {
-        refreshSaved();
-      }
-    };
-    if (window.safeStartViewTransition) {
-      window.safeStartViewTransition(update, paneId);
-    } else {
-      update();
+    byId("tabFile").classList.toggle("on", name === "file");
+    byId("paneFile").hidden = name !== "file";
+    byId("tabRemote").classList.toggle("on", name === "remote");
+    if (byId("tabBatch")) {
+      byId("tabBatch").classList.toggle("on", name === "batch");
+    }
+    if (byId("tabLink")) {
+      byId("tabLink").classList.toggle("on", name === "link");
+    }
+    byId("tabSaved").classList.toggle("on", name === "saved");
+    byId("paneRemote").hidden = name !== "remote";
+    if (byId("paneBatch")) {
+      byId("paneBatch").hidden = name !== "batch";
+    }
+    if (byId("paneLink")) {
+      byId("paneLink").hidden = name !== "link";
+    }
+    byId("paneSaved").hidden = name !== "saved";
+    if (byId("keepWrap")) {
+      byId("keepWrap").hidden = name !== "remote" && name !== "link";
+    }
+    if (name === "saved") {
+      refreshSaved();
     }
   }
 
@@ -6393,7 +6422,9 @@ try {
     window.openBrowseDialog = openDialog;
     showTab(tab);
     syncCascadeStyles();
-    dialog.showModal();
+    if (!dialog.open) {
+      dialog.showModal();
+    }
     await refreshSaved();
     if (tab === "remote") {
       await loadTerms();
@@ -7814,6 +7845,90 @@ try {
   const courseDirStatus = byId("courseDirStatus");
   let activeDirPrefix = "ALL";
   let dirSearchDebounce = null;
+  const DIR_CHUNK_SIZE = 60;
+  let dirCurrentResults = [];
+  let dirRenderedCount = 0;
+  let dirSavedCounts = new Map();
+
+  function createDirCard(it, savedCount, isEn) {
+    const card = document.createElement("div");
+    card.className = "dir-card";
+    card.setAttribute("data-code", it.code);
+
+    const top = document.createElement("div");
+    top.className = "dir-card-top";
+    const codeSpan = document.createElement("span");
+    codeSpan.className = "dir-code-badge";
+    codeSpan.textContent = it.code;
+    top.appendChild(codeSpan);
+
+    const copyBtn = document.createElement("button");
+    copyBtn.className = "iconbtn dir-copy-btn";
+    copyBtn.setAttribute("type", "button");
+    copyBtn.setAttribute("data-action", "copy");
+    copyBtn.setAttribute("data-code", it.code);
+    copyBtn.style.width = "26px";
+    copyBtn.style.height = "26px";
+    copyBtn.title = t("courseDirCopyCode");
+    copyBtn.innerHTML = "<svg class=\"i\" style=\"width:14px;height:14px;\"><use href=\"#i-copy\"/></svg>";
+    top.appendChild(copyBtn);
+
+    const names = document.createElement("div");
+    names.className = "dir-card-names";
+    const arName = document.createElement("div");
+    arName.className = "dir-name-ar";
+    arName.textContent = it.ar || it.en;
+    const enName = document.createElement("div");
+    enName.className = "dir-name-en";
+    enName.textContent = it.en || it.ar;
+    names.append(arName, enName);
+
+    if (it.alts && it.alts.length) {
+      const altBox = document.createElement("div");
+      altBox.className = "dir-card-alts";
+      altBox.textContent = (isEn ? "Also: " : "أيضاً: ") + it.alts.map(a => (isEn ? (a.en || a.ar) : (a.ar || a.en))).join(" | ");
+      names.appendChild(altBox);
+    }
+
+    const actions = document.createElement("div");
+    actions.className = "dir-card-actions";
+
+    if (savedCount > 0) {
+      const libBtn = document.createElement("button");
+      libBtn.className = "dir-btn is-saved dir-lib-btn";
+      libBtn.setAttribute("type", "button");
+      libBtn.setAttribute("data-action", "lib");
+      libBtn.setAttribute("data-code", it.code);
+      libBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-save\"/></svg><span>" + escapeHtml(t("courseDirSavedCount", { n: savedCount })) + "</span>";
+      libBtn.title = t("courseDirFindInLib");
+      actions.appendChild(libBtn);
+    }
+
+    const batchBtn = document.createElement("button");
+    batchBtn.className = "dir-btn is-primary-action dir-batch-btn";
+    batchBtn.setAttribute("type", "button");
+    batchBtn.setAttribute("data-action", "batch");
+    batchBtn.setAttribute("data-code", it.code);
+    batchBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-download\"/></svg><span>" + escapeHtml(t("courseDirBrowseDownload")) + "</span>";
+    actions.appendChild(batchBtn);
+
+    card.append(top, names, actions);
+    return card;
+  }
+
+  function renderNextDirChunk() {
+    if (!courseDirGrid || dirRenderedCount >= dirCurrentResults.length) return;
+    const isEn = window.I18N && window.I18N.lang === "en";
+    const frag = document.createDocumentFragment();
+    const nextLimit = Math.min(dirRenderedCount + DIR_CHUNK_SIZE, dirCurrentResults.length);
+    for (let i = dirRenderedCount; i < nextLimit; i++) {
+      const it = dirCurrentResults[i];
+      const savedCount = dirSavedCounts.get(it.code.toUpperCase()) || 0;
+      frag.appendChild(createDirCard(it, savedCount, isEn));
+    }
+    dirRenderedCount = nextLimit;
+    courseDirGrid.appendChild(frag);
+  }
 
   function renderCourseDirectory() {
     if (!courseDirGrid || !window.MaterialsDB) return;
@@ -7832,104 +7947,78 @@ try {
     }
 
     courseDirGrid.innerHTML = "";
+    courseDirGrid.scrollTop = 0;
     if (!results.length) {
       courseDirGrid.innerHTML = "<div class=\"muted\" style=\"grid-column: 1 / -1; padding: 32px 16px; text-align: center;\">" + escapeHtml(t("courseDirNoMatch")) + "</div>";
+      dirCurrentResults = [];
+      dirRenderedCount = 0;
       return;
     }
 
-    const isEn = window.I18N && window.I18N.lang === "en";
-    const frag = document.createDocumentFragment();
+    dirSavedCounts = new Map();
+    for (let s = 0; s < savedRecordsCache.length; s++) {
+      const mat = savedRecordsCache[s].parsedMeta && savedRecordsCache[s].parsedMeta.material;
+      if (mat) {
+        const k = mat.toUpperCase();
+        dirSavedCounts.set(k, (dirSavedCounts.get(k) || 0) + 1);
+      }
+    }
 
-    for (let i = 0; i < results.length; i++) {
-      const it = results[i];
-      const card = document.createElement("div");
-      card.className = "dir-card";
+    dirCurrentResults = results;
+    dirRenderedCount = 0;
+    renderNextDirChunk();
+  }
 
-      const top = document.createElement("div");
-      top.className = "dir-card-top";
-      const codeSpan = document.createElement("span");
-      codeSpan.className = "dir-code-badge";
-      codeSpan.textContent = it.code;
-      top.appendChild(codeSpan);
+  if (courseDirGrid) {
+    courseDirGrid.addEventListener("click", async (e) => {
+      const btn = e.target.closest("button[data-action]");
+      if (!btn) return;
+      const action = btn.getAttribute("data-action");
+      const code = btn.getAttribute("data-code");
+      if (!code) return;
 
-      const copyBtn = document.createElement("button");
-      copyBtn.className = "iconbtn";
-      copyBtn.style.width = "26px";
-      copyBtn.style.height = "26px";
-      copyBtn.title = t("courseDirCopyCode");
-      copyBtn.innerHTML = "<svg class=\"i\" style=\"width:14px;height:14px;\"><use href=\"#i-copy\"/></svg>";
-      copyBtn.addEventListener("click", () => {
+      if (action === "copy") {
         try {
-          navigator.clipboard.writeText(it.code);
-          copyBtn.title = t("courseDirCopied");
-          copyBtn.style.color = "var(--blue)";
+          await navigator.clipboard.writeText(code);
+          btn.title = t("courseDirCopied");
+          btn.style.color = "var(--blue)";
           setTimeout(() => {
-            copyBtn.title = t("courseDirCopyCode");
-            copyBtn.style.color = "";
+            btn.title = t("courseDirCopyCode");
+            btn.style.color = "";
           }, 1500);
-        } catch (e) {}
-      });
-      top.appendChild(copyBtn);
-
-      const names = document.createElement("div");
-      names.className = "dir-card-names";
-      const arName = document.createElement("div");
-      arName.className = "dir-name-ar";
-      arName.textContent = it.ar || it.en;
-      const enName = document.createElement("div");
-      enName.className = "dir-name-en";
-      enName.textContent = it.en || it.ar;
-      names.append(arName, enName);
-
-      if (it.alts && it.alts.length) {
-        const altBox = document.createElement("div");
-        altBox.className = "dir-card-alts";
-        altBox.textContent = (isEn ? "Also: " : "أيضاً: ") + it.alts.map(a => (isEn ? (a.en || a.ar) : (a.ar || a.en))).join(" | ");
-        names.appendChild(altBox);
-      }
-
-      const savedCount = savedRecordsCache.filter(r => r.parsedMeta && r.parsedMeta.material && r.parsedMeta.material.toUpperCase() === it.code.toUpperCase()).length;
-
-      const actions = document.createElement("div");
-      actions.className = "dir-card-actions";
-
-      if (savedCount > 0) {
-        const libBtn = document.createElement("button");
-        libBtn.className = "dir-btn is-saved";
-        libBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-save\"/></svg><span>" + escapeHtml(t("courseDirSavedCount", { n: savedCount })) + "</span>";
-        libBtn.title = t("courseDirFindInLib");
-        libBtn.addEventListener("click", async () => {
-          if (courseDirModal) courseDirModal.close();
-          await openDialog("saved");
-          if (byId("libSearch")) {
-            byId("libSearch").value = it.code;
-            renderLibraryView();
-          }
-        });
-        actions.appendChild(libBtn);
-      }
-
-      const batchBtn = document.createElement("button");
-      batchBtn.className = "dir-btn is-primary-action";
-      batchBtn.innerHTML = "<svg class=\"i\" style=\"width:12px;height:12px;\"><use href=\"#i-download\"/></svg><span>" + escapeHtml(t("courseDirBrowseDownload")) + "</span>";
-      batchBtn.addEventListener("click", async () => {
+        } catch (_) {}
+      } else if (action === "lib") {
+        if (courseDirModal) courseDirModal.close();
+        await openDialog("saved");
+        if (byId("libSearch")) {
+          byId("libSearch").value = code;
+          renderLibraryView();
+        }
+      } else if (action === "batch") {
         if (courseDirModal) courseDirModal.close();
         await openDialog("batch");
         if (byId("batchCourseFilter")) {
-          byId("batchCourseFilter").value = it.code;
+          byId("batchCourseFilter").value = code;
           renderBatchCoursesList(false);
         }
-        const cState = getOrCreateCourseState(it.code, it.code + " — " + (isEn ? (it.en || it.ar) : (it.ar || it.en)));
+        const isEn = window.I18N && window.I18N.lang === "en";
+        const it = window.MaterialsDB ? window.MaterialsDB.get(code) : null;
+        const title = it ? (code + " — " + (isEn ? (it.en || it.ar) : (it.ar || it.en))) : code;
+        const cState = getOrCreateCourseState(code, title);
         cState.checked = true;
         saveBatchState();
         renderBatchCoursesList(false);
         loadCheckedCoursesSequentially(false);
-      });
-      actions.appendChild(batchBtn);
-      card.append(top, names, actions);
-      frag.appendChild(card);
-    }
-    courseDirGrid.appendChild(frag);
+      }
+    });
+
+    courseDirGrid.addEventListener("scroll", () => {
+      if (dirRenderedCount < dirCurrentResults.length) {
+        if (courseDirGrid.scrollTop + courseDirGrid.clientHeight >= courseDirGrid.scrollHeight - 300) {
+          renderNextDirChunk();
+        }
+      }
+    }, { passive: true });
   }
 
   function openCourseDirectory() {
@@ -7937,7 +8026,9 @@ try {
     if (courseDirSearch) courseDirSearch.value = "";
     activeDirPrefix = "ALL";
     renderCourseDirectory();
-    courseDirModal.showModal();
+    if (!courseDirModal.open) {
+      courseDirModal.showModal();
+    }
     if (courseDirSearch) setTimeout(() => courseDirSearch.focus(), 100);
   }
 

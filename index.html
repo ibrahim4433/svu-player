@@ -11531,6 +11531,18 @@
       view-transition-name: active-lecture-card;
     }
 
+    dialog,
+    dialog *,
+    dialog::backdrop,
+    ::backdrop,
+    #mobileMenuSheet,
+    #mobileMenuSheet *,
+    .mobile-sheet,
+    .mobile-sheet *,
+    .mobile-sheet-backdrop {
+      view-transition-name: none !important;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       ::view-transition-group(*),
       ::view-transition-old(*),

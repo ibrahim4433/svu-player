@@ -116,6 +116,29 @@ window.SVU_PREFS = {
   }
 };
 
+let currentTransition = null;
+
+window.skipActiveViewTransition = function () {
+  if (currentTransition) {
+    try {
+      currentTransition.skipTransition();
+    } catch (_) {}
+    currentTransition = null;
+    window.__activeViewTransition = null;
+  }
+};
+
+if (typeof HTMLDialogElement !== "undefined" && typeof HTMLDialogElement.prototype.showModal === "function") {
+  const origShowModal = HTMLDialogElement.prototype.showModal;
+  HTMLDialogElement.prototype.showModal = function () {
+    if (typeof window.skipActiveViewTransition === "function") {
+      window.skipActiveViewTransition();
+    }
+    if (this.open) return;
+    return origShowModal.apply(this, arguments);
+  };
+}
+
 /**
  * Safe View Transitions helper with progressive enhancement fallback,
  * prefers-reduced-motion check, view-transition-name cleanup, and accessibility focus routing.
@@ -151,6 +174,8 @@ window.safeStartViewTransition = function (updateCallback, focusTarget) {
   const prefersReduced = typeof window.matchMedia === "function" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  const hasOpenDialog = !!document.querySelector("dialog[open], .mobile-sheet.open");
+
   let updateRan = false;
   const safeUpdate = function () {
     if (updateRan) return;
@@ -158,24 +183,36 @@ window.safeStartViewTransition = function (updateCallback, focusTarget) {
     return updateCallback();
   };
 
-  if (typeof document.startViewTransition !== "function" || prefersReduced) {
+  if (typeof document.startViewTransition !== "function" || prefersReduced || hasOpenDialog) {
+    window.skipActiveViewTransition();
     safeUpdate();
     routeFocus();
     cleanupNames();
     return;
   }
 
+  window.skipActiveViewTransition();
+
   try {
     const transition = document.startViewTransition(function () {
       return safeUpdate();
     });
+    currentTransition = transition;
+    window.__activeViewTransition = transition;
+
     transition.finished
       .catch(function () {})
       .finally(function () {
+        if (currentTransition === transition) {
+          currentTransition = null;
+          window.__activeViewTransition = null;
+        }
         routeFocus();
         cleanupNames();
       });
   } catch (err) {
+    currentTransition = null;
+    window.__activeViewTransition = null;
     safeUpdate();
     routeFocus();
     cleanupNames();
